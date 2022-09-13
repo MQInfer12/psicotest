@@ -1,13 +1,10 @@
-import React from 'react'
-import {initialForm, validationsForm} from '../validations/login'
+import React from "react";
+import { initialForm, validationsForm } from "../validations/login";
 import styled from "styled-components";
 import { UseForm } from "../hooks/useFormLogin";
-import Alerta from '../components/alerta'
-import Cargando from '../components/cargando'
-const ErrorCss = styled.p`
-  font-weight: bold;
-  color: #dc3545;
-`;
+import Alerta from "../components/alerta";
+import Cargando from "../components/cargando";
+import { ErrorCss } from "../styles/globales";
 
 const Login = () => {
   const {
@@ -32,34 +29,32 @@ const Login = () => {
       value: form.contrasenia,
       placeholder: "contrasenia",
       error: errors.contrasenia,
-    }
+    },
   ];
 
- 
   return (
     <div>
-    <form action="">
-      {data.map((v, i) => (
-        <div key={i}>
-          <input
-            type="text"
-            name={v.name}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={v.value}
-            placeholder={v.placeholder}
-          />
-          {v.error && <ErrorCss>{v.error}</ErrorCss>}
-        </div>
-      ))}
+      <form action="">
+        {data.map((v, i) => (
+          <div key={i}>
+            <input
+              type="text"
+              name={v.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={v.value}
+              placeholder={v.placeholder}
+            />
+            {v.error && <ErrorCss>{v.error}</ErrorCss>}
+          </div>
+        ))}
 
-     
-      <button onClick={handleSubmit}>Iniciar</button>
-    </form>
-    {loading && <Cargando />}
+        <button onClick={handleSubmit}>Iniciar</button>
+      </form>
+      {loading && <Cargando />}
       {response && <Alerta />}
-  </div>
-  )
-}
+    </div>
+  );
+};
 
-export default Login
+export default Login;

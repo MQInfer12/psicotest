@@ -4,6 +4,8 @@ export const initialForm = {
   contraseniaRepeat: "",
   edad: "",
   nombre: "",
+  genero: "",
+  sede: "",
 };
 
 export const validationsForm = (form) => {
@@ -36,6 +38,12 @@ export const validationsForm = (form) => {
   }
   if (!regexName.test(form.nombre.trim())) {
     errors.nombre = "El campo 'Nombre' sólo acepta letras y espacios en blanco";
+  }
+  if(!form.genero.trim()){
+    errors.genero = "El campo 'genero' es rquerido";
+  }
+  if(!form.sede.trim()){
+    errors.sede = "El campo 'sede' es rquerido";
   }
   return errors;
 };

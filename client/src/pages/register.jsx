@@ -4,10 +4,7 @@ import { UseForm } from "../hooks/useFormRegister";
 import { initialForm, validationsForm } from "../validations/register";
 import Alerta from "../components/alerta";
 import Cargando from "../components/cargando";
-const ErrorCss = styled.p`
-  font-weight: bold;
-  color: #dc3545;
-`;
+import { ErrorCss } from "../styles/globales";
 
 const Register = () => {
   const {
@@ -74,6 +71,7 @@ const Register = () => {
           value: 3,
         },
       ],
+      error: errors.genero,
     },
     {
       select: "sede",
@@ -100,6 +98,7 @@ const Register = () => {
           value: 4,
         },
       ],
+      error: errors.sede,
     },
   ];
 
@@ -121,18 +120,21 @@ const Register = () => {
         ))}
 
         {dataSelect.map((v, i) => (
-          <select
-            key={i}
-            name={v.select}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          >
-            {v.data.map((va, i) => (
-              <option key={i} value={va.value}>
-                {va.nombre}
-              </option>
-            ))}
-          </select>
+          <div>
+            <select
+              key={i}
+              name={v.select}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            >
+              {v.data.map((va, i) => (
+                <option key={i} value={va.value}>
+                  {va.nombre}
+                </option>
+              ))}
+            </select>
+            {v.error && <ErrorCss>{v.error}</ErrorCss>}
+          </div>
         ))}
 
         <button onClick={handleSubmit}>Regitrarse</button>
