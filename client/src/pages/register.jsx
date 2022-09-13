@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { UseForm } from "../hooks/useFormRegister";
 import { initialForm, validationsForm } from "../validations/register";
-
+import Alerta from "../components/alerta";
+import Cargando from "../components/cargando";
 const ErrorCss = styled.p`
   font-weight: bold;
   color: #dc3545;
@@ -57,8 +58,8 @@ const Register = () => {
       select: "genero",
       data: [
         {
-            nombre: "",
-            value: 0,
+          nombre: "Elija una opcion",
+          value: 0,
         },
         {
           nombre: "masculino",
@@ -78,8 +79,8 @@ const Register = () => {
       select: "sede",
       data: [
         {
-            nombre: "",
-            value: 0,
+          nombre: "Elija una opcion",
+          value: 0,
         },
         {
           nombre: "Cochabamba",
@@ -136,6 +137,8 @@ const Register = () => {
 
         <button onClick={handleSubmit}>Regitrarse</button>
       </form>
+      {loading && <Cargando />}
+      {response && <Alerta />}
     </div>
   );
 };

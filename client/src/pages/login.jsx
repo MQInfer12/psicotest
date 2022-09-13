@@ -2,7 +2,8 @@ import React from 'react'
 import {initialForm, validationsForm} from '../validations/login'
 import styled from "styled-components";
 import { UseForm } from "../hooks/useFormLogin";
-
+import Alerta from '../components/alerta'
+import Cargando from '../components/cargando'
 const ErrorCss = styled.p`
   font-weight: bold;
   color: #dc3545;
@@ -53,8 +54,10 @@ const Login = () => {
       ))}
 
      
-      <button onClick={handleSubmit}>Regitrarse</button>
+      <button onClick={handleSubmit}>Iniciar</button>
     </form>
+    {loading && <Cargando />}
+      {response && <Alerta />}
   </div>
   )
 }
