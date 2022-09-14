@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-
+import {signIn} from '../services/auth'
 
 export const UseForm = (
   initialForm,
@@ -12,11 +12,18 @@ export const UseForm = (
 
   const handleSend = async (form) => {
     try {
-      /*const res = await signUp(form);
+      const res = await signIn(form);
       const resJson = await res?.json();
-      const auth = resJson.auth;*/
-      console.log(form)
-       setForm(initialForm); //if want cleam the inputs
+     setLoading(true);
+      if(resJson.message =="Logged succesfully"){
+        alert('correcto')
+        setResponse(true);
+        setTimeout(() => (setResponse(false)),3000)
+      }
+      else alert(resJson.error)
+      setForm(initialForm); //if want cleam the inputs
+      setLoading(false)
+
     } catch (err) {
       console.log(err);
     }
