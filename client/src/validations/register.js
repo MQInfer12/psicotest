@@ -14,36 +14,36 @@ export const validationsForm = (form) => {
   let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
   let regexNumber = /^[0-9]+$/;
   if (!form.email.trim()) {
-    errors.email = "El campo 'Email' es requerido";
+    errors.email = "'Email' es requerido";
   } else if (!regexEmail.test(form.email.trim())) {
-    errors.email = "El campo 'Email' es incorrecto";
+    errors.email = "'Email' es incorrecto";
   }
 
   if (!form.contrasenia.trim()) {
-    errors.contrasenia = "El campo 'Contraseña es requerido";
+    errors.contrasenia = "'Contraseña es requerido";
   }
 
   if (form.contrasenia.trim() != form.contraseniaRepeat.trim()) {
-    errors.contraseniaRepeat = "no coinciden los campos";
+    errors.contraseniaRepeat = "No coinciden los campos";
   }
 
   if (!form.edad.trim()) {
-    errors.edad = "El campo 'edad' es requerido";
+    errors.edad = "'Edad' es requerido";
   }
   if (!regexNumber.test(form.edad.trim())) {
-    errors.edad = "El campo 'edad' sólo acepta numeros";
+    errors.edad = "'Edad' sólo acepta numeros";
   }
   if (!form.nombre.trim()) {
-    errors.nombre = "El campo 'nombre' es requerido";
+    errors.nombre = "'Nombre' es requerido";
   }
   if (!regexName.test(form.nombre.trim())) {
-    errors.nombre = "El campo 'Nombre' sólo acepta letras y espacios en blanco";
+    errors.nombre = "'Nombre' sólo acepta letras y espacios en blanco";
   }
-  if(!form.genero.trim()){
-    errors.genero = "El campo 'genero' es rquerido";
+  if(!form.genero.trim() || form.genero == 0){
+    errors.genero = "'Genero' es rquerido";
   }
-  if(!form.sede.trim()){
-    errors.sede = "El campo 'sede' es rquerido";
+  if(!form.sede.trim() || form.sede == 0){
+    errors.sede = "'Sede' es requerido";
   }
   return errors;
 };

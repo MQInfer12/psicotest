@@ -40,8 +40,8 @@ const DivFormlog = styled.div`
 `;
 
 const H1Title = styled.h1`
-  padding-top: 4.5rem;
-  padding-bottom: 4.5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   font-size: 2.2em;
   line-height: 3rem;
   color: #1a3260;
@@ -49,7 +49,8 @@ const H1Title = styled.h1`
 
 const DivInputs = styled.div`
   display: flex;
-  margin-bottom: 25px;
+  flex-direction: column;
+  margin-bottom: 20px;
 `;
 
 const DivInputBox = styled.div`
@@ -123,11 +124,11 @@ const IInput = styled.i`
 `;
 
 const DivButton = styled.div`
-  padding-top: 4.5rem;
-  padding-bottom: 4.5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 `;
 
-const ButtonSubmit = styled.a`
+const ButtonSubmit = styled.button`
   text-decoration: none;
   border: none;
   background-color: transparent;
@@ -173,43 +174,42 @@ const Login = () => {
   ];
 
   return (
-      <main>
-        <section>
-          <DivPrincipal>
-            <DivImagelog>
-              <DivItemlog></DivItemlog>
-            </DivImagelog>
-      
-            <DivFormlog>
-              <form>
-                <H1Title>Login</H1Title>
+    <main>
+      <section>
+        <DivPrincipal>
+          <DivImagelog>
+            <DivItemlog></DivItemlog>
+          </DivImagelog>
+    
+          <DivFormlog>
+            <form>
+              <H1Title>Login</H1Title>
 
-                {data.map((v, i) => (
-                  <DivInputs key={i}>
-                    <DivInputBox>
-                      <InputText
-                        required
-                        type={(v.name != 'contrasenia')? "text" : "password"}
-                        name={v.name}
-                        onChange={handleChange}
-                        value={v.value}
-                      />
-                      <SpanText>{v.placeholder}</SpanText>
-                      <IInput></IInput>
-                    </DivInputBox>
-                    {v.error && <ErrorCss>{v.error}</ErrorCss>}
-                  </DivInputs>
-                ))}
-      
-                <DivButton>
-                  <ButtonSubmit onClick={handleSubmit}>LOGIN</ButtonSubmit>
-                </DivButton>
-
-              </form>
-            </DivFormlog>
-          </DivPrincipal>
-        </section>
-      </main>
+              {data.map((v, i) => (
+                <DivInputs key={i}>
+                  <DivInputBox>
+                    <InputText
+                      required
+                      type={(v.name != 'contrasenia')? "text" : "password"}
+                      name={v.name}
+                      onChange={handleChange}
+                      value={v.value}
+                    />
+                    <SpanText>{v.placeholder}</SpanText>
+                    <IInput></IInput>
+                  </DivInputBox>
+                  {v.error && <ErrorCss>{v.error}</ErrorCss>}
+                </DivInputs>
+              ))}
+    
+              <DivButton>
+                <ButtonSubmit onClick={handleSubmit}>LOGIN</ButtonSubmit>
+              </DivButton>
+            </form>
+          </DivFormlog>
+        </DivPrincipal>
+      </section>
+    </main>
   );
 };
 
