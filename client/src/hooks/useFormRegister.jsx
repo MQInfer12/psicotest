@@ -1,10 +1,7 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import { signUp } from "../services/auth";
 
-
-export const UseForm = (
-  initialForm,
-  validateForm
-) => {
+export const UseForm = ( initialForm, validateForm ) => {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -12,48 +9,49 @@ export const UseForm = (
 
   const handleSend = async (form) => {
     try {
-      /*const res = await signUp(form);
+      const res = await signUp(form);
       const resJson = await res?.json();
-      const auth = resJson.auth;*/
-      console.log(form)
-       setForm(initialForm); //if want cleam the inputs
+      if(resJson.message =="¡Registro correcto!"){
+        console.log(form);
+      }
+      else alert(resJson.message);
+      //setForm(initialForm); //if want cleam the inputs
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleChange = (
-    e
-  ) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({
       ...form,
       [name]: value,
     });
   };
-  const handleBlur = (
-    e
-  ) => {
-    handleChange(e);
-    setErrors(validateForm(form));
-  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(validateForm(form));
-    if (Object.keys(errors).length === 0) {
-      setLoading(true);
-      handleSend(form);
-    } else {
-      return;
-    }
   };
+
+  const [cont, setCont] = useState(0);
+  useEffect(() => {
+    setCont(cont + 1);
+    if(cont > 0) {
+      if (Object.keys(errors).length === 0) {
+        handleSend(form);
+        setForm(initialForm);
+      }
+    }
+  }, [errors]);
+
+
   return {
     form,
     errors,
     loading,
     response,
     handleChange,
-    handleBlur,
     handleSubmit,
   };
 };

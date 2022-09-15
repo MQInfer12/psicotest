@@ -13,7 +13,6 @@ const Register = () => {
     loading,
     response,
     handleChange,
-    handleBlur,
     handleSubmit,
   } = UseForm(initialForm, validationsForm);
 
@@ -111,7 +110,6 @@ const Register = () => {
               type="text"
               name={v.name}
               onChange={handleChange}
-              onBlur={handleBlur}
               value={v.value}
               placeholder={v.placeholder}
             />
@@ -125,7 +123,6 @@ const Register = () => {
               key={i}
               name={v.select}
               onChange={handleChange}
-              onBlur={handleBlur}
             >
               {v.data.map((va, i) => (
                 <option key={i} value={va.value}>

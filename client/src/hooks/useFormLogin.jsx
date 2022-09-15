@@ -1,10 +1,7 @@
-import { useState, useContext } from "react";
-import {signIn} from '../services/auth'
+import { useState, useContext, useEffect } from "react";
+import { signIn, getProfile } from '../services/auth'
 
-export const UseForm = (
-  initialForm,
-  validateForm
-) => {
+export const UseForm = ( initialForm, validateForm ) => {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -14,53 +11,56 @@ export const UseForm = (
     try {
       const res = await signIn(form);
       const resJson = await res?.json();
-     setLoading(true);
+      //setLoading(true);
+
       if(resJson.message =="Logged succesfully"){
-        alert('correcto')
-        setResponse(true);
-        setTimeout(() => (setResponse(false)),3000)
+        console.log(form);
+        
+        const resprof = await getProfile();
+        const resprofJson = await resprof?.json();
+        console.log(resprofJson);
+        //setResponse(true);
+        //setTimeout(() => (setResponse(false)),3000);
       }
-      else alert(resJson.error)
-      setForm(initialForm); //if want cleam the inputs
-      setLoading(false)
+      else alert(resJson.error);
+
+      //setForm(initialForm); //if want cleam the inputs
+      //setLoading(false);
 
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleChange = (
-    e
-  ) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({
       ...form,
       [name]: value,
     });
   };
-  const handleBlur = (
-    e
-  ) => {
-    handleChange(e);
-    setErrors(validateForm(form));
-  };
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors(validateForm(form));
-    if (Object.keys(errors).length === 0) {
-      setLoading(true);
-      handleSend(form);
-    } else {
-      return;
-    }
   };
+
+  const [cont, setCont] = useState(0);
+  useEffect(() => {
+    setCont(cont + 1);
+    if(cont > 0) {
+      if (Object.keys(errors).length === 0) {
+        handleSend(form);
+      }
+    }
+  }, [errors]);
+
   return {
     form,
     errors,
     loading,
     response,
     handleChange,
-    handleBlur,
     handleSubmit,
   };
 };

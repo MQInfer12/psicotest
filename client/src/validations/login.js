@@ -5,14 +5,18 @@ export const initialForm = {
 
 export const validationsForm = (form) => {
   let errors = {};
+
   let regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/;
+
   if (!form.email.trim()) {
-    errors.email = "El campo 'Email' es requerido";
+    errors.email = "'Email' es requerido";
   } else if (!regexEmail.test(form.email.trim())) {
-    errors.email = "El campo 'Email' es incorrecto";
+    errors.email = "'Email' es incorrecto";
   }
+
   if (!form.contrasenia.trim()) {
-    errors.contrasenia = "El campo 'Contraseña es requerido";
+    errors.contrasenia = "'Contraseña' es requerida";
   }
+
   return errors;
 };
