@@ -44,5 +44,11 @@ class DatabaseSeeder extends Seeder
         DB::table('rols')->insert([
             'nombre' => 'beneficiario',
         ]);
+        DB::table('rols')->insert([
+            'nombre' => 'docente',
+        ]);
+        DB::table('rols')->insert([
+            'nombre' => 'admin',
+        ]);
     }
 }

@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getProfile, logOut } from "../services/auth";
+import { logOut } from "../services/usuario";
+import { useEffect, useContext } from "react";
+import { UserContext } from "../context/userContext";
 
 const DivHome = styled.div`
   height: 100vh;
@@ -21,21 +22,23 @@ const H1Title = styled.h1`
 `;
 
 const Home = () => {
+  const {user, setUser} = useContext(UserContext);
   const navigate = useNavigate();
-  const [user, setUser] = useState({});
 
-  useEffect(() => {
-    (async () => {
-      const resprof = await getProfile();
-      const resprofJson = await resprof?.json();
-      setUser(resprofJson);
-    })()
-  }, []);
+  const handleLogout = async () => {
+    const resout = await logOut();
+    const resoutJson = await resout?.json();
+    if(resoutJson.message == "Successfully logged out") {
+      setUser(null);
+      navigate("/");
+    }
+  }
 
   return(
     <DivHome>
-      <H1Title>Hola {user.nombre?.split(" ")[0]}</H1Title>
-      <button onClick={ () => { logOut(); navigate('/'); }}>Cerrar sesión</button>
+      <H1Title>Hola { user?.nombre }</H1Title>
+      <button onClick={ handleLogout }>Cerrar sesión</button>
+      { user?.id_rol == "3"? <H1Title>Administrador</H1Title> : "" } 
     </DivHome>
   );
 }

@@ -1,8 +1,13 @@
 import { useState, useContext, useEffect } from "react";
-import { signIn, getProfile } from '../services/auth';
+import { signIn } from '../services/auth';
 import { useNavigate } from "react-router-dom";
+import { getProfile } from "../services/usuario";
+import { UserContext } from "../context/userContext";
 
 export const UseForm = ( initialForm, validateForm ) => {
+
+  const {user, setUser} = useContext(UserContext);
+
   const navigate = useNavigate();
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
@@ -13,18 +18,12 @@ export const UseForm = ( initialForm, validateForm ) => {
     try {
       const res = await signIn(form);
       const resJson = await res?.json();
-      //setLoading(true);
 
       if(resJson.message =="Logged succesfully"){
+        setUser(await getProfile());
         navigate('/home');
-        
-        //setResponse(true);
-        //setTimeout(() => (setResponse(false)),3000);
       }
       else alert(resJson.error);
-
-      //setForm(initialForm); //if want cleam the inputs
-      //setLoading(false);
 
     } catch (err) {
       console.log(err);
