@@ -6,15 +6,19 @@ import Cookies from 'universal-cookie';
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Home from "./pages/home";
+import { getProfile } from "./services/usuario";
 
 function App() {
   const cookies = new Cookies();
   const [user, setUser] = useState(null);
   const value = useMemo(() => ({user, setUser}), [user, setUser]);
 
-  /*useEffect(() => {
-    console.log(cookies.get('jwt'));
-  }, [])*/
+  useEffect(() => {
+    (async () => {
+      const response = await getProfile();
+      setUser(response);
+    })();
+  }, [])
 
   return (
       <BrowserRouter>

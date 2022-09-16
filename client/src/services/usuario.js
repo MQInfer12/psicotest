@@ -10,7 +10,7 @@ export const getProfile = async () => {
         const resJson = await response?.json();
         return resJson;
     } catch (error) {
-        console.log(error);
+        console.log("No esta logeado");
     }
 };
 

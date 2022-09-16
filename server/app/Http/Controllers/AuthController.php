@@ -77,7 +77,7 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-    $cookie = cookie('jwt', $token, 60);
+        $cookie = cookie('jwt', $token, 60 * 24);
         return response()->json([
             'message' => "Logged succesfully",
         ])->withCookie($cookie);
