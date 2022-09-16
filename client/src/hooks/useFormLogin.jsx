@@ -1,7 +1,9 @@
 import { useState, useContext, useEffect } from "react";
-import { signIn, getProfile } from '../services/auth'
+import { signIn, getProfile } from '../services/auth';
+import { useNavigate } from "react-router-dom";
 
 export const UseForm = ( initialForm, validateForm ) => {
+  const navigate = useNavigate();
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -14,11 +16,8 @@ export const UseForm = ( initialForm, validateForm ) => {
       //setLoading(true);
 
       if(resJson.message =="Logged succesfully"){
-        console.log(form);
+        navigate('/home');
         
-        const resprof = await getProfile();
-        const resprofJson = await resprof?.json();
-        console.log(resprofJson);
         //setResponse(true);
         //setTimeout(() => (setResponse(false)),3000);
       }

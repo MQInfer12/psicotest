@@ -51,3 +51,16 @@ export const getProfile = async () => {
     console.log(error);
   }
 };
+
+export const logOut = async () => {
+  try {
+    const response = await fetch(`${http}auth/logout`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
