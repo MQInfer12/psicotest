@@ -1,24 +1,15 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { UserContext } from "./context/userContext";
-import Cookies from 'universal-cookie';
 import Login from "./pages/login";
 import Register from "./pages/register";
-import Home from "./pages/home";
-import { getProfile } from "./services/usuario";
+import Dashboard from "./pages/dashboard";
+import User from "./pages/user";
 
 function App() {
-  const cookies = new Cookies();
   const [user, setUser] = useState(null);
   const value = useMemo(() => ({user, setUser}), [user, setUser]);
-
-  useEffect(() => {
-    (async () => {
-      const response = await getProfile();
-      setUser(response);
-    })();
-  }, [])
 
   return (
       <BrowserRouter>
@@ -26,7 +17,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/home" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} >
+              <Route path="users" element={<User />} />
+            </Route>
           </Routes>
         </UserContext.Provider>
       </BrowserRouter>

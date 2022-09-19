@@ -3,7 +3,6 @@ import { initialForm, validationsForm } from "../validations/login";
 import styled from "styled-components";
 import { UseForm } from "../hooks/useFormLogin";
 import Alerta from "../components/alerta";
-import Cargando from "../components/cargando";
 import { ErrorCss } from "../styles/globales";
 
 //STYLED COMPONENTS

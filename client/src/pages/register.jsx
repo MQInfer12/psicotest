@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { UseForm } from "../hooks/useFormRegister";
 import { initialForm, validationsForm } from "../validations/register";
 import Alerta from "../components/alerta";
-import Cargando from "../components/cargando";
 import { ErrorCss } from "../styles/globales";
 
 //STYLED COMPONENTS
@@ -149,6 +148,7 @@ const ButtonSubmit = styled.button`
 //STYLED COMPONENTS
 
 const Register = () => {
+
   const {
     form,
     errors,
@@ -156,6 +156,7 @@ const Register = () => {
     response,
     handleChange,
     handleSubmit,
+    closeModal
   } = UseForm(initialForm, validationsForm);
 
   let data = [
@@ -290,12 +291,21 @@ const Register = () => {
               ))}
 
               <DivButton>
-                <ButtonSubmit onClick={handleSubmit}>REGISTRARSE</ButtonSubmit>
+                <ButtonSubmit onClick={ handleSubmit }>REGISTRARSE</ButtonSubmit>
               </DivButton>
             </form>
           </DivFormlog>
         </DivPrincipal>
       </section>
+      {response? 
+        <Alerta 
+          cerrar={closeModal} 
+          title='¡Exito!' 
+          text='Se registró el usuario correctamente.' 
+          iconClass='fa-solid fa-check'
+          btnText='Iniciar sesión'
+          /> 
+      : ""}
     </main>
   );
 };

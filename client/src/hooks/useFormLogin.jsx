@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { signIn } from '../services/auth';
 import { useNavigate } from "react-router-dom";
-import { getProfile } from "../services/usuario";
+import { getProfile } from "../services/auth";
 import { UserContext } from "../context/userContext";
 
 export const UseForm = ( initialForm, validateForm ) => {
@@ -21,7 +21,7 @@ export const UseForm = ( initialForm, validateForm ) => {
 
       if(resJson.message =="Logged succesfully"){
         setUser(await getProfile());
-        navigate('/home');
+        navigate('/dashboard');
       }
       else alert(resJson.error);
 
@@ -43,14 +43,17 @@ export const UseForm = ( initialForm, validateForm ) => {
     setErrors(validateForm(form));
   };
 
-  const [cont, setCont] = useState(0);
+  //CUANDO CAMBIEN LOS ERRORES
+  const [effects, setEffects] = useState(false);
   useEffect(() => {
-    setCont(cont + 1);
-    if(cont > 0) {
+    if(effects) {
       if (Object.keys(errors).length === 0) {
         handleSend(form);
       }
     }
+
+    //DA PASO AL USE EFFECT
+    setEffects(true);
   }, [errors]);
 
   return {

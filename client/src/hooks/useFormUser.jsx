@@ -1,21 +1,18 @@
 import { useState, useEffect } from "react";
-import { signUp } from "../services/auth";
+import { addUser } from "../services/usuario";
 
-export const UseForm = ( initialForm, validateForm ) => {
+export const UseForm = ( initialForm, validateForm, success ) => {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState(false);
 
   const handleSend = async (form) => {
     try {
-      const res = await signUp(form);
+      const res = await addUser(form);
       const resJson = await res?.json();
-      if(resJson.message =="¡Registro correcto!"){
-        setResponse(true);
-        setForm(initialForm); //if want cleam the inputs
+      if(resJson.mensaje =="se guardo correctamente"){
+        console.log("Se registró un nuevo usuario!");
+        success();
       }
-      else console.log(resJson.message);
     } catch (err) {
       console.log(err);
     }
@@ -34,10 +31,6 @@ export const UseForm = ( initialForm, validateForm ) => {
     setErrors(validateForm(form));
   };
 
-  const closeModal = () => {
-    setResponse(false);
-  }
-
   //CUANDO CAMBIEN LOS ERRORES
   const [effects, setEffects] = useState(false);
   useEffect(() => {
@@ -55,10 +48,7 @@ export const UseForm = ( initialForm, validateForm ) => {
   return {
     form,
     errors,
-    loading,
-    response,
     handleChange,
     handleSubmit,
-    closeModal
   };
 };
