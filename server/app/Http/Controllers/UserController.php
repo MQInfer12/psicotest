@@ -10,8 +10,12 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
-        return $users;
+       /*  $users = User::all();
+        return $users; */
+        $showUser = DB::select("select u.nombre, u.email, u.password, u.perfil,
+        u.genero, u.edad, u.id_sede, u.id_rol, u.estado, r.nombre as rol 
+        from users u, rols r where u.id_rol=r.id");
+        return response()->json($showUser);
     }
 
     public function store(Request $request)

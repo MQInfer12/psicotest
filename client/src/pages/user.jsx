@@ -122,7 +122,6 @@ const User = () => {
                   return v;
                 }
               }
-            
             })
             .map((v, i) => {
               return (
