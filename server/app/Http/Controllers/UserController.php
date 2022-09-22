@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -45,6 +46,12 @@ class UserController extends Controller
     {
         $user = User::find($id);
         return $user;
+    }
+
+    public function Search($email)
+    {
+        $user = DB::select("select * from users where email like '$email%'");
+        return response()-> json($user, 200);
     }
 
     public function update(Request $request, $id)

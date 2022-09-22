@@ -1,10 +1,13 @@
-import {http} from './htpp'
+import { http } from "./htpp";
 
 export const signIn = async (form) => {
   try {
     const response = await fetch(`${http}auth/login`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "accept": "application/json",
+      },
       credentials: "include",
       body: JSON.stringify({
         email: form.email,
@@ -21,7 +24,9 @@ export const signUp = async (form) => {
   try {
     const response = await fetch(`${http}auth/register`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json",
+      "accept": "application/json",
+    },
       credentials: "include",
       body: JSON.stringify({
         nombre: form.nombre,
@@ -31,7 +36,7 @@ export const signUp = async (form) => {
         edad: form.edad,
         id_sede: form.sede,
         id_rol: "1",
-        estado: "1"
+        estado: "1",
       }),
     });
     return response;
@@ -43,9 +48,9 @@ export const signUp = async (form) => {
 export const getProfile = async () => {
   try {
     const response = await fetch(`${http}auth/me`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
     });
     const resJson = await response?.json();
     return resJson;
@@ -57,9 +62,9 @@ export const getProfile = async () => {
 export const logOut = async () => {
   try {
     const response = await fetch(`${http}auth/logout`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
     });
     return response;
   } catch (error) {
