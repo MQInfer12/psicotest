@@ -13,5 +13,8 @@ Route::group(['middleware' => 'api'], function(){
     Route::post('auth/logout', [AuthController::class, 'logout']);
     Route::post('auth/refresh', [AuthController::class, 'refresh']);
     Route::post('auth/me', [AuthController::class, 'me']);
+
+    //USER ROUTES
     Route::apiResource("user", UserController::class);
+    Route::put('user/able/{id}', [UserController::class, 'able']);
 });

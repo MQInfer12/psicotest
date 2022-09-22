@@ -70,4 +70,19 @@ class UserController extends Controller
 
         return response()->json(["mensaje" => "se actualizo correctamente"], 201);
     }
+
+    public function able($id)
+    {
+        $user = User::findOrFail($id);
+        
+        if(!$user->estado) {
+            $user->estado = true;
+        } else {
+            $user->estado = false;
+        }
+        
+        $user->save();
+
+        return response()->json(["mensaje" => "se actualizo correctamente"], 201);
+    }
 }

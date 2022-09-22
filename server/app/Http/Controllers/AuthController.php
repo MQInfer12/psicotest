@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -28,10 +29,15 @@ class AuthController extends Controller
      */
     public function login()
     {
-        $credentials = request(['email', 'password']);
+        $email = request('email');
+        $autorizado = DB::select("SELECT estado FROM users WHERE email='$email'");
+        if(!$autorizado[0]->estado) {
+            return response()->json(['error' => 'No se puede ingresar a esta cuenta'], 401);
+        }
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        $credentials = request(['email', 'password']);
+        if (!$token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Correo o contraseña incorrectos'], 401);
         }
 
         return $this->respondWithToken($token);

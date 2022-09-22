@@ -226,10 +226,6 @@ const UserModal = ({ cerrar, actualizar, funcion, user }) => {
           nombre: "Docente",
           value: 2,
         },
-        {
-          nombre: "Administrador",
-          value: 3,
-        },
       ],
       error: errors.rol,
     },

@@ -65,3 +65,15 @@ export const updateUser = async (form, id) => {
     console.log(error);
   }
 }
+
+export const ableUser = async (id) => {
+  try {
+    const response = await fetch(`${http}user/able/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" }
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

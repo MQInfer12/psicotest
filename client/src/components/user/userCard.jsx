@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import defaultPhoto from '../../images/defaultPhoto.jpg';
-import { getUser } from "../../services/usuario";
+import { ableUser, getUser } from "../../services/usuario";
 import UserModal from "./userModal";
 
 const DivCard = styled.div`
   width: 350px;
   border-radius: 20px;
-  background-color: white;
+  background-color: ${props => props.estado? "white" : "#ff8080"};
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -51,8 +51,18 @@ const UserCard = ({ user }) => {
   const [usuario, setUsuario] = useState(user);
   const [showForm, setShowForm] = useState(false);
 
+  const cambiarHabilitado = async (id) => {
+    const res = await ableUser(id);
+    const resJson = await res?.json();
+    if(resJson.mensaje = 'se actualizo correctamente') {
+      const newUser = await getUser(id);
+      const newUserJson = await newUser?.json();
+      setUsuario(newUserJson);
+    }
+  } 
+
   return (
-    <DivCard>
+    <DivCard estado={usuario.estado}>
       <DivCardData>
         <PhotoPerfil src={defaultPhoto} />
         <DivCardText>
@@ -70,8 +80,8 @@ const UserCard = ({ user }) => {
         </DivCardText>
       </DivCardData>
       <DivCardButtons>
-        <ButtonCard onClick={() => setShowForm(true)}>Editar</ButtonCard>
-        <ButtonCard>Deshabilitar</ButtonCard>
+        <ButtonCard disabled={usuario.id_rol == 3} onClick={() => setShowForm(true)}>Editar</ButtonCard>
+        <ButtonCard disabled={usuario.id_rol == 3} onClick={() => cambiarHabilitado(usuario.id)}>{usuario.estado? "Deshabilitar" : "Habilitar"}</ButtonCard>
       </DivCardButtons>
       {showForm && 
         <UserModal 

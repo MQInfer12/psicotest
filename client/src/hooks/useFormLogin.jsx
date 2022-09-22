@@ -8,11 +8,12 @@ export const UseForm = ( initialForm, validateForm ) => {
 
   const {user, setUser} = useContext(UserContext);
 
-  const navigate = useNavigate();
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSend = async (form) => {
     try {
@@ -22,9 +23,9 @@ export const UseForm = ( initialForm, validateForm ) => {
       if(resJson.message =="Logged succesfully"){
         setUser(await getProfile());
         navigate('/dashboard');
-      }
-      else alert(resJson.error);
-
+      } else {
+        alert(resJson.error)
+      };
     } catch (err) {
       console.log(err);
     }
@@ -40,6 +41,7 @@ export const UseForm = ( initialForm, validateForm ) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    //CAMBIAR ERRORES
     setErrors(validateForm(form));
   };
 
