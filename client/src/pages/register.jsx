@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { UseForm } from "../hooks/useFormRegister";
 import { initialForm, validationsForm } from "../validations/register";
-import Alerta from "../components/alerta";
+import Alerta from "../components/globals/alerta";
 import { ErrorCss } from "../styles/globales";
 
 //STYLED COMPONENTS
@@ -298,8 +298,8 @@ const Register = () => {
         </DivPrincipal>
       </section>
       {response? 
-        <Alerta 
-          cerrar={closeModal} 
+        <Alerta
+          cerrar={closeModal}
           title='¡Exito!' 
           text='Se registró el usuario correctamente.' 
           iconClass='fa-solid fa-check'

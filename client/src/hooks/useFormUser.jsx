@@ -1,20 +1,33 @@
 import { useState, useEffect } from "react";
-import { addUser } from "../services/usuario";
+import { addUser, updateUser } from "../services/usuario";
 
-export const UseForm = ( initialForm, validateForm, success ) => {
+export const UseForm = ( initialForm, validateForm, success, funcion, id_user ) => {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
 
   const handleSend = async (form) => {
-    try {
-      const res = await addUser(form);
-      const resJson = await res?.json();
-      if(resJson.mensaje =="se guardo correctamente"){
-        console.log("Se registró un nuevo usuario!");
-        success();
+    if(funcion == "añadir") {
+      try {
+        const res = await addUser(form);
+        const resJson = await res?.json();
+        if(resJson.mensaje =="se guardo correctamente"){
+          console.log("Se registró un nuevo usuario!");
+          success();
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
+    } else if(funcion == "editar") {
+      try {
+        const res = await updateUser(form, id_user);
+        const resJson = await res?.json();
+        if(resJson.mensaje =="se actualizo correctamente"){
+          console.log("Se actualizó el usuario!");
+          success();
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -30,6 +43,20 @@ export const UseForm = ( initialForm, validateForm, success ) => {
     e.preventDefault();
     setErrors(validateForm(form));
   };
+
+  const handleUser = (user) => {
+    const obj = {
+      nombre: user.nombre,
+      email: user.email,
+      edad: String(user.edad),
+      contrasenia: "password",
+      genero: user.genero,
+      sede: String(user.id_sede),
+      rol: String(user.id_rol),
+    }
+
+    setForm(obj);
+  }
 
   //CUANDO CAMBIEN LOS ERRORES
   const [effects, setEffects] = useState(false);
@@ -50,5 +77,6 @@ export const UseForm = ( initialForm, validateForm, success ) => {
     errors,
     handleChange,
     handleSubmit,
+    handleUser
   };
 };

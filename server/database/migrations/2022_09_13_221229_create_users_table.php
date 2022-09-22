@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('edad');
             $table->foreignId('id_sede')->constrained('sedes')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('id_rol')->constrained('rols')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->boolean('estado');
             $table->rememberToken();
             $table->timestamps();
         });

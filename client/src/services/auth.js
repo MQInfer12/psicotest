@@ -30,7 +30,8 @@ export const signUp = async (form) => {
         genero: form.genero,
         edad: form.edad,
         id_sede: form.sede,
-        id_rol: "1"
+        id_rol: "1",
+        estado: "1"
       }),
     });
     return response;

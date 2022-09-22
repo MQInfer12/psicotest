@@ -23,6 +23,7 @@ class UserController extends Controller
             'edad' => 'required',
             'id_sede' => 'required',
             'id_rol' => 'required',
+            'estado' => 'required',
         ]);
 
         $user = new User();
@@ -33,6 +34,7 @@ class UserController extends Controller
         $user->edad = $request->edad;
         $user->id_sede = $request->id_sede;
         $user->id_rol = $request->id_rol;
+        $user->estado = $request->estado;
 
         $user->save();
 
@@ -50,7 +52,6 @@ class UserController extends Controller
         $request->validate([
             'nombre' => 'required',
             'email' => 'required',
-            'password' => 'required',
             'genero' => 'required',
             'edad' => 'required',
             'id_sede' => 'required',
@@ -60,7 +61,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->nombre = $request->nombre;
         $user->email = $request->email;
-        $user->password = bcrypt($request->password);
         $user->genero = $request->genero;
         $user->edad = $request->edad;
         $user->id_sede = $request->id_sede;

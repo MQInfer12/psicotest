@@ -4,8 +4,7 @@ import { useNavigate, Link, Outlet } from "react-router-dom";
 import { logOut, getProfile } from "../services/auth";
 import { useEffect, useContext, useState } from "react";
 import { UserContext } from "../context/userContext";
-import Cargando from "../components/cargando";
-import User from "./user";
+import Cargando from "../components/globals/cargando";
 
 const DivHome = styled.div`
   height: 100vh;

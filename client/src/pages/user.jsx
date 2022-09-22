@@ -3,9 +3,9 @@ import { UserContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getUsers } from "../services/usuario";
-import Cargando from "../components/cargando";
-import UserCard from "../components/dashboard/userCard";
-import UserModal from "../components/dashboard/userModal";
+import Cargando from "../components/globals/cargando";
+import UserCard from "../components/user/userCard";
+import UserModal from "../components/user/userModal";
 
 const DivUsersPage = styled.div`
   min-height: 90vh;
@@ -63,6 +63,7 @@ const User = () => {
       {showForm && <UserModal
         cerrar={() => setShowForm(false)}
         actualizar={() => llenarUsuarios()}
+        funcion="añadir"
       />}
       <DivUsersContainer>
         {

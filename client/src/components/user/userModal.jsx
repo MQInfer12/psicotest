@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { initialForm, validationsForm } from "../../validations/user";
 import { UseForm } from "../../hooks/useFormUser";
@@ -94,49 +94,78 @@ const ButtonModal = styled.button`
   }
 `;
 
-const UserModal = ({ cerrar, actualizar }) => {
+const UserModal = ({ cerrar, actualizar, funcion, user }) => {
 
   const {
     form,
     errors,
     handleChange,
     handleSubmit,
-  } = UseForm(initialForm, validationsForm, (() => { actualizar(); cerrar(); }));
+    handleUser,
+  } = UseForm(initialForm, validationsForm, (() => { actualizar(); cerrar(); }), funcion, user?.id);
 
-  let data = [
-    {
-      name: "nombre",
-      value: form.nombre,
-      placeholder: "Nombre",
-      error: errors.nombre,
-      tipo: "text"
-    },
-    {
-      name: "email",
-      value: form.email,
-      placeholder: "Correo",
-      error: errors.email,
-      tipo: "text"
-    },
-    {
-      name: "contrasenia",
-      value: form.contrasenia,
-      placeholder: "Contraseña",
-      error: errors.contrasenia,
-      tipo: "text"
-    },
-    {
-      name: "edad",
-      value: form.edad,
-      placeholder: "Edad",
-      error: errors.edad,
-      tipo: "number"
-    },
-  ];
+  let data;
+  if(funcion == "añadir") {
+    data = [
+      {
+        name: "nombre",
+        value: form.nombre,
+        placeholder: "Nombre",
+        error: errors.nombre,
+        tipo: "text"
+      },
+      {
+        name: "email",
+        value: form.email,
+        placeholder: "Correo",
+        error: errors.email,
+        tipo: "text"
+      }, 
+      {
+        name: "contrasenia",
+        value: form.contrasenia,
+        placeholder: "Contraseña",
+        error: errors.contrasenia,
+        tipo: "text"
+      },
+      {
+        name: "edad",
+        value: form.edad,
+        placeholder: "Edad",
+        error: errors.edad,
+        tipo: "number"
+      },
+    ];
+  } else if(funcion == "editar") {
+    data = [
+      {
+        name: "nombre",
+        value: form.nombre,
+        placeholder: "Nombre",
+        error: errors.nombre,
+        tipo: "text"
+      },
+      {
+        name: "email",
+        value: form.email,
+        placeholder: "Correo",
+        error: errors.email,
+        tipo: "text"
+      }, 
+      {
+        name: "edad",
+        value: form.edad,
+        placeholder: "Edad",
+        error: errors.edad,
+        tipo: "number"
+      },
+    ];
+  }
 
   let dataSelect = [
     {
       select: "genero",
+      seleccionado: user?.genero,
       data: [
         {
           nombre: "Elija una opción",
@@ -155,6 +184,7 @@ const UserModal = ({ cerrar, actualizar }) => {
     },
     {
       select: "sede",
+      seleccionado: user?.id_sede,
       data: [
         {
           nombre: "Elija una opción",
@@ -182,6 +212,7 @@ const UserModal = ({ cerrar, actualizar }) => {
     },
     {
       select: "rol",
+      seleccionado: user?.id_rol,
       data: [
         {
           nombre: "Elija una opción",
@@ -204,6 +235,12 @@ const UserModal = ({ cerrar, actualizar }) => {
     },
   ];
 
+  useState(() => {
+    if(user != undefined) {
+      handleUser(user);
+    }
+  }, [])
+
   return (
     <DivModalContainer>
       <DivAtras onClick={cerrar}></DivAtras>
@@ -225,6 +262,7 @@ const UserModal = ({ cerrar, actualizar }) => {
               <select
                 name={v.select}
                 onChange={handleChange}
+                defaultValue={v.seleccionado}
               >
                 {v.data.map((va, i) => (
                   <option key={i} value={va.value}>
@@ -235,7 +273,7 @@ const UserModal = ({ cerrar, actualizar }) => {
               {v.error && <ErrorCss>{v.error}</ErrorCss>}
             </DivInput>
           ))}
-        <ButtonModal onClick={handleSubmit}>Enviar</ButtonModal>
+        <ButtonModal onClick={handleSubmit}>{funcion}</ButtonModal>
         <ButtonClose onClick={cerrar}>x</ButtonClose>
       </FormAlerta>
     </DivModalContainer>
