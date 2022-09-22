@@ -13,8 +13,8 @@ class UserController extends Controller
        /*  $users = User::all();
         return $users; */
         $showUser = DB::select("select u.nombre, u.email, u.password, u.perfil,
-        u.genero, u.edad, u.id_sede, u.id_rol, u.estado, r.nombre as rol 
-        from users u, rols r where u.id_rol=r.id");
+        u.genero, u.edad, u.id_sede, u.id_rol, u.estado, r.nombre as rol , s.nombre as sede
+        from users u, rols r, sedes s where u.id_rol=r.id and u.id_sede=s.id");
         return response()->json($showUser);
     }
 

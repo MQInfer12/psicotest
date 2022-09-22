@@ -67,28 +67,8 @@ const UserCard = (params) => {
           <PText>Correo: {params.email}</PText>
           <PText>Genero: {params.genero}</PText>
           <PText>Edad: {params.edad}</PText>
-          <PText>
-            Rol:{" "}
-            {params.id_rol == 1
-              ? "Beneficiario"
-              : params.id_rol == 2
-              ? "Docente"
-              : params.id_rol == 3
-              ? "Admin"
-              : ""}
-          </PText>
-          <PText>
-            Sede:{" "}
-            {params.id_sede == 1
-              ? "Cochabamba"
-              : params.id_sede == 2
-              ? "La Paz"
-              : params.id_sede == 3
-              ? "El Alto"
-              : params.id_sede == 4
-              ? "Santa Cruz"
-              : ""}
-          </PText>
+          <PText>{params.rol}</PText>
+          <PText>{params.sede}</PText>
         </DivCardText>
       </DivCardData>
       <DivCardButtons>
