@@ -12,6 +12,18 @@ export const getUsers = async () => {
   }
 };
 
+export const searchUsers = async (email) => {
+  try {
+    const response = await fetch(`${http}search-user/${email}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json", "accept":"application/json" }
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const addUser = async (form) => {
   try {
     const response = await fetch(`${http}user`, {
@@ -50,7 +62,8 @@ export const updateUser = async (form, id) => {
   try {
     const response = await fetch(`${http}user/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json",
+      "accept": "application/json", },
       body: JSON.stringify({
         nombre: form.nombre,
         email: form.email,
@@ -70,7 +83,8 @@ export const ableUser = async (id) => {
   try {
     const response = await fetch(`${http}user/able/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json",
+      "accept": "application/json", },
     });
     return response;
   } catch (error) {

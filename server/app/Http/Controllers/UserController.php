@@ -4,13 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
-        return $users;
+        /*  $users = User::all();
+        return $users; */
+        $showUser = DB::select("
+        
+        
+        select u.id, u.nombre as nombreUser, u.email, u.perfil, u.genero, 
+        u.edad, u.id_sede, u.id_rol, u.estado, r.nombre as rol , 
+        s.nombre as nombreSede from users u, rols r, sedes s where 
+        u.id_rol=r.id and u.id_sede=s.id; 
+        ");
+        return response()->json($showUser);
     }
 
     public function store(Request $request)
@@ -47,6 +57,12 @@ class UserController extends Controller
         return $user;
     }
 
+    public function Search($email)
+    {
+        $user = DB::select("select * from users where email like '$email%'");
+        return response()->json($user, 200);
+    }
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -74,13 +90,13 @@ class UserController extends Controller
     public function able($id)
     {
         $user = User::findOrFail($id);
-        
-        if(!$user->estado) {
+
+        if (!$user->estado) {
             $user->estado = true;
         } else {
             $user->estado = false;
         }
-        
+
         $user->save();
 
         return response()->json(["mensaje" => "se actualizo correctamente"], 201);
