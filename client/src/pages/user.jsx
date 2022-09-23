@@ -6,7 +6,8 @@ import { getUsers, searchUsers } from "../services/usuario";
 import Cargando from "../components/globals/cargando";
 import UserCard from "../components/user/userCard";
 import UserModal from "../components/user/userModal";
-import UserSearch from "../components/user/userSearch";
+import UserResponse from "../components/user/filter/userReponse";
+import UserFilter from "../components/user/filter/userFilter";
 
 const DivUsersPage = styled.div`
   min-height: 90vh;
@@ -48,7 +49,7 @@ const User = () => {
     const resJson = await res?.json();
     setUsuarios(resJson);
     setLoadingUsers(false);
-    console.log(resJson)
+    console.log(resJson);
   };
 
   useEffect(() => {
@@ -59,34 +60,31 @@ const User = () => {
     llenarUsuarios();
   }, []);
 
+
+/* ====== FILTER ====== */
+
   const [filter, setFilter] = useState("");
   const [optionFilter, setOptionFilter] = useState("email");
   const handleChange = () => {
     llenarUsuarios();
   };
 
+  const handleSaveInput = (value) => {
+    setFilter(value);
+  };
+
+  const handleOptionSelect = (option) => {
+    setOptionFilter(option);
+  };
+
   return (
     <DivUsersPage>
-
       {/* FILTRAR */}
-      <div>
-        <input
-          type="text"
-          placeholder="Enter Post gmail"
-          onChange={(event) => {
-            setFilter(event.target.value);
-          }}
-        />
-
-        <select
-          name="optionFilter"
-          onChange={(e) => setOptionFilter(e.target.value)}
-        >
-          <option value={"email"}>correo</option>
-          <option value={"nombre"}>nombre</option>
-          <option value={"rol"}>roles</option>
-        </select>
-      </div>
+      
+      <UserFilter
+        handleSaveInput={handleSaveInput}
+        handleOptionSelect={handleOptionSelect}
+      />
 
 
 
@@ -102,34 +100,12 @@ const User = () => {
         {loadingUsers ? (
           <Cargando />
         ) : (
-          usuarios
-            .filter((v) => {
-              if (filter === "") {
-                return v;
-              } 
-              if(optionFilter==="email"){
-                if (v.email.toLowerCase().includes(filter.toLowerCase())) {
-                  return v;
-                }
-              }
-              if(optionFilter==="nombre"){
-                if (v.nombre.toLowerCase().includes(filter.toLowerCase())) {
-                  return v;
-                }
-              }
-              if(optionFilter==="rol"){
-                if (v.rol.toLowerCase().includes(filter.toLowerCase())) {
-                  return v;
-                }
-              }
-            })
-            .map((v, i) => {
-              return (
-                <div key={i}>
-                  <UserCard {...v} onSubmit={handleChange} />
-                </div>
-              );
-            })
+          <UserResponse
+            usuarios={usuarios}
+            filter={filter}
+            optionFilter={optionFilter}
+            handleChange={handleChange}
+          />
         )}
       </DivUsersContainer>
     </DivUsersPage>

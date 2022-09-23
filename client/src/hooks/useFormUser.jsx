@@ -46,7 +46,7 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id_user ) 
 
   const handleUser = (user) => {
     const obj = {
-      nombre: user.nombre,
+      nombre: user.nombreUser,
       email: user.email,
       edad: String(user.edad),
       contrasenia: "password",

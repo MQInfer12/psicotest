@@ -62,7 +62,8 @@ export const updateUser = async (form, id) => {
   try {
     const response = await fetch(`${http}user/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json",
+      "accept": "application/json", },
       body: JSON.stringify({
         nombre: form.nombre,
         email: form.email,
@@ -82,7 +83,8 @@ export const ableUser = async (id) => {
   try {
     const response = await fetch(`${http}user/able/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json",
+      "accept": "application/json", },
     });
     return response;
   } catch (error) {

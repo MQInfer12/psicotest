@@ -10,11 +10,16 @@ class UserController extends Controller
 {
     public function index()
     {
-       /*  $users = User::all();
+        /*  $users = User::all();
         return $users; */
-        $showUser = DB::select("select u.nombre, u.email, u.password, u.perfil,
-        u.genero, u.edad, u.id_sede, u.id_rol, u.estado, r.nombre as rol , s.nombre as sede
-        from users u, rols r, sedes s where u.id_rol=r.id and u.id_sede=s.id");
+        $showUser = DB::select("
+        
+        
+        select u.id, u.nombre as nombreUser, u.email, u.perfil, u.genero, 
+        u.edad, u.id_sede, u.id_rol, u.estado, r.nombre as rol , 
+        s.nombre as nombreSede from users u, rols r, sedes s where 
+        u.id_rol=r.id and u.id_sede=s.id; 
+        ");
         return response()->json($showUser);
     }
 
@@ -55,7 +60,7 @@ class UserController extends Controller
     public function Search($email)
     {
         $user = DB::select("select * from users where email like '$email%'");
-        return response()-> json($user, 200);
+        return response()->json($user, 200);
     }
 
     public function update(Request $request, $id)
@@ -85,13 +90,13 @@ class UserController extends Controller
     public function able($id)
     {
         $user = User::findOrFail($id);
-        
-        if(!$user->estado) {
+
+        if (!$user->estado) {
             $user->estado = true;
         } else {
             $user->estado = false;
         }
-        
+
         $user->save();
 
         return response()->json(["mensaje" => "se actualizo correctamente"], 201);

@@ -63,12 +63,12 @@ const UserCard = (params) => {
       <DivCardData>
         <PhotoPerfil src={defaultPhoto} />
         <DivCardText>
-          <PText>{params.nombre}</PText>
+          <PText>{params.nombreUser}</PText>
           <PText>Correo: {params.email}</PText>
           <PText>Genero: {params.genero}</PText>
           <PText>Edad: {params.edad}</PText>
-          <PText>{params.rol}</PText>
-          <PText>{params.sede}</PText>
+          <PText>rol: {params.rol}</PText>
+          <PText>sede: {params.nombreSede}</PText>
         </DivCardText>
       </DivCardData>
       <DivCardButtons>
