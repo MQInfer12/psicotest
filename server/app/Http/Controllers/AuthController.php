@@ -31,8 +31,11 @@ class AuthController extends Controller
     {
         $email = request('email');
         $autorizado = DB::select("SELECT estado FROM users WHERE email='$email'");
-        if(!$autorizado[0]->estado) {
-            return response()->json(['error' => 'No se puede ingresar a esta cuenta'], 401);
+        
+        if($autorizado != []) {
+            if(!$autorizado[0]->estado) {
+                return response()->json(['error' => 'No se puede ingresar a esta cuenta'], 401);
+            }
         }
 
         $credentials = request(['email', 'password']);

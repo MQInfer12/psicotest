@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GrupoBeneficiarioController;
+use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,4 +18,10 @@ Route::group(['middleware' => 'api'], function(){
     //USER ROUTES
     Route::apiResource("user", UserController::class);
     Route::put('user/able/{id}', [UserController::class, 'able']);
+
+    //GRUPO ROUTES
+    Route::apiResource("grupo", GrupoController::class);
+    
+    //GRUPOBENEFICIARIO ROUTES
+    Route::apiResource("grupobeneficiario", GrupoBeneficiarioController::class);
 });
