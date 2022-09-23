@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 
 const UserFilter = ({handleSaveInput, handleOptionSelect}) => {
-    const [optionFilter, setOptionFilter] = useState("email");
-    const handleChange = (e) => {
-        handleSaveInput(e.target.value)
-    }
-    const handleOption = (e) => {
-        handleOptionSelect(e.target.value)
-    }
+
+  const handleChange = (e) => {
+      handleSaveInput(e.target.value)
+  }
+  const handleOption = (e) => {
+      handleOptionSelect(e.target.value)
+  }
+
   return (
     <div>
       <input
         type="text"
-        placeholder="Enter Post gmail"
+        placeholder="Ingresa filtro"
         onChange={handleChange}
       />
 
@@ -20,9 +21,9 @@ const UserFilter = ({handleSaveInput, handleOptionSelect}) => {
         name="optionFilter"
         onChange={handleOption}
       >
-        <option value={"email"}>correo</option>
-        <option value={"nombreUser"}>nombre</option>
-        <option value={"rol"}>roles</option>
+        <option value={"email"}>Correo</option>
+        <option value={"nombre_user"}>Nombre</option>
+        <option value={"nombre_rol"}>Rol</option>
       </select>
     </div>
   );

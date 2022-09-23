@@ -12,6 +12,7 @@ const DivCard = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  transition: all 0.2s;
 `;
 
 const PhotoPerfil = styled.img`
@@ -46,7 +47,7 @@ const ButtonCard = styled.button`
   font-size: 0.8rem;
   cursor: pointer;
 `;
-//aqui quedes xd
+
 const UserCard = (params) => {
   const [showForm, setShowForm] = useState(false);
 
@@ -63,12 +64,12 @@ const UserCard = (params) => {
       <DivCardData>
         <PhotoPerfil src={defaultPhoto} />
         <DivCardText>
-          <PText>{params.nombreUser}</PText>
+          <PText>{params.nombre_user}</PText>
           <PText>Correo: {params.email}</PText>
           <PText>Genero: {params.genero}</PText>
           <PText>Edad: {params.edad}</PText>
-          <PText>rol: {params.rol}</PText>
-          <PText>sede: {params.nombreSede}</PText>
+          <PText>Rol: {params.nombre_rol}</PText>
+          <PText>Sede: {params.nombre_sede}</PText>
         </DivCardText>
       </DivCardData>
       <DivCardButtons>

@@ -1,9 +1,6 @@
 import React from "react";
 import UserCard from "../userCard";
 const UserResponse = ({ usuarios, filter, optionFilter, handleChange }) => {
-    const handleChangeSoon = () => {
-        handleChange()
-    }
   return (
     <>
       {usuarios
@@ -16,13 +13,13 @@ const UserResponse = ({ usuarios, filter, optionFilter, handleChange }) => {
               return v;
             }
           }
-          if (optionFilter === "nombreUser") {
-            if (v.nombreUser.toLowerCase().includes(filter.toLowerCase())) {
+          if (optionFilter === "nombre_user") {
+            if (v.nombre_user.toLowerCase().includes(filter.toLowerCase())) {
               return v;
             }
           }
-          if (optionFilter === "rol") {
-            if (v.rol.toLowerCase().includes(filter.toLowerCase())) {
+          if (optionFilter === "nombre_rol") {
+            if (v.nombre_rol.toLowerCase().includes(filter.toLowerCase())) {
               return v;
             }
           }
@@ -30,10 +27,11 @@ const UserResponse = ({ usuarios, filter, optionFilter, handleChange }) => {
         .map((v, i) => {
           return (
             <div key={i}>
-              <UserCard {...v} onSubmit={handleChangeSoon} />
+              <UserCard {...v} onSubmit={handleChange} />
             </div>
           );
-        })}
+        })
+      }
     </>
   );
 };

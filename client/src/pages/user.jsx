@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getUsers, searchUsers } from "../services/usuario";
 import Cargando from "../components/globals/cargando";
-import UserCard from "../components/user/userCard";
 import UserModal from "../components/user/userModal";
 import UserResponse from "../components/user/filter/userReponse";
 import UserFilter from "../components/user/filter/userFilter";
@@ -49,7 +48,6 @@ const User = () => {
     const resJson = await res?.json();
     setUsuarios(resJson);
     setLoadingUsers(false);
-    console.log(resJson);
   };
 
   useEffect(() => {
@@ -60,11 +58,11 @@ const User = () => {
     llenarUsuarios();
   }, []);
 
-
-/* ====== FILTER ====== */
+  /* ====== FILTER ====== */
 
   const [filter, setFilter] = useState("");
   const [optionFilter, setOptionFilter] = useState("email");
+  
   const handleChange = () => {
     llenarUsuarios();
   };
@@ -79,14 +77,13 @@ const User = () => {
 
   return (
     <DivUsersPage>
+
       {/* FILTRAR */}
       
       <UserFilter
         handleSaveInput={handleSaveInput}
         handleOptionSelect={handleOptionSelect}
       />
-
-
 
       <ButtonCard onClick={() => setShowForm(true)}>Añadir</ButtonCard>
       {showForm && (
@@ -96,6 +93,8 @@ const User = () => {
           funcion="añadir"
         />
       )}
+
+      {/* ==== LISTADO ===== */}
       <DivUsersContainer>
         {loadingUsers ? (
           <Cargando />

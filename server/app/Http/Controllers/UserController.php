@@ -12,14 +12,13 @@ class UserController extends Controller
     {
         /*  $users = User::all();
         return $users; */
-        $showUser = DB::select("
-        
-        
-        select u.id, u.nombre as nombreUser, u.email, u.perfil, u.genero, 
-        u.edad, u.id_sede, u.id_rol, u.estado, r.nombre as rol , 
-        s.nombre as nombreSede from users u, rols r, sedes s where 
-        u.id_rol=r.id and u.id_sede=s.id; 
-        ");
+        $showUser = DB::select("SELECT u.id, u.nombre as nombre_user, u.email, u.perfil, u.genero, 
+                                u.edad, u.id_sede, u.id_rol, u.estado, r.nombre as nombre_rol, 
+                                s.nombre as nombre_sede 
+                                from users u, rols r, sedes s 
+                                where u.id_rol=r.id 
+                                and u.id_sede=s.id
+                                order by u.id;");
         return response()->json($showUser);
     }
 
