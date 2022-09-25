@@ -2,7 +2,7 @@ import React from "react";
 import { initialForm, validationsForm } from "../validations/login";
 import styled from "styled-components";
 import { UseForm } from "../hooks/useFormLogin";
-import { ErrorCss } from "../styles/globales";
+import { ErrorCss } from "../styles/formularios";
 
 //STYLED COMPONENTS
 

@@ -62,8 +62,10 @@ export const updateUser = async (form, id) => {
   try {
     const response = await fetch(`${http}user/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json",
-      "accept": "application/json", },
+      headers: { 
+        "Content-Type": "application/json",
+        "accept": "application/json", 
+      },
       body: JSON.stringify({
         nombre: form.nombre,
         email: form.email,

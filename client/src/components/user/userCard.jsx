@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import defaultPhoto from "../../images/defaultPhoto.jpg";
 import { ableUser } from "../../services/usuario";
-import UserModal from "./userModal";
+import Modal from "../globals/modal";
+import ModalUser from "./modalUser";
 
 const DivCard = styled.div`
   width: 350px;
@@ -86,16 +87,18 @@ const UserCard = (params) => {
           {params.estado ? "Deshabilitar" : "Habilitar"}
         </ButtonCard>
       </DivCardButtons>
-      {showForm && (
-        <UserModal
-          cerrar={() => setShowForm(false)}
-          actualizar={async () => {
-            params.onSubmit();
-          }}
-          funcion="editar"
-          user={params}
-        />
-      )}
+      {showForm && 
+        <Modal cerrar={() => setShowForm(false)} >
+          <ModalUser
+            actualizar={() => {
+              params.onSubmit();
+              setShowForm(false);
+            }}
+            funcion="editar"
+            user={params}
+          />
+        </Modal>
+      }
     </DivCard>
   );
 };

@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { UseForm } from "../hooks/useFormRegister";
 import { initialForm, validationsForm } from "../validations/register";
-import Alerta from "../components/globals/alerta";
-import { ErrorCss } from "../styles/globales";
+import { ErrorCss } from "../styles/formularios";
+import Modal from "../components/globals/modal";
+import ModalRegister from "../components/register/modalRegister";
 
 //STYLED COMPONENTS
 
@@ -297,15 +298,16 @@ const Register = () => {
           </DivFormlog>
         </DivPrincipal>
       </section>
-      {response? 
-        <Alerta
-          cerrar={closeModal}
-          title='¡Exito!' 
-          text='Se registró el usuario correctamente.' 
-          iconClass='fa-solid fa-check'
-          btnText='Iniciar sesión'
-          /> 
-      : ""}
+      {response &&
+        <Modal cerrar={closeModal}>
+          <ModalRegister
+            title='¡Exito!' 
+            text='Se registró el usuario correctamente.' 
+            iconClass='fa-solid fa-check'
+            btnText='Iniciar sesión'
+          />
+        </Modal>
+      }
     </main>
   );
 };

@@ -88,17 +88,19 @@ const Dashboard = () => {
         loading? (
           <Cargando />
         ) : (
-          <div>
+          <>
             <Navbar>
               <H2Bienvenida>Hola { user?.nombre }</H2Bienvenida>
               <UlNavbar>
-                { user?.id_rol == "3"? <Link to="./users">Usuarios</Link> : "" }
+                { user?.id_rol == "3" && <Link to="./users">Usuarios</Link>}
+                { user?.id_rol == "2" && <Link to="./groups">Grupos</Link>}
                 <button onClick={ handleLogout }>Cerrar sesión</button>
               </UlNavbar>
             </Navbar>
             <Outlet />
-          </div>
-      )}
+          </>
+        )
+      }
     </DivHome>
   );
 }

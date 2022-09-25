@@ -26,9 +26,7 @@ const UserResponse = ({ usuarios, filter, optionFilter, handleChange }) => {
         })
         .map((v, i) => {
           return (
-            <div key={i}>
-              <UserCard {...v} onSubmit={handleChange} />
-            </div>
+            <UserCard key={i} {...v} onSubmit={handleChange} />
           );
         })
       }

@@ -2,11 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getUsers, searchUsers } from "../services/usuario";
+import { getUsers } from "../services/usuario";
 import Cargando from "../components/globals/cargando";
-import UserModal from "../components/user/userModal";
 import UserResponse from "../components/user/filter/userReponse";
 import UserFilter from "../components/user/filter/userFilter";
+import Modal from "../components/globals/modal";
+import ModalUser from "../components/user/modalUser";
 
 const DivUsersPage = styled.div`
   min-height: 90vh;
@@ -52,7 +53,7 @@ const User = () => {
 
   useEffect(() => {
     //PROTECCION DE RUTA SOLO PARA ADMINS
-    if (user?.id_rol != 3) navigate("/dashboard");
+    if (user?.id_rol != 3) return navigate("/dashboard");
 
     //LLENADO DE USUARIOS
     llenarUsuarios();
@@ -86,13 +87,14 @@ const User = () => {
       />
 
       <ButtonCard onClick={() => setShowForm(true)}>Añadir</ButtonCard>
-      {showForm && (
-        <UserModal
-          cerrar={() => setShowForm(false)}
-          actualizar={() => llenarUsuarios()}
-          funcion="añadir"
-        />
-      )}
+      {showForm && 
+        <Modal cerrar={() => setShowForm(false)}>
+          <ModalUser
+            actualizar={() => llenarUsuarios()}
+            funcion="añadir"
+          />
+        </Modal>
+      }
 
       {/* ==== LISTADO ===== */}
       <DivUsersContainer>

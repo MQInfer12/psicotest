@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Grupo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GrupoController extends Controller
 {
     public function index()
     {
-        return Grupo::all();
+        return DB::select("SELECT g.id, g.titulo, g.descripcion, g.id_docente, u.nombre as nombre_docente
+                           FROM grupos g, users u
+                           WHERE u.id = g.id_docente
+                           ORDER BY g.id
+        ");
     }
 
     public function store(Request $request)
@@ -56,5 +61,10 @@ class GrupoController extends Controller
     public function destroy($id) 
     {
         return Grupo::destroy($id);
+    }
+
+    public function indexDocente($id_docente)
+    {
+        return DB::select("SELECT * FROM grupos WHERE id_docente='$id_docente'");
     }
 }

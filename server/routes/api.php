@@ -18,11 +18,11 @@ Route::group(['middleware' => 'api'], function(){
 
     //USER ROUTES
     Route::apiResource("user", UserController::class);
-
     Route::put('user/able/{id}', [UserController::class, 'able']);
 
     //GRUPO ROUTES
     Route::apiResource("grupo", GrupoController::class);
+    Route::get('grupo/docente/{id_docente}', [GrupoController::class, 'indexDocente']);
     
     //GRUPOBENEFICIARIO ROUTES
     Route::apiResource("grupobeneficiario", GrupoBeneficiarioController::class);

@@ -1,39 +1,12 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-
-const DivAlertaContainer = styled.div`
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  left: 0;
-`;
-
-const DivAtras = styled.div`
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-`;
+import React from "react";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const DivAlerta = styled.div`
-  position: relative;
-  z-index: 1;
-  border-radius: 16px;
-  width: 400px;
-  height: 400px;
-  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 40px;
   text-align: center;
 `;
 
@@ -102,24 +75,21 @@ const ButtonClose = styled.button`
   }
 `;
 
-const Alerta = ({ cerrar, title, text, iconClass, btnText }) => {
+const ModalRegister = ({ title, text, iconClass, btnText }) => {
   const navigate = useNavigate();
+
   return (
-    <DivAlertaContainer>
-      <DivAtras onClick={cerrar}></DivAtras>
-      <DivAlerta>
-        <DivAlertaText>
-          <DivIcon className={iconClass}></DivIcon>
-          <H2Title>{title}</H2Title>
-          <PText>{text}</PText>
-        </DivAlertaText>
-        <DivButtons>
-          <ButtonModal onClick={() => navigate("/") }>{btnText}</ButtonModal>
-        </DivButtons>
-        <ButtonClose onClick={cerrar}>x</ButtonClose>
-      </DivAlerta>
-    </DivAlertaContainer>
+    <DivAlerta>
+      <DivAlertaText>
+        <DivIcon className={iconClass}></DivIcon>
+        <H2Title>{title}</H2Title>
+        <PText>{text}</PText>
+      </DivAlertaText>
+      <DivButtons>
+        <ButtonModal onClick={() => navigate("/") }>{btnText}</ButtonModal>
+      </DivButtons>
+    </DivAlerta>
   )
 }
 
-export default Alerta
+export default ModalRegister;
