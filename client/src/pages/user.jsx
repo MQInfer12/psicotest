@@ -90,7 +90,10 @@ const User = () => {
       {showForm && 
         <Modal cerrar={() => setShowForm(false)}>
           <ModalUser
-            actualizar={() => llenarUsuarios()}
+            actualizar={() =>{
+              llenarUsuarios();
+              setShowForm(false);
+            }}
             funcion="añadir"
           />
         </Modal>

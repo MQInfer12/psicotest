@@ -16,6 +16,7 @@ const ModalGroup = ({ actualizar, id_docente, funcion, group }) => {
   const {
     form,
     errors,
+    sizeTitle,
     handleChange,
     handleSubmit,
     handleFill,
@@ -26,7 +27,8 @@ const ModalGroup = ({ actualizar, id_docente, funcion, group }) => {
       name: "titulo",
       value: form.titulo,
       placeholder: "Titulo",
-      error: errors.titulo
+      error: errors.titulo,
+      size: 22
     },
     {
       name: "descripcion",
@@ -53,6 +55,7 @@ const ModalGroup = ({ actualizar, id_docente, funcion, group }) => {
             value={v.value}
             onChange={ handleChange }
           />
+          {v.size && <small>{sizeTitle}/{v.size}</small>}
           {v.error && <ErrorCss>{v.error}</ErrorCss>}
         </DivInput>
       ))}

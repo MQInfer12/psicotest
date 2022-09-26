@@ -11,6 +11,7 @@ Route::post('auth/register', [AuthController::class, 'register']);
 Route::post('auth/login', [AuthController::class, 'login']);
 
 Route::get('search-user/{email}', [UserController::class, 'Search']);
+
 Route::group(['middleware' => 'api'], function(){
     Route::post('auth/logout', [AuthController::class, 'logout']);
     Route::post('auth/refresh', [AuthController::class, 'refresh']);
@@ -23,6 +24,7 @@ Route::group(['middleware' => 'api'], function(){
     //GRUPO ROUTES
     Route::apiResource("grupo", GrupoController::class);
     Route::get('grupo/docente/{id_docente}', [GrupoController::class, 'indexDocente']);
+    Route::put('grupo/able/{id}', [GrupoController::class, 'able']);
     
     //GRUPOBENEFICIARIO ROUTES
     Route::apiResource("grupobeneficiario", GrupoBeneficiarioController::class);

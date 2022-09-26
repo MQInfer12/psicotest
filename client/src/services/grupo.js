@@ -69,3 +69,16 @@ export const updateGrupo = async (form, id) => {
     console.log(error);
   }
 }
+
+export const ableGrupo = async (id) => {
+  try {
+    const response = await fetch(`${http}grupo/able/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json",
+      "accept": "application/json", },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

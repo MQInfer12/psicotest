@@ -12,6 +12,7 @@ class Grupo extends Model
     protected $fillable = [
         'titulo',
         'descripcion',
-        'id_docente'
+        'id_docente',
+        'estado'
     ];
 }

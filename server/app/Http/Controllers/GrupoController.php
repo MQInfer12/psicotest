@@ -29,6 +29,7 @@ class GrupoController extends Controller
         $grupo->titulo = $request->titulo;
         $grupo->descripcion = $request->descripcion;
         $grupo->id_docente = $request->id_docente;
+        $grupo->estado = 1;
 
         $grupo->save();
 
@@ -67,7 +68,22 @@ class GrupoController extends Controller
     {
         return DB::select("SELECT *
                            FROM grupos 
-                           WHERE id_docente='$id_docente'
+                           WHERE id_docente='$id_docente' AND estado='true'
                            ORDER BY id");
+    }
+
+    public function able($id)
+    {
+        $grupo = Grupo::findOrFail($id);
+
+        if (!$grupo->estado) {
+            $grupo->estado = true;
+        } else {
+            $grupo->estado = false;
+        }
+
+        $grupo->save();
+
+        return response()->json(["mensaje" => "se actualizo correctamente"], 201);
     }
 }

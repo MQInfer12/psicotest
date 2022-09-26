@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('titulo');
             $table->string('descripcion');
             $table->binary('portada')->nullable();
+            $table->boolean('estado');
             $table->foreignId('id_docente')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });

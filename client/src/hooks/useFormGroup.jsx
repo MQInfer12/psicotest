@@ -5,6 +5,9 @@ import { addGrupo, updateGrupo } from "../services/grupo";
 export const UseForm = ( initialForm, validateForm, success, funcion, id, id_docente ) => {
 
   const [form, setForm] = useState(initialForm);
+  //USESTATE DEL TAMAÑO DEL STRING//
+  const [sizeTitle, setSizeTitle] = useState(0);
+  //USESTATE DEL TAMAÑO DEL STRING//
   const [errors, setErrors] = useState({});
 
   const handleSend = async (form) => {
@@ -24,7 +27,6 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id, id_doc
       try {
         const res = await updateGrupo(form, id);
         const resJson = await res?.json();
-        console.log(resJson);
         if(resJson.mensaje =="se actualizo correctamente"){
           console.log("Se actualizó el grupo!");
           success();
@@ -36,6 +38,16 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id, id_doc
   };
 
   const handleChange = (e) => {
+    //COMPROBAR STRING E IR ACTUALIZANDO EL TAMAÑO//
+    if(e.target.name == "titulo") {
+      if(e.target.value.length > 22) {
+        e.target.value = e.target.value.slice(0, 21);
+        return;
+      }
+      setSizeTitle(e.target.value.length);
+    }
+    //COMPROBAR STRING E IR ACTUALIZANDO EL TAMAÑO//
+
     const { name, value } = e.target;
     setForm({
       ...form,
@@ -44,6 +56,10 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id, id_doc
   };
 
   const handleFill = (group) => {
+    //CARGAR TAMAÑO DEL STRING AL EDITAR//
+    setSizeTitle(group.titulo.length);
+    //CARGAR TAMAÑO DEL STRING AL EDITAR//
+
     const obj = {
       titulo: group.titulo,
       descripcion: group.descripcion,
@@ -55,7 +71,6 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id, id_doc
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //CAMBIAR ERRORES
     setErrors(validateForm(form));
   };
 
@@ -67,14 +82,13 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id, id_doc
         handleSend(form);
       }
     }
-
-    //DA PASO AL USE EFFECT
     setEffects(true);
   }, [errors]);
 
   return {
     form,
     errors,
+    sizeTitle,
     handleChange,
     handleSubmit,
     handleFill
