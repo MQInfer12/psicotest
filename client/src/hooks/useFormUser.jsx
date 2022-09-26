@@ -44,7 +44,7 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id_user ) 
     setErrors(validateForm(form));
   };
 
-  const handleUser = (user) => {
+  const handleFill = (user) => {
     const obj = {
       nombre: user.nombre_user,
       email: user.email,
@@ -77,6 +77,6 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id_user ) 
     errors,
     handleChange,
     handleSubmit,
-    handleUser
+    handleFill
   };
 };

@@ -49,3 +49,23 @@ export const addGrupo = async (form, id_docente) => {
     console.log(error);
   }
 }
+
+export const updateGrupo = async (form, id) => {
+  try {
+    const response = await fetch(`${http}grupo/${id}`, {
+      method: "PUT",
+      headers: { 
+        "Content-Type": "application/json",
+        "accept": "application/json", 
+      },
+      body: JSON.stringify({
+        titulo: form.titulo,
+        descripcion: form.descripcion,
+        id_docente: form.id_docente,
+      }),
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

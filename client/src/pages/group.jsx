@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { getGruposDocente } from '../services/grupo';
 import Modal from '../components/globals/modal';
 import ModalGroup from '../components/group/modalGroup';
+import GroupResponse from '../components/group/groupResponse';
 
 const DivUsersPage = styled.div`
   min-height: 90vh;
@@ -45,6 +46,8 @@ const Group = () => {
 
   return (
     <DivUsersPage>
+      <ButtonAdd onClick={() => setShowForm(true)}>Añadir grupo</ButtonAdd>
+
       {showForm && 
         <Modal cerrar={() => setShowForm(false)} >
           <ModalGroup 
@@ -57,15 +60,8 @@ const Group = () => {
           />
         </Modal>
       }
-      <ButtonAdd onClick={() => setShowForm(true)}>Añadir grupo</ButtonAdd>
-      {
-        grupos.map((v, i) => (
-          <div key={i}>
-            <p>{v.titulo}</p>
-            <p>{v.descripcion}</p>
-          </div>
-        ))
-      }
+
+      <GroupResponse grupos={grupos} llenarGrupos={llenarGrupos} />
     </DivUsersPage>
   )
 }

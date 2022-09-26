@@ -1,24 +1,37 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { addGrupo } from "../services/grupo";
+import { addGrupo, updateGrupo } from "../services/grupo";
 
-export const UseForm = ( initialForm, validateForm, success, id_docente ) => {
+export const UseForm = ( initialForm, validateForm, success, funcion, id, id_docente ) => {
 
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
 
-  const navigate = useNavigate();
-
   const handleSend = async (form) => {
-    try {
-      const res = await addGrupo(form, id_docente);
-      const resJson = await res?.json();
-      if(resJson.mensaje =="se guardo correctamente"){
-        console.log("Se creó un nuevo grupo!");
-        success();
+    console.log(funcion);
+    if(funcion == "añadir") {
+      try {
+        const res = await addGrupo(form, id_docente);
+        const resJson = await res?.json();
+        if(resJson.mensaje =="se guardo correctamente"){
+          console.log("Se creó un nuevo grupo!");
+          success();
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
+    } else if(funcion == "editar") {
+      try {
+        const res = await updateGrupo(form, id);
+        const resJson = await res?.json();
+        console.log(resJson);
+        if(resJson.mensaje =="se actualizo correctamente"){
+          console.log("Se actualizó el grupo!");
+          success();
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -29,6 +42,16 @@ export const UseForm = ( initialForm, validateForm, success, id_docente ) => {
       [name]: value,
     });
   };
+
+  const handleFill = (group) => {
+    const obj = {
+      titulo: group.titulo,
+      descripcion: group.descripcion,
+      id_docente: id_docente
+    }
+
+    setForm(obj);
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,5 +77,6 @@ export const UseForm = ( initialForm, validateForm, success, id_docente ) => {
     errors,
     handleChange,
     handleSubmit,
+    handleFill
   };
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { initialForm, validationsForm } from '../../validations/group';
 import { UseForm } from '../../hooks/useFormGroup';
@@ -12,13 +12,14 @@ const FormContainer = styled.form`
   gap: 20px;
 `;
 
-const ModalGroup = ({ actualizar, id_docente, funcion }) => {
+const ModalGroup = ({ actualizar, id_docente, funcion, group }) => {
   const {
     form,
     errors,
     handleChange,
     handleSubmit,
-  } = UseForm(initialForm, validationsForm, actualizar, id_docente);
+    handleFill,
+  } = UseForm(initialForm, validationsForm, actualizar, funcion, group?.id, id_docente);
 
   let data = [
     {
@@ -35,6 +36,12 @@ const ModalGroup = ({ actualizar, id_docente, funcion }) => {
     },
   ];
 
+  useEffect(() => {
+    if(group != undefined) {
+      handleFill(group, id_docente);
+    }
+  }, [])
+
   return (
     <FormContainer>
       {data.map((v, i) => (
@@ -49,7 +56,7 @@ const ModalGroup = ({ actualizar, id_docente, funcion }) => {
           {v.error && <ErrorCss>{v.error}</ErrorCss>}
         </DivInput>
       ))}
-      <ButtonModal onClick={handleSubmit}>{funcion}</ButtonModal>
+      <ButtonModal onClick={ handleSubmit }>{funcion}</ButtonModal>
     </FormContainer>
   )
 }

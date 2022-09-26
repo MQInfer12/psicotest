@@ -65,6 +65,9 @@ class GrupoController extends Controller
 
     public function indexDocente($id_docente)
     {
-        return DB::select("SELECT * FROM grupos WHERE id_docente='$id_docente'");
+        return DB::select("SELECT *
+                           FROM grupos 
+                           WHERE id_docente='$id_docente'
+                           ORDER BY id");
     }
 }

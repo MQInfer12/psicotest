@@ -19,7 +19,7 @@ const ModalUser = ({ actualizar, funcion, user }) => {
     errors,
     handleChange,
     handleSubmit,
-    handleUser,
+    handleFill,
   } = UseForm(initialForm, validationsForm, actualizar, funcion, user?.id);
 
   let data;
@@ -151,7 +151,7 @@ const ModalUser = ({ actualizar, funcion, user }) => {
 
   useEffect(() => {
     if(user != undefined) {
-      handleUser(user);
+      handleFill(user);
     }
   }, [])
 

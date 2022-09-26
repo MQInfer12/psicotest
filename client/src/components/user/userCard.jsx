@@ -49,53 +49,53 @@ const ButtonCard = styled.button`
   cursor: pointer;
 `;
 
-const UserCard = (params) => {
+const UserCard = (props) => {
   const [showForm, setShowForm] = useState(false);
 
   const cambiarHabilitado = async (id) => {
     const res = await ableUser(id);
     const resJson = await res?.json();
     if ((resJson.mensaje = "se actualizo correctamente")) {
-      params.onSubmit();
+      props.onSubmit();
     }
   };
 
   return (
-    <DivCard estado={params.estado}>
+    <DivCard estado={props.estado}>
       <DivCardData>
         <PhotoPerfil src={defaultPhoto} />
         <DivCardText>
-          <PText>{params.nombre_user}</PText>
-          <PText>Correo: {params.email}</PText>
-          <PText>Genero: {params.genero}</PText>
-          <PText>Edad: {params.edad}</PText>
-          <PText>Rol: {params.nombre_rol}</PText>
-          <PText>Sede: {params.nombre_sede}</PText>
+          <PText>{props.nombre_user}</PText>
+          <PText>Correo: {props.email}</PText>
+          <PText>Genero: {props.genero}</PText>
+          <PText>Edad: {props.edad}</PText>
+          <PText>Rol: {props.nombre_rol}</PText>
+          <PText>Sede: {props.nombre_sede}</PText>
         </DivCardText>
       </DivCardData>
       <DivCardButtons>
         <ButtonCard
-          disabled={params.id_rol == 3}
+          disabled={props.id_rol == 3}
           onClick={() => setShowForm(true)}
         >
           Editar
         </ButtonCard>
         <ButtonCard
-          disabled={params.id_rol == 3}
-          onClick={() => cambiarHabilitado(params.id)}
+          disabled={props.id_rol == 3}
+          onClick={() => cambiarHabilitado(props.id)}
         >
-          {params.estado ? "Deshabilitar" : "Habilitar"}
+          {props.estado ? "Deshabilitar" : "Habilitar"}
         </ButtonCard>
       </DivCardButtons>
       {showForm && 
         <Modal cerrar={() => setShowForm(false)} >
           <ModalUser
             actualizar={() => {
-              params.onSubmit();
+              props.onSubmit();
               setShowForm(false);
             }}
             funcion="editar"
-            user={params}
+            user={props}
           />
         </Modal>
       }

@@ -8,6 +8,7 @@ const DivAlerta = styled.div`
   align-items: center;
   justify-content: space-between;
   text-align: center;
+  gap: 10px;
 `;
 
 const DivAlertaText = styled.div`

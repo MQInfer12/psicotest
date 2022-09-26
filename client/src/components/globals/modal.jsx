@@ -45,7 +45,6 @@ const DivChildContainer = styled.div`
   z-index: 1;
   border-radius: 16px;
   width: 400px;
-  min-height: 400px;
   background-color: white;
   padding: 40px;
 `;
