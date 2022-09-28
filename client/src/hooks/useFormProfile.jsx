@@ -29,6 +29,7 @@ export const UseForm = ( initialForm, validateForm, success, id ) => {
       getBase64(e.target.files[0], (resultado) => {
         setPicPrev(resultado);
       });
+      return;
     }
 
     setForm({
@@ -41,7 +42,6 @@ export const UseForm = ( initialForm, validateForm, success, id ) => {
     setPicPrev(user.perfil);
 
     const obj = {
-      perfil: "",
       nombre: user.nombre,
       edad: String(user.edad),
       genero: user.genero,
@@ -58,7 +58,7 @@ export const UseForm = ( initialForm, validateForm, success, id ) => {
 
   const handleReset = () => {
     setPicPrev(null);
-  }
+  };
 
   //CUANDO CAMBIEN LOS ERRORES
   const [effects, setEffects] = useState(false);

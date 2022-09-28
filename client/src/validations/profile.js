@@ -1,5 +1,4 @@
 export const initialForm = {
-  perfil: "",
   nombre: "",
   edad: "",
   genero: "",

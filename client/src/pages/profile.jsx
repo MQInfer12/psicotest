@@ -271,23 +271,25 @@ const Profile = () => {
           <ProfilePic 
             width="100px" 
             height="100px"
-            src={picPrev}
+            src={ editable? picPrev : user?.perfil }
           />
-          <DivPhotoInfo>
-            <DivPhotoButtons>
-              <DivFile>
-                <InputFile 
-                  type="file" 
-                  name="perfil"
-                  value={form.perfil}
-                  onChange={ handleChange }
-                />
-                <PurpleButton>Subir foto nueva</PurpleButton>
-              </DivFile>
-              <WhiteButton onClick={ handleReset }>Reset</WhiteButton>
-            </DivPhotoButtons>
-            <InfoPhotoExtensions>Permitido JPG, JPEG o PNG. Tamaño máximo de 800Kb.</InfoPhotoExtensions>
-          </DivPhotoInfo>
+          {
+            editable &&
+            <DivPhotoInfo>
+              <DivPhotoButtons>
+                <DivFile>
+                  <InputFile 
+                    type="file" 
+                    name="perfil"
+                    onChange={ handleChange }
+                  />
+                  <PurpleButton>Subir foto nueva</PurpleButton>
+                </DivFile>
+                <WhiteButton onClick={ handleReset }>Reset</WhiteButton>
+              </DivPhotoButtons>
+              <InfoPhotoExtensions>Permitido JPG, JPEG o PNG. Tamaño máximo de 800Kb.</InfoPhotoExtensions>
+            </DivPhotoInfo>
+          }
         </DivPhoto>
       </UpContainer>
       <DownContainer>
@@ -297,19 +299,14 @@ const Profile = () => {
               dataleft.map((v, i) => (
                 <DivInputs key={i}>
                   <InputInfo>{v.placeholder}</InputInfo>
-                  {
-                    <>
-                      <InputText 
-                        value={v.value}
-                        name={v.name}
-                        type={v.tipo}
-                        disabled={v.disabled || !editable}
-                        onChange={ handleChange }
-                      />
-                      {v.error && <ErrorCss>{v.error}</ErrorCss>}
-                    </>
-                  }
-                  
+                    <InputText 
+                      value={v.value}
+                      name={v.name}
+                      type={v.tipo}
+                      disabled={v.disabled || !editable}
+                      onChange={ handleChange }
+                    />
+                    {v.error && <ErrorCss>{v.error}</ErrorCss>}
                 </DivInputs>
               ))
             }
@@ -319,20 +316,39 @@ const Profile = () => {
               dataSelect.map((v, i) => (
                 <DivInputs key={i}>
                   <InputInfo>{v.select}</InputInfo>
-                    <InputSelect
-                      onChange={ handleChange }
-                      name={v.select}
-                      defaultValue={v.selected}
-                      disabled={!editable}
-                    >
-                      {
-                        v.data.map((va, i) => (
-                          <option key={i} value={va.value}>
-                            {va.nombre}
-                          </option>
-                        ))
-                      }
-                    </InputSelect>
+                  {
+                    editable? (
+                      <InputSelect
+                        onChange={ handleChange }
+                        name={v.select}
+                        defaultValue={v.selected}
+                        disabled={!editable}
+                      >
+                        {
+                          v.data.map((va, i) => (
+                            <option key={i} value={va.value}>
+                              {va.nombre}
+                            </option>
+                          ))
+                        }
+                      </InputSelect> 
+                    ) : (
+                      <InputSelect
+                        onChange={ handleChange }
+                        name={v.select}
+                        value={v.selected}
+                        disabled={!editable}
+                      >
+                        {
+                          v.data.map((va, i) => (
+                            <option key={i} value={va.value}>
+                              {va.nombre}
+                            </option>
+                          ))
+                        }
+                      </InputSelect>
+                      )
+                  }
                 </DivInputs>
               ))
             }
@@ -343,7 +359,7 @@ const Profile = () => {
             editable? (
             <>
               <PurpleButton onClick={ (e) => { handleSubmit(e); setEditable(false); }}>Guardar cambios</PurpleButton>
-              <WhiteButton onClick={ () => setEditable(false) }>Cancelar</WhiteButton>
+              <WhiteButton onClick={ () => { setEditable(false); handleFill(user); }}>Cancelar</WhiteButton>
             </>
             ) : (
               <PurpleButton onClick={ () => setEditable(true) }>Editar</PurpleButton>
