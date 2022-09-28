@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -52,6 +51,10 @@ class AuthController extends Controller
      */
     public function me()
     {
+        $usuario = auth()->user();
+        if($usuario->perfil != null) {
+            $usuario->perfil = stream_get_contents($usuario -> perfil);
+        }
         return response()->json(auth()->user());
     }
 

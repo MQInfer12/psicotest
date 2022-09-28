@@ -236,7 +236,6 @@ const Register = () => {
           nombre: "El Alto",
           value: 3,
         },
-        ,
         {
           nombre: "Santa Cruz",
           value: 4,

@@ -12,8 +12,9 @@ const DivCard = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  justify-content: space-between;
   transition: all 0.2s;
+  gap: 20px;
 `;
 
 const PhotoPerfil = styled.img`

@@ -10,8 +10,6 @@ import Modal from "../components/globals/modal";
 import ModalUser from "../components/user/modalUser";
 
 const DivUsersPage = styled.div`
-  min-height: 90vh;
-  padding: 40px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -19,7 +17,6 @@ const DivUsersPage = styled.div`
 `;
 
 const DivUsersContainer = styled.div`
-  height: 100%;
   width: 100%;
   border-radius: 20px;
   padding: 40px;

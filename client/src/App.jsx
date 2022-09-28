@@ -7,6 +7,7 @@ import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
 import User from "./pages/user";
 import Group from "./pages/group";
+import Profile from "./pages/profile";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -21,6 +22,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} >
             <Route path="users" element={<User />} />
             <Route path="groups" element={<Group />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
           <Route path="*" element={<Login />} />
         </Routes>

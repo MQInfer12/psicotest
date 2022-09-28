@@ -6,11 +6,10 @@ import { getGruposDocente } from '../services/grupo';
 import Modal from '../components/globals/modal';
 import ModalGroup from '../components/group/modalGroup';
 import GroupResponse from '../components/group/groupResponse';
+import Cargando from '../components/globals/cargando';
 
-const DivUsersPage = styled.div`
-  min-height: 90vh;
+const DivGroupsPage = styled.div`
   width: 100%;
-  padding: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,16 +23,28 @@ const ButtonAdd = styled.button`
   cursor: pointer;
 `;
 
+const DivGroups = styled.div`
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  gap: 20px;
+`;
+
 const Group = () => {
   const { user, setUser } = useContext(UserContext);
   const [ grupos, setGrupos ] = useState([]);
   const [ showForm, setShowForm ] = useState(false);
+  const [ loading, setLoading ] = useState(true);
+
   const navigate = useNavigate();
 
   const llenarGrupos = async () => {
     const res = await getGruposDocente(user.id);
     const resJson = await res?.json();
     setGrupos(resJson);
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -45,7 +56,7 @@ const Group = () => {
   }, []);
 
   return (
-    <DivUsersPage>
+    <DivGroupsPage>
       <ButtonAdd onClick={() => setShowForm(true)}>Añadir grupo</ButtonAdd>
 
       {showForm && 
@@ -60,9 +71,14 @@ const Group = () => {
           />
         </Modal>
       }
-
-      <GroupResponse grupos={grupos} llenarGrupos={llenarGrupos} />
-    </DivUsersPage>
+      <DivGroups>
+        { loading? (
+          <Cargando />
+        ) : (
+          <GroupResponse grupos={grupos} llenarGrupos={llenarGrupos} />
+        )}
+      </DivGroups>
+    </DivGroupsPage>
   )
 }
 

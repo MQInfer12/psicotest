@@ -5,51 +5,165 @@ import { logOut, getProfile } from "../services/auth";
 import { useEffect, useContext, useState } from "react";
 import { UserContext } from "../context/userContext";
 import Cargando from "../components/globals/cargando";
+import Logo from '../images/logopsico.png';
+import ProfilePic from "../components/globals/profilePic";
 
-const DivHome = styled.div`
+const LoaderContainer = styled.div`
   height: 100vh;
-`;
-
-const Navbar = styled.nav`
   width: 100%;
-  height: 10vh;
+`;
+
+const DashboardContainer = styled.div`
+  min-height: 100vh;
   display: flex;
+`;
+
+const SideBar = styled.nav`
+  background-color: #FFFFFF;
+  width: 263px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  background-color: #9c27b0;
-  padding: 20px;
+  padding-top: 54px;
+  position: fixed;
 `;
 
-const H2Bienvenida = styled.h2`
-  color: #f8f9fa;
+const SideBarLogo = styled.img`
+  object-fit: cover;
+  width: 175px;
+  height: 38px;
+  background-color: #D9D9D9;
+  margin-bottom: 88px;
 `;
 
-const UlNavbar = styled.ul`
+const SideBarList = styled.ul`
   list-style: none;
   display: flex;
-  gap: 40px;
+  flex-direction: column;
+  gap: 5px;
 
-  & > button {
-    border: none;
-    background-color: transparent;
-    font-size: 1rem;
-    cursor: pointer;
-    color: #f8f9fa;
+  .selected {
+    background-color: #660BE1;
   }
+  .selected:hover {
+    color: #D9D9D9;
+  }
+`;
 
-  & > button:hover {
-    color: #9b9b9b;
+const SideBarLink = styled(Link)`
+  color: #D9D9D9;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 10px 20px 10px 20px;
+  border-radius: 8px;
+  transition: all 0.4s;
+
+  &:hover {
+    color: #660BE1;
   }
+`;
+
+const SideBarButton = styled.button`
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+  color: #D9D9D9;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 10px 20px 10px 20px;
+  border-radius: 8px;
+  transition: all 0.4s;
+
+  &:hover {
+    color: #660BE1;
+  }
+`;
+
+const SideBarIcon = styled.i`
+  text-align: center;
+  font-size: 16px;
+  width: 30px;
+`;
+
+const SideBarOptionText = styled.span`
+  font-size: 16px;
+  line-height: 27px;
+`;
+
+const RightContainer = styled.div`
+  margin-left: 263px;
+  background-color: #F4F4F4;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const UpbarContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 47px 40px 31px 40px;
+  height: 157px;
+`;
+
+const UpbarText = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+const ActualPage = styled.span`
+  margin-top: 7px;
+  font-weight: 300;
+  font-size: 16px;
+  color: #ADA7A7;
+`;
+
+const TitlePage = styled.span`
+  font-size: 24px;
+  font-weight: 600;
+  color: #3E435D;
+`;
+
+const UpbarSquares = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 30px;
+`;
+
+const UpbarName = styled.p`
+  font-weight: 300;
+  font-size: 16px;
+  color: #ADA7A7;
+`;
+
+const UpbarNot = styled.div`
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  background-color: #D9D9D9;
+`;
+
+const OutletContainer = styled.div`
+  padding: 0px 40px 40px 40px;
 `;
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const {user, setUser} = useContext(UserContext);
+
+  const [selected, setSelected] = useState("home");
+  const [titlePage, setTitlePage] = useState("Home");
+
   const navigate = useNavigate();
 
   //AL RENDERIZARSE EL COMPONENTE//
   useEffect(() => {
-    //si el user es indefinido obtener el user, si no, mostrar la pantalla
+    //si el user es indefinido obtener el user, si no, mostrar la pantalla de login
     if(user == undefined) {
       (async () => {
         const userPromise = await getProfile();
@@ -83,25 +197,111 @@ const Dashboard = () => {
   }
 
   return(
-    <DivHome>
+    <DashboardContainer>
       {
         loading? (
-          <Cargando />
+          <LoaderContainer>
+            <Cargando />
+          </LoaderContainer>
         ) : (
           <>
-            <Navbar>
-              <H2Bienvenida>Hola { user?.nombre }</H2Bienvenida>
-              <UlNavbar>
-                { user?.id_rol == "3" && <Link to="./users">Usuarios</Link>}
-                { user?.id_rol == "2" && <Link to="./groups">Grupos</Link>}
-                <button onClick={ handleLogout }>Cerrar sesión</button>
-              </UlNavbar>
-            </Navbar>
-            <Outlet />
+            <SideBar>
+              <SideBarLogo src={Logo} />
+              <SideBarList>
+                <li>
+                  <SideBarLink 
+                    onClick={() => {
+                      setSelected("home");
+                      setTitlePage("Home");
+                    }}
+                    className={selected == "home" && "selected"} 
+                    to="./" 
+                  >
+                    <SideBarIcon className="fa-solid fa-house"></SideBarIcon>
+                    <SideBarOptionText>Home</SideBarOptionText>
+                  </SideBarLink>
+                </li>
+
+                {
+                  user?.id_rol == "3" && 
+                  <li>
+                    <SideBarLink 
+                      onClick={() => {
+                        setSelected("users");
+                        setTitlePage("Usuarios");
+                      }}
+                      className={selected == "users" && "selected"} 
+                      to="./users"
+                    >
+                      <SideBarIcon className="fa-solid fa-user-group"></SideBarIcon>
+                      <SideBarOptionText>Usuarios</SideBarOptionText>
+                    </SideBarLink>
+                  </li>
+                }
+
+                {
+                  user?.id_rol == "2" && 
+                  <li>
+                    <SideBarLink 
+                      onClick={() => {
+                        setSelected("groups");
+                        setTitlePage("Grupos");
+                      }}
+                      className={selected == "groups" && "selected"} 
+                      to="./groups" 
+                    >
+                      <SideBarIcon className="fa-solid fa-users-line"></SideBarIcon>
+                      <SideBarOptionText>Grupos</SideBarOptionText>
+                    </SideBarLink>
+                  </li>
+                }
+
+                <li>
+                  <SideBarLink 
+                    onClick={() => {
+                      setSelected("profile");
+                      setTitlePage("Perfil");
+                    }}
+                    className={selected == "profile" && "selected"} 
+                    to="./profile" 
+                  >
+                    <SideBarIcon className="fa-solid fa-address-card"></SideBarIcon>
+                    <SideBarOptionText>Perfil</SideBarOptionText>
+                  </SideBarLink>
+                </li>
+
+                <li>
+                  <SideBarButton onClick={ handleLogout }>
+                    <SideBarIcon className="fa-solid fa-right-from-bracket"></SideBarIcon>
+                    <SideBarOptionText>Logout</SideBarOptionText>
+                  </SideBarButton>
+                </li>
+              </SideBarList>
+            </SideBar>
+            <RightContainer>
+              <UpbarContainer>
+                <UpbarText>
+                  <ActualPage>Admin / Creación Tests</ActualPage>
+                  <TitlePage>{ titlePage }</TitlePage>
+                </UpbarText>
+                <UpbarSquares>
+                  <UpbarName>Bienvenido {user?.nombre}</UpbarName>
+                  <UpbarNot></UpbarNot>
+                  <ProfilePic 
+                    width="52px"
+                    height="52px"
+                    src={user?.perfil}
+                  />
+                </UpbarSquares>
+              </UpbarContainer>
+              <OutletContainer>
+                <Outlet />
+              </OutletContainer>
+            </RightContainer>
           </>
         )
       }
-    </DivHome>
+    </DashboardContainer>
   );
 }
 
