@@ -4,6 +4,7 @@ import defaultPhoto from "../../images/defaultPhoto.jpg";
 import { ableUser } from "../../services/usuario";
 import Modal from "../globals/modal";
 import ModalUser from "./modalUser";
+import ProfilePic from "../globals/profilePic";
 
 const DivCard = styled.div`
   width: 350px;
@@ -64,7 +65,7 @@ const UserCard = (props) => {
   return (
     <DivCard estado={props.estado}>
       <DivCardData>
-        <PhotoPerfil src={defaultPhoto} />
+        <ProfilePic width="75px" height="75px" src={props.perfil} />
         <DivCardText>
           <PText>{props.nombre_user}</PText>
           <PText>Correo: {props.email}</PText>
