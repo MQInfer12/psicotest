@@ -65,7 +65,8 @@ const InputFile = styled.input`
   cursor: pointer;
 `;
 
-const SubirButton = styled.button`
+const PurpleButton = styled.button`
+  height: 42px;
   border: none;
   padding: 8px 26px 8px 26px;
   background-color: #660BE1;
@@ -76,7 +77,8 @@ const SubirButton = styled.button`
   cursor: pointer;
 `;
 
-const ResetButton = styled.button`
+const WhiteButton = styled.button`
+  height: 42px;
   border: 1px solid #D9D9D9;
   padding: 8px 20px 8px 20px;
   background-color: #FFFFFF;
@@ -126,6 +128,7 @@ const InputInfo = styled.p`
 `;
 
 const InputText = styled.input`
+  font-size: 13px;
   border-radius: 5px;
   border: 1px solid #D9D9D9;
   outline: none;
@@ -135,14 +138,25 @@ const InputText = styled.input`
   padding-left: 10px;
 `;
 
+const PText = styled.p`
+  border-radius: 5px;
+  color: #636161;
+  min-width: 500px;
+  height: 38px;
+  padding-left: 11px;
+  font-size: 13px;
+  padding-top: 9px;
+`;
+
 const InputSelect = styled.select`
+  font-size: 13px;
   border-radius: 5px;
   border: 1px solid #D9D9D9;
   outline: none;
   color: #636161;
   min-width: 500px;
   height: 38px;
-  padding-left: 10px;
+  padding-left: 6px;
 `;
 
 const DivButtonsDown = styled.div`
@@ -152,6 +166,7 @@ const DivButtonsDown = styled.div`
 
 const Profile = () => {
   const { user, setUser } = useContext(UserContext);
+  const [ editable, setEditable ] = useState(false);
 
   const actualizar = async () => {
     const newUser = await getProfile();
@@ -267,9 +282,9 @@ const Profile = () => {
                   value={form.perfil}
                   onChange={ handleChange }
                 />
-                <SubirButton>Subir foto nueva</SubirButton>
+                <PurpleButton>Subir foto nueva</PurpleButton>
               </DivFile>
-              <ResetButton onClick={ handleReset }>Reset</ResetButton>
+              <WhiteButton onClick={ handleReset }>Reset</WhiteButton>
             </DivPhotoButtons>
             <InfoPhotoExtensions>Permitido JPG, JPEG o PNG. Tamaño máximo de 800Kb.</InfoPhotoExtensions>
           </DivPhotoInfo>
@@ -282,14 +297,19 @@ const Profile = () => {
               dataleft.map((v, i) => (
                 <DivInputs key={i}>
                   <InputInfo>{v.placeholder}</InputInfo>
-                  <InputText 
-                    value={v.value}
-                    name={v.name}
-                    type={v.tipo}
-                    disabled={v.disabled}
-                    onChange={ handleChange }
-                  />
-                  {v.error && <ErrorCss>{v.error}</ErrorCss>}
+                  {
+                    <>
+                      <InputText 
+                        value={v.value}
+                        name={v.name}
+                        type={v.tipo}
+                        disabled={v.disabled || !editable}
+                        onChange={ handleChange }
+                      />
+                      {v.error && <ErrorCss>{v.error}</ErrorCss>}
+                    </>
+                  }
+                  
                 </DivInputs>
               ))
             }
@@ -299,27 +319,36 @@ const Profile = () => {
               dataSelect.map((v, i) => (
                 <DivInputs key={i}>
                   <InputInfo>{v.select}</InputInfo>
-                  <InputSelect
-                    onChange={ handleChange }
-                    name={v.select}
-                    defaultValue={v.selected}
-                  >
-                    {
-                      v.data.map((va, i) => (
-                        <option key={i} value={va.value}>
-                          {va.nombre}
-                        </option>
-                      ))
-                    }
-                  </InputSelect>
+                    <InputSelect
+                      onChange={ handleChange }
+                      name={v.select}
+                      defaultValue={v.selected}
+                      disabled={!editable}
+                    >
+                      {
+                        v.data.map((va, i) => (
+                          <option key={i} value={va.value}>
+                            {va.nombre}
+                          </option>
+                        ))
+                      }
+                    </InputSelect>
                 </DivInputs>
               ))
             }
           </InputsColumn>
         </InputsContainer>
         <DivButtonsDown>
-          <SubirButton onClick={ handleSubmit }>Guardar cambios</SubirButton>
-          <ResetButton>Cancelar</ResetButton>
+          {
+            editable? (
+            <>
+              <PurpleButton onClick={ (e) => { handleSubmit(e); setEditable(false); }}>Guardar cambios</PurpleButton>
+              <WhiteButton onClick={ () => setEditable(false) }>Cancelar</WhiteButton>
+            </>
+            ) : (
+              <PurpleButton onClick={ () => setEditable(true) }>Editar</PurpleButton>
+            )
+          }
         </DivButtonsDown>
       </DownContainer>
     </ProfileContainer>

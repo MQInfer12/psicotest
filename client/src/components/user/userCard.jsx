@@ -18,12 +18,6 @@ const DivCard = styled.div`
   gap: 20px;
 `;
 
-const PhotoPerfil = styled.img`
-  width: 75px;
-  height: 75px;
-  border-radius: 10px;
-`;
-
 const DivCardData = styled.div`
   display: flex;
   gap: 20px;
