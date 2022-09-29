@@ -8,7 +8,7 @@ import Dashboard from "./pages/dashboard";
 import User from "./pages/user";
 import Group from "./pages/group";
 import Profile from "./pages/profile";
-
+import Test from './pages/test'
 function App() {
   const [user, setUser] = useState(null);
   const value = useMemo(() => ({user, setUser}), [user, setUser]);
@@ -21,6 +21,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} >
             <Route path="users" element={<User />} />
+            <Route path="tests" element={<Test />} />
             <Route path="groups" element={<Group />} />
             <Route path="profile" element={<Profile />} />
           </Route>

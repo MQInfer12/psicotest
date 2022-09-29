@@ -239,6 +239,23 @@ const Dashboard = () => {
                   </li>
                 }
 
+{
+                  user?.id_rol == "3" && 
+                  <li>
+                    <SideBarLink 
+                      onClick={() => {
+                        setSelected("tests");
+                        setTitlePage("tests");
+                      }}
+                      className={selected == "tests" && "selected"} 
+                      to="./tests"
+                    >
+                      <SideBarIcon className="fa-solid fa-user-group"></SideBarIcon>
+                      <SideBarOptionText>Tests</SideBarOptionText>
+                    </SideBarLink>
+                  </li>
+                }
+
                 {
                   user?.id_rol == "2" && 
                   <li>
