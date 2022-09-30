@@ -87,7 +87,7 @@ const Calendar = () => {
 
   const getMes = (mes) => {
     const year = dayjs().year();
-    const primerDiaDelMes = dayjs(new Date(year, mes, 0)).day();
+    const primerDiaDelMes = dayjs(new Date(year, mes, 1)).day();
     let diaActual = 0 - primerDiaDelMes;
     const dias = new Array(6).fill([]).map(() => {
       return new Array(7).fill(null).map(() => {
@@ -154,13 +154,13 @@ const Calendar = () => {
     <CalendarTable>
       <thead>
         <tr>
+          <DaysTh>Do</DaysTh>
           <DaysTh>Lu</DaysTh>
           <DaysTh>Ma</DaysTh>
           <DaysTh>Mi</DaysTh>
           <DaysTh>Ju</DaysTh>
           <DaysTh>Vi</DaysTh>
           <DaysTh>Sa</DaysTh>
-          <DaysTh>Do</DaysTh>
         </tr>
       </thead>
       <tbody>

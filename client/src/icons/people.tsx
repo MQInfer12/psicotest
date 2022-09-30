@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Svg = styled.svg`
-  color: #959595;
+  color: #D9D9D9;
 `
 ;
 const People = () => {

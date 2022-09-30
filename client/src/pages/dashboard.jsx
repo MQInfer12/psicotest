@@ -222,6 +222,7 @@ const Dashboard = () => {
                     <SideBarOptionText>Home</SideBarOptionText>
                   </SideBarLink>
                 </li>
+                
                 <li>
                   <SideBarLink 
                     onClick={() => {
@@ -235,6 +236,7 @@ const Dashboard = () => {
                     <SideBarOptionText>Calendario</SideBarOptionText>
                   </SideBarLink>
                 </li>
+
                 {
                   user?.id_rol == "3" && 
                   <li>
@@ -252,13 +254,13 @@ const Dashboard = () => {
                   </li>
                 }
 
-{
+                {
                   user?.id_rol == "3" && 
                   <li>
                     <SideBarLink 
                       onClick={() => {
                         setSelected("tests");
-                        setTitlePage("tests");
+                        setTitlePage("Tests");
                       }}
                       className={selected == "tests" && "selected"} 
                       to="./tests"
