@@ -10,6 +10,7 @@ import Group from "./pages/group";
 import Profile from "./pages/profile";
 import Home from "./pages/home";
 import Calendar from "./pages/calendar";
+import Test from './pages/test';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -24,6 +25,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} >
             <Route path="" element={<Home />} />
             <Route path="users" element={<User />} />
+            <Route path="tests" element={<Test />} />
             <Route path="groups" element={<Group />} />
             <Route path="profile" element={<Profile />} />
             <Route path="calendar" element={<Calendar />} />
