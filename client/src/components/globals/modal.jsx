@@ -10,6 +10,7 @@ const DivModalContainer = styled.div`
   justify-content: center;
   top: 0;
   left: 0;
+  z-index: 5;
 `;
 
 const ButtonClose = styled.button`
