@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { updateUser } from "../services/usuario";
 import { getBase64 } from "../functions/base64encrypt";
 
-export const UseForm = ( initialForm, validateForm, success, id ) => {
+export const UseForm = ( initialForm, validateForm, success, id) => {
 
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});

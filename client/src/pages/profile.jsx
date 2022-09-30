@@ -8,9 +8,11 @@ import { ErrorCss } from "../styles/formularios";
 import { getProfile } from "../services/auth";
 
 const ProfileContainer = styled.div`
-  height: calc(100vh - 197px);
+  height: 100%;
   background-color: #FFFFFF;
   border-radius: 10px;
+  position: relative;
+  overflow: hidden;
 `;
 
 const UpContainer = styled.div`
@@ -32,12 +34,6 @@ const DivPhoto = styled.div`
   display: flex;
   gap: 24px;
   align-items: center;
-`;
-
-const ImgPhoto = styled.img`
-  height: 100px;
-  width: 100px;
-  border-radius: 10px;
 `;
 
 const DivPhotoInfo = styled.div`
@@ -138,16 +134,6 @@ const InputText = styled.input`
   padding-left: 10px;
 `;
 
-const PText = styled.p`
-  border-radius: 5px;
-  color: #636161;
-  min-width: 500px;
-  height: 38px;
-  padding-left: 11px;
-  font-size: 13px;
-  padding-top: 9px;
-`;
-
 const InputSelect = styled.select`
   font-size: 13px;
   border-radius: 5px;
@@ -171,6 +157,7 @@ const Profile = () => {
   const actualizar = async () => {
     const newUser = await getProfile();
     setUser(newUser);
+    setEditable(false);
   }
 
   const {
@@ -358,7 +345,7 @@ const Profile = () => {
           {
             editable? (
             <>
-              <PurpleButton onClick={ (e) => { handleSubmit(e); setEditable(false); }}>Guardar cambios</PurpleButton>
+              <PurpleButton onClick={ handleSubmit }>Guardar cambios</PurpleButton>
               <WhiteButton onClick={ () => { setEditable(false); handleFill(user); }}>Cancelar</WhiteButton>
             </>
             ) : (

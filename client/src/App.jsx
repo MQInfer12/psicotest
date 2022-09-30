@@ -8,6 +8,8 @@ import Dashboard from "./pages/dashboard";
 import User from "./pages/user";
 import Group from "./pages/group";
 import Profile from "./pages/profile";
+import Home from "./pages/home";
+import Calendar from "./pages/calendar";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -20,9 +22,11 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} >
+            <Route path="" element={<Home />} />
             <Route path="users" element={<User />} />
             <Route path="groups" element={<Group />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="calendar" element={<Calendar />} />
           </Route>
           <Route path="*" element={<Login />} />
         </Routes>

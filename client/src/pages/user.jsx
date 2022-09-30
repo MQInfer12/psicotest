@@ -25,6 +25,7 @@ const DivUsersContainer = styled.div`
   gap: 20px;
   flex-wrap: wrap;
   justify-content: space-around;
+  position: relative;
 `;
 
 const ButtonCard = styled.button`

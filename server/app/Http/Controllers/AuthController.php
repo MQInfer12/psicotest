@@ -55,6 +55,7 @@ class AuthController extends Controller
         if($usuario->perfil != null) {
             $usuario->perfil = stream_get_contents($usuario -> perfil);
         }
+        
         return response()->json(auth()->user());
     }
 

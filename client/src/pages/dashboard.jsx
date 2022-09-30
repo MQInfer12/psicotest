@@ -149,6 +149,7 @@ const UpbarNot = styled.div`
 `;
 
 const OutletContainer = styled.div`
+  min-height: calc(100vh - 157px);
   padding: 0px 40px 40px 40px;
 `;
 
@@ -221,7 +222,19 @@ const Dashboard = () => {
                     <SideBarOptionText>Home</SideBarOptionText>
                   </SideBarLink>
                 </li>
-
+                <li>
+                  <SideBarLink 
+                    onClick={() => {
+                      setSelected("calendar");
+                      setTitlePage("Calendario");
+                    }}
+                    className={selected == "calendar" && "selected"} 
+                    to="./calendar" 
+                  >
+                    <SideBarIcon className="fa-solid fa-calendar-days"></SideBarIcon>
+                    <SideBarOptionText>Calendario</SideBarOptionText>
+                  </SideBarLink>
+                </li>
                 {
                   user?.id_rol == "3" && 
                   <li>
