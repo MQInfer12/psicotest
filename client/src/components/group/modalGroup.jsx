@@ -1,18 +1,10 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
 import { initialForm, validationsForm } from '../../validations/group';
 import { UseForm } from '../../hooks/useFormGroup';
-import { DivInput, PText, InputText, ErrorCss, ButtonModal } from "../../styles/formularios";
-
-const FormContainer = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-`;
+import { FormContainer, DivInput, PText, InputText, ErrorCss, PurpleButton } from "../../styles/formularios";
 
 const ModalGroup = ({ actualizar, id_docente, funcion, group }) => {
+  
   const {
     form,
     errors,
@@ -59,7 +51,7 @@ const ModalGroup = ({ actualizar, id_docente, funcion, group }) => {
           {v.error && <ErrorCss>{v.error}</ErrorCss>}
         </DivInput>
       ))}
-      <ButtonModal onClick={ handleSubmit }>{funcion}</ButtonModal>
+      <PurpleButton onClick={ handleSubmit }>{funcion}</PurpleButton>
     </FormContainer>
   )
 }

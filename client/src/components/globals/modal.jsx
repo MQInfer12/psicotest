@@ -15,21 +15,20 @@ const DivModalContainer = styled.div`
 
 const ButtonClose = styled.button`
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  right: 10px;
+  font-size: 16px;
+  color: #D9D9D9;
+  text-align: center;
+  background-color: #660BE1;
   height: 32px;
   width: 32px;
+  border-radius: 10px;
   border: none;
-  text-transform: uppercase;
   cursor: pointer;
-  border-radius: 16px;
-  background: linear-gradient(to right, #ff512f, #dd2476);
-  box-shadow: 0px 0px 50px 0px rgb(0 0 0 / 10%);
-  color: #f8f9fa;
-
-  &:hover {
-    background: linear-gradient(to right, #8e2de2, #4a00e0);
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const DivAtras = styled.div`
@@ -45,9 +44,9 @@ const DivChildContainer = styled.div`
   position: relative;
   z-index: 1;
   border-radius: 16px;
-  width: 400px;
+  min-width: 400px;
   background-color: white;
-  padding: 40px;
+  padding: 26px;
 `;
 
 const Modal = ({cerrar, children}) => {
@@ -56,7 +55,7 @@ const Modal = ({cerrar, children}) => {
       <DivAtras onClick={cerrar}></DivAtras>
       <DivChildContainer>
         { children }
-        <ButtonClose onClick={cerrar}>x</ButtonClose>
+        <ButtonClose onClick={cerrar}><i className="fa-solid fa-xmark"></i></ButtonClose>
       </DivChildContainer>
     </DivModalContainer>
   )

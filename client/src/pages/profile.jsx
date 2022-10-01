@@ -4,8 +4,8 @@ import styled from "styled-components";
 import ProfilePic from "../components/globals/profilePic";
 import { initialForm, validationsForm } from "../validations/profile";
 import { UseForm } from "../hooks/useFormProfile";
-import { ErrorCss } from "../styles/formularios";
 import { getProfile } from "../services/auth";
+import { FormContainer, DivInput, PText, InputText, InputSelect, ErrorCss, PurpleButton, WhiteButton } from "../styles/formularios";
 
 const ProfileContainer = styled.div`
   height: 100%;
@@ -61,30 +61,6 @@ const InputFile = styled.input`
   cursor: pointer;
 `;
 
-const PurpleButton = styled.button`
-  height: 42px;
-  border: none;
-  padding: 8px 26px 8px 26px;
-  background-color: #660BE1;
-  border-radius: 8px;
-  color: #D9D9D9;
-  text-align: center;
-  font-size: 15px;
-  cursor: pointer;
-`;
-
-const WhiteButton = styled.button`
-  height: 42px;
-  border: 1px solid #D9D9D9;
-  padding: 8px 20px 8px 20px;
-  background-color: #FFFFFF;
-  border-radius: 8px;
-  color: #ADA7A7;
-  text-align: center;
-  font-size: 15px;
-  cursor: pointer;
-`;
-
 const InfoPhotoExtensions = styled.p`
   font-size: 15px;
   color: #ADA7A7;
@@ -103,46 +79,11 @@ const InputsContainer = styled.div`
   justify-content: space-around;
 `;
 
-const InputsColumn = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
-const DivInputs = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
-
 const InputInfo = styled.p`
   text-transform: uppercase;
   font-size: 12px;
   color: #ADA7A7;
   font-weight: 500;
-`;
-
-const InputText = styled.input`
-  font-size: 13px;
-  border-radius: 5px;
-  border: 1px solid #D9D9D9;
-  outline: none;
-  color: #636161;
-  min-width: 500px;
-  height: 38px;
-  padding-left: 10px;
-`;
-
-const InputSelect = styled.select`
-  font-size: 13px;
-  border-radius: 5px;
-  border: 1px solid #D9D9D9;
-  outline: none;
-  color: #636161;
-  min-width: 500px;
-  height: 38px;
-  padding-left: 6px;
 `;
 
 const DivButtonsDown = styled.div`
@@ -281,11 +222,11 @@ const Profile = () => {
       </UpContainer>
       <DownContainer>
         <InputsContainer>
-          <InputsColumn>
+          <FormContainer>
             {
               dataleft.map((v, i) => (
-                <DivInputs key={i}>
-                  <InputInfo>{v.placeholder}</InputInfo>
+                <DivInput key={i}>
+                  <PText>{v.placeholder}</PText>
                     <InputText 
                       value={v.value}
                       name={v.name}
@@ -294,14 +235,14 @@ const Profile = () => {
                       onChange={ handleChange }
                     />
                     {v.error && <ErrorCss>{v.error}</ErrorCss>}
-                </DivInputs>
+                </DivInput>
               ))
             }
-          </InputsColumn>
-          <InputsColumn>
+          </FormContainer>
+          <FormContainer>
             {
               dataSelect.map((v, i) => (
-                <DivInputs key={i}>
+                <DivInput key={i}>
                   <InputInfo>{v.select}</InputInfo>
                   {
                     editable? (
@@ -336,10 +277,10 @@ const Profile = () => {
                       </InputSelect>
                       )
                   }
-                </DivInputs>
+                </DivInput>
               ))
             }
-          </InputsColumn>
+          </FormContainer>
         </InputsContainer>
         <DivButtonsDown>
           {

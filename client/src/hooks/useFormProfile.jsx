@@ -39,6 +39,7 @@ export const UseForm = ( initialForm, validateForm, success, id) => {
   };
 
   const handleFill = (user) => {
+    setErrors({reseted: true});
     setPicPrev(user.perfil);
 
     const obj = {

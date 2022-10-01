@@ -13,18 +13,6 @@ export const getUsers = async () => {
   }
 };
 
-export const searchUsers = async (email) => {
-  try {
-    const response = await fetch(`${http}search-user/${email}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json", "accept":"application/json" }
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const addUser = async (form) => {
   try {
     const response = await fetch(`${http}user`, {

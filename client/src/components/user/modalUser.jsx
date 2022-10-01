@@ -1,16 +1,7 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
 import { initialForm, validationsForm } from "../../validations/user";
 import { UseForm } from "../../hooks/useFormUser";
-import { DivInput, PText, InputText, ErrorCss, ButtonModal } from "../../styles/formularios";
-
-const FormContainer = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-`;
+import { FormContainer, DivInput, PText, InputText, InputSelect, ErrorCss, PurpleButton } from "../../styles/formularios";
 
 const ModalUser = ({ actualizar, funcion, user }) => {
 
@@ -171,7 +162,8 @@ const ModalUser = ({ actualizar, funcion, user }) => {
       ))}
       {dataSelect.map((v, i) => (
         <DivInput key={i}>
-          <select
+          <PText>{v.select}</PText>
+          <InputSelect
             name={v.select}
             onChange={handleChange}
             defaultValue={v.seleccionado}
@@ -181,11 +173,11 @@ const ModalUser = ({ actualizar, funcion, user }) => {
                 {va.nombre}
               </option>
             ))}
-          </select>
+          </InputSelect>
           {v.error && <ErrorCss>{v.error}</ErrorCss>}
         </DivInput>
       ))}
-      <ButtonModal onClick={handleSubmit}>{funcion}</ButtonModal>
+      <PurpleButton onClick={handleSubmit}>{funcion}</PurpleButton>
     </FormContainer>
   ) 
 }

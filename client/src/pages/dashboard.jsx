@@ -265,7 +265,7 @@ const Dashboard = () => {
                       className={selected == "tests" && "selected"} 
                       to="./tests"
                     >
-                      <SideBarIcon className="fa-solid fa-user-group"></SideBarIcon>
+                      <SideBarIcon className="fa-solid fa-clipboard"></SideBarIcon>
                       <SideBarOptionText>Tests</SideBarOptionText>
                     </SideBarLink>
                   </li>

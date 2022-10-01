@@ -22,7 +22,7 @@ export const getGrupos = async () => {
       headers: { 
         "Content-Type": "application/json",
         "accept": "application/json", 
-      },
+      },  
     });
     return response;
   } catch (error) {
