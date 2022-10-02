@@ -3,7 +3,6 @@ import styled from "styled-components";
 import dayjs from "dayjs";
 
 const CalendarContainer = styled.div`
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;

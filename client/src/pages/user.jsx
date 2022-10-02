@@ -14,6 +14,7 @@ const DivUsersPage = styled.div`
   flex-direction: column;
   gap: 20px;
   align-items: center;
+  width: 100%;
 `;
 
 const DivUsersContainer = styled.div`

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GrupoBeneficiarioController;
 use App\Http\Controllers\GrupoController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,7 @@ Route::group(['middleware' => 'api'], function(){
     
     //GRUPOBENEFICIARIO ROUTES
     Route::apiResource("grupobeneficiario", GrupoBeneficiarioController::class);
+
+    //TEST ROUTES
+    Route::apiResource("test", TestController::class);
 });

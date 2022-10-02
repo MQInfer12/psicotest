@@ -108,6 +108,7 @@ const UpbarContainer = styled.div`
   justify-content: space-between;
   padding: 47px 40px 31px 40px;
   height: 157px;
+  z-index: 1;
 `;
 
 const UpbarText = styled.div`

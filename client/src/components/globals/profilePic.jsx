@@ -9,7 +9,7 @@ const Pic = styled.img`
   object-position: center;
   border-radius: ${props => props.border ? "100%" : "10px"};
   border: ${props => props.border && "2px solid #FFFFFF"};
-  transform: ${props => `translateX(${-18 * props.translation}px)`};
+  transform: ${props => `translateX(${-15 * props.translation}px)`};
 `;
 
 const ProfilePic = ({ width, height, src, border, translation }) => {
