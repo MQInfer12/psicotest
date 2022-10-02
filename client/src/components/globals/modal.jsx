@@ -4,19 +4,16 @@ import styled from "styled-components";
 const DivModalContainer = styled.div`
   width: 100%;
   height: 100vh;
-  position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 5;
 `;
 
 const ButtonClose = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
   font-size: 16px;
   color: #D9D9D9;
   text-align: center;
@@ -41,21 +38,43 @@ const DivAtras = styled.div`
 `;
 
 const DivChildContainer = styled.div`
-  position: relative;
   z-index: 1;
   border-radius: 16px;
   min-width: 400px;
   background-color: white;
+`;
+
+const PTitulo = styled.p`
+  font-weight: 600;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.5);
+`;
+
+const DivCabecera = styled.div`
+  width: 100%;
+  padding: 10px 26px;
+  border-bottom: 1px solid #D9D9D9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const DivBody = styled.div`
   padding: 26px;
 `;
 
-const Modal = ({cerrar, children}) => {
+const Modal = ({cerrar, children, titulo}) => {
   return (
     <DivModalContainer>
       <DivAtras onClick={cerrar}></DivAtras>
       <DivChildContainer>
-        { children }
+      <DivCabecera>
+        <PTitulo>{titulo}</PTitulo>
         <ButtonClose onClick={cerrar}><i className="fa-solid fa-xmark"></i></ButtonClose>
+      </DivCabecera>
+        <DivBody>
+          { children }
+        </DivBody>
       </DivChildContainer>
     </DivModalContainer>
   )

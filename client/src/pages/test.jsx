@@ -4,8 +4,15 @@ import styled from "styled-components";
 import People from "../icons/people";
 import Timer from "../icons/timer";
 
+const TestContainer = styled.div`
+  height: 100%;
+  display: flex;
+  gap: 20px;
+`;
+
 const Container = styled.div`
   width: 322px;
+  height: fit-content;
   display: inline-block;
   background-color: #fff;
   padding: 28px 32px 32px 32px;
@@ -50,29 +57,55 @@ const ContainerImg = styled.div`
 
 const Test = () => {
   return (
-    <Container>
-      <H2>Test AMAS-C</H2>
-      <P>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit odio
-      </P>
+    <TestContainer>
+      <Container>
+        <H2>Test AMAS-C</H2>
+        <P>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit odio
+        </P>
 
-      <ContainerIcon>
-        <People />
-        <Span>Santiago</Span>
-      </ContainerIcon>
+        <ContainerIcon>
+          <People />
+          <Span>Santiago</Span>
+        </ContainerIcon>
 
-      <ContainerIcon>
-        <Timer />
-        <Span>2 horas</Span>
-      </ContainerIcon>
+        <ContainerIcon>
+          <Timer />
+          <Span>2 horas</Span>
+        </ContainerIcon>
 
-      <ContainerImg>
-        <ProfilePic width="36px" height="36px" border={true} />
-        <ProfilePic width="36px" height="36px" border={true} translation={1} />
-        <ProfilePic width="36px" height="36px" border={true} translation={2} />
-        <ProfilePic width="36px" height="36px" border={true} translation={3} />
-      </ContainerImg>
-    </Container>
+        <ContainerImg>
+          <ProfilePic width="36px" height="36px" border={true} />
+          <ProfilePic width="36px" height="36px" border={true} translation={1} />
+          <ProfilePic width="36px" height="36px" border={true} translation={2} />
+          <ProfilePic width="36px" height="36px" border={true} translation={3} />
+        </ContainerImg>
+        </Container>
+
+        <Container>
+        <H2>Test AMAS-C</H2>
+        <P>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit odio
+        </P>
+
+        <ContainerIcon>
+          <People />
+          <Span>Santiago</Span>
+        </ContainerIcon>
+
+        <ContainerIcon>
+          <Timer />
+          <Span>2 horas</Span>
+        </ContainerIcon>
+
+        <ContainerImg>
+          <ProfilePic width="36px" height="36px" border={true} />
+          <ProfilePic width="36px" height="36px" border={true} translation={1} />
+          <ProfilePic width="36px" height="36px" border={true} translation={2} />
+          <ProfilePic width="36px" height="36px" border={true} translation={3} />
+        </ContainerImg>
+      </Container>
+    </TestContainer>
   );
 };
 

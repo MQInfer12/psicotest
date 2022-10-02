@@ -75,7 +75,7 @@ const GroupCard = (props) => {
         </div>
       </DivInfo>
       {showForm && 
-        <Modal cerrar={() => setShowForm(false)}>
+        <Modal cerrar={() => setShowForm(false)} titulo="Editar grupo">
           <ModalGroup 
             actualizar={() => {
               props.llenarGrupos();

@@ -14,6 +14,11 @@ export const DivInput = styled.div`
   gap: 8px;
 `;
 
+export const DivText = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const PText = styled.p`
   text-transform: uppercase;
   font-size: 12px;
@@ -31,6 +36,7 @@ export const InputText = styled.input`
   width: 100%;
   height: 38px;
   padding-left: 10px;
+  padding-right: 10px;
 `;
 
 export const InputSelect = styled.select`

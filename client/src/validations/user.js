@@ -19,22 +19,23 @@ export const validationsForm = (form) => {
   } else if (!regexEmail.test(form.email.trim())) {
     errors.email = "'Email' es incorrecto";
   }
+  
   if (!form.contrasenia.trim()) {
     errors.contrasenia = "'Contraseña es requerido";
   }
 
   if (!form.nombre.trim()) {
     errors.nombre = "'Nombre' es requerido";
+  } else if (!regexName.test(form.nombre.trim())) {
+    errors.nombre = "'Nombre' solo acepta letras y espacios";
   }
-  if (!regexName.test(form.nombre.trim())) {
-    errors.nombre = "'Nombre' sólo acepta letras y espacios en blanco";
-  }
+
   if (!form.edad.trim()) {
     errors.edad = "'Edad' es requerido";
-  }
-  if (!regexNumber.test(form.edad.trim())) {
+  } else if (!regexNumber.test(form.edad.trim())) {
     errors.edad = "'Edad' sólo acepta numeros";
   }
+
   if(!form.genero.trim() || form.genero == 0){
     errors.genero = "'Genero' es requerido";
   }

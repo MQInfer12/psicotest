@@ -60,7 +60,7 @@ const Group = () => {
       <ButtonAdd onClick={() => setShowForm(true)}>Añadir grupo</ButtonAdd>
 
       {showForm && 
-        <Modal cerrar={() => setShowForm(false)} >
+        <Modal cerrar={() => setShowForm(false)} titulo="Añadir grupo" >
           <ModalGroup 
             actualizar={() => {
               llenarGrupos();

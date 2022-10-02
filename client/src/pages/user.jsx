@@ -86,7 +86,7 @@ const User = () => {
 
       <ButtonCard onClick={() => setShowForm(true)}>Añadir</ButtonCard>
       {showForm && 
-        <Modal cerrar={() => setShowForm(false)}>
+        <Modal cerrar={() => setShowForm(false)} titulo="Añadir usuario">
           <ModalUser
             actualizar={() =>{
               llenarUsuarios();

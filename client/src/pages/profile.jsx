@@ -5,7 +5,7 @@ import ProfilePic from "../components/globals/profilePic";
 import { initialForm, validationsForm } from "../validations/profile";
 import { UseForm } from "../hooks/useFormProfile";
 import { getProfile } from "../services/auth";
-import { FormContainer, DivInput, PText, InputText, InputSelect, ErrorCss, PurpleButton, WhiteButton } from "../styles/formularios";
+import { FormContainer, DivInput, DivText, PText, InputText, InputSelect, ErrorCss, PurpleButton, WhiteButton } from "../styles/formularios";
 
 const ProfileContainer = styled.div`
   height: 100%;
@@ -77,13 +77,6 @@ const InputsContainer = styled.div`
   display: flex;
   gap: 44px;
   justify-content: space-around;
-`;
-
-const InputInfo = styled.p`
-  text-transform: uppercase;
-  font-size: 12px;
-  color: #ADA7A7;
-  font-weight: 500;
 `;
 
 const DivButtonsDown = styled.div`
@@ -226,7 +219,10 @@ const Profile = () => {
             {
               dataleft.map((v, i) => (
                 <DivInput key={i}>
-                  <PText>{v.placeholder}</PText>
+                  <DivText>
+                    <PText>{v.placeholder}</PText>
+                    {v.error && <ErrorCss>{v.error}</ErrorCss>}
+                  </DivText>
                     <InputText 
                       value={v.value}
                       name={v.name}
@@ -234,7 +230,6 @@ const Profile = () => {
                       disabled={v.disabled || !editable}
                       onChange={ handleChange }
                     />
-                    {v.error && <ErrorCss>{v.error}</ErrorCss>}
                 </DivInput>
               ))
             }
@@ -243,7 +238,7 @@ const Profile = () => {
             {
               dataSelect.map((v, i) => (
                 <DivInput key={i}>
-                  <InputInfo>{v.select}</InputInfo>
+                  <PText>{v.select}</PText>
                   {
                     editable? (
                       <InputSelect

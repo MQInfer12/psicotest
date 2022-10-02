@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { initialForm, validationsForm } from '../../validations/group';
 import { UseForm } from '../../hooks/useFormGroup';
-import { FormContainer, DivInput, PText, InputText, ErrorCss, PurpleButton } from "../../styles/formularios";
+import { FormContainer, DivInput, DivText, PText, InputText, ErrorCss, PurpleButton } from "../../styles/formularios";
 
 const ModalGroup = ({ actualizar, id_docente, funcion, group }) => {
   
@@ -40,7 +40,10 @@ const ModalGroup = ({ actualizar, id_docente, funcion, group }) => {
     <FormContainer>
       {data.map((v, i) => (
         <DivInput key={i}> 
-          <PText>{v.placeholder}</PText>
+          <DivText>
+            <PText>{v.placeholder}</PText>
+            {v.error && <ErrorCss>{v.error}</ErrorCss>}
+          </DivText>
           <InputText 
             type="text"
             name={v.name} 
@@ -48,7 +51,6 @@ const ModalGroup = ({ actualizar, id_docente, funcion, group }) => {
             onChange={ handleChange }
           />
           {v.size && <small>{sizeTitle}/{v.size}</small>}
-          {v.error && <ErrorCss>{v.error}</ErrorCss>}
         </DivInput>
       ))}
       <PurpleButton onClick={ handleSubmit }>{funcion}</PurpleButton>

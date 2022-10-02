@@ -4,6 +4,7 @@ import { addUser, updateUser } from "../services/usuario";
 export const UseForm = ( initialForm, validateForm, success, funcion, id_user ) => {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
+  const [picPrev, setPicPrev] = useState("");
 
   const handleSend = async (form) => {
     if(funcion == "añadir") {
@@ -19,7 +20,7 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id_user ) 
       }
     } else if(funcion == "editar") {
       try {
-        const res = await updateUser(form, id_user);
+        const res = await updateUser(form, id_user, picPrev);
         const resJson = await res?.json();
         if(resJson.mensaje =="se actualizo correctamente"){
           console.log("Se actualizó el usuario!");
@@ -45,6 +46,8 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id_user ) 
   };
 
   const handleFill = (user) => {
+    setPicPrev(user.perfil);
+
     const obj = {
       nombre: user.nombre_user,
       email: user.email,
@@ -56,6 +59,10 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id_user ) 
     }
 
     setForm(obj);
+  }
+
+  const handleReset = () => {
+    setPicPrev(null);
   }
 
   //CUANDO CAMBIEN LOS ERRORES
@@ -74,9 +81,11 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id_user ) 
 
   return {
     form,
+    picPrev,
     errors,
     handleChange,
     handleSubmit,
-    handleFill
+    handleFill,
+    handleReset
   };
 };

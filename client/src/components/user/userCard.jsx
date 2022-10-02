@@ -84,7 +84,7 @@ const UserCard = (props) => {
         </ButtonCard>
       </DivCardButtons>
       {showForm && 
-        <Modal cerrar={() => setShowForm(false)} >
+        <Modal cerrar={() => setShowForm(false)} titulo="Editar usuario">
           <ModalUser
             actualizar={() => {
               props.onSubmit();

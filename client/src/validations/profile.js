@@ -21,7 +21,7 @@ export const validationsForm = (form) => {
     errors.nombre = "'Nombre' es requerido";
   }
   if (!regexName.test(form.nombre.trim())) {
-    errors.nombre = "'Nombre' sólo acepta letras y espacios en blanco";
+    errors.nombre = "'Nombre' solo acepta letras y espacios";
   }
 
   if(!form.genero.trim() || form.genero == 0){
