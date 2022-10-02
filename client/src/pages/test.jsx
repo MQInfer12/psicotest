@@ -3,10 +3,8 @@ import ProfilePic from "../components/globals/profilePic";
 import styled from "styled-components";
 import People from "../icons/people";
 import Timer from "../icons/timer";
-import Calendar from "./calendar";
 
 const TestContainer = styled.div`
-  width: calc(100% - 433px);
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -58,17 +56,6 @@ const ContainerImg = styled.div`
   gap: -16px;
 `;
 
-const CalendarContainer = styled.div`
-  background-color: #FFFFFF;
-  height: 100vh;
-  width: 433px;
-  position: fixed;
-  top:0;
-  right: 0;
-  z-index: 0;
-  padding-top: 157px;
-`;
-
 const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
@@ -90,11 +77,8 @@ const PurpleButton = styled.button`
   text-transform: capitalize;
 `;
 
-let data = new Array(4);
-
 const Test = () => {
   return (
-    <>
     <TestContainer>
       <ButtonContainer>
         <PurpleButton>Añadir</PurpleButton>
@@ -261,10 +245,6 @@ const Test = () => {
         </ContainerImg>
       </Container>
     </TestContainer>
-    <CalendarContainer>
-      <Calendar />
-    </CalendarContainer>
-    </>
   );
 };
 
