@@ -85,6 +85,16 @@ const SideBar = ({ rol, setTitlePage, setUser }) => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState("home");
 
+  //BOTON CERRAR SESION//
+  const handleLogout = async () => {
+    const resout = await logOut();
+    const resoutJson = await resout?.json();
+    if(resoutJson.message == "Successfully logged out") {
+      setUser(undefined);
+      navigate("/");
+    }
+  }
+
   const linksData = [
     {
       roles: [1, 2, 3], 
@@ -129,16 +139,6 @@ const SideBar = ({ rol, setTitlePage, setUser }) => {
       icon: "fa-solid fa-address-card",
     },
   ]
-
-  //BOTON CERRAR SESION//
-  const handleLogout = async () => {
-    const resout = await logOut();
-    const resoutJson = await resout?.json();
-    if(resoutJson.message == "Successfully logged out") {
-      setUser(undefined);
-      navigate("/");
-    }
-  }
   
   return (
     <SideBarContainer>

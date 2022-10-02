@@ -5,12 +5,11 @@ import Calendar from "../../pages/calendar";
 
 const RightContainer = styled.aside`
   background-color: ${props => props.calendar? "#FFFFFF" : "transparent"};
-  height: 100vh;
-  width: 433px;
   position: ${props => props.calendar? "fixed" : "absolute"};
   top:0;
   right: 0;
-  z-index: 0;
+  height: 100vh;
+  width: 433px;
   display: flex;
   flex-direction: column;
 `;

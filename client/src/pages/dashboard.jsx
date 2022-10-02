@@ -68,11 +68,12 @@ const Dashboard = () => {
             
             <CenterScreen 
               titlePage={titlePage}
+              calendar={true  /*Cambiar a true si se usa calendario en cierta pagina*/}
             />
 
             <RightBar 
               user={user}
-              calendar={false /*Cambiar a true si se usa calendario en cierta pagina*/}
+              calendar={true /*Cambiar a true si se usa calendario en cierta pagina*/}
             />
           </>
         )

@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 
 const CenterContainer = styled.div`
   margin-left: 263px;
+  margin-right: ${props => props.calendar && "433px"};
   background-color: #F4F4F4;
   width: 100%;
   display: flex;
@@ -41,9 +42,9 @@ const OutletContainer = styled.div`
   padding: 0px 40px 40px 40px;
 `;
 
-const CenterScreen = ({ titlePage }) => {
+const CenterScreen = ({ titlePage, calendar }) => {
   return (
-    <CenterContainer>
+    <CenterContainer calendar={calendar}>
       <UpbarContainer>
         <UpbarText>
           <ActualPage>Admin / Creación Tests</ActualPage>
