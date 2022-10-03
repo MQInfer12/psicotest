@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
 import styled from 'styled-components';
 import { getGruposDocente } from '../services/grupo';
@@ -33,12 +32,10 @@ const DivGroups = styled.div`
 `;
 
 const Group = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [ grupos, setGrupos ] = useState([]);
   const [ showForm, setShowForm ] = useState(false);
   const [ loading, setLoading ] = useState(true);
-
-  const navigate = useNavigate();
 
   const llenarGrupos = async () => {
     const res = await getGruposDocente(user.id);
@@ -48,9 +45,6 @@ const Group = () => {
   }
 
   useEffect(() => {
-    //PROTECCION DE RUTA SOLO PARA DOCENTES
-    if (user?.id_rol != 2) return navigate("/dashboard");
-
     //LLENAR GRUPOS
     llenarGrupos();
   }, []);

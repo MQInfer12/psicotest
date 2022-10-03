@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import { UserContext } from "../context/userContext";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { getUsers } from "../services/usuario";
 import Cargando from "../components/globals/cargando";
@@ -37,11 +35,9 @@ const ButtonCard = styled.button`
 `;
 
 const User = () => {
-  const { user, setUser } = useContext(UserContext);
   const [usuarios, setUsuarios] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const navigate = useNavigate();
 
   const llenarUsuarios = async () => {
     const res = await getUsers();
@@ -51,9 +47,6 @@ const User = () => {
   };
 
   useEffect(() => {
-    //PROTECCION DE RUTA SOLO PARA ADMINS
-    if (user?.id_rol != 3) return navigate("/dashboard");
-
     //LLENADO DE USUARIOS
     llenarUsuarios();
   }, []);

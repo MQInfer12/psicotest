@@ -2,7 +2,8 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { UserContext } from "./context/userContext";
-import OutletContext from "./context/outletContext";
+import OutletContext from "./wrappers/outletContext";
+import ProtectedRoute from "./wrappers/protectedRoute";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
@@ -12,6 +13,7 @@ import Profile from "./pages/profile";
 import Home from "./pages/home";
 import Calendar from "./pages/calendar";
 import Test from './pages/test';
+import ProtectedRole from "./wrappers/protectedRole";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -23,7 +25,14 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<Dashboard />} >
+          <Route 
+            path="/dashboard" 
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } 
+          >
             <Route 
               path="" 
               element={
@@ -35,25 +44,31 @@ function App() {
             <Route 
               path="users" 
               element={
-                <OutletContext titlePage="Usuarios" calendar={false}>
-                  <User />
-                </OutletContext>
+                <ProtectedRole roles={[3]}>
+                  <OutletContext titlePage="Usuarios" calendar={false}>
+                    <User />
+                  </OutletContext>
+                </ProtectedRole>
               } 
             />
             <Route 
               path="tests" 
               element={
-                <OutletContext titlePage="Tests" calendar={true}>
-                  <Test />
-                </OutletContext>
+                <ProtectedRole roles={[3]}>
+                  <OutletContext titlePage="Tests" calendar={true}>
+                    <Test />
+                  </OutletContext>
+                </ProtectedRole>
               } 
             />
             <Route 
               path="groups" 
               element={
-                <OutletContext titlePage="Grupos" calendar={false}>
-                  <Group />
-                </OutletContext>
+                <ProtectedRole roles={[2]}>
+                  <OutletContext titlePage="Grupos" calendar={false}>
+                    <Group />
+                  </OutletContext>
+                </ProtectedRole>
               } 
             />
             <Route 
