@@ -56,10 +56,8 @@ class HorarioController extends Controller
         $grupo->hora_inicio = $request->hora_inicio;
         $grupo->hora_final = $request->hora_final;
         $grupo->id_docente = $request->id_docente;
-        $grupo->disponible = $request->disponible;
-
+        $grupo->disponible = true;
         $grupo->save();
-
         return response()->json(["mensaje" => "se actualizo correctamente"], 201);
     }
 
