@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 const Svg = styled.svg`
   color: #D9D9D9;
-`
-;
+`;
+
 const People = () => {
 
   return (

@@ -14,18 +14,18 @@ const DivModalContainer = styled.div`
 `;
 
 const ButtonClose = styled.button`
-  font-size: 16px;
-  color: #D9D9D9;
-  text-align: center;
-  background-color: #660BE1;
-  height: 32px;
-  width: 32px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 32px;
+  width: 32px;
+  border: 1px solid #D9D9D9;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  color: #ADA7A7;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
 `;
 
 const DivAtras = styled.div`

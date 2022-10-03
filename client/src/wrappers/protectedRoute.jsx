@@ -24,7 +24,6 @@ const ProtectedRoute = ({ children }) => {
   }
 
   useEffect(() => {
-    console.log(user);
     if(user == undefined) {
       (async () => {
         const userPromise = await getProfile();
