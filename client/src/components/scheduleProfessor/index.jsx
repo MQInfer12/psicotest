@@ -3,9 +3,9 @@ import ModalSchedule from "./modal";
 import Modal from "../globals/modal";
 const Index = () => {
   const [showForm, setShowForm] = useState(false);
-const hideModal = () => {
-    setShowForm(false)
-}
+  const hideModal = () => {
+    setShowForm(false);
+  };
   return (
     <>
       <button onClick={() => setShowForm(true)}>Agregar horario</button>
@@ -14,6 +14,7 @@ const hideModal = () => {
           <ModalSchedule hideModal={hideModal} />
         </Modal>
       )}
+      <p>listar horarios</p>
     </>
   );
 };

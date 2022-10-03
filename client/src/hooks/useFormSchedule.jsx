@@ -1,26 +1,24 @@
 import { useState, useContext, useEffect } from "react";
-import { addHorario } from '../services/horario';
+import { addHorario } from "../services/horario";
 import { getProfile } from "../services/auth";
 import { UserContext } from "../context/userContext";
 
-export const UseForm = ( initialForm, validateForm, hideModal ) => {
-
-  const {user, setUser} = useContext(UserContext);
+export const UseForm = (initialForm, validateForm, hideModal) => {
+  const { user, setUser } = useContext(UserContext);
 
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
-
 
   const handleSend = async (form) => {
     try {
       const res = await addHorario(form);
       const resJson = await res?.json();
 
-      if(resJson.message =="se guardo correctamente"){
-        hideModal()
+      if (resJson.message == "se guardo correctamente") {
+        hideModal();
       } else {
-        alert(resJson.error)
-      };
+        alert(resJson.error);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -43,7 +41,7 @@ export const UseForm = ( initialForm, validateForm, hideModal ) => {
   //CUANDO CAMBIEN LOS ERRORES
   const [effects, setEffects] = useState(false);
   useEffect(() => {
-    if(effects) {
+    if (effects) {
       if (Object.keys(errors).length === 0) {
         handleSend(form);
       }
