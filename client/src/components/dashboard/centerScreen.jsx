@@ -38,8 +38,27 @@ const TitlePage = styled.span`
 `;
 
 const OutletContainer = styled.div`
-  min-height: calc(100vh - 157px);
+  height: calc(100vh - 157px);
+  overflow: scroll;
+  overflow-x: hidden;
   padding: 0px 40px 40px 40px;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #ADA7A7;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #660BE1;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #660BE1;
+  }
+
 `;
 
 const CenterScreen = ({ titlePage, setTitlePage, setCalendar, calendar }) => {

@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { UserContext } from "./context/userContext";
 import OutletContext from "./wrappers/outletContext";
 import ProtectedRoute from "./wrappers/protectedRoute";
+import ProtectedRole from "./wrappers/protectedRole";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
@@ -13,7 +14,6 @@ import Profile from "./pages/profile";
 import Home from "./pages/home";
 import Calendar from "./pages/calendar";
 import Test from './pages/test';
-import ProtectedRole from "./wrappers/protectedRole";
 
 function App() {
   const [user, setUser] = useState(null);
