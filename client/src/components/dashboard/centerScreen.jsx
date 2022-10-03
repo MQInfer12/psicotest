@@ -42,7 +42,7 @@ const OutletContainer = styled.div`
   padding: 0px 40px 40px 40px;
 `;
 
-const CenterScreen = ({ titlePage, calendar }) => {
+const CenterScreen = ({ titlePage, setTitlePage, setCalendar, calendar }) => {
   return (
     <CenterContainer calendar={calendar}>
       <UpbarContainer>
@@ -52,7 +52,7 @@ const CenterScreen = ({ titlePage, calendar }) => {
         </UpbarText>
       </UpbarContainer>
       <OutletContainer>
-        <Outlet />
+        <Outlet context={{setTitlePage, setCalendar}} />
       </OutletContainer>
     </CenterContainer>
   )

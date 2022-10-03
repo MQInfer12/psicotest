@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { UserContext } from "./context/userContext";
+import OutletContext from "./context/outletContext";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
@@ -23,12 +24,54 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} >
-            <Route path="" element={<Home />} />
-            <Route path="users" element={<User />} />
-            <Route path="tests" element={<Test />} />
-            <Route path="groups" element={<Group />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="calendar" element={<Calendar />} />
+            <Route 
+              path="" 
+              element={
+                <OutletContext titlePage="Home" calendar={false}>
+                  <Home />
+                </OutletContext>
+              } 
+            />
+            <Route 
+              path="users" 
+              element={
+                <OutletContext titlePage="Usuarios" calendar={false}>
+                  <User />
+                </OutletContext>
+              } 
+            />
+            <Route 
+              path="tests" 
+              element={
+                <OutletContext titlePage="Tests" calendar={true}>
+                  <Test />
+                </OutletContext>
+              } 
+            />
+            <Route 
+              path="groups" 
+              element={
+                <OutletContext titlePage="Grupos" calendar={false}>
+                  <Group />
+                </OutletContext>
+              } 
+            />
+            <Route 
+              path="profile" 
+              element={
+                <OutletContext titlePage="Perfil" calendar={false}>
+                  <Profile />
+                </OutletContext>
+              } 
+            />
+            <Route 
+              path="calendar" 
+              element={
+                <OutletContext titlePage="Calendario" calendar={false}>
+                <Calendar />
+                </OutletContext>
+              } 
+            />
           </Route>
           <Route path="*" element={<Login />} />
         </Routes>

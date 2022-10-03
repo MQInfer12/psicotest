@@ -22,7 +22,9 @@ const DashboardContainer = styled.div`
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const {user, setUser} = useContext(UserContext);
+
   const [titlePage, setTitlePage] = useState("Home");
+  const [calendar, setCalendar] = useState(false);
 
   const navigate = useNavigate();
 
@@ -62,18 +64,19 @@ const Dashboard = () => {
           <>
             <SideBar 
               rol={user?.id_rol}
-              setTitlePage={setTitlePage}
               setUser={setUser}
             />
             
             <CenterScreen 
               titlePage={titlePage}
-              calendar={true  /*Cambiar a true si se usa calendario en cierta pagina*/}
+              setTitlePage={setTitlePage}
+              calendar={calendar}
+              setCalendar={setCalendar}
             />
 
             <RightBar 
               user={user}
-              calendar={true /*Cambiar a true si se usa calendario en cierta pagina*/}
+              calendar={calendar}
             />
           </>
         )

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Logo from "../../images/logopsico.png";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { logOut } from "../../services/auth";
 
 const SideBarContainer = styled.nav`
@@ -29,15 +29,15 @@ const SideBarList = styled.ul`
   flex-direction: column;
   gap: 5px;
 
-  .selected {
+  .active {
     background-color: #660BE1;
   }
-  .selected:hover {
+  .active:hover {
     color: #D9D9D9;
   }
 `;
 
-const SideBarLink = styled(Link)`
+const SideBarLink = styled(NavLink)`
   color: #D9D9D9;
   text-decoration: none;
   display: flex;
@@ -81,9 +81,8 @@ const SideBarOptionText = styled.span`
   line-height: 27px;
 `;
 
-const SideBar = ({ rol, setTitlePage, setUser }) => {
+const SideBar = ({ rol, setUser }) => {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState("home");
 
   //BOTON CERRAR SESION//
   const handleLogout = async () => {
@@ -148,17 +147,12 @@ const SideBar = ({ rol, setTitlePage, setUser }) => {
           linksData.map((v, i) => (
             v.roles.includes(rol) &&
             <li key={i}>
-              <SideBarLink 
-              onClick={() => {
-                setSelected(v.select);
-                setTitlePage(v.title);
-              }}
-              className={selected == v.select && "selected"} 
-              to={v.goTo}
-            >
-              <SideBarIcon className={v.icon}></SideBarIcon>
-              <SideBarOptionText>{v.title}</SideBarOptionText>
-            </SideBarLink>
+              <SideBarLink
+                to={v.goTo}
+              >
+                <SideBarIcon className={v.icon}></SideBarIcon>
+                <SideBarOptionText>{v.title}</SideBarOptionText>
+              </SideBarLink>
             </li>
           ))
         }

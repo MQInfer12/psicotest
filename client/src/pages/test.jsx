@@ -88,17 +88,17 @@ const Test = () => {
         <P>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit odio
         </P>
-
+    
         <ContainerIcon>
           <People />
           <Span>Santiago</Span>
         </ContainerIcon>
-
+    
         <ContainerIcon>
           <Timer />
           <Span>2 horas</Span>
         </ContainerIcon>
-
+    
         <ContainerImg>
           <ProfilePic width="36px" height="36px" border={true} />
           <ProfilePic width="36px" height="36px" border={true} translation={1} />
@@ -111,17 +111,17 @@ const Test = () => {
         <P>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit odio
         </P>
-
+    
         <ContainerIcon>
           <People />
           <Span>Santiago</Span>
         </ContainerIcon>
-
+    
         <ContainerIcon>
           <Timer />
           <Span>2 horas</Span>
         </ContainerIcon>
-
+    
         <ContainerImg>
           <ProfilePic width="36px" height="36px" border={true} />
           <ProfilePic width="36px" height="36px" border={true} translation={1} />
@@ -134,17 +134,17 @@ const Test = () => {
         <P>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit odio
         </P>
-
+    
         <ContainerIcon>
           <People />
           <Span>Santiago</Span>
         </ContainerIcon>
-
+    
         <ContainerIcon>
           <Timer />
           <Span>2 horas</Span>
         </ContainerIcon>
-
+    
         <ContainerImg>
           <ProfilePic width="36px" height="36px" border={true} />
           <ProfilePic width="36px" height="36px" border={true} translation={1} />
@@ -157,17 +157,17 @@ const Test = () => {
         <P>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit odio
         </P>
-
+    
         <ContainerIcon>
           <People />
           <Span>Santiago</Span>
         </ContainerIcon>
-
+    
         <ContainerIcon>
           <Timer />
           <Span>2 horas</Span>
         </ContainerIcon>
-
+    
         <ContainerImg>
           <ProfilePic width="36px" height="36px" border={true} />
           <ProfilePic width="36px" height="36px" border={true} translation={1} />
@@ -180,17 +180,17 @@ const Test = () => {
         <P>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit odio
         </P>
-
+    
         <ContainerIcon>
           <People />
           <Span>Santiago</Span>
         </ContainerIcon>
-
+    
         <ContainerIcon>
           <Timer />
           <Span>2 horas</Span>
         </ContainerIcon>
-
+    
         <ContainerImg>
           <ProfilePic width="36px" height="36px" border={true} />
           <ProfilePic width="36px" height="36px" border={true} translation={1} />
@@ -203,17 +203,17 @@ const Test = () => {
         <P>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit odio
         </P>
-
+    
         <ContainerIcon>
           <People />
           <Span>Santiago</Span>
         </ContainerIcon>
-
+    
         <ContainerIcon>
           <Timer />
           <Span>2 horas</Span>
         </ContainerIcon>
-
+    
         <ContainerImg>
           <ProfilePic width="36px" height="36px" border={true} />
           <ProfilePic width="36px" height="36px" border={true} translation={1} />
@@ -226,17 +226,17 @@ const Test = () => {
         <P>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit odio
         </P>
-
+    
         <ContainerIcon>
           <People />
           <Span>Santiago</Span>
         </ContainerIcon>
-
+    
         <ContainerIcon>
           <Timer />
           <Span>2 horas</Span>
         </ContainerIcon>
-
+    
         <ContainerImg>
           <ProfilePic width="36px" height="36px" border={true} />
           <ProfilePic width="36px" height="36px" border={true} translation={1} />
