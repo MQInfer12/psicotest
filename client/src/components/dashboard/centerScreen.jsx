@@ -41,7 +41,7 @@ const OutletContainer = styled.div`
   height: calc(100vh - 157px);
   overflow: scroll;
   overflow-x: hidden;
-  padding: 0px 40px 40px 40px;
+  padding: 0px 40px 40px;
 
   &::-webkit-scrollbar {
     width: 8px;

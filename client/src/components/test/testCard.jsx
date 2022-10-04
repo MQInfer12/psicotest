@@ -6,15 +6,19 @@ import ProfilePic from "../globals/profilePic";
 import Modal from "../globals/modal";
 import ModalTest from "./modalTest";
 import { deleteTest } from "../../services/test";
+import { useNavigate } from "react-router-dom";
+import { WhiteIconButton, PurpleIconButton, DangerIconButton } from "../../styles/formularios";
 
 const Container = styled.div`
   width: 322px;
   height: fit-content;
-  display: inline-block;
   background-color: #fff;
   padding: 28px 32px 32px 32px;
   border-radius: 10px;
   border-top: 14px solid #670ce3;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 `;
 
 const H2 = styled.h2`
@@ -24,7 +28,6 @@ const H2 = styled.h2`
 `;
 
 const P = styled.p`
-  margin-top: 12px;
   font-weight: 400;
   font-size: 14px;
   line-height: 24px;
@@ -42,17 +45,22 @@ const ContainerIcon = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 21px;
 `;
 
 const ContainerImg = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 26px;
   gap: -16px;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+`;
+
 const TestCard = (props) => {
+  const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
 
   const borrarTest = async () => {
@@ -84,9 +92,13 @@ const TestCard = (props) => {
         <ProfilePic width="36px" height="36px" border={true} translation={2} />
         <ProfilePic width="36px" height="36px" border={true} translation={3} />
       </ContainerImg>
-
-      <button onClick={() => setShowForm(true)}>Editar</button>
-      <button onClick={borrarTest}>Eliminar</button>
+      
+      <ButtonContainer>
+        <WhiteIconButton onClick={() => { navigate(`../testview/${props.id}`) }}><i className="fa-solid fa-newspaper"></i></WhiteIconButton>
+        <PurpleIconButton onClick={() => { navigate(`./${props.id}`) }}><i className="fa-solid fa-pen-to-square"></i></PurpleIconButton>
+        <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
+        <DangerIconButton onClick={borrarTest}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
+      </ButtonContainer>
 
       {
         showForm && 

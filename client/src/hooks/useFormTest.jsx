@@ -23,7 +23,7 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id ) => {
       try {
         const res = await updateTest(form, id);
         const resJson = await res?.json();
-        if(resJson.mensaje =="se actualizo correctamente"){
+        if(resJson.mensaje =="se guardo correctamente"){
           console.log("Se actualizó el test!");
           success();
         }

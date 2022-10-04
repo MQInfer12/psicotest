@@ -81,3 +81,48 @@ export const WhiteButton = styled.button`
   font-size: 15px;
   cursor: pointer;
 `;
+
+export const PurpleIconButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 40px;
+  border: none;
+  background-color: #660BE1;
+  border-radius: 10px;
+  color: #D9D9D9;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+`;
+
+export const WhiteIconButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 40px;
+  border: 1px solid #D9D9D9;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  color: #ADA7A7;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+`;
+
+export const DangerIconButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  height: 32px;
+  width: 40px;
+  border: 1px solid #D9D9D9;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  color: #DC4067;
+  text-align: center;
+  cursor: pointer;
+`;

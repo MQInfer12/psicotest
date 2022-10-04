@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { WhiteIconButton } from "../../styles/formularios";
 
 const DivModalContainer = styled.div`
   width: 100%;
@@ -11,21 +12,6 @@ const DivModalContainer = styled.div`
   top: 0;
   left: 0;
   z-index: 5;
-`;
-
-const ButtonClose = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 32px;
-  width: 32px;
-  border: 1px solid #D9D9D9;
-  background-color: #FFFFFF;
-  border-radius: 10px;
-  color: #ADA7A7;
-  text-align: center;
-  font-size: 16px;
-  cursor: pointer;
 `;
 
 const DivAtras = styled.div`
@@ -70,7 +56,7 @@ const Modal = ({cerrar, children, titulo}) => {
       <DivChildContainer>
       <DivCabecera>
         <PTitulo>{titulo}</PTitulo>
-        <ButtonClose onClick={cerrar}><i className="fa-solid fa-xmark"></i></ButtonClose>
+        <WhiteIconButton onClick={cerrar}><i className="fa-solid fa-xmark"></i></WhiteIconButton>
       </DivCabecera>
         <DivBody>
           { children }

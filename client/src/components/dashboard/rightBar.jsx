@@ -6,6 +6,7 @@ import Calendar from "../../pages/calendar";
 const RightContainer = styled.aside`
   background-color: ${props => props.calendar? "#FFFFFF" : "transparent"};
   position: ${props => props.calendar? "fixed" : "absolute"};
+  z-index: ${props => props.calendar? "0" : "-1"};
   top:0;
   right: 0;
   height: 100vh;
