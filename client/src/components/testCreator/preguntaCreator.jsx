@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { DangerIconButton, WhiteIconButton } from "../../styles/formularios";
 import Cargando from "../globals/cargando";
-import { getPreguntasBySeccion } from "../../services/pregunta";
+import { getPreguntasBySeccion, massDestroy } from "../../services/pregunta";
 import Modal from "../globals/modal";
 import ModalPregunta from "./modalPregunta";
 import PreguntaCard from "./preguntaCard";
@@ -142,12 +142,21 @@ const PreguntaCreator = ({ idSeccion }) => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [preguntasPage, setPreguntasPage] = useState(1);
+  const [selecteds, setSelecteds] = useState([]);
 
   const llenarPreguntas = async () => {
     const res = await getPreguntasBySeccion(idSeccion);
     const resJson = await res?.json();
     setPreguntas(resJson);
     setLoading(false);
+  }
+
+  const borrarPreguntas = async () => {
+    const res = await massDestroy(selecteds);
+    const resJson = await res?.json();
+    if(resJson.mensaje = "se borro correctamente") {
+      llenarPreguntas();
+    }
   }
 
   useState(() => {
@@ -159,8 +168,8 @@ const PreguntaCreator = ({ idSeccion }) => {
       <ControlsContainer>
         <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-plus"></i></WhiteIconButton>
         <DeleteContainer>
-          <PSelected>1 selected</PSelected>
-          <DangerIconButton><i className="fa-solid fa-trash-can"></i></DangerIconButton>
+          <PSelected>{selecteds.length} selected</PSelected>
+          <DangerIconButton onClick={borrarPreguntas}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
         </DeleteContainer>
         {
           showForm &&
@@ -196,7 +205,14 @@ const PreguntaCreator = ({ idSeccion }) => {
                 <>
                   {
                     preguntas.filter((v, i) => i >= (preguntasPage - 1) * 8 && i < preguntasPage * 8).map((v, i) => (
-                      <PreguntaCard key={i} {...v} index={((preguntasPage - 1) * 8) + (i + 1)} llenarPreguntas={llenarPreguntas}/>
+                      <PreguntaCard 
+                        key={i} 
+                        {...v} 
+                        index={((preguntasPage - 1) * 8) + (i + 1)} 
+                        llenarPreguntas={llenarPreguntas}
+                        selecteds={selecteds}
+                        setSelecteds={setSelecteds}
+                      />
                     ))
                   }
                 </>

@@ -4,6 +4,19 @@ import { WhiteIconButton } from "../../styles/formularios";
 import Modal from "../globals/modal";
 import ModalPregunta from "./modalPregunta";
 
+const PreguntaRow = styled.tr`
+  filter: ${props => props.selected && "opacity(0.5)"};
+  transition: all 0.2s;
+
+  &:hover > td {
+    padding-right: 120px;
+
+    & > div {
+      transform: translateX(0);
+    }
+  }
+`;
+
 const ThNumber = styled.th`
   font-size: 14px;
   font-weight: 500;
@@ -28,14 +41,6 @@ const TdPregunta = styled.td`
     overflow: hidden;
     text-overflow: ellipsis;
   }
-
-  &:hover {
-    padding-right: 120px;
-
-    & > div {
-      transform: translateX(0);
-    }
-  }
 `;
 
 const DivButtonsTd = styled.div`
@@ -53,6 +58,11 @@ const DivButtonsTd = styled.div`
 
 const PreguntaCard = (props) => {
   const [showForm, setShowForm] = useState(false);
+  const [selected, setSelected] = useState(false);
+
+  useEffect(() => {
+    props.selecteds.includes(props.id)? setSelected(true) : setSelected(false);
+  })
 
   return (
     <>
@@ -70,16 +80,37 @@ const PreguntaCard = (props) => {
         />
       </Modal>
     }
-    <tr>
+    <PreguntaRow 
+      selected={selected}
+    >
       <ThNumber>{props.index}</ThNumber>
       <TdPregunta>
         <p>{props.descripcion}</p>
         <DivButtonsTd>
           <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
-          <WhiteIconButton><i className="fa-solid fa-info"></i></WhiteIconButton>
+          { /* BOTON PARA IR MARCANDO LAS PREGUNTAS */}
+          <WhiteIconButton 
+            onClick={() => {
+              if(!props.selecteds.includes(props.id)) {
+                props.setSelecteds(old => [...old, props.id]);
+                setSelected(true);
+              } else {
+                props.setSelecteds(old => old.filter(value => value != props.id));
+                setSelected(false);
+              }
+            }}
+          >
+            {
+              selected? (
+                <i className="fa-solid fa-square-check"></i>
+              ) : (
+                <i className="fa-regular fa-square-check"></i>
+              )
+            }
+          </WhiteIconButton>
         </DivButtonsTd>
       </TdPregunta>
-    </tr>
+    </PreguntaRow>
     </>
   )
 }

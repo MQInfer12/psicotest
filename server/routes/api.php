@@ -42,6 +42,7 @@ Route::group(['middleware' => 'api'], function(){
     //PREGUNTAS ROUTES
     Route::apiResource("pregunta", PreguntaController::class);
     Route::get("pregunta/seccion/{idSeccion}", [PreguntaController::class, 'preguntasBySeccion']);
+    Route::post("pregunta/destroy", [PreguntaController::class, 'massDestroy']);
     
     //SECCIONES ROUTES
     Route::apiResource("reactivo", ReactivoController::class);

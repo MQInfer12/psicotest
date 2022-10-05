@@ -73,3 +73,21 @@ export const deletePregunta = async (id) => {
     console.log(error);
   }
 }
+
+export const massDestroy = async (ids) => {
+  try {
+    const objeto = Object.assign({}, ids);
+    const response = await fetch(`${http}pregunta/destroy`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id_seccion: "",
+        descripcion: "",
+        objeto: objeto
+      }),
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

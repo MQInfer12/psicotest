@@ -55,8 +55,7 @@ const ContainerImg = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: center;
-  gap: 2px;
+  justify-content: space-between;
 `;
 
 const TestCard = (props) => {

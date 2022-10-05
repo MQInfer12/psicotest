@@ -52,4 +52,15 @@ class PreguntaController extends Controller
     {
         return Pregunta::destroy($id);
     }
+
+    public function massDestroy(Request $request)
+    {
+        $objeto = $request->objeto;
+
+        foreach($objeto as $valor) {
+            Pregunta::destroy($valor);
+        }
+
+        return response()->json(["mensaje" => "se borro correctamente"], 201);
+    }
 }
