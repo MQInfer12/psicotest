@@ -64,7 +64,7 @@ function App() {
               } 
             />
             <Route 
-              path="tests/:testId" 
+              path="tests/:idTest" 
               element={
                 <ProtectedRole roles={[3]}>
                   <OutletContext titlePage="Creación de Test" calendar={false}>
@@ -74,7 +74,7 @@ function App() {
               } 
             />
             <Route 
-              path="testview/:testId" 
+              path="testview/:idTest" 
               element={
                 <ProtectedRole roles={[3]}>
                   <OutletContext titlePage="" calendar={false}>

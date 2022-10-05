@@ -82,6 +82,18 @@ export const WhiteButton = styled.button`
   cursor: pointer;
 `;
 
+export const DangerButton = styled.button`
+  height: 42px;
+  border: 1px solid #D9D9D9;
+  padding: 8px 20px 8px 20px;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  color: #DC4067;
+  text-align: center;
+  font-size: 15px;
+  cursor: pointer;
+`;
+
 export const PurpleIconButton = styled.button`
   display: flex;
   align-items: center;
