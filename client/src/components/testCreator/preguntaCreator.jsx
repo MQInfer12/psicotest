@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { DangerIconButton } from "../../styles/formularios";
+import { DangerIconButton, WhiteIconButton } from "../../styles/formularios";
+import Cargando from "../globals/cargando";
+import { getPreguntasBySeccion } from "../../services/pregunta";
+import Modal from "../globals/modal";
+import ModalPregunta from "./modalPregunta";
+import PreguntaCard from "./preguntaCard";
 
 const PreguntaCreatorContainer = styled.div`
   width: 622px;
@@ -14,9 +19,15 @@ const PreguntaCreatorContainer = styled.div`
 const ControlsContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
   height: 68px;
   padding: 0px 21px;
+`;
+
+const DeleteContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
 `;
 
 const PSelected = styled.p`
@@ -28,6 +39,7 @@ const PSelected = styled.p`
 //TABLA
 const TableContainer = styled.div`
   height: 552px;
+  overflow: hidden;
 `;
 
 const TablePreguntas = styled.table`
@@ -39,8 +51,10 @@ const TablePreguntas = styled.table`
   }
 
   & > tbody > tr {
+    max-width: 622px;
     line-height: 64px;
     background-color: #FFFFFF;
+    position: relative;
   }
 
   & > tbody > tr:nth-child(2n) {
@@ -65,20 +79,16 @@ const ThPregunta = styled.th`
   color: #464F60;
 `;
 
-const ThNumber = styled.th`
-  font-size: 14px;
-  font-weight: 500;
-  color: #171C26;
-  padding-left: 11px;
-  width: 47px;
-  text-align: start;
+const TrCargando = styled.tr`
+  display: flex;
+  width: 622px;
+  height: 512px;
 `;
 
-const TdPregunta = styled.td`
-  color: #464F60;
-  font-weight: 400;
-  font-size: 14px;
-  text-align: start;
+const TdCargando = styled.td`
+  display: flex;
+  width: 100%;
+  height: 100%;
 `;
 
 //PAGINACION ABAJO
@@ -92,6 +102,7 @@ const PaginationContainer = styled.div`
 
 const PaginationCounter = styled.p`
   font-size: 12px;
+  letter-spacing: 0.03em;
   color: #687182;
 `;
 
@@ -107,8 +118,9 @@ const RowsPage = styled.p`
 `;
 
 const ButtonPagContainer = styled.div`
+  width: 100px;
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
 `;
 
 const ButtonChange = styled.button`
@@ -125,12 +137,44 @@ const ButtonChange = styled.button`
   cursor: pointer;
 `;
 
-const PreguntaCreator = () => {
+const PreguntaCreator = ({ idSeccion }) => {
+  const [preguntas, setPreguntas] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [preguntasPage, setPreguntasPage] = useState(1);
+
+  const llenarPreguntas = async () => {
+    const res = await getPreguntasBySeccion(idSeccion);
+    const resJson = await res?.json();
+    setPreguntas(resJson);
+    setLoading(false);
+  }
+
+  useState(() => {
+    llenarPreguntas();
+  }, []);
+
   return (
     <PreguntaCreatorContainer>
       <ControlsContainer>
-        <PSelected>1 selected</PSelected>
-        <DangerIconButton><i className="fa-solid fa-trash-can"></i></DangerIconButton>
+        <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-plus"></i></WhiteIconButton>
+        <DeleteContainer>
+          <PSelected>1 selected</PSelected>
+          <DangerIconButton><i className="fa-solid fa-trash-can"></i></DangerIconButton>
+        </DeleteContainer>
+        {
+          showForm &&
+          <Modal titulo="Añadir pregunta" cerrar={() => setShowForm(false)}>
+            <ModalPregunta
+              actualizar={() => {
+                llenarPreguntas();
+                setShowForm(false);
+              }}
+              funcion="añadir"
+              idSeccion={idSeccion}
+            />
+          </Modal>
+        }
       </ControlsContainer>
       <TableContainer>
         <TablePreguntas>
@@ -141,49 +185,40 @@ const PreguntaCreator = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <ThNumber>1</ThNumber>
-              <TdPregunta>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</TdPregunta>
-            </tr>
-            <tr>
-              <ThNumber>2</ThNumber>
-              <TdPregunta>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</TdPregunta>
-            </tr>
-            <tr>
-              <ThNumber>3</ThNumber>
-              <TdPregunta>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</TdPregunta>
-            </tr>
-            <tr>
-              <ThNumber>4</ThNumber>
-              <TdPregunta>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</TdPregunta>
-            </tr>
-            <tr>
-              <ThNumber>5</ThNumber>
-              <TdPregunta>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</TdPregunta>
-            </tr>
-            <tr>
-              <ThNumber>6</ThNumber>
-              <TdPregunta>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</TdPregunta>
-            </tr>
-            <tr>
-              <ThNumber>7</ThNumber>
-              <TdPregunta>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</TdPregunta>
-            </tr>
-            <tr>
-              <ThNumber>8</ThNumber>
-              <TdPregunta>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</TdPregunta>
-            </tr>
+            {
+              loading? (
+                <TrCargando>
+                  <TdCargando>
+                    <Cargando />
+                  </TdCargando>
+                </TrCargando>
+              ) : (
+                <>
+                  {
+                    preguntas.filter((v, i) => i >= (preguntasPage - 1) * 8 && i < preguntasPage * 8).map((v, i) => (
+                      <PreguntaCard key={i} {...v} index={((preguntasPage - 1) * 8) + (i + 1)} llenarPreguntas={llenarPreguntas}/>
+                    ))
+                  }
+                </>
+              )
+            }
           </tbody>
         </TablePreguntas>
       </TableContainer>
       <PaginationContainer>
-        <PaginationCounter>1-10 de 97</PaginationCounter>
+        <PaginationCounter>
+          {((preguntasPage - 1) * 8) + 1}-{preguntasPage * 8 > preguntas.length? preguntas.length : preguntasPage * 8} de {preguntas.length}
+        </PaginationCounter>
         <ChangePageContainer>
-          <RowsPage>Filas por pagina: 10</RowsPage>
+          <RowsPage>Filas por pagina: 8</RowsPage>
           <ButtonPagContainer>
-            <ButtonChange><i className="fa-solid fa-arrow-left"></i></ButtonChange>
-            <RowsPage>1/10</RowsPage>
-            <ButtonChange><i className="fa-solid fa-arrow-right"></i></ButtonChange>
+            <ButtonChange onClick={() => preguntasPage != 1 && setPreguntasPage(preguntasPage - 1)}>
+              <i className="fa-solid fa-arrow-left"></i>
+            </ButtonChange>
+            <RowsPage>{preguntasPage}/{Math.ceil(preguntas.length / 8)}</RowsPage>
+            <ButtonChange onClick={() => preguntasPage != Math.ceil(preguntas.length / 8) && setPreguntasPage(preguntasPage + 1)}>
+              <i className="fa-solid fa-arrow-right"></i>
+            </ButtonChange>
           </ButtonPagContainer>
         </ChangePageContainer>
       </PaginationContainer>

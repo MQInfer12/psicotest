@@ -58,7 +58,7 @@ export const ErrorCss = styled.p`
 `;
 
 export const PurpleButton = styled.button`
-  height: 42px;
+  min-height: 42px;
   border: none;
   padding: 8px 26px 8px 26px;
   background-color: #660BE1;
@@ -71,7 +71,7 @@ export const PurpleButton = styled.button`
 `;
 
 export const WhiteButton = styled.button`
-  height: 42px;
+  min-height: 42px;
   border: 1px solid #D9D9D9;
   padding: 8px 20px 8px 20px;
   background-color: #FFFFFF;
@@ -83,7 +83,7 @@ export const WhiteButton = styled.button`
 `;
 
 export const DangerButton = styled.button`
-  height: 42px;
+  min-height: 42px;
   border: 1px solid #D9D9D9;
   padding: 8px 20px 8px 20px;
   background-color: #FFFFFF;

@@ -2,8 +2,10 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { initialForm, validationsForm } from "../../validations/user";
 import { UseForm } from "../../hooks/useFormUser";
-import { FormContainer, DivInput, DivText, PText, InputText, InputSelect, ErrorCss, PurpleButton, WhiteButton } from "../../styles/formularios";
+import { FormContainer, PurpleButton, WhiteButton } from "../../styles/formularios";
 import ProfilePic from "../globals/profilePic";
+import FormInputsText from "../globals/formInputsText";
+import FormInputsSelect from "../globals/formInputsSelect";
 
 const ModalUserContainer = styled.div`
   display: flex;
@@ -224,41 +226,16 @@ const ModalUser = ({ actualizar, funcion, user }) => {
       }
       <Columnas>
         <FormContainer>
-          {data.map((v, i) => (
-            <DivInput key={i}> 
-              <DivText>
-                <PText>{v.placeholder}</PText>
-                {v.error && <ErrorCss>{v.error}</ErrorCss>}
-              </DivText>
-              <InputText 
-                type={v.tipo} 
-                name={v.name} 
-                value={v.value}
-                onChange={ handleChange }
-              />
-            </DivInput>
-          ))}
+          <FormInputsText
+            data={data}
+            handleChange={handleChange}
+          />
         </FormContainer>
         <FormContainer>
-          {dataSelect.map((v, i) => (
-            <DivInput key={i}>
-              <DivText>
-                <PText>{v.select}</PText>
-                {v.error && <ErrorCss>{v.error}</ErrorCss>}
-              </DivText>
-              <InputSelect
-                name={v.select}
-                onChange={handleChange}
-                defaultValue={v.seleccionado}
-              >
-                {v.data.map((va, i) => (
-                  <option key={i} value={va.value}>
-                    {va.nombre}
-                  </option>
-                ))}
-              </InputSelect>
-            </DivInput>
-          ))}
+          <FormInputsSelect
+            data={dataSelect}
+            handleChange={handleChange}
+          />
         </FormContainer>
       </Columnas>
       <PurpleButton onClick={handleSubmit}>{funcion}</PurpleButton>
