@@ -24,13 +24,13 @@ export const getReactivosBySeccion = async (idSeccion) => {
   }
 };
 
-export const addReactivo = async (form) => {
+export const addReactivo = async (form, idSeccion) => {
   try {
     const response = await fetch(`${http}reactivo`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        id_seccion: form.id_seccion,
+        id_seccion: idSeccion,
         descripcion: form.descripcion
       }),
     });

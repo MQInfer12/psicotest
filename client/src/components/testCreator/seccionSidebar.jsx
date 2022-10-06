@@ -35,8 +35,7 @@ const ButtonContainer = styled.div`
   gap: 5px;
 `;
 
-const SeccionSidebar = ({ test, idTest, seccion, index, llenarSecciones, actualState }) => {
-  
+const SeccionSidebar = ({ test, idTest, seccion, index, llenarSecciones, seccionState, editState }) => {
   const añadirSeccion = async () => {
     const res = await addSeccion(idTest);
     const resJson = await res?.json();
@@ -61,7 +60,7 @@ const SeccionSidebar = ({ test, idTest, seccion, index, llenarSecciones, actualS
         <DashTitle>{test.nombre}</DashTitle>
         <DashTitle>Sección {index}</DashTitle>
         <ButtonContainer>
-          <WhiteIconButton onClick={() => actualState.seccionActual != 0 && actualState.setSeccionActual(actualState.seccionActual - 1)}>
+          <WhiteIconButton onClick={() => seccionState.seccionActual != 0 && seccionState.setSeccionActual(seccionState.seccionActual - 1)}>
             <i className="fa-solid fa-angle-left"></i>
           </WhiteIconButton>
           {
@@ -70,14 +69,25 @@ const SeccionSidebar = ({ test, idTest, seccion, index, llenarSecciones, actualS
             :
             <PurpleButton onClick={añadirSeccion}>Crear Sección</PurpleButton>
           }
-          <WhiteIconButton onClick={() => index != "nueva" && actualState.setSeccionActual(actualState.seccionActual + 1)}>
+          <WhiteIconButton onClick={() => index != "nueva" && seccionState.setSeccionActual(seccionState.seccionActual + 1)}>
             <i className="fa-solid fa-angle-right"></i>
           </WhiteIconButton>
         </ButtonContainer>
       </DashPart>
       <DashPart>
-        <WhiteButton>Preguntas</WhiteButton>
-        <WhiteButton>Reactivos</WhiteButton>
+        {
+          editState.editActual == "0"? (
+            <>
+              <PurpleButton onClick={() => editState.setEditActual(0)}>Preguntas</PurpleButton>
+              <WhiteButton onClick={() => editState.setEditActual(1)}>Reactivos</WhiteButton>
+            </>
+          ) : (
+            <>
+              <WhiteButton onClick={() => editState.setEditActual(0)}>Preguntas</WhiteButton>
+              <PurpleButton onClick={() => editState.setEditActual(1)}>Reactivos</PurpleButton>
+            </>
+          )
+        }
       </DashPart>
     </SeccionCreatorDash>
   )

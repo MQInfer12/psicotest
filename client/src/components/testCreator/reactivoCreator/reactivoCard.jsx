@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { WhiteIconButton } from "../../styles/formularios";
-import Modal from "../globals/modal";
-import ModalPregunta from "./modalPregunta";
+import { WhiteIconButton } from "../../../styles/formularios";
+import Modal from "../../globals/modal";
+import ModalReactivo from "./modalReactivo";
 
 const PreguntaRow = styled.tr`
   filter: ${props => props.selected && "opacity(0.5)"};
@@ -36,11 +36,11 @@ const TdPregunta = styled.td`
   padding-right: 20px;
   transition: all 0.3s;
   position: relative;
+`;
 
-  & > p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+const PPregunta = styled.p`
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const DivButtonsTd = styled.div`
@@ -56,7 +56,7 @@ const DivButtonsTd = styled.div`
   transition: all 0.3s;
 `;
 
-const PreguntaCard = (props) => {
+const ReactivoCard = (props) => {
   const [showForm, setShowForm] = useState(false);
   const [selected, setSelected] = useState(false);
 
@@ -66,26 +66,12 @@ const PreguntaCard = (props) => {
 
   return (
     <>
-    {
-      showForm &&
-      <Modal titulo="Editar pregunta" cerrar={() => setShowForm(false)} >
-        <ModalPregunta 
-          actualizar={() => {
-            props.llenarPreguntas();
-            setShowForm(false);
-          }}
-          funcion="editar"
-          pregunta={props}
-          idSeccion={props.id_seccion}
-        />
-      </Modal>
-    }
     <PreguntaRow 
       selected={selected}
     >
       <ThNumber>{props.index}</ThNumber>
       <TdPregunta>
-        <p>{props.descripcion}</p>
+        <PPregunta>{props.descripcion}</PPregunta>
         <DivButtonsTd>
           <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
           { /* BOTON PARA IR MARCANDO LAS PREGUNTAS */}
@@ -109,10 +95,24 @@ const PreguntaCard = (props) => {
             }
           </WhiteIconButton>
         </DivButtonsTd>
+        {
+          showForm &&
+          <Modal titulo="Editar reactivo" cerrar={() => setShowForm(false)} >
+            <ModalReactivo 
+              actualizar={() => {
+                props.llenarReactivos();
+                setShowForm(false);
+              }}
+              funcion="editar"
+              reactivo={props}
+              idSeccion={props.id_seccion}
+            />
+          </Modal>
+        }
       </TdPregunta>
     </PreguntaRow>
     </>
   )
 }
 
-export default PreguntaCard;
+export default ReactivoCard;

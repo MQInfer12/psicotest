@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { DangerIconButton, WhiteIconButton } from "../../styles/formularios";
-import Cargando from "../globals/cargando";
-import { getPreguntasBySeccion, massDestroy } from "../../services/pregunta";
-import Modal from "../globals/modal";
-import ModalPregunta from "./modalPregunta";
-import PreguntaCard from "./preguntaCard";
+import { DangerIconButton, WhiteIconButton } from "../../../styles/formularios";
+import Cargando from "../../globals/cargando";
+import { getPreguntasBySeccion, massDestroy } from "../../../services/pregunta";
+import Modal from "../../globals/modal";
+import ModalPregunta from "../modalPregunta";
+import PreguntaCard from "../preguntaCard";
+import Pagination from "../pagination";
 
 const PreguntaCreatorContainer = styled.div`
   width: 622px;
@@ -52,7 +53,7 @@ const TablePreguntas = styled.table`
 
   & > tbody > tr {
     max-width: 622px;
-    line-height: 64px;
+    height: 64px;
     background-color: #FFFFFF;
     position: relative;
   }
@@ -91,52 +92,6 @@ const TdCargando = styled.td`
   height: 100%;
 `;
 
-//PAGINACION ABAJO
-const PaginationContainer = styled.div`
-  padding: 35px 20px 0px;
-  height: 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const PaginationCounter = styled.p`
-  font-size: 12px;
-  letter-spacing: 0.03em;
-  color: #687182;
-`;
-
-const ChangePageContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 20px;
-`;
-
-const RowsPage = styled.p`
-  font-size: 12px;
-  color: #687182;
-`;
-
-const ButtonPagContainer = styled.div`
-  width: 100px;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const ButtonChange = styled.button`
-  box-shadow: 0px 0px 0px 1px rgba(70, 79, 96, 0.24);
-  width: 24px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 7px;
-  color: #868FA0;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-`;
-
 const PreguntaCreator = ({ idSeccion }) => {
   const [preguntas, setPreguntas] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -155,7 +110,9 @@ const PreguntaCreator = ({ idSeccion }) => {
     const res = await massDestroy(selecteds);
     const resJson = await res?.json();
     if(resJson.mensaje = "se borro correctamente") {
+      console.log("Se borraron las preguntas");
       llenarPreguntas();
+      setSelecteds([]);
     }
   }
 
@@ -221,23 +178,12 @@ const PreguntaCreator = ({ idSeccion }) => {
           </tbody>
         </TablePreguntas>
       </TableContainer>
-      <PaginationContainer>
-        <PaginationCounter>
-          {((preguntasPage - 1) * 8) + 1}-{preguntasPage * 8 > preguntas.length? preguntas.length : preguntasPage * 8} de {preguntas.length}
-        </PaginationCounter>
-        <ChangePageContainer>
-          <RowsPage>Filas por pagina: 8</RowsPage>
-          <ButtonPagContainer>
-            <ButtonChange onClick={() => preguntasPage != 1 && setPreguntasPage(preguntasPage - 1)}>
-              <i className="fa-solid fa-arrow-left"></i>
-            </ButtonChange>
-            <RowsPage>{preguntasPage}/{Math.ceil(preguntas.length / 8)}</RowsPage>
-            <ButtonChange onClick={() => preguntasPage != Math.ceil(preguntas.length / 8) && setPreguntasPage(preguntasPage + 1)}>
-              <i className="fa-solid fa-arrow-right"></i>
-            </ButtonChange>
-          </ButtonPagContainer>
-        </ChangePageContainer>
-      </PaginationContainer>
+      <Pagination 
+        cant={preguntas.length}
+        rows={8}
+        page={preguntasPage}
+        setPage={setPreguntasPage}
+      />
     </PreguntaCreatorContainer>
   )
 }

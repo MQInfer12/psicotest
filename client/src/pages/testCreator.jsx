@@ -6,6 +6,7 @@ import { getTest } from "../services/test";
 import PreguntaCreator from "../components/testCreator/preguntaCreator";
 import SeccionSidebar from "../components/testCreator/seccionSidebar";
 import Cargando from "../components/globals/cargando";
+import ReactivoCreator from "../components/testCreator/reactivoCreator";
 
 //CONTROLES ARRIBA
 const TestCreatorContainer = styled.div`
@@ -17,7 +18,7 @@ const TestCreatorContainer = styled.div`
 `;
 
 const SeccionContainer = styled.div`
-  transform: translate(${props => props.translate * -100}%);
+  transform: translateX(${props => props.translate * -100}%);
   min-width: 100%;
   height: 100%;
   display: flex;
@@ -28,8 +29,16 @@ const CreatorsContainer = styled.div`
   min-width: calc(100% - 263px);
   display: flex;
   flex-direction: column;
+`;
+
+const FullScreen = styled.div`
+  width: 100%;
+  min-height: 100%;
+  display: flex;
   align-items: center;
   justify-content: center;
+  transform: translateY(${props => props.translate * -100}%);
+  transition: all 1s;
 `;
 
 const EmptySeccion = styled.p`
@@ -48,6 +57,7 @@ const TestCreator = () => {
   const [test, setTest] = useState([]);
   const [secciones, setSecciones] = useState([]);
   const [seccionActual, setSeccionActual] = useState(0);
+  const [editActual, setEditActual] = useState(0);
   
   const llenarSecciones = async () => {
     const tst = await getTest(idTest);
@@ -78,13 +88,21 @@ const TestCreator = () => {
                     index={i + 1}
                     idTest={idTest} 
                     llenarSecciones={llenarSecciones}
-                    actualState={{seccionActual, setSeccionActual}}
+                    seccionState={{seccionActual, setSeccionActual}}
+                    editState={{editActual, setEditActual}}
                     seccion={v}
                   />
                   <CreatorsContainer>
-                    <PreguntaCreator 
-                      idSeccion={v.id}
-                    />
+                    <FullScreen translate={editActual}>
+                      <PreguntaCreator 
+                        idSeccion={v.id}
+                      />
+                    </FullScreen>
+                    <FullScreen translate={editActual}>
+                      <ReactivoCreator
+                        idSeccion={v.id}
+                      />
+                    </FullScreen>
                   </CreatorsContainer>
                 </SeccionContainer>
               ))
@@ -95,10 +113,13 @@ const TestCreator = () => {
                 index="nueva"
                 idTest={idTest} 
                 llenarSecciones={llenarSecciones}
-                actualState={{seccionActual, setSeccionActual}}
+                seccionState={{seccionActual, setSeccionActual}}
+                editState={{editActual, setEditActual}}
               />
               <CreatorsContainer>
-                <EmptySeccion>Añade una nueva sección para comenzar a editar preguntas y reactivos.</EmptySeccion>
+                <FullScreen translate="0">
+                  <EmptySeccion>Añade una nueva sección para comenzar a editar preguntas y reactivos.</EmptySeccion>
+                </FullScreen>
               </CreatorsContainer>
             </SeccionContainer>
           </>
