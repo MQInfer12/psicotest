@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { getSeccionesByTest } from "../services/seccion";
 import { getTest } from "../services/test";
-import PreguntaCreator from "../components/testCreator/preguntaCreator";
+import PreguntaCreator from "../components/testCreator/preguntaCreator/preguntaCreator";
 import SeccionSidebar from "../components/testCreator/seccionSidebar";
 import Cargando from "../components/globals/cargando";
-import ReactivoCreator from "../components/testCreator/reactivoCreator";
+import ReactivoCreator from "../components/testCreator/reactivoCreator/reactivoCreator";
 
 //CONTROLES ARRIBA
 const TestCreatorContainer = styled.div`

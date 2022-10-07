@@ -4,8 +4,8 @@ import { DangerIconButton, WhiteIconButton } from "../../../styles/formularios";
 import Cargando from "../../globals/cargando";
 import { getPreguntasBySeccion, massDestroy } from "../../../services/pregunta";
 import Modal from "../../globals/modal";
-import ModalPregunta from "../modalPregunta";
-import PreguntaCard from "../preguntaCard";
+import ModalPregunta from "./modalPregunta";
+import PreguntaCard from "./preguntaCard";
 import Pagination from "../pagination";
 
 const PreguntaCreatorContainer = styled.div`
@@ -87,9 +87,10 @@ const TrCargando = styled.tr`
 `;
 
 const TdCargando = styled.td`
+  background-color: #FFFFFF;
   display: flex;
-  width: 100%;
-  height: 100%;
+  width: 622px;
+  height: 512px;
 `;
 
 const PreguntaCreator = ({ idSeccion }) => {

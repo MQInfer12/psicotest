@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { FormContainer, PurpleButton } from "../../styles/formularios";
-import FormInputsText from "../globals/formInputsText";
-import { initialForm, validationsForm } from "../../validations/pregunta_reactivo";
-import { UseForm } from "../../hooks/useFormReactivo";
+import { FormContainer, PurpleButton } from "../../../styles/formularios";
+import FormInputsText from "../../globals/formInputsText";
+import { initialForm, validationsForm } from "../../../validations/pregunta_reactivo";
+import { UseForm } from "../../../hooks/useFormReactivo";
 
 const ModalReactivo = ({ reactivo, actualizar, funcion, idSeccion }) => {
   const {

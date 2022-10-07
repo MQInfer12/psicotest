@@ -51,6 +51,17 @@ const TablePreguntas = styled.table`
     height: 40px;
   }
 
+  & > thead > tr {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+  }
+
+  & > thead > tr > th {
+    height: 40px;
+  }
+
   & > tbody > tr {
     max-width: 622px;
     height: 64px;
@@ -70,14 +81,6 @@ const ThNumberal = styled.th`
   width: 47px;
   text-align: start;
   font-weight: 600;
-`;
-
-const ThPregunta = styled.th`
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  text-align: start;
-  color: #464F60;
 `;
 
 const TrCargando = styled.tr`
@@ -107,16 +110,6 @@ const ReactivoCreator = ({ idSeccion }) => {
     setLoading(false);
   }
 
-  /*const borrarPreguntas = async () => {
-    const res = await massDestroy(selecteds);
-    const resJson = await res?.json();
-    if(resJson.mensaje = "se borro correctamente") {
-      console.log("Se borraron las preguntas");
-      llenarPreguntas();
-      setSelecteds([]);
-    }
-  }*/
-
   useState(() => {
     llenarReactivos();
   }, []);
@@ -125,10 +118,6 @@ const ReactivoCreator = ({ idSeccion }) => {
     <PreguntaCreatorContainer>
       <ControlsContainer>
         <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-plus"></i></WhiteIconButton>
-        <DeleteContainer>
-          <PSelected>{selecteds.length} selected</PSelected>
-          <DangerIconButton onClick={() => {}}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
-        </DeleteContainer>
         {
           showForm &&
           <Modal titulo="Añadir reactivo" cerrar={() => setShowForm(false)}>
@@ -148,7 +137,18 @@ const ReactivoCreator = ({ idSeccion }) => {
           <thead>
             <tr>
               <ThNumberal>#</ThNumberal>
-              <ThPregunta>REACTIVO</ThPregunta>
+              {
+                reactivos.filter((v, i) => i >= (reactivosPage - 1) * 8 && i < reactivosPage * 8).map((v, i) => (
+                  <ReactivoCard 
+                    key={i} 
+                    {...v} 
+                    index={((reactivosPage - 1) * 8) + (i + 1)} 
+                    llenarReactivos={llenarReactivos}
+                    selecteds={selecteds}
+                    setSelecteds={setSelecteds}
+                  />
+                ))
+              }
             </tr>
           </thead>
           <tbody>
@@ -161,7 +161,7 @@ const ReactivoCreator = ({ idSeccion }) => {
                 </TrCargando>
               ) : (
                 <>
-                  {
+                  {/*
                     reactivos.filter((v, i) => i >= (reactivosPage - 1) * 8 && i < reactivosPage * 8).map((v, i) => (
                       <ReactivoCard 
                         key={i} 
@@ -172,7 +172,7 @@ const ReactivoCreator = ({ idSeccion }) => {
                         setSelecteds={setSelecteds}
                       />
                     ))
-                  }
+                    */}
                 </>
               )
             }
