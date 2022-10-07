@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { addTest, updateTest } from "../services/test";
+import { addPregunta, updatePregunta } from "../services/pregunta";
 
-export const UseForm = ( initialForm, validateForm, success, funcion, id ) => {
+export const UseForm = ( initialForm, validateForm, success, funcion, id, idSeccion ) => {
 
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
@@ -10,10 +10,10 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id ) => {
     console.log(funcion);
     if(funcion == "añadir") {
       try {
-        const res = await addTest(form);
+        const res = await addPregunta(form, idSeccion);
         const resJson = await res?.json();
         if(resJson.mensaje =="se guardo correctamente"){
-          console.log("Se creó un nuevo test!");
+          console.log("Se creó una nueva pregunta!");
           success();
         }
       } catch (err) {
@@ -21,7 +21,7 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id ) => {
       }
     } else if(funcion == "editar") {
       try {
-        const res = await updateTest(form, id);
+        const res = await updatePregunta(form, id);
         const resJson = await res?.json();
         if(resJson.mensaje =="se guardo correctamente"){
           console.log("Se actualizó el test!");
@@ -41,12 +41,10 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id ) => {
     });
   };
 
-  const handleFill = (test) => {
+  const handleFill = (pregunta) => {
     const obj = {
-      nombre: test.nombre,
-      descripcion: test.descripcion,
-      autor: "Admin",
-      tiempo: test.tiempo
+      id_seccion: idSeccion,
+      descripcion: pregunta.descripcion
     }
 
     setForm(obj);

@@ -4,6 +4,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GrupoBeneficiarioController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\HorarioController;
+use App\Http\Controllers\PreguntaController;
+use App\Http\Controllers\ReactivoController;
+use App\Http\Controllers\SeccionController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +34,19 @@ Route::group(['middleware' => 'api'], function(){
 
     //TEST ROUTES
     Route::apiResource("test", TestController::class);
+    
+    //SECCIONES ROUTES
+    Route::apiResource("seccion", SeccionController::class);
+    Route::get("seccion/test/{idTest}", [SeccionController::class, 'seccionByTest']);
+    
+    //PREGUNTAS ROUTES
+    Route::apiResource("pregunta", PreguntaController::class);
+    Route::get("pregunta/seccion/{idSeccion}", [PreguntaController::class, 'preguntasBySeccion']);
+    Route::post("pregunta/destroy", [PreguntaController::class, 'massDestroy']);
+    
+    //SECCIONES ROUTES
+    Route::apiResource("reactivo", ReactivoController::class);
+    Route::get("reactivo/seccion/{idSeccion}", [ReactivoController::class, 'reactivosBySeccion']);
 
     //HORARIOS
     Route::apiResource("horario", HorarioController::class);

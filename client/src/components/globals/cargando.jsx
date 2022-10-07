@@ -16,12 +16,16 @@ const Loader = styled.div`
   height: 80px;
   border-radius: 50%;
   border: 8px solid rgba(0, 0, 0, 0.2);
-  border-top-color: #9c27b0;
+  border-top-color: #2264E6;
   animation: spin 1.2s ease infinite;
 
   @keyframes spin {
     0% {
+      border-top-color: #2264E6;
       transform: rotate(0deg);
+    }
+    50% {
+      border-top-color: #660BE1;
     }
     100% {
       transform: rotate(360deg);

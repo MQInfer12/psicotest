@@ -14,6 +14,8 @@ import Profile from "./pages/profile";
 import Home from "./pages/home";
 import Calendar from "./pages/calendar";
 import Test from './pages/test';
+import TestCreator from "./pages/testCreator";
+import TestView from "./pages/testView";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -57,6 +59,26 @@ function App() {
                 <ProtectedRole roles={[3]}>
                   <OutletContext titlePage="Tests" calendar={true}>
                     <Test />
+                  </OutletContext>
+                </ProtectedRole>
+              } 
+            />
+            <Route 
+              path="tests/:idTest" 
+              element={
+                <ProtectedRole roles={[3]}>
+                  <OutletContext titlePage="Creación de Test" calendar={false}>
+                    <TestCreator />
+                  </OutletContext>
+                </ProtectedRole>
+              } 
+            />
+            <Route 
+              path="testview/:idTest" 
+              element={
+                <ProtectedRole roles={[3]}>
+                  <OutletContext titlePage="" calendar={false}>
+                    <TestView />
                   </OutletContext>
                 </ProtectedRole>
               } 

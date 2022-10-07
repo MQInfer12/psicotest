@@ -23,6 +23,10 @@ const SideBarLogo = styled.img`
   margin-bottom: 88px;
 `;
 
+//ae2d68, c05299, ea698b, 9c5ad0, b5179e, 8e2de2
+
+//404be3, 5d7bd5, c586dd
+
 const SideBarList = styled.ul`
   list-style: none;
   display: flex;
@@ -30,7 +34,7 @@ const SideBarList = styled.ul`
   gap: 5px;
 
   .active {
-    background-color: #660BE1;
+    background-color: #660BE1; 
   }
   .active:hover {
     color: #D9D9D9;
@@ -109,7 +113,7 @@ const SideBar = ({ rol, setUser }) => {
       icon: "fa-solid fa-address-card",
     },
   ]
-  
+
   return (
     <SideBarContainer>
       <SideBarLogo src={Logo} />

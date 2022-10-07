@@ -6,7 +6,7 @@ const CenterContainer = styled.div`
   margin-left: 263px;
   margin-right: ${props => props.calendar && "433px"};
   background-color: #F4F4F4;
-  width: 100%;
+  width: calc(100% - 263px); 
   display: flex;
   flex-direction: column;
 `;
@@ -41,7 +41,7 @@ const OutletContainer = styled.div`
   height: calc(100vh - 157px);
   overflow: scroll;
   overflow-x: hidden;
-  padding: 0px 40px 40px 40px;
+  padding: 0px 40px 40px;
 
   &::-webkit-scrollbar {
     width: 8px;

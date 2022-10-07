@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { FormContainer, DivInput, DivText, PText, InputText, InputSelect, ErrorCss, PurpleButton, WhiteButton } from "../../styles/formularios";
 import { initialForm, validationsForm } from "../../validations/test";
 import { UseForm } from "../../hooks/useFormTest";
+import FormInputsText from "../globals/formInputsText";
 
 const ModalTest = ({ funcion, actualizar, test }) => {
   const {
@@ -54,23 +55,11 @@ const ModalTest = ({ funcion, actualizar, test }) => {
 
   return (
     <FormContainer>
-        {
-          data.map((v, i) => (
-            <DivInput key={i}>
-              <DivText>
-                <PText>{v.placeholder}</PText>
-                {v.error && <ErrorCss>{v.error}</ErrorCss>}
-              </DivText>
-              <InputText 
-                name={v.name}
-                value={v.value}
-                onChange={ handleChange }
-                disabled={v.disabled}
-              />
-            </DivInput>
-          ))
-        }
-        <PurpleButton onClick={ handleSubmit }>{funcion}</PurpleButton>
+      <FormInputsText
+        data={data}
+        handleChange={ handleChange }
+      />
+      <PurpleButton onClick={ handleSubmit }>{funcion}</PurpleButton>
     </FormContainer>
   )
 }

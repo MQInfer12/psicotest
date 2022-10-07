@@ -5,7 +5,8 @@ import ProfilePic from "../components/globals/profilePic";
 import { initialForm, validationsForm } from "../validations/profile";
 import { UseForm } from "../hooks/useFormProfile";
 import { getProfile } from "../services/auth";
-import { FormContainer, DivInput, DivText, PText, InputText, InputSelect, ErrorCss, PurpleButton, WhiteButton } from "../styles/formularios";
+import { FormContainer, DivInput, PText, InputSelect, PurpleButton, WhiteButton } from "../styles/formularios";
+import FormInputsText from "../components/globals/formInputsText";
 
 const ProfileContainer = styled.div`
   height: 100%;
@@ -115,7 +116,7 @@ const Profile = () => {
       placeholder: "Nombre",
       error: errors.nombre,
       tipo: "text",
-      disabled: false
+      disabled: false || !editable
     },
     {
       name: "email",
@@ -123,7 +124,7 @@ const Profile = () => {
       placeholder: "Email",
       error: errors.email,
       tipo: "text",
-      disabled: true
+      disabled: true || !editable
     },
     {
       name: "contrasenia",
@@ -131,7 +132,7 @@ const Profile = () => {
       placeholder: "Contraseña",
       error: errors.contrasenia,
       tipo: "password",
-      disabled: true
+      disabled: true || !editable
     },
     {
       name: "edad",
@@ -139,14 +140,14 @@ const Profile = () => {
       placeholder: "Edad",
       error: errors.edad,
       tipo: "number",
-      disabled: false
+      disabled: false || !editable
     },
   ]
 
   let dataSelect = [
     {
       select: "genero",
-      selected: user?.genero,
+      seleccionado: user?.genero,
       data: [
         {
           nombre: "Hombre",
@@ -158,10 +159,11 @@ const Profile = () => {
         }
       ],
       error: errors.genero,
+      disabled: !editable
     },
     {
       select: "sede",
-      selected: user?.id_sede,
+      seleccionado: user?.id_sede,
       data: [
         {
           nombre: "Cochabamba",
@@ -181,6 +183,7 @@ const Profile = () => {
         },
       ],
       error: errors.sede,
+      disabled: !editable
     },
   ];
 
@@ -216,23 +219,10 @@ const Profile = () => {
       <DownContainer>
         <InputsContainer>
           <FormContainer>
-            {
-              dataleft.map((v, i) => (
-                <DivInput key={i}>
-                  <DivText>
-                    <PText>{v.placeholder}</PText>
-                    {v.error && <ErrorCss>{v.error}</ErrorCss>}
-                  </DivText>
-                    <InputText 
-                      value={v.value}
-                      name={v.name}
-                      type={v.tipo}
-                      disabled={v.disabled || !editable}
-                      onChange={ handleChange }
-                    />
-                </DivInput>
-              ))
-            }
+            <FormInputsText
+              data={dataleft}
+              handleChange={handleChange}
+            />
           </FormContainer>
           <FormContainer>
             {
@@ -244,7 +234,7 @@ const Profile = () => {
                       <InputSelect
                         onChange={ handleChange }
                         name={v.select}
-                        defaultValue={v.selected}
+                        defaultValue={v.seleccionado}
                         disabled={!editable}
                       >
                         {
@@ -259,7 +249,7 @@ const Profile = () => {
                       <InputSelect
                         onChange={ handleChange }
                         name={v.select}
-                        value={v.selected}
+                        value={v.seleccionado}
                         disabled={!editable}
                       >
                         {
@@ -270,7 +260,7 @@ const Profile = () => {
                           ))
                         }
                       </InputSelect>
-                      )
+                    )
                   }
                 </DivInput>
               ))

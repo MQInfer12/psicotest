@@ -6,9 +6,8 @@ import Calendar from "../../pages/calendar";
 const RightContainer = styled.aside`
   background-color: ${props => props.calendar? "#FFFFFF" : "transparent"};
   position: ${props => props.calendar? "fixed" : "absolute"};
-  top:0;
+  height: ${props => props.calendar && "100vh"};
   right: 0;
-  height: 100vh;
   width: 433px;
   display: flex;
   flex-direction: column;
@@ -34,6 +33,11 @@ const UpbarNot = styled.div`
   height: 52px;
   border-radius: 10px;
   background-color: #D9D9D9;
+`;
+
+const CalendarContainer = styled.div`
+  height: calc(100% - 157px);
+  pointer-events: none;
 `;
 
 const RightBar = ({ user, calendar }) => {
