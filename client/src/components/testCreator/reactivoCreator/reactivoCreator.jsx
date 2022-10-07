@@ -22,25 +22,12 @@ const ControlsContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 68px;
-  padding: 0px 21px;
-`;
-
-const DeleteContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-`;
-
-const PSelected = styled.p`
-  height: max-content;
-  font-size: 12px;
-  color: #464F60;
+  padding: 0px 11px;
 `;
 
 //TABLA
 const TableContainer = styled.div`
   height: 552px;
-  overflow: hidden;
 `;
 
 const TablePreguntas = styled.table`
@@ -51,14 +38,9 @@ const TablePreguntas = styled.table`
     height: 40px;
   }
 
-  & > thead > tr {
+  & > thead > tr > th {
     display: flex;
     align-items: center;
-    width: 100%;
-    height: 40px;
-  }
-
-  & > thead > tr > th {
     height: 40px;
   }
 
@@ -72,6 +54,14 @@ const TablePreguntas = styled.table`
   & > tbody > tr:nth-child(2n) {
     background-color: #EBF0FA;
   }
+`;
+
+const TrHead = styled.tr`
+  display: grid;
+  grid-template-columns: 47px repeat(${props => props.cant}, 1fr);
+  align-items: center;
+  width: 100%;
+  height: 40px;
 `;
 
 const ThNumberal = styled.th`
@@ -135,7 +125,7 @@ const ReactivoCreator = ({ idSeccion }) => {
       <TableContainer>
         <TablePreguntas>
           <thead>
-            <tr>
+            <TrHead cant={reactivos.length}>
               <ThNumberal>#</ThNumberal>
               {
                 reactivos.filter((v, i) => i >= (reactivosPage - 1) * 8 && i < reactivosPage * 8).map((v, i) => (
@@ -149,7 +139,7 @@ const ReactivoCreator = ({ idSeccion }) => {
                   />
                 ))
               }
-            </tr>
+            </TrHead>
           </thead>
           <tbody>
             {

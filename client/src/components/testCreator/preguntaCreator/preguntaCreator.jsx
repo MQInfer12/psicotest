@@ -22,7 +22,7 @@ const ControlsContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 68px;
-  padding: 0px 21px;
+  padding: 0px 11px;
 `;
 
 const DeleteContainer = styled.div`

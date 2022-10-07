@@ -15,7 +15,7 @@ class ReactivoController extends Controller
 
     public function reactivosBySeccion($idSeccion)
     {
-        return DB::select("SELECT * FROM reactivos WHERE id_seccion='$idSeccion'");
+        return DB::select("SELECT * FROM reactivos WHERE id_seccion='$idSeccion' ORDER BY id");
     }
 
     public function store(Request $request)
