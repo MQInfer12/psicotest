@@ -1,46 +1,27 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { WhiteIconButton } from "../../../styles/formularios";
+import { DangerIconButton, WhiteIconButton } from "../../../styles/formularios";
 import Modal from "../../globals/modal";
 import ModalReactivo from "./modalReactivo";
 
-const PreguntaRow = styled.tr`
-  filter: ${props => props.selected && "opacity(0.5)"};
+const ThReactivo = styled.th`
+  padding-left: 11px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: start;
+  color: #464F60;
+  position: relative;
+  overflow: hidden;
   transition: all 0.2s;
 
-  &:hover > td {
-    padding-right: 120px;
+  flex-grow: 1;
 
+  &:hover {
     & > div {
       transform: translateX(0);
     }
   }
-`;
-
-const ThNumber = styled.th`
-  font-size: 14px;
-  font-weight: 500;
-  color: #171C26;
-  padding-left: 11px;
-  width: 47px;
-  text-align: start;
-`;
-
-const TdPregunta = styled.td`
-  max-width: 575px;
-  color: #464F60;
-  font-weight: 400;
-  font-size: 14px;
-  text-align: start;
-  white-space: nowrap;
-  padding-right: 20px;
-  transition: all 0.3s;
-  position: relative;
-`;
-
-const PPregunta = styled.p`
-  overflow: hidden;
-  text-overflow: ellipsis;
 `;
 
 const DivButtonsTd = styled.div`
@@ -66,34 +47,12 @@ const ReactivoCard = (props) => {
 
   return (
     <>
-    <PreguntaRow 
-      selected={selected}
-    >
-      <ThNumber>{props.index}</ThNumber>
-      <TdPregunta>
-        <PPregunta>{props.descripcion}</PPregunta>
+    <ThReactivo>
+        {props.descripcion}
         <DivButtonsTd>
           <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
           { /* BOTON PARA IR MARCANDO LAS PREGUNTAS */}
-          <WhiteIconButton 
-            onClick={() => {
-              if(!props.selecteds.includes(props.id)) {
-                props.setSelecteds(old => [...old, props.id]);
-                setSelected(true);
-              } else {
-                props.setSelecteds(old => old.filter(value => value != props.id));
-                setSelected(false);
-              }
-            }}
-          >
-            {
-              selected? (
-                <i className="fa-solid fa-square-check"></i>
-              ) : (
-                <i className="fa-regular fa-square-check"></i>
-              )
-            }
-          </WhiteIconButton>
+          <DangerIconButton><i className="fa-solid fa-trash-can"></i></DangerIconButton>
         </DivButtonsTd>
         {
           showForm &&
@@ -109,8 +68,7 @@ const ReactivoCard = (props) => {
             />
           </Modal>
         }
-      </TdPregunta>
-    </PreguntaRow>
+    </ThReactivo>
     </>
   )
 }
