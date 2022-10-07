@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CitaController;
 use App\Http\Controllers\GrupoBeneficiarioController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\HorarioController;
@@ -51,5 +52,13 @@ Route::group(['middleware' => 'api'], function(){
     //HORARIOS
     Route::apiResource("horario", HorarioController::class);
     Route::get('horario/show/{id_docente}', [HorarioController::class, 'showById']);
+
+    //Citas
+ /*    Route::apiResource("cita", CitaController::class); */
+    Route::put('cita/schedule/{id_schedule}', [CitaController::class, 'scheduleAppointment']);
+    Route::get('cita/schedule/{id_user}', [CitaController::class, 'getAppointmentsSchedule']);
+    Route::get('cita/allschedule', [CitaController::class, 'allAppointmentsAvailables']);
+    Route::put('cita/allschedule/{idHorario}/{idCita}', [CitaController::class, 'cancelAppointment']);
+
 
 });

@@ -53,4 +53,7 @@ class GrupoBeneficiarioController extends Controller
     {
         return GrupoBeneficiario::destroy($id);
     }
+
+
+
 }
