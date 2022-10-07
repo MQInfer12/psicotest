@@ -15,7 +15,14 @@ class HorarioController extends Controller
         where h.id_docente=u.id
         ");
     }
-    
+
+    public function showById($id)
+    {
+        return DB::select("SELECT h.id, h.fecha, h.hora_inicio, h.hora_final, h.disponible, u.email, u.nombre 
+        from horarios h, users u 
+        where h.id_docente=u.id and u.id=$id");
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -61,9 +68,8 @@ class HorarioController extends Controller
         return response()->json(["mensaje" => "se actualizo correctamente"], 201);
     }
 
-    public function destroy($id) 
+    public function destroy($id)
     {
         return Horario::destroy($id);
     }
-
 }

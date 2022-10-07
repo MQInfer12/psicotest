@@ -3,7 +3,7 @@ import { addHorario } from "../services/horario";
 import { getProfile } from "../services/auth";
 import { UserContext } from "../context/userContext";
 
-export const UseForm = (initialForm, validateForm, hideModal) => {
+export const UseForm = (initialForm, validateForm, hideModal, handlegetTime) => {
   const { user, setUser } = useContext(UserContext);
 
   const [form, setForm] = useState(initialForm);
@@ -12,12 +12,11 @@ export const UseForm = (initialForm, validateForm, hideModal) => {
   const handleSend = async (form) => {
     try {
       const res = await addHorario(form);
-      const resJson = await res?.json();
-
-      if (resJson.message == "se guardo correctamente") {
+      if (res.mensaje == "se guardo correctamente") {
+        handlegetTime();
         hideModal();
       } else {
-        alert(resJson.error);
+        alert(res.error);
       }
     } catch (err) {
       console.log(err);

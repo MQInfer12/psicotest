@@ -34,4 +34,6 @@ Route::group(['middleware' => 'api'], function(){
 
     //HORARIOS
     Route::apiResource("horario", HorarioController::class);
+    Route::get('horario/show/{id_docente}', [HorarioController::class, 'showById']);
+
 });
