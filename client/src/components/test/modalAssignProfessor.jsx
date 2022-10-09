@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { getProfessor } from "../../services/usuario";
-import { addProfessorToTest } from "../../services/test";
+import { addProfessorToTest, getProfessorNotAssigned } from "../../services/test";
 const ModalAssignProfessor = ({ id, actualizar }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const handleGetData = async () => {
-    const res = await getProfessor();
+    const res = await getProfessorNotAssigned(id);
     setData(res);
     setLoading(false);
   };

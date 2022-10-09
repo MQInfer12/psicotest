@@ -114,3 +114,22 @@ export const deleteTest = async (id) => {
     console.log(error);
   }
 };
+
+export const getProfessorNotAssigned = async(id) => {
+  try {
+    const response = await fetch(`${http}test/professorNotAssigning/${id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    });
+  
+    if (response.ok) {
+      const result = await response.json();
+      return result;
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}

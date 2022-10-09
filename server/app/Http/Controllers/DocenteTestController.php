@@ -27,18 +27,24 @@ class DocenteTestController extends Controller
     public function getProfessorNotAssigning($id)
     {
         $getIdDocente = DB::select("select * from docente_tests where id_test=$id");
-
+        $getIdsany = true;
         $condition = "and u.id!=";
         foreach ($getIdDocente as $idProfessor) {
+            $getIdsany = false;
             if ($idProfessor != end($getIdDocente)) {
                 $condition = $condition . ' ' . $idProfessor->id_docente . ' ' . $condition;
             } else {
                 $condition = $condition . ' ' . $idProfessor->id_docente;
             }
         }
-
-        $getProfessorsNotAssigning = DB::select("SELECT u.nombre, u.email, u.estado, s.nombre from users u, sedes s 
-         where u.id_rol=2 and u.id_sede=s.id " . $condition);
+        if ($getIdsany) {
+            $getProfessorsNotAssigning = DB::select("SELECT u.id, u.nombre, u.email, u.estado, s.nombre from users u, sedes s 
+            where u.id_rol=2 and u.id_sede=s.id");
+        }else{
+            $getProfessorsNotAssigning = DB::select("SELECT u.id, u.nombre, u.email, u.estado, s.nombre from users u, sedes s 
+            where u.id_rol=2 and u.id_sede=s.id " . $condition); 
+        }
+       
 
         return response()->json($getProfessorsNotAssigning);
     }
