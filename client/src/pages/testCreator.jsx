@@ -53,9 +53,10 @@ const EmptySeccion = styled.p`
 const TestCreator = () => {
   const { idTest } = useParams();
 
-  const [loading, setLoading] = useState(true);
   const [test, setTest] = useState([]);
   const [secciones, setSecciones] = useState([]);
+
+  const [loading, setLoading] = useState(true);
   const [seccionActual, setSeccionActual] = useState(0);
   const [editActual, setEditActual] = useState(0);
   

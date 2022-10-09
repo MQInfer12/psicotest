@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { DangerIconButton, WhiteIconButton } from "../../../styles/formularios";
+import { WhiteIconButton } from "../../../styles/formularios";
 import Cargando from "../../globals/cargando";
 import { getReactivosBySeccion } from "../../../services/reactivo";
+import { getPuntuacionesByReactivos } from "../../../services/puntuacion";
 import Modal from "../../globals/modal";
 import Pagination from "../pagination";
 import ModalReactivo from "./modalReactivo";
@@ -22,25 +23,12 @@ const ControlsContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 68px;
-  padding: 0px 21px;
-`;
-
-const DeleteContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-`;
-
-const PSelected = styled.p`
-  height: max-content;
-  font-size: 12px;
-  color: #464F60;
+  padding: 0px 11px;
 `;
 
 //TABLA
 const TableContainer = styled.div`
   height: 552px;
-  overflow: hidden;
 `;
 
 const TablePreguntas = styled.table`
@@ -49,16 +37,12 @@ const TablePreguntas = styled.table`
 
   & > thead {
     height: 40px;
-  }
-
-  & > thead > tr {
-    display: flex;
-    align-items: center;
     width: 100%;
-    height: 40px;
   }
 
   & > thead > tr > th {
+    display: flex;
+    align-items: center;
     height: 40px;
   }
 
@@ -72,6 +56,15 @@ const TablePreguntas = styled.table`
   & > tbody > tr:nth-child(2n) {
     background-color: #EBF0FA;
   }
+`;
+
+const TrHead = styled.tr`
+  text-align: center;
+  display: grid;
+  grid-template-columns: 47px repeat(${props => props.cant}, 1fr);
+  align-items: center;
+  width: 622px;
+  height: 40px;
 `;
 
 const ThNumberal = styled.th`
@@ -90,23 +83,62 @@ const TrCargando = styled.tr`
 `;
 
 const TdCargando = styled.td`
+  background-color: #FFFFFF;
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 512px;
+`;
+
+const TdPuntuacion = styled.td`
+  max-width: 575px;
+  color: #464F60;
+  font-weight: 400;
+  font-size: 14px;
+  text-align: center;
+`;
+
+const InputNumber = styled.input`
+  border: none;
+  background-color: transparent;
+  text-align: center;
+  width: 100%;
+  outline: none;
 `;
 
 const ReactivoCreator = ({ idSeccion }) => {
   const [reactivos, setReactivos] = useState([]);
+  const [idPreguntas, setIdPreguntas] = useState([]);
+  const [puntuaciones, setPuntuaciones] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [reactivosPage, setReactivosPage] = useState(1);
-  const [selecteds, setSelecteds] = useState([]);
 
   const llenarReactivos = async () => {
     const res = await getReactivosBySeccion(idSeccion);
     const resJson = await res?.json();
-    console.log(resJson);
     setReactivos(resJson);
+
+    //BUSCAR PUNTUACIONES POR ID REACTIVOS
+    let idReactivos = [];
+    resJson.forEach(reactivo => {
+      idReactivos.push(reactivo.id);
+    });
+
+    const resPunt = await getPuntuacionesByReactivos(idReactivos);
+    const resPuntJson = await resPunt?.json();
+    setPuntuaciones(resPuntJson);
+
+    //LLENAR LOS IDPREGUNTAS
+    const ids = [];
+    resPuntJson.forEach(puntuacion => {
+      if(!ids.includes(puntuacion.id_pregunta)) {
+        ids.push(puntuacion.id_pregunta);
+      }
+    })
+    setIdPreguntas(ids);
+
+    //DEJAR DE CARGAR
     setLoading(false);
   }
 
@@ -135,7 +167,7 @@ const ReactivoCreator = ({ idSeccion }) => {
       <TableContainer>
         <TablePreguntas>
           <thead>
-            <tr>
+            <TrHead cant={reactivos.length}>
               <ThNumberal>#</ThNumberal>
               {
                 reactivos.filter((v, i) => i >= (reactivosPage - 1) * 8 && i < reactivosPage * 8).map((v, i) => (
@@ -144,12 +176,10 @@ const ReactivoCreator = ({ idSeccion }) => {
                     {...v} 
                     index={((reactivosPage - 1) * 8) + (i + 1)} 
                     llenarReactivos={llenarReactivos}
-                    selecteds={selecteds}
-                    setSelecteds={setSelecteds}
                   />
                 ))
               }
-            </tr>
+            </TrHead>
           </thead>
           <tbody>
             {
@@ -160,20 +190,18 @@ const ReactivoCreator = ({ idSeccion }) => {
                   </TdCargando>
                 </TrCargando>
               ) : (
-                <>
-                  {/*
-                    reactivos.filter((v, i) => i >= (reactivosPage - 1) * 8 && i < reactivosPage * 8).map((v, i) => (
-                      <ReactivoCard 
-                        key={i} 
-                        {...v} 
-                        index={((reactivosPage - 1) * 8) + (i + 1)} 
-                        llenarReactivos={llenarReactivos}
-                        selecteds={selecteds}
-                        setSelecteds={setSelecteds}
-                      />
-                    ))
-                    */}
-                </>
+                idPreguntas.filter((v, i) => i >= (reactivosPage - 1) * 8 && i < reactivosPage * 8).map((v, i) => (
+                  <TrHead cant={reactivos.length} key={i}>
+                    <ThNumberal>{i + 1}</ThNumberal>
+                    {
+                      puntuaciones.filter(va => va.id_pregunta == v).map((va, j) => (
+                        <TdPuntuacion>
+                          {va.asignado}
+                        </TdPuntuacion>
+                      )) 
+                    }
+                  </TrHead>
+                ))
               )
             }
           </tbody>

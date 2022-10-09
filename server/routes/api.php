@@ -6,6 +6,7 @@ use App\Http\Controllers\GrupoBeneficiarioController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\PreguntaController;
+use App\Http\Controllers\PuntuacionController;
 use App\Http\Controllers\ReactivoController;
 use App\Http\Controllers\SeccionController;
 use App\Http\Controllers\TestController;
@@ -48,6 +49,10 @@ Route::group(['middleware' => 'api'], function(){
     //SECCIONES ROUTES
     Route::apiResource("reactivo", ReactivoController::class);
     Route::get("reactivo/seccion/{idSeccion}", [ReactivoController::class, 'reactivosBySeccion']);
+
+    //PUNTUACIONES ROUTES
+    Route::apiResource("puntuacion", PuntuacionController::class);
+    Route::post("puntuacion/reactivo", [PuntuacionController::class, 'puntuacionesByReactivos']);
 
     //HORARIOS
     Route::apiResource("horario", HorarioController::class);

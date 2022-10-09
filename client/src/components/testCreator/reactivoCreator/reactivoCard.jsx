@@ -1,36 +1,49 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { DangerIconButton, WhiteIconButton } from "../../../styles/formularios";
 import Modal from "../../globals/modal";
 import ModalReactivo from "./modalReactivo";
+import { deleteReactivo } from "../../../services/reactivo";
 
 const ThReactivo = styled.th`
-  padding-left: 11px;
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
   text-align: start;
   color: #464F60;
   position: relative;
-  overflow: hidden;
   transition: all 0.2s;
 
-  flex-grow: 1;
-
   &:hover {
+    & > p {
+      background-color: #FFFFFF;
+    }
+
     & > div {
-      transform: translateX(0);
+      transform: translateY(-40px);
     }
   }
 `;
 
-const DivButtonsTd = styled.div`
+const PText = styled.p`
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   height: 100%;
-  padding-right: 10px;
+  background-color: #EBF0FA;
+  z-index: 1;
+  transition: all 0.3s;
+`;
+
+const DivButtonsTd = styled.div`
+  width: 100%;
+  height: 100%;
   position: absolute;
+  display: flex;
+  justify-content: center;
   top: 0;
-  right: 0;
-  transform: translateX(100px);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -39,37 +52,41 @@ const DivButtonsTd = styled.div`
 
 const ReactivoCard = (props) => {
   const [showForm, setShowForm] = useState(false);
-  const [selected, setSelected] = useState(false);
 
-  useEffect(() => {
-    props.selecteds.includes(props.id)? setSelected(true) : setSelected(false);
-  })
+  const borrarReactivo = async () => {
+    const res = await deleteReactivo(props.id);
+    const resJson = await res?.json();
+    console.log(resJson);
+    if(resJson) {
+      console.log("Se borro correctamente");
+      props.llenarReactivos();
+    }
+  }
 
   return (
-    <>
     <ThReactivo>
+      <PText>
         {props.descripcion}
-        <DivButtonsTd>
-          <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
-          { /* BOTON PARA IR MARCANDO LAS PREGUNTAS */}
-          <DangerIconButton><i className="fa-solid fa-trash-can"></i></DangerIconButton>
-        </DivButtonsTd>
-        {
-          showForm &&
-          <Modal titulo="Editar reactivo" cerrar={() => setShowForm(false)} >
-            <ModalReactivo 
-              actualizar={() => {
-                props.llenarReactivos();
-                setShowForm(false);
-              }}
-              funcion="editar"
-              reactivo={props}
-              idSeccion={props.id_seccion}
-            />
-          </Modal>
-        }
+      </PText>
+      <DivButtonsTd>
+        <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
+        <DangerIconButton onClick={borrarReactivo}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
+      </DivButtonsTd>
+      {
+        showForm &&
+        <Modal titulo="Editar reactivo" cerrar={() => setShowForm(false)} >
+          <ModalReactivo 
+            actualizar={() => {
+              props.llenarReactivos();
+              setShowForm(false);
+            }}
+            funcion="editar"
+            reactivo={props}
+            idSeccion={props.id_seccion}
+          />
+        </Modal>
+      }
     </ThReactivo>
-    </>
   )
 }
 

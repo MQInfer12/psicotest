@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pregunta;
+use App\Models\Puntuacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -29,7 +30,21 @@ class PreguntaController extends Controller
         $pregunta->id_seccion = $request->id_seccion;
         $pregunta->descripcion = $request->descripcion;
         $pregunta->save();
+        
+        //AÑADIR PUNTUACIONES DE LA PREGUNTA DEPENDIENDO DE CUANTOS REACTIVOS HAYA
+        $id_pregunta = $pregunta->id;
+        $id_seccion = $request->id_seccion;
+        $reactivos = DB::select("SELECT * FROM reactivos WHERE id_seccion='$id_seccion' ORDER BY id");
 
+        foreach($reactivos as $reactivo) {
+            $puntuacion = new Puntuacion();
+            $puntuacion->id_pregunta = $id_pregunta;
+            $puntuacion->id_reactivo = $reactivo->id;
+            $puntuacion->asignado = 0;
+            $puntuacion->save();
+        }
+
+        //RETORNAR
         return response()->json(["mensaje" => "se guardo correctamente"], 201);
     }
 

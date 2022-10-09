@@ -65,7 +65,6 @@ const PreguntaCard = (props) => {
   })
 
   return (
-    <>
     <PreguntaRow 
       selected={selected}
     >
@@ -111,7 +110,6 @@ const PreguntaCard = (props) => {
         }
       </TdPregunta>
     </PreguntaRow>
-    </>
   )
 }
 
