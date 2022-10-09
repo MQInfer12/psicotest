@@ -12,6 +12,27 @@ export const getUsers = async () => {
     console.log(error);
   }
 };
+export const getProfessor = async() => {
+
+  try {
+    const response = await fetch(`${http}user/getProfessors/1`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    });
+  
+    if (response.ok) {
+      const result = await response.json();
+      console.log(result);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+
+}
+
 
 export const addUser = async (form) => {
   try {

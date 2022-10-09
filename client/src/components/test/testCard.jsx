@@ -7,8 +7,12 @@ import Modal from "../globals/modal";
 import ModalTest from "./modalTest";
 import { deleteTest } from "../../services/test";
 import { useNavigate } from "react-router-dom";
-import { WhiteIconButton, PurpleIconButton, DangerIconButton } from "../../styles/formularios";
-
+import {
+  WhiteIconButton,
+  PurpleIconButton,
+  DangerIconButton,
+} from "../../styles/formularios";
+import ModalAssignProfessor from './modalAssignProfessor'
 const Container = styled.div`
   width: 322px;
   height: fit-content;
@@ -61,46 +65,62 @@ const ButtonContainer = styled.div`
 const TestCard = (props) => {
   const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
-
+  const [showAddProfessor, setShowAddProfessor] = useState(false);
   const borrarTest = async () => {
     const res = await deleteTest(props.id);
     const resJson = await res?.json();
-    if(resJson) props.llenarTests();
-  }
+    if (resJson) props.llenarTests();
+  };
 
   return (
     <Container>
       <H2>{props.nombre}</H2>
-      <P>
-        {props.descripcion}
-      </P>
-  
+      <P>{props.descripcion}</P>
+
       <ContainerIcon>
         <People />
         <Span>{props.autor}</Span>
       </ContainerIcon>
-  
+
       <ContainerIcon>
         <Timer />
         <Span>{props.tiempo}</Span>
       </ContainerIcon>
-  
+
       <ContainerImg>
         <ProfilePic width="36px" height="36px" border={true} />
         <ProfilePic width="36px" height="36px" border={true} translation={1} />
         <ProfilePic width="36px" height="36px" border={true} translation={2} />
         <ProfilePic width="36px" height="36px" border={true} translation={3} />
       </ContainerImg>
-      
+
       <ButtonContainer>
-        <WhiteIconButton onClick={() => { navigate(`../testview/${props.id}`) }}><i className="fa-solid fa-newspaper"></i></WhiteIconButton>
-        <PurpleIconButton onClick={() => { navigate(`./${props.id}`) }}><i className="fa-solid fa-pen-to-square"></i></PurpleIconButton>
-        <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
-        <DangerIconButton onClick={borrarTest}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
+        <WhiteIconButton
+          onClick={() => {
+            navigate(`../testview/${props.id}`);
+          }}
+        >
+          <i className="fa-solid fa-newspaper"></i>
+        </WhiteIconButton>
+        <PurpleIconButton
+          onClick={() => {
+            navigate(`./${props.id}`);
+          }}
+        >
+          <i className="fa-solid fa-pen-to-square"></i>
+        </PurpleIconButton>
+        <WhiteIconButton onClick={() => setShowForm(true)}>
+          <i className="fa-solid fa-pencil"></i>
+        </WhiteIconButton>
+        <DangerIconButton onClick={borrarTest}>
+          <i className="fa-solid fa-trash-can"></i>
+        </DangerIconButton>
+        <WhiteIconButton onClick={() => setShowAddProfessor(true)}>
+          <i className="fa-sharp fa-solid fa-user-plus"></i>
+        </WhiteIconButton>
       </ButtonContainer>
 
-      {
-        showForm && 
+      {showForm && (
         <Modal titulo="Editar test" cerrar={() => setShowForm(false)}>
           <ModalTest
             test={props}
@@ -111,9 +131,21 @@ const TestCard = (props) => {
             }}
           />
         </Modal>
-      }
+      )}
+
+      {showAddProfessor && (
+        <Modal titulo="Agregar Profesor" cerrar={() => setShowAddProfessor(false)}>
+          <ModalAssignProfessor
+            test={props}
+            actualizar={() => {
+              props.llenarTests();
+              setShowForm(false);
+            }}
+          />
+        </Modal>
+      )}
     </Container>
-  )
-}
+  );
+};
 
 export default TestCard;

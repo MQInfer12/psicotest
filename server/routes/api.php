@@ -25,6 +25,7 @@ Route::group(['middleware' => 'api'], function(){
     //USER ROUTES
     Route::apiResource("user", UserController::class);
     Route::put('user/able/{id}', [UserController::class, 'able']);
+    Route::get('user/getProfessors/{id}', [UserController::class, 'getProfessor']);
 
     //GRUPO ROUTES
     Route::apiResource("grupo", GrupoController::class);
