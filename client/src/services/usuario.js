@@ -25,7 +25,7 @@ export const getProfessor = async() => {
   
     if (response.ok) {
       const result = await response.json();
-      console.log(result);
+      return result;
     }
   } catch (err) {
     console.error(err);
