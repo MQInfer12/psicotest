@@ -97,8 +97,19 @@ const TdPuntuacion = styled.td`
   text-align: center;
 `;
 
-const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, preguntas }) => {
+const InputNumber = styled.input`
+  border: none;
+  background-color: transparent;
+  text-align: center;
+  width: 100%;
+  outline: none;
+`;
+
+const ReactivoCreator = ({ idSeccion }) => {
+  const [reactivos, setReactivos] = useState([]);
+  const [idPreguntas, setIdPreguntas] = useState([]);
   const [puntuaciones, setPuntuaciones] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [reactivosPage, setReactivosPage] = useState(1);
@@ -108,7 +119,7 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, preguntas }) => {
     const resJson = await res?.json();
     setReactivos(resJson);
 
-    //BUSCAR POR ID REACTIVOS
+    //BUSCAR PUNTUACIONES POR ID REACTIVOS
     let idReactivos = [];
     resJson.forEach(reactivo => {
       idReactivos.push(reactivo.id);
@@ -118,6 +129,16 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, preguntas }) => {
     const resPuntJson = await resPunt?.json();
     setPuntuaciones(resPuntJson);
 
+    //LLENAR LOS IDPREGUNTAS
+    const ids = [];
+    resPuntJson.forEach(puntuacion => {
+      if(!ids.includes(puntuacion.id_pregunta)) {
+        ids.push(puntuacion.id_pregunta);
+      }
+    })
+    setIdPreguntas(ids);
+
+    //DEJAR DE CARGAR
     setLoading(false);
   }
 
@@ -169,20 +190,18 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, preguntas }) => {
                   </TdCargando>
                 </TrCargando>
               ) : (
-                <>
-                {
-                  preguntas.filter((v, i) => i >= (reactivosPage - 1) * 8 && i < reactivosPage * 8).map((pregunta, i) => (
-                    <TrHead cant={reactivos.length}>
-                      <ThNumberal>{i + 1}</ThNumberal>
-                      {
-                        puntuaciones.filter(v => v.id_pregunta == pregunta.id).map((v, i) => (
-                          <TdPuntuacion>{v.asignado}</TdPuntuacion>
-                        ))
-                      }
-                    </TrHead>
-                  ))
-                }
-                </>
+                idPreguntas.filter((v, i) => i >= (reactivosPage - 1) * 8 && i < reactivosPage * 8).map((v, i) => (
+                  <TrHead cant={reactivos.length} key={i}>
+                    <ThNumberal>{i + 1}</ThNumberal>
+                    {
+                      puntuaciones.filter(va => va.id_pregunta == v).map((va, j) => (
+                        <TdPuntuacion>
+                          {va.asignado}
+                        </TdPuntuacion>
+                      )) 
+                    }
+                  </TrHead>
+                ))
               )
             }
           </tbody>

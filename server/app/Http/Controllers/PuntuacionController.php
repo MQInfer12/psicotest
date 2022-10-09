@@ -17,14 +17,18 @@ class PuntuacionController extends Controller
     {
         $reactivos = $request->reactivos;
 
-        $query = "SELECT * FROM puntuacions WHERE ";
-        foreach($reactivos as $index => $reactivo) {
-            $query = $query . " id_reactivo = '$reactivo' OR";
+        if(count($reactivos) != 0) {
+            $query = "SELECT * FROM puntuacions WHERE ";
+            foreach($reactivos as $index => $reactivo) {
+                $query = $query . " id_reactivo = '$reactivo' OR";
+            }
+            $query = $query . "DER BY id_pregunta";
+    
+            $puntuaciones = DB::select($query);
+            return $puntuaciones;
+        } else {
+            return [];
         }
-        $query = $query . "DER BY id_reactivo";
-
-        $puntuaciones = DB::select($query);
-        return $puntuaciones;
     }
 
     public function update(Request $request, Puntuacion $puntuacion)

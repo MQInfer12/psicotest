@@ -55,8 +55,6 @@ const TestCreator = () => {
 
   const [test, setTest] = useState([]);
   const [secciones, setSecciones] = useState([]);
-  const [preguntas, setPreguntas] = useState([]);
-  const [reactivos, setReactivos] = useState([]);
 
   const [loading, setLoading] = useState(true);
   const [seccionActual, setSeccionActual] = useState(0);
@@ -99,16 +97,11 @@ const TestCreator = () => {
                     <FullScreen translate={editActual}>
                       <PreguntaCreator 
                         idSeccion={v.id}
-                        preguntas={preguntas}
-                        setPreguntas={setPreguntas}
                       />
                     </FullScreen>
                     <FullScreen translate={editActual}>
                       <ReactivoCreator
                         idSeccion={v.id}
-                        reactivos={reactivos}
-                        setReactivos={setReactivos}
-                        preguntas={preguntas}
                       />
                     </FullScreen>
                   </CreatorsContainer>

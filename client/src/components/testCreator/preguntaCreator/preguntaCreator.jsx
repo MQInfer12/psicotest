@@ -93,7 +93,8 @@ const TdCargando = styled.td`
   height: 512px;
 `;
 
-const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas }) => {
+const PreguntaCreator = ({ idSeccion }) => {
+  const [preguntas, setPreguntas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [preguntasPage, setPreguntasPage] = useState(1);
