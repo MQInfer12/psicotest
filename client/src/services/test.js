@@ -12,11 +12,30 @@ export const getTests = async () => {
   }
 };
 
+export const getProfessorTests = async (id) => {
+  try {
+    const response = await fetch(`${http}test/professor/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+    });
+    const resJson = await response.json();
+    return resJson;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const addTest = async (form) => {
   try {
     const response = await fetch(`${http}test`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
       body: JSON.stringify({
         nombre: form.nombre,
         descripcion: form.descripcion,
@@ -35,7 +54,7 @@ export const addProfessorToTest = async (obj, id_test) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "accept": "application/json",
+        accept: "application/json",
       },
       body: JSON.stringify({
         objeto: obj,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Timer from "../../icons/timer";
 import People from "../../icons/people";
@@ -13,6 +13,7 @@ import {
   DangerIconButton,
 } from "../../styles/formularios";
 import ModalAssignProfessor from "./modalAssignProfessor";
+import { getProfessorTests } from "../../services/test";
 const Container = styled.div`
   width: 322px;
   height: fit-content;
@@ -66,11 +67,21 @@ const TestCard = (props) => {
   const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
   const [showAddProfessor, setShowAddProfessor] = useState(false);
+  const [data, setData] = useState([]);
   const borrarTest = async () => {
     const res = await deleteTest(props.id);
     const resJson = await res?.json();
     if (resJson) props.llenarTests();
   };
+
+  const handleGetProfessor = async () => {
+    const resp = await getProfessorTests(props.id);
+    setData(resp);
+  };
+
+  useEffect(() => {
+    handleGetProfessor();
+  }, []);
 
   return (
     <Container>
@@ -88,10 +99,17 @@ const TestCard = (props) => {
       </ContainerIcon>
 
       <ContainerImg>
-        <ProfilePic width="36px" height="36px" border={true} />
-        <ProfilePic width="36px" height="36px" border={true} translation={1} />
-        <ProfilePic width="36px" height="36px" border={true} translation={2} />
-        <ProfilePic width="36px" height="36px" border={true} translation={3} />
+        {data.map((v, i) => (
+          <div key={i}>
+            <ProfilePic
+              width="36px"
+              height="36px"
+              border={true}
+              src={v.perfil}
+              translation={i}
+            />
+          </div>
+        ))}
       </ContainerImg>
 
       <ButtonContainer>
@@ -142,6 +160,7 @@ const TestCard = (props) => {
             id={props.id}
             actualizar={() => {
               props.llenarTests();
+              handleGetProfessor();
               setShowAddProfessor(false);
             }}
           />
