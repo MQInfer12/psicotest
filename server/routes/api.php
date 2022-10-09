@@ -40,6 +40,7 @@ Route::group(['middleware' => 'api'], function(){
     Route::apiResource("test", TestController::class);
     Route::post("test/assignateProfessor", [DocenteTestController::class, 'store']);
     Route::get("test/professor/{id}", [DocenteTestController::class, 'index']);
+    Route::get("test/professorNotAssigning/{id}", [DocenteTestController::class, 'getProfessorNotAssigning']);
     
     //SECCIONES ROUTES
     Route::apiResource("seccion", SeccionController::class);
