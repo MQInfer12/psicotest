@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { DangerIconButton, WhiteIconButton } from "../../../styles/formularios";
+import { WhiteIconButton } from "../../../styles/formularios";
 import Cargando from "../../globals/cargando";
 import { getReactivosBySeccion } from "../../../services/reactivo";
+import { getPuntuacionesByReactivos } from "../../../services/puntuacion";
 import Modal from "../../globals/modal";
 import Pagination from "../pagination";
 import ModalReactivo from "./modalReactivo";
@@ -36,6 +37,7 @@ const TablePreguntas = styled.table`
 
   & > thead {
     height: 40px;
+    width: 100%;
   }
 
   & > thead > tr > th {
@@ -57,10 +59,11 @@ const TablePreguntas = styled.table`
 `;
 
 const TrHead = styled.tr`
+  text-align: center;
   display: grid;
   grid-template-columns: 47px repeat(${props => props.cant}, 1fr);
   align-items: center;
-  width: 100%;
+  width: 622px;
   height: 40px;
 `;
 
@@ -80,23 +83,41 @@ const TrCargando = styled.tr`
 `;
 
 const TdCargando = styled.td`
+  background-color: #FFFFFF;
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 512px;
 `;
 
-const ReactivoCreator = ({ idSeccion }) => {
-  const [reactivos, setReactivos] = useState([]);
+const TdPuntuacion = styled.td`
+  max-width: 575px;
+  color: #464F60;
+  font-weight: 400;
+  font-size: 14px;
+  text-align: center;
+`;
+
+const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, preguntas }) => {
+  const [puntuaciones, setPuntuaciones] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [reactivosPage, setReactivosPage] = useState(1);
-  const [selecteds, setSelecteds] = useState([]);
 
   const llenarReactivos = async () => {
     const res = await getReactivosBySeccion(idSeccion);
     const resJson = await res?.json();
-    console.log(resJson);
     setReactivos(resJson);
+
+    //BUSCAR POR ID REACTIVOS
+    let idReactivos = [];
+    resJson.forEach(reactivo => {
+      idReactivos.push(reactivo.id);
+    });
+
+    const resPunt = await getPuntuacionesByReactivos(idReactivos);
+    const resPuntJson = await resPunt?.json();
+    setPuntuaciones(resPuntJson);
+
     setLoading(false);
   }
 
@@ -134,8 +155,6 @@ const ReactivoCreator = ({ idSeccion }) => {
                     {...v} 
                     index={((reactivosPage - 1) * 8) + (i + 1)} 
                     llenarReactivos={llenarReactivos}
-                    selecteds={selecteds}
-                    setSelecteds={setSelecteds}
                   />
                 ))
               }
@@ -151,18 +170,18 @@ const ReactivoCreator = ({ idSeccion }) => {
                 </TrCargando>
               ) : (
                 <>
-                  {/*
-                    reactivos.filter((v, i) => i >= (reactivosPage - 1) * 8 && i < reactivosPage * 8).map((v, i) => (
-                      <ReactivoCard 
-                        key={i} 
-                        {...v} 
-                        index={((reactivosPage - 1) * 8) + (i + 1)} 
-                        llenarReactivos={llenarReactivos}
-                        selecteds={selecteds}
-                        setSelecteds={setSelecteds}
-                      />
-                    ))
-                    */}
+                {
+                  preguntas.filter((v, i) => i >= (reactivosPage - 1) * 8 && i < reactivosPage * 8).map((pregunta, i) => (
+                    <TrHead cant={reactivos.length}>
+                      <ThNumberal>{i + 1}</ThNumberal>
+                      {
+                        puntuaciones.filter(v => v.id_pregunta == pregunta.id).map((v, i) => (
+                          <TdPuntuacion>{v.asignado}</TdPuntuacion>
+                        ))
+                      }
+                    </TrHead>
+                  ))
+                }
                 </>
               )
             }
