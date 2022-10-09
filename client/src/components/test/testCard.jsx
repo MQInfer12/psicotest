@@ -12,7 +12,7 @@ import {
   PurpleIconButton,
   DangerIconButton,
 } from "../../styles/formularios";
-import ModalAssignProfessor from './modalAssignProfessor'
+import ModalAssignProfessor from "./modalAssignProfessor";
 const Container = styled.div`
   width: 322px;
   height: fit-content;
@@ -134,12 +134,15 @@ const TestCard = (props) => {
       )}
 
       {showAddProfessor && (
-        <Modal titulo="Agregar Profesor" cerrar={() => setShowAddProfessor(false)}>
+        <Modal
+          titulo="Agregar Profesor"
+          cerrar={() => setShowAddProfessor(false)}
+        >
           <ModalAssignProfessor
-            test={props}
+            id={props.id}
             actualizar={() => {
               props.llenarTests();
-              setShowForm(false);
+              setShowAddProfessor(false);
             }}
           />
         </Modal>

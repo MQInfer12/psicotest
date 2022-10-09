@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CitaController;
+use App\Http\Controllers\DocenteTestController;
 use App\Http\Controllers\GrupoBeneficiarioController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\HorarioController;
@@ -37,6 +38,7 @@ Route::group(['middleware' => 'api'], function(){
 
     //TEST ROUTES
     Route::apiResource("test", TestController::class);
+    Route::post("test/assignateProfessor", [DocenteTestController::class, 'store']);
     
     //SECCIONES ROUTES
     Route::apiResource("seccion", SeccionController::class);
