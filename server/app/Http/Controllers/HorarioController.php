@@ -15,7 +15,21 @@ class HorarioController extends Controller
         where h.id_docente=u.id
         ");
     }
-    
+
+    public function showById($id)
+    {
+        return DB::select("SELECT h.id, h.fecha, h.hora_inicio, h.hora_final, h.disponible, u.email, u.nombre 
+        from horarios h, users u 
+        where h.id_docente=u.id and u.id=$id");
+    }
+
+    public function showWhoHaveDateTheProfessor($id)
+    {
+        return DB::select("SELECT c.id, c.id_usuario, h.fecha , h.hora_inicio, h.hora_final,h.disponible, 
+        h.id_docente, u.email, u.nombre
+        from citas c, horarios h, users u where h.id_docente=$id and c.id_horario=h.id and c.id_usuario = u.id");
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -56,16 +70,13 @@ class HorarioController extends Controller
         $grupo->hora_inicio = $request->hora_inicio;
         $grupo->hora_final = $request->hora_final;
         $grupo->id_docente = $request->id_docente;
-        $grupo->disponible = $request->disponible;
-
+        $grupo->disponible = true;
         $grupo->save();
-
         return response()->json(["mensaje" => "se actualizo correctamente"], 201);
     }
 
-    public function destroy($id) 
+    public function destroy($id)
     {
         return Horario::destroy($id);
     }
-
 }

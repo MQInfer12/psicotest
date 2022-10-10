@@ -16,6 +16,7 @@ import Calendar from "./pages/calendar";
 import Test from './pages/test';
 import TestCreator from "./pages/testCreator";
 import TestView from "./pages/testView";
+import Appoinment from "./pages/appoinment";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -98,6 +99,14 @@ function App() {
               element={
                 <OutletContext titlePage="Perfil" calendar={false}>
                   <Profile />
+                </OutletContext>
+              } 
+            />
+            <Route 
+              path="cita" 
+              element={
+                <OutletContext titlePage="cita" calendar={false}>
+                  <Appoinment />
                 </OutletContext>
               } 
             />
