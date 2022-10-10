@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { DangerIconButton, WhiteIconButton } from "../../../styles/formularios";
 import Cargando from "../../globals/cargando";
 import { getPreguntasBySeccion, massDestroy } from "../../../services/pregunta";
+import { getPuntuacionesByReactivos } from "../../../services/puntuacion";
 import Modal from "../../globals/modal";
 import ModalPregunta from "./modalPregunta";
 import PreguntaCard from "./preguntaCard";
@@ -93,8 +94,7 @@ const TdCargando = styled.td`
   height: 512px;
 `;
 
-const PreguntaCreator = ({ idSeccion }) => {
-  const [preguntas, setPreguntas] = useState([]);
+const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPuntuaciones }) => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [preguntasPage, setPreguntasPage] = useState(1);
@@ -104,6 +104,18 @@ const PreguntaCreator = ({ idSeccion }) => {
     const res = await getPreguntasBySeccion(idSeccion);
     const resJson = await res?.json();
     setPreguntas(resJson);
+
+    //BUSCAR PUNTUACIONES POR ID REACTIVOS
+    let idReactivos = [];
+    reactivos.forEach(reactivo => {
+      idReactivos.push(reactivo.id);
+    });
+
+    const resPunt = await getPuntuacionesByReactivos(idReactivos);
+    const resPuntJson = await resPunt?.json();
+    setPuntuaciones(resPuntJson);
+
+    //DEJAR DE CARGAR
     setLoading(false);
   }
 

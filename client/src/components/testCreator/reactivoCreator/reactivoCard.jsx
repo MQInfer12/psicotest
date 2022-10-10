@@ -56,7 +56,6 @@ const ReactivoCard = (props) => {
   const borrarReactivo = async () => {
     const res = await deleteReactivo(props.id);
     const resJson = await res?.json();
-    console.log(resJson);
     if(resJson) {
       console.log("Se borro correctamente");
       props.llenarReactivos();

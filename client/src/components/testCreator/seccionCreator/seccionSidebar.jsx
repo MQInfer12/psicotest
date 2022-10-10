@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { PurpleButton, WhiteButton, DangerButton, WhiteIconButton } from "../../styles/formularios";
-import { addSeccion, deleteSeccion } from "../../services/seccion";
+import { PurpleButton, WhiteButton, DangerButton, WhiteIconButton } from "../../../styles/formularios";
+import { addSeccion, deleteSeccion } from "../../../services/seccion";
 
 const SeccionCreatorDash = styled.div`
   width: 263px;
@@ -35,9 +35,10 @@ const ButtonContainer = styled.div`
   gap: 5px;
 `;
 
-const SeccionSidebar = ({ test, idTest, seccion, index, llenarSecciones, seccionState, editState }) => {
+const SeccionSidebar = ({ test, seccion, index, llenarSecciones, seccionState, editState }) => {
+
   const añadirSeccion = async () => {
-    const res = await addSeccion(idTest);
+    const res = await addSeccion(test.id);
     const resJson = await res?.json();
     if(resJson.mensaje == "se guardo correctamente") {
       console.log("Se creó una nueva sección");
