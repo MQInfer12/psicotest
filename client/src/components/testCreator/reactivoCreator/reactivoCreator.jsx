@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { WhiteIconButton } from "../../../styles/formularios";
 import Cargando from "../../globals/cargando";
 import { getReactivosBySeccion } from "../../../services/reactivo";
-import { getPuntuacionesByReactivos } from "../../../services/puntuacion";
+import { getPuntuacionesByReactivos, massUpdatePuntuaciones } from "../../../services/puntuacion";
+import { ErrorCss } from "../../../styles/formularios";
 import Modal from "../../globals/modal";
 import Pagination from "../pagination";
 import ModalReactivo from "./modalReactivo";
@@ -24,6 +25,19 @@ const ControlsContainer = styled.div`
   justify-content: space-between;
   height: 68px;
   padding: 0px 11px;
+`;
+
+const HeadContainer = styled.div`
+  width: fit-content;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+`;
+
+const PSelected = styled.p`
+  height: max-content;
+  font-size: 12px;
+  color: #464F60;
 `;
 
 //TABLA
@@ -94,14 +108,17 @@ const TdPuntuacion = styled.td`
   color: #464F60;
   font-weight: 400;
   font-size: 14px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 `;
 
 const InputNumber = styled.input`
   border: none;
   background-color: transparent;
   text-align: center;
-  width: 100%;
+  width: 40%;
   outline: none;
 `;
 
@@ -109,6 +126,7 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [reactivosPage, setReactivosPage] = useState(1);
+  const [save, setSave] = useState(false);
 
   const llenarReactivos = async () => {
     const res = await getReactivosBySeccion(idSeccion);
@@ -129,6 +147,26 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
     setLoading(false);
   }
 
+  const handleChange = (e) => {
+    setSave(true);
+    const {name, value} = e.target;
+
+    let puntuacion = puntuaciones.find(obj => {
+      return obj.id == name
+    })
+    puntuacion.asignado = Number(value);
+
+    setPuntuaciones(oldPuntuaciones => [...oldPuntuaciones]);
+  }
+
+  const handleSave = async () => {
+    const res = await massUpdatePuntuaciones(puntuaciones);
+    const resJson = await res?.json();
+    if(resJson.mensaje == "se guardo correctamente") {
+      setSave(false);
+    }
+  }
+
   useState(() => {
     llenarReactivos();
   }, []);
@@ -136,7 +174,10 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
   return (
     <PreguntaCreatorContainer>
       <ControlsContainer>
-        <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-plus"></i></WhiteIconButton>
+        <HeadContainer>
+          <WhiteIconButton onClick={() => setShowForm(true)} disabled={reactivos.length == 5}><i className="fa-solid fa-plus"></i></WhiteIconButton>
+          <PSelected>{reactivos.length} / 5</PSelected>
+        </HeadContainer>
         {
           showForm &&
           <Modal titulo="Añadir reactivo" cerrar={() => setShowForm(false)}>
@@ -149,6 +190,13 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
               idSeccion={idSeccion}
             />
           </Modal>
+        }
+        {
+          save &&
+          <HeadContainer>
+            <ErrorCss>¡Guarda tus cambios!</ErrorCss>
+            <WhiteIconButton onClick={handleSave}><i className="fa-solid fa-plus"></i></WhiteIconButton>
+          </HeadContainer>
         }
       </ControlsContainer>
       <TableContainer>
@@ -183,7 +231,12 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
                     {
                       puntuaciones.filter(va => va.id_pregunta == v.id).map((va, j) => (
                         <TdPuntuacion key={j}>
-                          {va.id_pregunta}
+                          <InputNumber 
+                            name={va.id}
+                            type="number"
+                            value={va.asignado}
+                            onChange={handleChange}
+                          />
                         </TdPuntuacion>
                       )) 
                     }

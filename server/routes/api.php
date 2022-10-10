@@ -51,8 +51,8 @@ Route::group(['middleware' => 'api'], function(){
     Route::get("reactivo/seccion/{idSeccion}", [ReactivoController::class, 'reactivosBySeccion']);
 
     //PUNTUACIONES ROUTES
-    Route::apiResource("puntuacion", PuntuacionController::class);
     Route::post("puntuacion/reactivo", [PuntuacionController::class, 'puntuacionesByReactivos']);
+    Route::put("puntuacion/update", [PuntuacionController::class, 'massUpdate']);
 
     //HORARIOS
     Route::apiResource("horario", HorarioController::class);
@@ -60,11 +60,9 @@ Route::group(['middleware' => 'api'], function(){
     Route::get('horario/showWho/{id_docente}', [HorarioController::class, 'showWhoHaveDateTheProfessor']);
 
     //Citas
- /*    Route::apiResource("cita", CitaController::class); */
+    /*Route::apiResource("cita", CitaController::class); */
     Route::put('cita/schedule/{id_schedule}', [CitaController::class, 'scheduleAppointment']);
     Route::get('cita/schedule/{id_user}', [CitaController::class, 'getAppointmentsSchedule']);
     Route::get('cita/allschedule', [CitaController::class, 'allAppointmentsAvailables']);
     Route::put('cita/allschedule/{idHorario}/{idCita}', [CitaController::class, 'cancelAppointment']);
-
-
 });
