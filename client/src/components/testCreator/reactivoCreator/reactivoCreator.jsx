@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { WhiteIconButton } from "../../../styles/formularios";
 import Cargando from "../../globals/cargando";
-import { getReactivosBySeccion } from "../../../services/reactivo";
-import { getPuntuacionesByReactivos } from "../../../services/puntuacion";
+import { addReactivo, getReactivosBySeccion } from "../../../services/reactivo";
+import { getPuntuacionesByReactivos, massUpdatePuntuaciones } from "../../../services/puntuacion";
+import { ErrorCss } from "../../../styles/formularios";
 import Modal from "../../globals/modal";
 import Pagination from "../pagination";
 import ModalReactivo from "./modalReactivo";
@@ -24,6 +25,19 @@ const ControlsContainer = styled.div`
   justify-content: space-between;
   height: 68px;
   padding: 0px 11px;
+`;
+
+const HeadContainer = styled.div`
+  width: fit-content;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+`;
+
+const PSelected = styled.p`
+  height: max-content;
+  font-size: 12px;
+  color: #464F60;
 `;
 
 //TABLA
@@ -94,25 +108,25 @@ const TdPuntuacion = styled.td`
   color: #464F60;
   font-weight: 400;
   font-size: 14px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 `;
 
 const InputNumber = styled.input`
   border: none;
   background-color: transparent;
   text-align: center;
-  width: 100%;
+  width: 40%;
   outline: none;
 `;
 
-const ReactivoCreator = ({ idSeccion }) => {
-  const [reactivos, setReactivos] = useState([]);
-  const [idPreguntas, setIdPreguntas] = useState([]);
-  const [puntuaciones, setPuntuaciones] = useState([]);
-
+const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, setPuntuaciones, preguntas }) => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [reactivosPage, setReactivosPage] = useState(1);
+  const [save, setSave] = useState(false);
 
   const llenarReactivos = async () => {
     const res = await getReactivosBySeccion(idSeccion);
@@ -129,17 +143,28 @@ const ReactivoCreator = ({ idSeccion }) => {
     const resPuntJson = await resPunt?.json();
     setPuntuaciones(resPuntJson);
 
-    //LLENAR LOS IDPREGUNTAS
-    const ids = [];
-    resPuntJson.forEach(puntuacion => {
-      if(!ids.includes(puntuacion.id_pregunta)) {
-        ids.push(puntuacion.id_pregunta);
-      }
-    })
-    setIdPreguntas(ids);
-
     //DEJAR DE CARGAR
     setLoading(false);
+  }
+
+  const handleChange = (e) => {
+    setSave(true);
+    const {name, value} = e.target;
+
+    let puntuacion = puntuaciones.find(obj => {
+      return obj.id == name
+    })
+    puntuacion.asignado = Number(value);
+
+    setPuntuaciones(oldPuntuaciones => [...oldPuntuaciones]);
+  }
+
+  const handleSave = async () => {
+    const res = await massUpdatePuntuaciones(puntuaciones);
+    const resJson = await res?.json();
+    if(resJson.mensaje == "se guardo correctamente") {
+      setSave(false);
+    }
   }
 
   useState(() => {
@@ -149,11 +174,15 @@ const ReactivoCreator = ({ idSeccion }) => {
   return (
     <PreguntaCreatorContainer>
       <ControlsContainer>
-        <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-plus"></i></WhiteIconButton>
+        <HeadContainer>
+          <WhiteIconButton onClick={() => setShowForm(true)} disabled={reactivos.length == 5}><i className="fa-solid fa-plus"></i></WhiteIconButton>
+          <PSelected>{reactivos.length} / 5</PSelected>
+        </HeadContainer>
         {
           showForm &&
           <Modal titulo="Añadir reactivo" cerrar={() => setShowForm(false)}>
             <ModalReactivo
+              call={addReactivo}
               actualizar={() => {
                 llenarReactivos();
                 setShowForm(false);
@@ -163,6 +192,13 @@ const ReactivoCreator = ({ idSeccion }) => {
             />
           </Modal>
         }
+        {
+          save &&
+          <HeadContainer>
+            <ErrorCss>¡Guarda tus cambios!</ErrorCss>
+            <WhiteIconButton onClick={handleSave}><i className="fa-solid fa-plus"></i></WhiteIconButton>
+          </HeadContainer>
+        }
       </ControlsContainer>
       <TableContainer>
         <TablePreguntas>
@@ -170,7 +206,7 @@ const ReactivoCreator = ({ idSeccion }) => {
             <TrHead cant={reactivos.length}>
               <ThNumberal>#</ThNumberal>
               {
-                reactivos.filter((v, i) => i >= (reactivosPage - 1) * 8 && i < reactivosPage * 8).map((v, i) => (
+                reactivos.map((v, i) => (
                   <ReactivoCard 
                     key={i} 
                     {...v} 
@@ -190,13 +226,18 @@ const ReactivoCreator = ({ idSeccion }) => {
                   </TdCargando>
                 </TrCargando>
               ) : (
-                idPreguntas.filter((v, i) => i >= (reactivosPage - 1) * 8 && i < reactivosPage * 8).map((v, i) => (
+                preguntas.filter((v, i) => i >= (reactivosPage - 1) * 8 && i < reactivosPage * 8).map((v, i) => (
                   <TrHead cant={reactivos.length} key={i}>
-                    <ThNumberal>{i + 1}</ThNumberal>
+                    <ThNumberal>{((reactivosPage - 1) * 8) + (i + 1)}</ThNumberal>
                     {
-                      puntuaciones.filter(va => va.id_pregunta == v).map((va, j) => (
-                        <TdPuntuacion>
-                          {va.asignado}
+                      puntuaciones.filter(va => va.id_pregunta == v.id).map((va, j) => (
+                        <TdPuntuacion key={j}>
+                          <InputNumber 
+                            name={va.id}
+                            type="number"
+                            value={va.asignado}
+                            onChange={handleChange}
+                          />
                         </TdPuntuacion>
                       )) 
                     }
@@ -208,7 +249,7 @@ const ReactivoCreator = ({ idSeccion }) => {
         </TablePreguntas>
       </TableContainer>
       <Pagination 
-        cant={reactivos.length}
+        cant={preguntas.length}
         rows={8}
         page={reactivosPage}
         setPage={setReactivosPage}

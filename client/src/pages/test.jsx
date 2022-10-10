@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Modal from "../components/globals/modal";
 import ModalTest from "../components/test/modalTest";
 import TestCard from "../components/test/testCard";
-import { getTests } from "../services/test";
+import { addTest, getTests } from "../services/test";
 
 const TestContainer = styled.div`
   display: flex;
@@ -55,6 +55,7 @@ const Test = () => {
         showForm &&
         <Modal cerrar={() => setShowForm(false)} titulo="Añadir test">
           <ModalTest 
+            call={addTest}
             actualizar={() => {
               llenarTests();
               setShowForm(false);

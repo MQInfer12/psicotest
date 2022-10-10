@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import defaultPhoto from "../../images/defaultPhoto.jpg";
-import { ableUser } from "../../services/usuario";
+import { ableUser, updateUser } from "../../services/usuario";
 import Modal from "../globals/modal";
 import ModalUser from "./modalUser";
 import ProfilePic from "../globals/profilePic";
@@ -86,6 +85,7 @@ const UserCard = (props) => {
       {showForm && 
         <Modal cerrar={() => setShowForm(false)} titulo="Editar usuario">
           <ModalUser
+            call={updateUser}
             actualizar={() => {
               props.onSubmit();
               setShowForm(false);

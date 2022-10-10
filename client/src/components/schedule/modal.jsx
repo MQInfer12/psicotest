@@ -21,7 +21,7 @@ const Modal = ({ hideModal, handlegetTime }) => {
       name: "fecha",
       value: form.fecha,
       err: errors.fecha,
-      place:"fecha - mm/dd/yy",
+      place:"fecha - dd/mm/yy",
     },
     {
       name: "hora_inicio",

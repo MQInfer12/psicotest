@@ -6,6 +6,7 @@ export const initialForm = {
   genero: "",
   sede: "",
   rol: "",
+  perfil: ""
 };
   
 export const validationsForm = (form) => {

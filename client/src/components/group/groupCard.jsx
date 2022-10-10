@@ -3,7 +3,7 @@ import styled from "styled-components";
 import patronGrupo from '../../images/patrongrupo.jpg';
 import Modal from "../globals/modal";
 import ModalGroup from "./modalGroup";
-import { ableGrupo } from '../../services/grupo';
+import { ableGrupo, updateGrupo } from '../../services/grupo';
 
 const DivGroupCard = styled.div`
   border-radius: 20px;
@@ -77,6 +77,7 @@ const GroupCard = (props) => {
       {showForm && 
         <Modal cerrar={() => setShowForm(false)} titulo="Editar grupo">
           <ModalGroup 
+            call={updateGrupo}
             actualizar={() => {
               props.llenarGrupos();
               setShowForm(false);

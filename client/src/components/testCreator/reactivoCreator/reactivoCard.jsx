@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { DangerIconButton, WhiteIconButton } from "../../../styles/formularios";
 import Modal from "../../globals/modal";
 import ModalReactivo from "./modalReactivo";
-import { deleteReactivo } from "../../../services/reactivo";
+import { deleteReactivo, updateReactivo } from "../../../services/reactivo";
 
 const ThReactivo = styled.th`
   font-size: 11px;
@@ -30,6 +30,7 @@ const PText = styled.p`
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   width: 100%;
   height: 100%;
   background-color: #EBF0FA;
@@ -56,7 +57,6 @@ const ReactivoCard = (props) => {
   const borrarReactivo = async () => {
     const res = await deleteReactivo(props.id);
     const resJson = await res?.json();
-    console.log(resJson);
     if(resJson) {
       console.log("Se borro correctamente");
       props.llenarReactivos();
@@ -76,6 +76,7 @@ const ReactivoCard = (props) => {
         showForm &&
         <Modal titulo="Editar reactivo" cerrar={() => setShowForm(false)} >
           <ModalReactivo 
+            call={updateReactivo}
             actualizar={() => {
               props.llenarReactivos();
               setShowForm(false);

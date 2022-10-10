@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
-import ModalSchedule from "../components/scheduleProfessor";
+import ModalSchedule from "../components/schedule";
 const CalendarContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -155,6 +155,7 @@ const Calendar = () => {
   };
 
   return (
+    <>
     <CalendarContainer>
       <MonthContainer>
         <MonthButton onClick={lastMonth}>
@@ -204,8 +205,9 @@ const Calendar = () => {
           ))}
         </tbody>
       </CalendarTable>
-      <ModalSchedule />
     </CalendarContainer>
+    <ModalSchedule />
+    </>
   );
 };
 

@@ -76,18 +76,18 @@ const ButtonClose = styled.button`
   }
 `;
 
-const ModalRegister = ({ title, text, iconClass, btnText }) => {
+const ModalRegister = () => {
   const navigate = useNavigate();
 
   return (
     <DivAlerta>
       <DivAlertaText>
-        <DivIcon className={iconClass}></DivIcon>
-        <H2Title>{title}</H2Title>
-        <PText>{text}</PText>
+        <DivIcon className='fa-solid fa-check'></DivIcon>
+        <H2Title>¡Exito!</H2Title>
+        <PText>Se registró el usuario correctamente.</PText>
       </DivAlertaText>
       <DivButtons>
-        <ButtonModal onClick={() => navigate("/") }>{btnText}</ButtonModal>
+        <ButtonModal onClick={() => navigate("/") }>Iniciar sesión</ButtonModal>
       </DivButtons>
     </DivAlerta>
   )

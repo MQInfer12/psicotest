@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { WhiteIconButton } from "../../../styles/formularios";
+import { updatePregunta } from "../../../services/pregunta";
 import Modal from "../../globals/modal";
 import ModalPregunta from "./modalPregunta";
 
@@ -98,6 +99,7 @@ const PreguntaCard = (props) => {
           showForm &&
           <Modal titulo="Editar pregunta" cerrar={() => setShowForm(false)} >
             <ModalPregunta 
+              call={updatePregunta}
               actualizar={() => {
                 props.llenarPreguntas();
                 setShowForm(false);

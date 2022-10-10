@@ -5,7 +5,7 @@ import People from "../../icons/people";
 import ProfilePic from "../globals/profilePic";
 import Modal from "../globals/modal";
 import ModalTest from "./modalTest";
-import { deleteTest } from "../../services/test";
+import { deleteTest, updateTest } from "../../services/test";
 import { useNavigate } from "react-router-dom";
 import {
   WhiteIconButton,
@@ -148,6 +148,7 @@ const TestCard = (props) => {
           <ModalTest
             test={props}
             funcion="editar"
+            call={updateTest}
             actualizar={() => {
               props.llenarTests();
               setShowForm(false);
