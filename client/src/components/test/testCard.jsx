@@ -14,6 +14,7 @@ import {
 } from "../../styles/formularios";
 import ModalAssignProfessor from "./modalAssignProfessor";
 import { getProfessorTests } from "../../services/test";
+import ModalUnassign from './modalUnassignProfessor'
 const Container = styled.div`
   width: 322px;
   height: fit-content;
@@ -67,6 +68,7 @@ const TestCard = (props) => {
   const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
   const [showAddProfessor, setShowAddProfessor] = useState(false);
+  const [showUnassignProfessor, setShowUnassignProfessor] = useState(false);
   const [data, setData] = useState([]);
   const borrarTest = async () => {
     const res = await deleteTest(props.id);
@@ -136,6 +138,9 @@ const TestCard = (props) => {
         <WhiteIconButton onClick={() => setShowAddProfessor(true)}>
           <i className="fa-sharp fa-solid fa-user-plus"></i>
         </WhiteIconButton>
+        <WhiteIconButton onClick={() => setShowUnassignProfessor(true)}>
+          <i class="fa-solid fa-user-minus"></i>
+        </WhiteIconButton>
       </ButtonContainer>
 
       {showForm && (
@@ -162,6 +167,22 @@ const TestCard = (props) => {
               props.llenarTests();
               handleGetProfessor();
               setShowAddProfessor(false);
+            }}
+          />
+        </Modal>
+      )}
+
+      {showUnassignProfessor && (
+        <Modal
+          titulo="Desasignar Profesor"
+          cerrar={() => setShowUnassignProfessor(false)}
+        >
+          <ModalUnassign
+            id={props.id}
+            actualizar={() => {
+              props.llenarTests();
+              handleGetProfessor();
+              setShowUnassignProfessor(false);
             }}
           />
         </Modal>

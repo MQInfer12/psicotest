@@ -41,6 +41,8 @@ Route::group(['middleware' => 'api'], function(){
     Route::post("test/assignateProfessor", [DocenteTestController::class, 'store']);
     Route::get("test/professor/{id}", [DocenteTestController::class, 'index']);
     Route::get("test/professorNotAssigning/{id}", [DocenteTestController::class, 'getProfessorNotAssigning']);
+    Route::get("test/professorAssigning/{id}", [DocenteTestController::class, 'getProfessorAssigning']);
+    Route::post("test/deleteprofessorAssigning", [DocenteTestController::class, 'deleteProfessorAssigning']);
     
     //SECCIONES ROUTES
     Route::apiResource("seccion", SeccionController::class);

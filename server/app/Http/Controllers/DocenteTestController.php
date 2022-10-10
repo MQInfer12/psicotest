@@ -40,14 +40,44 @@ class DocenteTestController extends Controller
         if ($getIdsany) {
             $getProfessorsNotAssigning = DB::select("SELECT u.id, u.nombre, u.email, u.estado, s.nombre from users u, sedes s 
             where u.id_rol=2 and u.id_sede=s.id");
-        }else{
+        } else {
             $getProfessorsNotAssigning = DB::select("SELECT u.id, u.nombre, u.email, u.estado, s.nombre from users u, sedes s 
-            where u.id_rol=2 and u.id_sede=s.id " . $condition); 
+            where u.id_rol=2 and u.id_sede=s.id " . $condition);
         }
-       
 
         return response()->json($getProfessorsNotAssigning);
     }
+
+
+    public function getProfessorAssigning($id)
+    {
+        $getIdDocente = DB::select("select * from docente_tests where id_test=$id");
+        $vec = [];
+        foreach ($getIdDocente as $idProfessor) {
+            $aux = DB::select("SELECT u.id, u.nombre, u.email, u.estado, s.nombre from users u, sedes s 
+            where u.id_rol=2 and u.id_sede=s.id and u.id=$idProfessor->id_docente");
+            $vec = array_merge_recursive($vec, $aux);
+        }
+        return response()->json($vec);
+    }
+
+    public function deleteProfessorAssigning(Request $request)
+    {
+        $request->validate([
+            "objeto" => "required",
+            "id_test" => "required"
+        ]);
+
+        $objeto = $request->objeto;
+
+        foreach ($objeto as $valor) {
+            DB::delete("delete from docente_tests where id_test=$request->id_test and id_docente=$valor");
+        }
+        return response()->json(["msg" => "se ha eliminado"], 200);
+    }
+
+
+
 
     public function store(Request $request)
     {

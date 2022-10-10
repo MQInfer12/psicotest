@@ -115,16 +115,16 @@ export const deleteTest = async (id) => {
   }
 };
 
-export const getProfessorNotAssigned = async(id) => {
+export const getProfessorNotAssigned = async (id) => {
   try {
     const response = await fetch(`${http}test/professorNotAssigning/${id}`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
     });
-  
+
     if (response.ok) {
       const result = await response.json();
       return result;
@@ -132,4 +132,46 @@ export const getProfessorNotAssigned = async(id) => {
   } catch (err) {
     console.error(err);
   }
-}
+};
+
+export const getProfessorAssigned = async (id) => {
+  try {
+    const response = await fetch(`${http}test/professorAssigning/${id}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      return result;
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const deleteProfessorAssigned = async (vec, id) => {
+  try {
+    const response = await fetch(`${http}test/deleteprofessorAssigning`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        objeto: vec,
+        id_test: id,
+      }),
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      return result;
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
