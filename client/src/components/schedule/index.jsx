@@ -7,6 +7,7 @@ import {
   getTimeWithWhoHaveDate,
 } from "../../services/horario";
 import { UserContext } from "../../context/userContext";
+
 const Index = () => {
   const [showForm, setShowForm] = useState(false);
   const { user } = useContext(UserContext);

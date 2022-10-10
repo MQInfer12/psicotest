@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { UserContext } from "../context/userContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { initialForm, validationsForm } from "../validations/login";
 import styled from "styled-components";
 import { UseForm } from "../hooks/useForm";
@@ -11,8 +11,6 @@ import { ErrorCss } from "../styles/formularios";
 
 const DivPrincipal = styled.div`
   display: grid;
-  grid-column-gap: 5em;
-  column-gap: 5em;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   text-align: center;
   height: 100vh;
@@ -20,18 +18,21 @@ const DivPrincipal = styled.div`
 `;
 
 const DivImagelog = styled.div`
+  height: 100vh;
   display: grid;
   grid-template-columns: repeat(16, minmax(10px, 1fr));
   grid-template-rows: repeat(10, minmax(95px, 1fr));
 `;
 
 const DivItemlog = styled.div`
+  height: 100vh;
   grid-column-start: 1;
   grid-column-end: 17;
   grid-row-start: 1;
   grid-row-end: 11;
   background: url('/src/images/imglogin.jpg') no-repeat;
   background-size: cover;
+  background-position-y: center;
 `;
 
 const DivFormlog = styled.div`
@@ -41,11 +42,26 @@ const DivFormlog = styled.div`
 `;
 
 const H1Title = styled.h1`
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  font-size: 2.2em;
-  line-height: 3rem;
-  color: #1a3260;
+  padding-bottom: 3rem;
+  font-size: 60px;
+  font-weight: 700;
+  color: #000000;
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+  align-items: center;
+
+  &::after {
+    content: "";
+    width: 96px;
+    border-top: 2px solid #7613FD;
+    background-color: #000000;
+    transition: all 0.2s;
+  }
+
+  &:hover::after {
+    width: 165px;
+  }
 `;
 
 const DivInputs = styled.div`
@@ -57,7 +73,6 @@ const DivInputs = styled.div`
 const DivInputBox = styled.div`
   position: relative;
   width: 250px;
-  margin-right: 20px;
 `;
 
 const InputText = styled.input`
@@ -89,7 +104,6 @@ const SpanText = styled.span`
   left: 0;
   padding: 10px 0 5px;
   color: #808291;
-  text-transform: uppercase;
   pointer-events: none;
   letter-spacing: 0.1em;
   transition: 0.5s;
@@ -110,7 +124,7 @@ const IInput = styled.i`
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, #ff1b69, #ff0, #2196f3, #9c27b0, #ff1b69);
+    background: linear-gradient(90deg, #ff1b69, #ff0, #2196f3, #7613FD, #ff1b69);
     animation: animate 2s linear infinite;
   }
 
@@ -126,25 +140,40 @@ const IInput = styled.i`
 
 const DivButton = styled.div`
   padding-top: 2rem;
-  padding-bottom: 2rem;
 `;
 
 const ButtonSubmit = styled.button`
+  width: 100%;
+  height: 54px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+
   text-decoration: none;
   border: none;
-  background-color: transparent;
   cursor: pointer;
-  padding: 0.8rem 2rem;
-  border-radius: 50px;
-  font-weight: bold;
-  font-size: 1rem;
-  background: linear-gradient(to right, #ff512f, #dd2476);
+  border-radius: 27px;
+  background: #7613FD;
   box-shadow: 0px 0px 50px 0px rgb(0 0 0 / 10%);
-  color: #f8f9fa;
+`;
 
-  &:hover {
-    background: linear-gradient(to right, #8e2de2, #4a00e0);
-  }
+const GoToContainer = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const GoToDescription = styled.p`
+  color: #000000;
+  font-size: 12px;
+  font-weight: 400;
+  text-decoration: none;
+`;
+
+const GoToText = styled(Link)`
+  color: #7613FD;
+  font-size: 12px;
+  font-weight: 400;
+  text-decoration: none;
 `;
 
 //STYLED COMPONENTS
@@ -212,7 +241,9 @@ const Login = () => {
                   {v.error && <ErrorCss>{v.error}</ErrorCss>}
                 </DivInputs>
               ))}
-    
+              <GoToContainer>
+                <GoToDescription>¿No tienes una cuenta?</GoToDescription><GoToText to='/register'>Regístrate</GoToText>
+              </GoToContainer>
               <DivButton>
                 <ButtonSubmit onClick={handleSubmit}>LOGIN</ButtonSubmit>
               </DivButton>

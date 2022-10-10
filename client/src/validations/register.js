@@ -21,7 +21,7 @@ export const validationsForm = (form) => {
   }
 
   if (!form.contrasenia.trim()) {
-    errors.contrasenia = "'Contraseña es requerido";
+    errors.contrasenia = "'Contraseña' es requerido";
     }
     if (form.contrasenia.trim() != form.contraseniaRepeat.trim()) {
     errors.contraseniaRepeat = "No coinciden los campos";

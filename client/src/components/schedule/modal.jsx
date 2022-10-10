@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { UserContext } from "../../context/userContext";
 import { UseForm } from "../../hooks/useFormSchedule";
 import { initialForm, validationsForm } from "../../validations/schedule";
+
 const Modal = ({ hideModal, handlegetTime }) => {
   const { form, errors, handleChange, handleSubmit } = UseForm(
     initialForm,
@@ -10,12 +11,14 @@ const Modal = ({ hideModal, handlegetTime }) => {
     hideModal,
     handlegetTime,
   );
+
   const { user } = useContext(UserContext);
+  
   const send = (e) => {
     form.id_docente = user.id;
     handleSubmit(e);
-
   };
+
   let data = [
     {
       name: "fecha",
@@ -36,6 +39,7 @@ const Modal = ({ hideModal, handlegetTime }) => {
       place:"hora Final",
     },
   ];
+
   return (
     <div>
       {data.map((v, i) => (

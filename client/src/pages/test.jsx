@@ -38,7 +38,6 @@ const Test = () => {
   const llenarTests = async () => {
     const res = await getTests();
     const resJson = await res?.json();
-    console.log(resJson);
     setTests(resJson);
   }
 
