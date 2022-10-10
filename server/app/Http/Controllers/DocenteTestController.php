@@ -38,10 +38,13 @@ class DocenteTestController extends Controller
             }
         }
         if ($getIdsany) {
-            $getProfessorsNotAssigning = DB::select("SELECT u.id, u.nombre, u.email, u.estado, s.nombre from users u, sedes s 
+            $getProfessorsNotAssigning = DB::select("SELECT u.id, u.nombre as nombre_user, u.email, 
+            u.estado, s.nombre as nombre_sede from users u, sedes s 
             where u.id_rol=2 and u.id_sede=s.id");
         } else {
-            $getProfessorsNotAssigning = DB::select("SELECT u.id, u.nombre, u.email, u.estado, s.nombre from users u, sedes s 
+            $getProfessorsNotAssigning = DB::select("SELECT u.id, u.nombre as nombre_user, u.email,
+             u.estado, s.nombre as nombre_sede 
+             from users u, sedes s 
             where u.id_rol=2 and u.id_sede=s.id " . $condition);
         }
 
@@ -54,7 +57,7 @@ class DocenteTestController extends Controller
         $getIdDocente = DB::select("select * from docente_tests where id_test=$id");
         $vec = [];
         foreach ($getIdDocente as $idProfessor) {
-            $aux = DB::select("SELECT u.id, u.nombre, u.email, u.estado, s.nombre from users u, sedes s 
+            $aux = DB::select("SELECT u.id, u.nombre as nombre_user, u.email, u.estado, s.nombre as nombre_sede from users u, sedes s 
             where u.id_rol=2 and u.id_sede=s.id and u.id=$idProfessor->id_docente");
             $vec = array_merge_recursive($vec, $aux);
         }

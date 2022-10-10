@@ -8,6 +8,7 @@ const ModalAssignProfessor = ({ id, actualizar }) => {
   const handleGetData = async () => {
     const res = await getProfessorNotAssigned(id);
     setData(res);
+    console.log(res)
     setLoading(false);
   };
 
