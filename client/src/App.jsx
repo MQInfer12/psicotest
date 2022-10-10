@@ -105,7 +105,7 @@ function App() {
             <Route 
               path="cita" 
               element={
-                <OutletContext titlePage="cita" calendar={false}>
+                <OutletContext titlePage="Cita" calendar={false}>
                   <Appoinment />
                 </OutletContext>
               } 
@@ -114,7 +114,7 @@ function App() {
               path="calendar" 
               element={
                 <OutletContext titlePage="Calendario" calendar={false}>
-                <Calendar />
+                  <Calendar />
                 </OutletContext>
               } 
             />

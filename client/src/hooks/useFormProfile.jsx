@@ -6,11 +6,10 @@ export const UseForm = ( initialForm, validateForm, success, id) => {
 
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
-  const [picPrev, setPicPrev] = useState("");
 
   const handleSend = async (form) => {
     try {
-      const res = await updateUser(form, id, picPrev);
+      const res = await updateUser(form, id);
       const resJson = await res?.json();
       if(resJson.mensaje =="se actualizo correctamente"){
         console.log("Se actualizó tu perfil!");
@@ -27,7 +26,10 @@ export const UseForm = ( initialForm, validateForm, success, id) => {
 
     if(name == "perfil") {
       getBase64(e.target.files[0], (resultado) => {
-        setPicPrev(resultado);
+        setForm({
+          ...form,
+          perfil: resultado,
+        });
       });
       return;
     }
@@ -39,14 +41,15 @@ export const UseForm = ( initialForm, validateForm, success, id) => {
   };
 
   const handleFill = (user) => {
+    console.log(user);
     setErrors({reseted: true});
-    setPicPrev(user.perfil);
 
     const obj = {
       nombre: user.nombre,
       edad: String(user.edad),
       genero: user.genero,
-      sede: String(user.id_sede)
+      sede: String(user.id_sede),
+      perfil: user.perfil
     }
 
     setForm(obj);
@@ -58,7 +61,10 @@ export const UseForm = ( initialForm, validateForm, success, id) => {
   };
 
   const handleReset = () => {
-    setPicPrev(null);
+    setForm({
+      ...form,
+      perfil: null,
+    });
   };
 
   //CUANDO CAMBIEN LOS ERRORES
@@ -75,7 +81,6 @@ export const UseForm = ( initialForm, validateForm, success, id) => {
   return {
     form,
     errors,
-    picPrev,
     handleChange,
     handleSubmit,
     handleFill,

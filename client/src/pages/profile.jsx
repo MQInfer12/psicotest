@@ -98,7 +98,6 @@ const Profile = () => {
   const {
     form,
     errors,
-    picPrev,
     handleChange,
     handleSubmit,
     handleFill,
@@ -195,7 +194,7 @@ const Profile = () => {
           <ProfilePic 
             width="100px" 
             height="100px"
-            src={ editable? picPrev : user?.perfil }
+            src={ editable? form.perfil : user?.perfil }
           />
           {
             editable &&

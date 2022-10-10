@@ -30,6 +30,7 @@ const PText = styled.p`
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   width: 100%;
   height: 100%;
   background-color: #EBF0FA;

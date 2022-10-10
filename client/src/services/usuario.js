@@ -1,5 +1,4 @@
 import { http } from './htpp';
-import { getBase64 } from '../functions/base64encrypt';
 
 export const getUsers = async () => {
   try {
@@ -47,7 +46,7 @@ export const getUser = async (id) => {
   }
 }
 
-export const updateUser = async (form, id, pic) => {
+export const updateUser = async (form, id) => {
   try {
     const response = await fetch(`${http}user/${id}`, {
       method: "PUT",
@@ -56,7 +55,7 @@ export const updateUser = async (form, id, pic) => {
         "accept": "application/json", 
       },
       body: JSON.stringify({
-        perfil: pic,
+        perfil: form.perfil,
         nombre: form.nombre,
         genero: form.genero,
         edad: form.edad,
