@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../context/userContext';
 import styled from 'styled-components';
-import { getGruposDocente } from '../services/grupo';
+import { addGrupo, getGruposDocente } from '../services/grupo';
 import Modal from '../components/globals/modal';
 import ModalGroup from '../components/group/modalGroup';
 import GroupResponse from '../components/group/groupResponse';
@@ -56,6 +56,7 @@ const Group = () => {
       {showForm && 
         <Modal cerrar={() => setShowForm(false)} titulo="Añadir grupo" >
           <ModalGroup 
+            call={addGrupo}
             actualizar={() => {
               llenarGrupos();
               setShowForm(false);

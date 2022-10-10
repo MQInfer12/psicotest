@@ -1,21 +1,26 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FormContainer, PurpleButton } from "../../../styles/formularios";
 import FormInputsText from "../../globals/formInputsText";
 import { initialForm, validationsForm } from "../../../validations/pregunta_reactivo";
-import { UseForm } from "../../../hooks/useFormReactivo";
+import { UseForm } from "../../../hooks/useForm";
 
-const ModalReactivo = ({ reactivo, actualizar, funcion, idSeccion }) => {
+const ModalReactivo = ({ reactivo, call, actualizar, funcion, idSeccion }) => {
   const {
     form,
     errors,
     handleChange,
-    handleSubmit,
-    handleFill
-  } = UseForm(initialForm, validationsForm, actualizar, funcion, reactivo?.id, idSeccion)
-
-  useEffect(() => {
-    reactivo && handleFill(reactivo);
-  }, []);
+    handleSubmit
+  } = UseForm(
+    reactivo? {
+      id_seccion: idSeccion,
+      descripcion: reactivo.descripcion
+    } : initialForm, 
+    validationsForm, 
+    call, 
+    actualizar, 
+    reactivo?.id, 
+    idSeccion
+  )
   
   const data = [
     {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { DangerIconButton, WhiteIconButton } from "../../../styles/formularios";
 import Cargando from "../../globals/cargando";
-import { getPreguntasBySeccion, massDestroy } from "../../../services/pregunta";
+import { addPregunta,getPreguntasBySeccion, massDestroy } from "../../../services/pregunta";
 import { getPuntuacionesByReactivos } from "../../../services/puntuacion";
 import Modal from "../../globals/modal";
 import ModalPregunta from "./modalPregunta";
@@ -145,6 +145,7 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
           showForm &&
           <Modal titulo="Añadir pregunta" cerrar={() => setShowForm(false)}>
             <ModalPregunta
+              call={addPregunta}
               actualizar={() => {
                 llenarPreguntas();
                 setShowForm(false);

@@ -1,10 +1,7 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { addHorario } from "../services/horario";
-import { getProfile } from "../services/auth";
-import { UserContext } from "../context/userContext";
 
 export const UseForm = (initialForm, validateForm, hideModal, handlegetTime) => {
-  const { user, setUser } = useContext(UserContext);
 
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});

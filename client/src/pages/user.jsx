@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { getUsers } from "../services/usuario";
+import { addUser, getUsers } from "../services/usuario";
 import Cargando from "../components/globals/cargando";
 import UserResponse from "../components/user/filter/userReponse";
 import UserFilter from "../components/user/filter/userFilter";
@@ -82,6 +82,7 @@ const User = () => {
       {showForm && 
         <Modal cerrar={() => setShowForm(false)} titulo="Añadir usuario">
           <ModalUser
+            call={addUser}
             actualizar={() =>{
               llenarUsuarios();
               setShowForm(false);

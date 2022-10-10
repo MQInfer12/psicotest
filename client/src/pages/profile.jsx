@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../context/userContext";
 import styled from "styled-components";
 import ProfilePic from "../components/globals/profilePic";
 import { initialForm, validationsForm } from "../validations/profile";
-import { UseForm } from "../hooks/useFormProfile";
+import { UseForm } from "../hooks/useForm";
 import { getProfile } from "../services/auth";
 import { FormContainer, DivInput, PText, InputSelect, PurpleButton, WhiteButton } from "../styles/formularios";
 import FormInputsText from "../components/globals/formInputsText";
+import { updateUser } from "../services/usuario";
 
 const ProfileContainer = styled.div`
   height: 100%;
@@ -100,13 +101,21 @@ const Profile = () => {
     errors,
     handleChange,
     handleSubmit,
-    handleFill,
-    handleReset
-  } = UseForm(initialForm, validationsForm, actualizar, user?.id);
-
-  useEffect(() => {
-    handleFill(user);
-  }, []);
+    handleReset,
+    handleResetImg
+  } = UseForm(
+    user? {
+      nombre: user.nombre,
+      edad: String(user.edad),
+      genero: user.genero,
+      sede: String(user.id_sede),
+      perfil: user.perfil
+    } : initialForm, 
+    validationsForm, 
+    updateUser,
+    actualizar, 
+    user?.id
+  );
 
   let dataleft = [
     {
@@ -208,7 +217,7 @@ const Profile = () => {
                   />
                   <PurpleButton>Subir foto nueva</PurpleButton>
                 </DivFile>
-                <WhiteButton onClick={ handleReset }>Reset</WhiteButton>
+                <WhiteButton onClick={ () => handleResetImg('perfil') }>Reset</WhiteButton>
               </DivPhotoButtons>
               <InfoPhotoExtensions>Permitido JPG, JPEG o PNG. Tamaño máximo de 800Kb.</InfoPhotoExtensions>
             </DivPhotoInfo>
@@ -271,7 +280,7 @@ const Profile = () => {
             editable? (
             <>
               <PurpleButton onClick={ handleSubmit }>Guardar cambios</PurpleButton>
-              <WhiteButton onClick={ () => { setEditable(false); handleFill(user); }}>Cancelar</WhiteButton>
+              <WhiteButton onClick={ () => { setEditable(false); handleReset(); }}>Cancelar</WhiteButton>
             </>
             ) : (
               <PurpleButton onClick={ () => setEditable(true) }>Editar</PurpleButton>

@@ -1,19 +1,29 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { initialForm, validationsForm } from '../../validations/group';
-import { UseForm } from '../../hooks/useFormGroup';
+import { UseForm } from '../../hooks/useForm';
 import { FormContainer, PurpleButton } from "../../styles/formularios";
 import FormInputsText from '../globals/formInputsText';
 
-const ModalGroup = ({ actualizar, id_docente, funcion, group }) => {
+const ModalGroup = ({ call, actualizar, id_docente, funcion, group }) => {
   
   const {
     form,
     errors,
-    sizeTitle,
+    //sizeTitle,
     handleChange,
     handleSubmit,
-    handleFill,
-  } = UseForm(initialForm, validationsForm, actualizar, funcion, group?.id, id_docente);
+  } = UseForm(
+    group? {
+      titulo: group.titulo,
+      descripcion: group.descripcion,
+      id_docente: id_docente
+    } : initialForm,
+    validationsForm,
+    call,
+    actualizar,
+    group?.id,
+    id_docente
+  );
 
   let data = [
     {
@@ -30,12 +40,6 @@ const ModalGroup = ({ actualizar, id_docente, funcion, group }) => {
       error: errors.descripcion
     },
   ];
-
-  useEffect(() => {
-    if(group != undefined) {
-      handleFill(group, id_docente);
-    }
-  }, [])
 
   return (
     <FormContainer>

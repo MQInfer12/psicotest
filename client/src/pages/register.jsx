@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { UseForm } from "../hooks/useFormRegister";
+import { UseForm } from "../hooks/useForm";
+import { signUp } from "../services/auth";
 import { initialForm, validationsForm } from "../validations/register";
 import { ErrorCss } from "../styles/formularios";
 import Modal from "../components/globals/modal";
@@ -149,16 +150,23 @@ const ButtonSubmit = styled.button`
 //STYLED COMPONENTS
 
 const Register = () => {
+  const [showModal, setShowModal] = useState(false);
 
   const {
     form,
     errors,
-    loading,
-    response,
     handleChange,
     handleSubmit,
-    closeModal
-  } = UseForm(initialForm, validationsForm);
+    handleReset
+  } = UseForm(
+    initialForm, 
+    validationsForm,
+    signUp,
+    () => {
+      setShowModal(true);
+      handleReset();
+    }
+  );
 
   let data = [
     {
@@ -297,8 +305,8 @@ const Register = () => {
           </DivFormlog>
         </DivPrincipal>
       </section>
-      {response &&
-        <Modal cerrar={closeModal}>
+      {showModal &&
+        <Modal cerrar={() => setShowModal(false)}>
           <ModalRegister
             title='¡Exito!' 
             text='Se registró el usuario correctamente.' 

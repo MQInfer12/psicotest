@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../context/userContext";
+import { useNavigate } from "react-router-dom";
 import { initialForm, validationsForm } from "../validations/login";
 import styled from "styled-components";
-import { UseForm } from "../hooks/useFormLogin";
+import { UseForm } from "../hooks/useForm";
+import { getProfile, signIn } from "../services/auth";
 import { ErrorCss } from "../styles/formularios";
 
 //STYLED COMPONENTS
@@ -147,15 +150,24 @@ const ButtonSubmit = styled.button`
 //STYLED COMPONENTS
 
 const Login = () => {
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const {
     form,
     errors,
-    loading,
-    response,
     handleChange,
     handleSubmit,
-  } = UseForm(initialForm, validationsForm);
+  } = UseForm(
+    initialForm, 
+    validationsForm,
+    signIn,
+    async () => {
+      const profile = await getProfile();
+      setUser(profile);
+      navigate('/dashboard');
+    }
+  );
 
   let data = [
     {

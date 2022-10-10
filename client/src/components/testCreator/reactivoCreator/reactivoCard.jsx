@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { DangerIconButton, WhiteIconButton } from "../../../styles/formularios";
 import Modal from "../../globals/modal";
 import ModalReactivo from "./modalReactivo";
-import { deleteReactivo } from "../../../services/reactivo";
+import { deleteReactivo, updateReactivo } from "../../../services/reactivo";
 
 const ThReactivo = styled.th`
   font-size: 11px;
@@ -76,6 +76,7 @@ const ReactivoCard = (props) => {
         showForm &&
         <Modal titulo="Editar reactivo" cerrar={() => setShowForm(false)} >
           <ModalReactivo 
+            call={updateReactivo}
             actualizar={() => {
               props.llenarReactivos();
               setShowForm(false);

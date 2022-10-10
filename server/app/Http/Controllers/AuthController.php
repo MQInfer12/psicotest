@@ -33,7 +33,7 @@ class AuthController extends Controller
         
         if($autorizado != []) {
             if(!$autorizado[0]->estado) {
-                return response()->json(['error' => 'No se puede ingresar a esta cuenta'], 401);
+                return response()->json(['error' => 'No se puede ingresar a esta cuenta'], 403);
             }
         }
 

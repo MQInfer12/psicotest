@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { WhiteIconButton } from "../../../styles/formularios";
 import Cargando from "../../globals/cargando";
-import { getReactivosBySeccion } from "../../../services/reactivo";
+import { addReactivo, getReactivosBySeccion } from "../../../services/reactivo";
 import { getPuntuacionesByReactivos, massUpdatePuntuaciones } from "../../../services/puntuacion";
 import { ErrorCss } from "../../../styles/formularios";
 import Modal from "../../globals/modal";
@@ -182,6 +182,7 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
           showForm &&
           <Modal titulo="Añadir reactivo" cerrar={() => setShowForm(false)}>
             <ModalReactivo
+              call={addReactivo}
               actualizar={() => {
                 llenarReactivos();
                 setShowForm(false);

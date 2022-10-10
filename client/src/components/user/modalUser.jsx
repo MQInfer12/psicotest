@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { initialForm, validationsForm } from "../../validations/user";
-import { UseForm } from "../../hooks/useFormUser";
+import { UseForm } from "../../hooks/useForm";
 import { FormContainer, PurpleButton, WhiteButton } from "../../styles/formularios";
 import ProfilePic from "../globals/profilePic";
 import FormInputsText from "../globals/formInputsText";
@@ -24,17 +24,30 @@ const FotoContainer = styled.div`
   align-items: center;
 `;
 
-const ModalUser = ({ actualizar, funcion, user }) => {
+const ModalUser = ({ call, actualizar, funcion, user }) => {
 
   const {
     form,
     errors,
-    picPrev,
     handleChange,
     handleSubmit,
-    handleFill,
-    handleReset,
-  } = UseForm(initialForm, validationsForm, actualizar, funcion, user?.id);
+    handleResetImg,
+  } = UseForm(
+    user? {
+      nombre: user.nombre_user,
+      email: user.email,
+      edad: String(user.edad),
+      contrasenia: "password",
+      genero: user.genero,
+      sede: String(user.id_sede),
+      rol: String(user.id_rol),
+      perfil: user.perfil
+    } : initialForm, 
+    validationsForm, 
+    call,
+    actualizar, 
+    user?.id
+  );
 
   let data;
   if(funcion == "añadir") {
@@ -209,19 +222,13 @@ const ModalUser = ({ actualizar, funcion, user }) => {
     ];
   }
 
-  useEffect(() => {
-    if(user != undefined) {
-      handleFill(user);
-    }
-  }, [])
-
   return (
     <ModalUserContainer>
       {
         funcion == "editar" &&
         <FotoContainer>
-          <ProfilePic width="75px" height="75px" src={picPrev} />
-          <WhiteButton onClick={handleReset}>Reset</WhiteButton>
+          <ProfilePic width="75px" height="75px" src={form.perfil} />
+          <WhiteButton onClick={() => handleResetImg('perfil')}>Reset</WhiteButton>
         </FotoContainer>
       }
       <Columnas>

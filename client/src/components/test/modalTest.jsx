@@ -1,18 +1,27 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import { FormContainer, DivInput, DivText, PText, InputText, InputSelect, ErrorCss, PurpleButton, WhiteButton } from "../../styles/formularios";
+import React from "react";
+import { FormContainer, PurpleButton } from "../../styles/formularios";
 import { initialForm, validationsForm } from "../../validations/test";
-import { UseForm } from "../../hooks/useFormTest";
+import { UseForm } from "../../hooks/useForm";
 import FormInputsText from "../globals/formInputsText";
 
-const ModalTest = ({ funcion, actualizar, test }) => {
+const ModalTest = ({ funcion, call, actualizar, test }) => {
   const {
     form,
     errors,
     handleChange,
-    handleSubmit,
-    handleFill
-  } = UseForm(initialForm, validationsForm, actualizar, funcion, test?.id)
+    handleSubmit
+  } = UseForm(
+    test? {
+      nombre: test.nombre,
+      descripcion: test.descripcion,
+      autor: "Admin",
+      tiempo: test.tiempo
+    } : initialForm, 
+    validationsForm,
+    call,
+    actualizar,
+    test?.id
+  )
 
   const data = [
     {
@@ -48,10 +57,6 @@ const ModalTest = ({ funcion, actualizar, test }) => {
       disabled: false
     },
   ]
-
-  useEffect(() => {
-    test && handleFill(test);
-  }, []);
 
   return (
     <FormContainer>
