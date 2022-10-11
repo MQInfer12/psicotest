@@ -4,14 +4,11 @@ import { DangerIconButton, WhiteIconButton } from "../../../styles/formularios";
 import Modal from "../../globals/modal";
 import ModalReactivo from "./modalReactivo";
 import { deleteReactivo, updateReactivo } from "../../../services/reactivo";
+import SureModal from "../../globals/sureModal";
 
 const ThReactivo = styled.th`
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  text-align: start;
-  color: #464F60;
   position: relative;
+  font-weight: 400;
   transition: all 0.2s;
 
   &:hover {
@@ -26,11 +23,13 @@ const ThReactivo = styled.th`
 `;
 
 const PText = styled.p`
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
   width: 100%;
   height: 100%;
   background-color: #EBF0FA;
@@ -53,6 +52,7 @@ const DivButtonsTd = styled.div`
 
 const ReactivoCard = (props) => {
   const [showForm, setShowForm] = useState(false);
+  const [showSure, setShowSure] = useState(false);
 
   const borrarReactivo = async () => {
     const res = await deleteReactivo(props.id);
@@ -70,7 +70,7 @@ const ReactivoCard = (props) => {
       </PText>
       <DivButtonsTd>
         <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
-        <DangerIconButton onClick={borrarReactivo}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
+        <DangerIconButton onClick={() => setShowSure(true)}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
       </DivButtonsTd>
       {
         showForm &&
@@ -84,6 +84,16 @@ const ReactivoCard = (props) => {
             funcion="editar"
             reactivo={props}
             idSeccion={props.id_seccion}
+          />
+        </Modal>
+      }
+      {
+        showSure &&
+        <Modal titulo="Eliminar reactivo" cerrar={() => setShowSure(false)}>
+          <SureModal
+            cerrar={() => setShowSure(false)}
+            sure={borrarReactivo}
+            text="Se eliminará el reactivo permanentemente"
           />
         </Modal>
       }

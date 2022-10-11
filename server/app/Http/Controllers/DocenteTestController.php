@@ -23,7 +23,6 @@ class DocenteTestController extends Controller
         return response()->json($showTests);
     }
 
-
     public function getProfessorNotAssigning($id)
     {
         $getIdDocente = DB::select("select * from docente_tests where id_test=$id");
@@ -51,7 +50,6 @@ class DocenteTestController extends Controller
         return response()->json($getProfessorsNotAssigning);
     }
 
-
     public function getProfessorAssigning($id)
     {
         $getIdDocente = DB::select("select * from docente_tests where id_test=$id");
@@ -78,9 +76,6 @@ class DocenteTestController extends Controller
         }
         return response()->json(["msg" => "se ha eliminado"], 200);
     }
-
-
-
 
     public function store(Request $request)
     {

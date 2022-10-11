@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Cargando from "../components/globals/cargando";
 import Modal from "../components/globals/modal";
 import ModalTest from "../components/test/modalTest";
 import TestCard from "../components/test/testCard";
 import { addTest, getTests } from "../services/test";
+
+const AllContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+`;
 
 const TestContainer = styled.div`
   display: flex;
@@ -32,13 +40,15 @@ const PurpleButton = styled.button`
 `;
 
 const Test = () => {
-  const [tests, setTests] = useState([]);  
-  const [showForm, setShowForm] = useState(false);  
+  const [tests, setTests] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [loading, setLoading] = useState(true);
   
   const llenarTests = async () => {
     const res = await getTests();
     const resJson = await res?.json();
     setTests(resJson);
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -46,30 +56,37 @@ const Test = () => {
   }, []);
 
   return (
-    <TestContainer>
+    <AllContainer>
       <ButtonContainer>
         <PurpleButton onClick={() => setShowForm(true)}>Añadir</PurpleButton>
       </ButtonContainer>
       {
-        showForm &&
-        <Modal cerrar={() => setShowForm(false)} titulo="Añadir test">
-          <ModalTest 
-            call={addTest}
-            actualizar={() => {
-              llenarTests();
-              setShowForm(false);
-            }}
-            funcion="añadir"
-          />
-        </Modal>
+        loading ? (
+          <Cargando />
+        ) : (
+          <TestContainer>
+            {
+              showForm &&
+              <Modal cerrar={() => setShowForm(false)} titulo="Añadir test">
+                <ModalTest 
+                  call={addTest}
+                  actualizar={() => {
+                    llenarTests();
+                    setShowForm(false);
+                  }}
+                  funcion="añadir"
+                />
+              </Modal>
+            }
+            {
+              tests.map((v, i) => (
+                <TestCard key={i} {...v} llenarTests={llenarTests} />
+              ))
+            }
+          </TestContainer>
+        )
       }
-
-      {
-        tests.map((v, i) => (
-          <TestCard key={i} {...v} llenarTests={llenarTests} />
-        ))
-      }
-    </TestContainer>
+    </AllContainer>
   );
 };
 

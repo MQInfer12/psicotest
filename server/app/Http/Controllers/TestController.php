@@ -9,11 +9,23 @@ use Illuminate\Support\Facades\DB;
 class TestController extends Controller
 {
     public function index()
-    {
-        $showTests = DB::select("SELECT *
-                                FROM tests
-                                ORDER BY id");
-        return response()->json($showTests);
+    {   
+        $tests = DB::select("SELECT *
+                                 FROM tests
+                                 ORDER BY id");
+
+        foreach($tests as $test) {
+            $id_test = $test->id;
+            $usuarios = DB::select("SELECT u.nombre, u.perfil
+                                    FROM users as u, docente_tests as dt
+                                    WHERE dt.id_test = '$id_test' AND dt.id_docente = u.id");
+            foreach($usuarios as $usuario) {
+                $usuario->perfil = stream_get_contents($usuario->perfil);
+            }
+            $test->usuarios = $usuarios;
+        }        
+
+        return response()->json($tests);
     }
 
     public function store(Request $request)

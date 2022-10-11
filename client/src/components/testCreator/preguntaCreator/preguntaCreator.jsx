@@ -8,6 +8,7 @@ import Modal from "../../globals/modal";
 import ModalPregunta from "./modalPregunta";
 import PreguntaCard from "./preguntaCard";
 import Pagination from "../pagination";
+import SureModal from "../../globals/sureModal";
 
 const PreguntaCreatorContainer = styled.div`
   width: 622px;
@@ -97,6 +98,7 @@ const TdCargando = styled.td`
 const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPuntuaciones }) => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [showSure, setShowSure] = useState(false);
   const [preguntasPage, setPreguntasPage] = useState(1);
   const [selecteds, setSelecteds] = useState([]);
 
@@ -139,7 +141,7 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
         <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-plus"></i></WhiteIconButton>
         <DeleteContainer>
           <PSelected>{selecteds.length} selected</PSelected>
-          <DangerIconButton onClick={borrarPreguntas}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
+          <DangerIconButton onClick={() => setShowSure(true)}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
         </DeleteContainer>
         {
           showForm &&
@@ -152,6 +154,16 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
               }}
               funcion="añadir"
               idSeccion={idSeccion}
+            />
+          </Modal>
+        }
+        {
+          showSure &&
+          <Modal titulo="Eliminar preguntas" cerrar={() => setShowSure(false)}>
+            <SureModal
+              cerrar={() => setShowSure(false)}
+              sure={borrarPreguntas}
+              text={"Se eliminarán " + selecteds.length + " preguntas permanentemente"}
             />
           </Modal>
         }

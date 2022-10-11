@@ -32,6 +32,7 @@ const ModalUnAssignProfessor = ({ id, actualizar }) => {
       setBtnActive(false);
     }
   };
+  
   const saveData = async () => {
     const vecAux = [];
     for (let val of checSelected) {
@@ -41,10 +42,10 @@ const ModalUnAssignProfessor = ({ id, actualizar }) => {
     //const obj = Object.assign({}, vecAux);
     const resp = await deleteProfessorAssigned(vecAux, id);
     if(resp.msg === "se ha eliminado"){
-        alert('se desasigno correctamente')
         actualizar();
     };
   };
+
   return (
     <div>
       {loading ? (

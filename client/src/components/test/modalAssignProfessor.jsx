@@ -43,7 +43,6 @@ const ModalAssignProfessor = ({ id, actualizar }) => {
     const obj = Object.assign({}, vecAux);
     const resp = await addProfessorToTest(obj, id);
     if(resp.mensaje === "se guardo correctamente"){
-        alert('se guardo correctamente')
         actualizar();
     };
   };

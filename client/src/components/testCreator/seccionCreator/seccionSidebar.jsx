@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { PurpleButton, WhiteButton, DangerButton, WhiteIconButton } from "../../../styles/formularios";
 import { addSeccion, deleteSeccion } from "../../../services/seccion";
+import Modal from "../../globals/modal";
+import SureModal from "../../globals/sureModal";
 
 const SeccionCreatorDash = styled.div`
   width: 263px;
@@ -37,6 +39,8 @@ const ButtonContainer = styled.div`
 
 const SeccionSidebar = ({ test, seccion, index, llenarSecciones, seccionState, editState }) => {
 
+  const [showSure, setShowSure] = useState(false);
+
   const añadirSeccion = async () => {
     const res = await addSeccion(test.id);
     const resJson = await res?.json();
@@ -57,6 +61,16 @@ const SeccionSidebar = ({ test, seccion, index, llenarSecciones, seccionState, e
 
   return (
     <SeccionCreatorDash>
+      {
+        showSure &&
+        <Modal titulo="Eliminar sección" cerrar={() => setShowSure(false)}>
+          <SureModal
+            cerrar={() => setShowSure(false)}
+            sure={eliminarSeccion}
+            text="Se eliminará esta sección permanentemente"
+          />
+        </Modal>
+      }
       <DashPart>
         <DashTitle>{test.nombre}</DashTitle>
         <DashTitle>Sección {index}</DashTitle>
@@ -66,7 +80,7 @@ const SeccionSidebar = ({ test, seccion, index, llenarSecciones, seccionState, e
           </WhiteIconButton>
           {
             seccion?
-            <DangerButton onClick={eliminarSeccion}>Eliminar Sección</DangerButton>
+            <DangerButton onClick={() => setShowSure(true)}>Eliminar Sección</DangerButton>
             :
             <PurpleButton onClick={añadirSeccion}>Crear Sección</PurpleButton>
           }
