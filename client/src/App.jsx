@@ -1,5 +1,6 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import styled from "styled-components";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { UserContext } from "./context/userContext";
 import OutletContext from "./wrappers/outletContext";
@@ -17,6 +18,25 @@ import Test from './pages/test';
 import TestCreator from "./pages/testCreator";
 import TestView from "./pages/testView";
 import Appoinment from "./pages/appoinment";
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  font-size: 16px;
+  color: #ADA7A7;
+  display: flex;
+  flex-direction: column;
+
+  &::after {
+    content: "";
+    width: 0%;
+    border-top: 1px solid #ADA7A7;
+    transition: all 0.2s;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+`;
 
 function App() {
   const [user, setUser] = useState(null);
@@ -68,7 +88,7 @@ function App() {
               path="tests/:idTest" 
               element={
                 <ProtectedRole roles={[3]}>
-                  <OutletContext titlePage="Creación de Test" calendar={false}>
+                  <OutletContext titlePage="Creación de Test" calendar={false} links={<><StyledLink to="/dashboard/tests">Tests</StyledLink>/</>}>
                     <TestCreator />
                   </OutletContext>
                 </ProtectedRole>
@@ -78,7 +98,7 @@ function App() {
               path="testview/:idTest" 
               element={
                 <ProtectedRole roles={[3]}>
-                  <OutletContext titlePage="" calendar={false}>
+                  <OutletContext titlePage="Información del test" calendar={false} links={<><StyledLink to="/dashboard/tests">Tests</StyledLink>/</>}>
                     <TestView />
                   </OutletContext>
                 </ProtectedRole>

@@ -115,31 +115,28 @@ const TestCard = (props) => {
       </ContainerImg>
 
       <ButtonContainer>
-        <WhiteIconButton
-          onClick={() => {
-            navigate(`../testview/${props.id}`);
-          }}
-        >
+        <WhiteIconButton onClick={() => navigate(`../testview/${props.id}`)}>
           <i className="fa-solid fa-newspaper"></i>
         </WhiteIconButton>
-        <PurpleIconButton
-          onClick={() => {
-            navigate(`./${props.id}`);
-          }}
-        >
+
+        <PurpleIconButton onClick={() => navigate(`./${props.id}`)}>
           <i className="fa-solid fa-pen-to-square"></i>
         </PurpleIconButton>
+
         <WhiteIconButton onClick={() => setShowForm(true)}>
           <i className="fa-solid fa-pencil"></i>
         </WhiteIconButton>
+
         <DangerIconButton onClick={borrarTest}>
           <i className="fa-solid fa-trash-can"></i>
         </DangerIconButton>
+
         <WhiteIconButton onClick={() => setShowAddProfessor(true)}>
           <i className="fa-sharp fa-solid fa-user-plus"></i>
         </WhiteIconButton>
+
         <WhiteIconButton onClick={() => setShowUnassignProfessor(true)}>
-          <i class="fa-solid fa-user-minus"></i>
+          <i className="fa-solid fa-user-minus"></i>
         </WhiteIconButton>
       </ButtonContainer>
 
@@ -159,7 +156,7 @@ const TestCard = (props) => {
 
       {showAddProfessor && (
         <Modal
-          titulo="Agregar Profesor"
+          titulo="Asignar docente"
           cerrar={() => setShowAddProfessor(false)}
         >
           <ModalAssignProfessor
@@ -175,7 +172,7 @@ const TestCard = (props) => {
 
       {showUnassignProfessor && (
         <Modal
-          titulo="Desasignar Profesor"
+          titulo="Desasignar docente"
           cerrar={() => setShowUnassignProfessor(false)}
         >
           <ModalUnassign

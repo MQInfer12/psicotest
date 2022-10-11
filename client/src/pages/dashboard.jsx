@@ -15,8 +15,9 @@ const DashboardContainer = styled.div`
 const Dashboard = () => {
   const {user, setUser} = useContext(UserContext);
 
-  const [titlePage, setTitlePage] = useState("Home");
+  const [titlePage, setTitlePage] = useState("");
   const [calendar, setCalendar] = useState(false);
+  const [links, setLinks] = useState(<></>);
 
   const navigate = useNavigate();
 
@@ -43,6 +44,8 @@ const Dashboard = () => {
         setTitlePage={setTitlePage}
         calendar={calendar}
         setCalendar={setCalendar}
+        links={links}
+        setLinks={setLinks}
       />
 
       <RightBar 

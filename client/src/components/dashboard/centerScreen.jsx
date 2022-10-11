@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 
 const CenterContainer = styled.div`
   margin-left: 263px;
@@ -29,6 +29,8 @@ const ActualPage = styled.span`
   font-weight: 300;
   font-size: 16px;
   color: #ADA7A7;
+  display: flex;
+  gap: 5px;
 `;
 
 const TitlePage = styled.span`
@@ -61,17 +63,38 @@ const OutletContainer = styled.div`
 
 `;
 
-const CenterScreen = ({ titlePage, setTitlePage, setCalendar, calendar }) => {
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  font-size: 16px;
+  color: #ADA7A7;
+  display: flex;
+  flex-direction: column;
+
+  &::after {
+    content: "";
+    width: 0%;
+    border-top: 1px solid #ADA7A7;
+    transition: all 0.2s;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+`;
+
+const CenterScreen = ({ titlePage, setTitlePage, calendar, setCalendar, links, setLinks }) => {
+  const location = useLocation();
+  
   return (
     <CenterContainer calendar={calendar}>
       <UpbarContainer>
         <UpbarText>
-          <ActualPage>Admin / Creación Tests</ActualPage>
+          <ActualPage>{links}<StyledLink to={location}>{titlePage}</StyledLink></ActualPage>
           <TitlePage>{ titlePage }</TitlePage>
         </UpbarText>
       </UpbarContainer>
       <OutletContainer>
-        <Outlet context={{setTitlePage, setCalendar}} />
+        <Outlet context={{setTitlePage, setCalendar, setLinks}} />
       </OutletContainer>
     </CenterContainer>
   )
