@@ -1,47 +1,98 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { WhiteIconButton } from "../../styles/formularios";
 import { ableUser, updateUser } from "../../services/usuario";
 import Modal from "../globals/modal";
 import ModalUser from "./modalUser";
 import ProfilePic from "../globals/profilePic";
 
 const DivCard = styled.div`
+  margin-top: 35px;
   width: 350px;
-  border-radius: 20px;
-  background-color: ${(props) => (props.estado ? "white" : "#ff8080")};
+  background-color: #E6E6E6;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: all 0.2s;
-  gap: 20px;
-`;
+  border-radius: 20px;
+  position: relative;
 
-const DivCardData = styled.div`
-  display: flex;
-  gap: 20px;
+  & > img {
+    position: absolute;
+    top: -50px;
+    left: 125px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  }
 `;
 
 const DivCardText = styled.div`
+  padding-top: 50px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  text-align: center;
 `;
 
-const PText = styled.div`
-  font-size: 0.8rem;
+const PNombre = styled.p`
+  color: #3E435D;
+  font-size: 22px;
+  font-weight: 600;
+`;
+
+const PRol = styled.p`
+  color: #ADA7A7;
+  font-size: 16px;
+  font-weight: 300;
+  text-transform: capitalize;
+`;
+
+const DivRow = styled.div`
+  padding-top: 5px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const DivColumns = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const PText = styled.p`
+  color: #3E435D;
+  font-size: 14px;
+  font-weight: 400;
+  width: 110%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const PGenero = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-transform: capitalize;
+  color: #3E435D;
+  font-size: 14px;
+  font-weight: 400;
 `;
 
 const DivCardButtons = styled.div`
+  padding-top: 10px;
+  justify-content: center;
   display: flex;
   gap: 20px;
 `;
 
-const ButtonCard = styled.button`
-  width: 100%;
-  height: 30px;
-  font-size: 0.8rem;
-  cursor: pointer;
+const DivEstado = styled.div`
+  display: flex;
+  gap: 5px;
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  font-size: 12px;
+  color: ${props => props.estado ? "#40dca0" : "#DC4067"};
+  align-items: center;
+  transition: all 0.2s;
 `;
 
 const UserCard = (props) => {
@@ -57,30 +108,44 @@ const UserCard = (props) => {
 
   return (
     <DivCard estado={props.estado}>
-      <DivCardData>
-        <ProfilePic width="75px" height="75px" src={props.perfil} />
-        <DivCardText>
-          <PText>{props.nombre_user}</PText>
-          <PText>Correo: {props.email}</PText>
-          <PText>Genero: {props.genero}</PText>
-          <PText>Edad: {props.edad}</PText>
-          <PText>Rol: {props.nombre_rol}</PText>
-          <PText>Sede: {props.nombre_sede}</PText>
-        </DivCardText>
-      </DivCardData>
+      <ProfilePic width="100px" height="100px" src={props.perfil} />
+      <DivEstado estado={props.estado}><i className="fa-solid fa-circle"></i>{props.estado ? "Habilitado" : "Deshabilitado"}</DivEstado>
+      <DivCardText>
+        <PNombre>{props.nombre_user}</PNombre>
+        <PRol>{props.nombre_rol}</PRol>
+        <DivRow>
+          <DivColumns>
+            <PText>{props.email}</PText>
+            <PGenero>
+              {
+                props.genero == "hombre"? (
+                  <i className="fa-solid fa-mars"></i>
+                ) : (
+                  <i className="fa-solid fa-venus"></i>
+                )
+              }
+              {props.genero}
+            </PGenero>
+          </DivColumns>
+          <DivColumns>
+            <PText>{props.nombre_sede}</PText>
+            <PText>{props.edad} años</PText>
+          </DivColumns>
+        </DivRow>
+      </DivCardText>
       <DivCardButtons>
-        <ButtonCard
+        <WhiteIconButton
           disabled={props.id_rol == 3}
           onClick={() => setShowForm(true)}
         >
-          Editar
-        </ButtonCard>
-        <ButtonCard
+          <i className="fa-solid fa-pencil"></i>
+        </WhiteIconButton>
+        <WhiteIconButton
           disabled={props.id_rol == 3}
           onClick={() => cambiarHabilitado(props.id)}
         >
-          {props.estado ? "Deshabilitar" : "Habilitar"}
-        </ButtonCard>
+          {props.estado ? <i className="fa-solid fa-user"></i> : <i className="fa-solid fa-user-slash"></i>}
+        </WhiteIconButton>
       </DivCardButtons>
       {showForm && 
         <Modal cerrar={() => setShowForm(false)} titulo="Editar usuario">

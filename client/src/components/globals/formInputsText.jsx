@@ -13,6 +13,7 @@ const FormInputsText = ({ data, handleChange }) => {
           </DivText>
           <InputText 
             name={v.name}
+            type={v.tipo}
             value={v.value}
             onChange={ handleChange }
             disabled={v.disabled}

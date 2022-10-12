@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { WhiteButton } from "../styles/formularios";
 import { addUser, getUsers } from "../services/usuario";
 import Cargando from "../components/globals/cargando";
 import UserResponse from "../components/user/filter/userReponse";
@@ -8,30 +9,27 @@ import Modal from "../components/globals/modal";
 import ModalUser from "../components/user/modalUser";
 
 const DivUsersPage = styled.div`
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
   align-items: center;
-  width: 100%;
 `;
 
 const DivUsersContainer = styled.div`
-  width: 100%;
   border-radius: 20px;
-  padding: 40px;
-  background-color: #f4bbff;
+  padding: 30px;
   display: flex;
-  gap: 20px;
+  gap: 30px;
   flex-wrap: wrap;
   justify-content: space-around;
-  position: relative;
 `;
 
-const ButtonCard = styled.button`
-  width: 200px;
-  height: 30px;
-  font-size: 0.8rem;
-  cursor: pointer;
+const DivControls = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
 `;
 
 const User = () => {
@@ -72,13 +70,13 @@ const User = () => {
     <DivUsersPage>
 
       {/* FILTRAR */}
-      
-      <UserFilter
-        handleSaveInput={handleSaveInput}
-        handleOptionSelect={handleOptionSelect}
-      />
-
-      <ButtonCard onClick={() => setShowForm(true)}>Añadir</ButtonCard>
+      <DivControls>
+        <UserFilter
+          handleSaveInput={handleSaveInput}
+          handleOptionSelect={handleOptionSelect}
+        />
+        <WhiteButton onClick={() => setShowForm(true)}>Añadir</WhiteButton>
+      </DivControls>
       {showForm && 
         <Modal cerrar={() => setShowForm(false)} titulo="Añadir usuario">
           <ModalUser
@@ -92,19 +90,20 @@ const User = () => {
         </Modal>
       }
 
-      {/* ==== LISTADO ===== */}
-      <DivUsersContainer>
-        {loadingUsers ? (
+      {
+        loadingUsers ? (
           <Cargando />
         ) : (
-          <UserResponse
-            usuarios={usuarios}
-            filter={filter}
-            optionFilter={optionFilter}
-            handleChange={handleChange}
-          />
-        )}
-      </DivUsersContainer>
+          <DivUsersContainer>
+            <UserResponse
+              usuarios={usuarios}
+              filter={filter}
+              optionFilter={optionFilter}
+              handleChange={handleChange}
+            />
+          </DivUsersContainer>
+        )
+      }
     </DivUsersPage>
   );
 };

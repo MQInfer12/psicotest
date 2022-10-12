@@ -58,7 +58,13 @@ export const ErrorCss = styled.p`
 `;
 
 export const PurpleButton = styled.button`
-  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  
+  min-height: "42px";
+  width: ${props => props.width};
   border: none;
   padding: 8px 26px 8px 26px;
   background-color: #660BE1;
@@ -80,6 +86,13 @@ export const WhiteButton = styled.button`
   text-align: center;
   font-size: 15px;
   cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    color: #D9D9D9;
+    background-color: #660be1;
+    border: 1px solid #660be1;
+  }
 `;
 
 export const DangerButton = styled.button`
@@ -92,6 +105,14 @@ export const DangerButton = styled.button`
   text-align: center;
   font-size: 15px;
   cursor: pointer;
+
+  transition: all 0.2s;
+
+  &:hover {
+    color: #FFFFFF;
+    background-color: #DC4067;
+    border: 1px solid #DC4067;
+  }
 `;
 
 export const PurpleIconButton = styled.button`
@@ -122,6 +143,13 @@ export const WhiteIconButton = styled.button`
   text-align: center;
   font-size: 16px;
   cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    color: #D9D9D9;
+    background-color: #660be1;
+    border: 1px solid #660be1;
+  }
 `;
 
 export const DangerIconButton = styled.button`
@@ -137,4 +165,11 @@ export const DangerIconButton = styled.button`
   color: #DC4067;
   text-align: center;
   cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    color: #FFFFFF;
+    background-color: #DC4067;
+    border: 1px solid #DC4067;
+  }
 `;

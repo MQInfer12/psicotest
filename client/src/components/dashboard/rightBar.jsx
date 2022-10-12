@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ProfilePic from "../globals/profilePic";
-import Calendar from "../../pages/calendar";
+import CalendarMini from "../calendar/calendarMini";
 
 const RightContainer = styled.aside`
   background-color: ${props => props.calendar? "#FFFFFF" : "transparent"};
@@ -15,7 +15,7 @@ const RightContainer = styled.aside`
 
 const UpbarSquares = styled.div`
   height: 157px;
-  padding: 47px 40px 31px 0px;
+  padding: 47px 40px 31px 20px;
   display: flex;
   align-items: center;
   gap: 30px;
@@ -23,21 +23,17 @@ const UpbarSquares = styled.div`
 `;
 
 const UpbarName = styled.p`
+  text-align: center;
   font-weight: 300;
   font-size: 16px;
   color: #ADA7A7;
 `;
 
 const UpbarNot = styled.div`
-  width: 52px;
+  min-width: 52px;
   height: 52px;
   border-radius: 10px;
   background-color: #D9D9D9;
-`;
-
-const CalendarContainer = styled.div`
-  height: calc(100% - 157px);
-  pointer-events: none;
 `;
 
 const RightBar = ({ user, calendar }) => {
@@ -54,7 +50,7 @@ const RightBar = ({ user, calendar }) => {
       </UpbarSquares>
       {
         calendar &&
-        <Calendar />
+        <CalendarMini />
       }
     </RightContainer>
   )
