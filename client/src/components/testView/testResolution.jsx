@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect , useContext } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { getFullTest } from "../../services/test";
+import { UserContext } from "../../context/userContext";
+import { addRespuesta } from "../../services/respuesta";
 
 const TestResolutionContainer = styled.div`
   background-color: #FFFFFF;
@@ -124,11 +126,35 @@ const PButton = styled.div`
 `;
 
 const TestResolution = ({ idTest, nombreTest }) => {
-
+  const { user } = useContext(UserContext);
   const [secciones, setSecciones] = useState([]);
   const [preguntasTotales, setPreguntasTotales] = useState(0);
   const [indexPregunta, setIndexPregunta] = useState(0);
+  const [resultados, setResultados] = useState({});
+
   let cont = 0;
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setResultados({
+      ...resultados,
+      [name]: value
+    })
+  }
+
+  const handleSubmit = async () => {
+    const form = {
+      id_test: idTest,
+      email_user: user.email,
+      id_resultados: resultados
+    }
+
+    const res = await addRespuesta(form);
+    const resJson = await res?.json();
+    console.log(JSON.stringify(form));
+    console.log(resJson);
+  }
 
   const llenarTestEntero = async () => {
     const res = await getFullTest(idTest);
@@ -140,16 +166,6 @@ const TestResolution = ({ idTest, nombreTest }) => {
       contPreguntas += seccion.preguntas.length;
     });
     setPreguntasTotales(contPreguntas);
-  }
-
-  const handleSend = () => {
-    let respuestas = {};
-    secciones.forEach(seccion => {
-      seccion.preguntas.forEach(pregunta => {
-        respuestas[pregunta.id] = 0;
-      })
-    })
-    console.log(respuestas);
   }
 
   useEffect(() => {
@@ -178,8 +194,9 @@ const TestResolution = ({ idTest, nombreTest }) => {
                         seccion.reactivos.map((reactivo, k) => (
                           <ReactivoContainer key={k}>
                             <ReactivoCheck
-                              type="text"
+                              type="radio"
                               name={pregunta.id}
+                              onChange={handleChange}
                               value={pregunta.puntuaciones.filter(puntuacion => puntuacion.id_reactivo == reactivo.id).map(puntuacion => puntuacion.id)}
                             /> 
                             <ReactivoTest>{reactivo.descripcion}</ReactivoTest>
@@ -207,7 +224,7 @@ const TestResolution = ({ idTest, nombreTest }) => {
           </ButtonTransparent>
           {
             indexPregunta == preguntasTotales - 1 ? (
-              <ButtonTransparent onClick={ handleSend }>
+              <ButtonTransparent onClick={ handleSubmit }>
                 <PButton>Enviar Test</PButton>
                 <IconButton className="fa-solid fa-share-from-square"></IconButton>
               </ButtonTransparent>

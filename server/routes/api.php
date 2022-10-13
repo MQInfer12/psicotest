@@ -9,6 +9,7 @@ use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\PuntuacionController;
 use App\Http\Controllers\ReactivoController;
+use App\Http\Controllers\RespuestaController;
 use App\Http\Controllers\SeccionController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
@@ -61,6 +62,9 @@ Route::group(['middleware' => 'api'], function(){
     //PUNTUACIONES ROUTES
     Route::post("puntuacion/reactivo", [PuntuacionController::class, 'puntuacionesByReactivos']);
     Route::put("puntuacion/update", [PuntuacionController::class, 'massUpdate']);
+
+    //RESPUESTA ROUTES
+    Route::apiResource("respuesta", RespuestaController::class);
 
     //HORARIOS
     Route::apiResource("horario", HorarioController::class);
