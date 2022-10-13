@@ -63,7 +63,7 @@ export const PurpleButton = styled.button`
   justify-content: center;
   gap: 20px;
   
-  min-height: "42px";
+  min-height: 42px;
   width: ${props => props.width};
   border: none;
   padding: 8px 26px 8px 26px;

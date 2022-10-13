@@ -76,4 +76,29 @@ class TestController extends Controller
     {
         return Test::destroy($id);
     }
+
+    public function getFullTest($id)
+    {
+        $test = DB::select("SELECT * FROM tests WHERE id='$id'");
+        $test = $test[0];
+
+        $id_test = $test->id;
+
+        $secciones = DB::select("SELECT id FROM seccions WHERE id_test='$id_test'");
+        foreach($secciones as $seccion) {
+            $id_seccion = $seccion->id;
+            $preguntas =DB::select("SELECT id, descripcion FROM preguntas WHERE id_seccion='$id_seccion' ORDER BY id");
+            $reactivos =DB::select("SELECT id, descripcion FROM reactivos WHERE id_seccion='$id_seccion' ORDER BY id");
+            foreach($preguntas as $pregunta) {
+                $id_pregunta = $pregunta->id;
+                $puntuaciones = DB::select("SELECT id, id_reactivo, asignado FROM puntuacions WHERE id_pregunta='$id_pregunta' ORDER BY id_reactivo");
+                $pregunta->puntuaciones = $puntuaciones;
+            }
+            $seccion->preguntas = $preguntas;
+            $seccion->reactivos = $reactivos;
+        }
+
+        $test->secciones = $secciones;
+        return $test;
+    }
 }

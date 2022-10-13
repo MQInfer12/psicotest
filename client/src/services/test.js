@@ -80,6 +80,18 @@ export const getTest = async (id) => {
   }
 };
 
+export const getFullTest = async (id) => {
+  try {
+    const response = await fetch(`${http}test/full/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const updateTest = async (form, id) => {
   try {
     const response = await fetch(`${http}test/${id}`, {

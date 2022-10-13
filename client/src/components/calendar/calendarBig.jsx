@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
-import { PurpleButton } from "../../styles/formularios";
+import { PurpleButton, WhiteIconButton } from "../../styles/formularios";
 
 const DivCalendarBig = styled.div`
   height: 100%;
@@ -46,13 +46,30 @@ const TdDay = styled.td`
 `;
 
 const DivTd = styled.div`
+  position: relative;
   width: 100%;
   height: 100%;
   padding: 10px;
   font-size: 14px;
+
+  & > button {
+    display: none;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    transform: scale(0.8);
+    transition: all 0.2s;
+  }
+
+  &:hover > button {
+    display: block;
+  }
 `;
 
-const PDay = styled.p`
+const DivDay = styled.p`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   color: ${props => props.today && '#660BE1'};
 `;
 
@@ -171,7 +188,7 @@ const CalendarBig = () => {
                   key={j}
                 >
                   <DivTd>
-                    <PDay
+                    <DivDay
                       today={comprobarDiaActual(
                         day.format("YYYY"),
                         day.format("MM"),
@@ -179,7 +196,8 @@ const CalendarBig = () => {
                       )}
                     >
                       {day.format("DD")}
-                    </PDay>
+                    </DivDay>
+                    {/*<WhiteIconButton><i className="fa-solid fa-plus"></i></WhiteIconButton>*/}
                   </DivTd>
                 </TdDay>
               ))}
