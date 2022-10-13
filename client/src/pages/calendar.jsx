@@ -7,7 +7,7 @@ const Calendar = () => {
   return (
     <>
     <CalendarBig />
-    {/*<ModalSchedule />*/}
+    <ModalSchedule />
     </>
   );
 };

@@ -3,83 +3,57 @@
 namespace App\Http\Controllers;
 
 use App\Models\Respuesta;
+use App\Models\Resultado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RespuestaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        return Respuesta::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id_test' => 'required',
+            'email_user' => 'required',
+            'id_puntuaciones' => 'required'
+        ]);
+
+        $respuesta = new Respuesta();
+        $respuesta->id_test = $request->id_test;
+        $respuesta->email_user = $request->email_user;
+        $respuesta->save();
+
+        $id_puntuaciones = $request->id_puntuaciones;
+        foreach($id_puntuaciones as $id_puntuacion) {
+            $resultado = new Resultado();
+            $resultado->id_respuesta = $respuesta->id;
+            $resultado->id_puntuacion = $id_puntuacion;
+            $resultado->save();
+        }
+
+        return response()->json(["mensaje" => "se guardo correctamente"], 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Respuesta  $respuesta
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Respuesta $respuesta)
+    public function show($id)
     {
-        //
+        $respuesta = Respuesta::find($id);
+        $id_respuesta = $respuesta->id;
+        $resultados = DB::select("SELECT * FROM resultados WHERE id_respuesta='$id_respuesta'");
+        foreach($resultados as $resultado) {
+            $id_puntuacion = $resultado->id_puntuacion;
+            $puntuacion = DB::select("SELECT * FROM puntuacions WHERE id='$id_puntuacion'");
+            $resultado->puntuacion = $puntuacion;
+        }
+        $respuesta->resultados = $resultados;
+        return $respuesta;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Respuesta  $respuesta
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Respuesta $respuesta)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Respuesta  $respuesta
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Respuesta $respuesta)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Respuesta  $respuesta
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Respuesta $respuesta)
-    {
-        //
+        return Respuesta::destroy($id);
     }
 }

@@ -10,11 +10,10 @@ import FormInputsText from "../components/globals/formInputsText";
 import { updateUser } from "../services/usuario";
 
 const ProfileContainer = styled.div`
-  height: 100%;
+  min-height: 100%;
   background-color: #FFFFFF;
   border-radius: 10px;
   position: relative;
-  overflow: hidden;
 `;
 
 const UpContainer = styled.div`
