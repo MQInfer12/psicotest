@@ -128,17 +128,18 @@ const TestResolution = ({ idTest, nombreTest }) => {
   const [secciones, setSecciones] = useState([]);
   const [preguntasTotales, setPreguntasTotales] = useState(0);
   const [indexPregunta, setIndexPregunta] = useState(0);
+  let cont = 0;
 
   const llenarTestEntero = async () => {
     const res = await getFullTest(idTest);
     const resJson = await res?.json();
     setSecciones(resJson.secciones);
 
-    let cont = 0;
+    let contPreguntas = 0;
     resJson.secciones.forEach(seccion => {
-      cont += seccion.preguntas.length;
+      contPreguntas += seccion.preguntas.length;
     });
-    setPreguntasTotales(cont);
+    setPreguntasTotales(contPreguntas);
   }
 
   const handleSend = () => {
@@ -164,28 +165,31 @@ const TestResolution = ({ idTest, nombreTest }) => {
         <PreguntasContainer>
           {
             secciones.map((seccion, i) => (
-              seccion.preguntas.map((pregunta, j) => (
-                <UnaPreguntaContainer key={j} translate={indexPregunta}>
-                  <PreguntaContainer>
-                    <PreguntaIndex>P{j + 1}: {j + 1}/{preguntasTotales}</PreguntaIndex>
-                    <Pregunta>{pregunta.descripcion}</Pregunta>
-                  </PreguntaContainer>
-                  <ReactivosContainer>
-                    {
-                      seccion.reactivos.map((reactivo, k) => (
-                        <ReactivoContainer key={k}>
-                          <ReactivoCheck
-                            type="radio"
-                            name={pregunta.id}
-                            value={pregunta.puntuaciones.filter(puntuacion => puntuacion.id_reactivo == reactivo.id).map(puntuacion => puntuacion.asignado)}
-                          /> 
-                          <ReactivoTest>{reactivo.descripcion}</ReactivoTest>
-                        </ReactivoContainer>
-                      ))
-                    }
-                  </ReactivosContainer>
-                </UnaPreguntaContainer>
-              ))
+              seccion.preguntas.map((pregunta, j) => {
+                cont++;
+                return (
+                  <UnaPreguntaContainer key={j} translate={indexPregunta}>
+                    <PreguntaContainer>
+                      <PreguntaIndex>P{cont}: {cont}/{preguntasTotales}</PreguntaIndex>
+                      <Pregunta>{pregunta.descripcion}</Pregunta>
+                    </PreguntaContainer>
+                    <ReactivosContainer>
+                      {
+                        seccion.reactivos.map((reactivo, k) => (
+                          <ReactivoContainer key={k}>
+                            <ReactivoCheck
+                              type="text"
+                              name={pregunta.id}
+                              value={pregunta.puntuaciones.filter(puntuacion => puntuacion.id_reactivo == reactivo.id).map(puntuacion => puntuacion.id)}
+                            /> 
+                            <ReactivoTest>{reactivo.descripcion}</ReactivoTest>
+                          </ReactivoContainer>
+                        ))
+                      }
+                    </ReactivosContainer>
+                  </UnaPreguntaContainer>
+                )
+              })
             ))
           }
         </PreguntasContainer>
