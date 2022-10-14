@@ -20,7 +20,9 @@ class TestController extends Controller
                                     FROM users as u, docente_tests as dt
                                     WHERE dt.id_test = '$id_test' AND dt.id_docente = u.id");
             foreach($usuarios as $usuario) {
-                $usuario->perfil = stream_get_contents($usuario->perfil);
+                if($usuario->perfil != null) {
+                    $usuario->perfil = stream_get_contents($usuario->perfil);
+                }
             }
             $test->usuarios = $usuarios;
         }        

@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-
 import { UserContext } from "../../context/userContext";
 import { UseForm } from "../../hooks/useFormSchedule";
 import { initialForm, validationsForm } from "../../validations/schedule";
