@@ -147,12 +147,11 @@ const TestResolution = ({ idTest, nombreTest }) => {
     const form = {
       id_test: idTest,
       email_user: user.email,
-      id_resultados: resultados
+      puntuaciones: resultados
     }
 
     const res = await addRespuesta(form);
     const resJson = await res?.json();
-    console.log(JSON.stringify(form));
     console.log(resJson);
   }
 

@@ -19,7 +19,7 @@ class RespuestaController extends Controller
         $request->validate([
             'id_test' => 'required',
             'email_user' => 'required',
-            'id_puntuaciones' => 'required'
+            'puntuaciones' => 'required'
         ]);
 
         $respuesta = new Respuesta();
@@ -27,11 +27,11 @@ class RespuestaController extends Controller
         $respuesta->email_user = $request->email_user;
         $respuesta->save();
 
-        $id_puntuaciones = $request->id_puntuaciones;
-        foreach($id_puntuaciones as $id_puntuacion) {
+        $puntuaciones = $request->puntuaciones;
+        foreach($puntuaciones as $puntuacion) {
             $resultado = new Resultado();
             $resultado->id_respuesta = $respuesta->id;
-            $resultado->id_puntuacion = $id_puntuacion;
+            $resultado->id_puntuacion = $puntuacion;
             $resultado->save();
         }
 
