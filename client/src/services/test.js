@@ -24,32 +24,6 @@ export const getTestsToProfessor = async (id) => {
   }
 };
 
-export const getBeneficiaryAssign = async (id) => {
-  try {
-    const response = await fetch(`${http}test/benefAssigning/${id}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getBeneficiaryNoAssign = async (id) => {
-  try {
-    const response = await fetch(`${http}test/benefNoAssigning/${id}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    const res = await response.json();
-    return res;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-
 export const getProfessorTests = async (id) => {
   try {
     const response = await fetch(`${http}test/professor/${id}`, {
@@ -128,7 +102,7 @@ export const getFullTest = async (id) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const updateTest = async (form, id) => {
   try {
@@ -223,5 +197,52 @@ export const deleteProfessorAssigned = async (vec, id) => {
     }
   } catch (err) {
     console.error(err);
+  }
+};
+
+/* ======================= BENEFICIARY ============== */
+
+export const getBeneficiaryAssign = async (id) => {
+  try {
+    const response = await fetch(`${http}test/benefAssigning/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getBeneficiaryNoAssign = async (id) => {
+  try {
+    const response = await fetch(`${http}test/benefNoAssigning/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    const res = await response.json();
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addBenefToTest = async (obj, id_docente_test) => {
+  try {
+    const response = await fetch(`${http}test/AssigningVariosBenef`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify({
+        objeto: obj,
+        id_docente_test: id_docente_test,
+      }),
+    });
+    const resJson = await response.json();
+    return resJson;
+  } catch (error) {
+    console.log(error);
   }
 };

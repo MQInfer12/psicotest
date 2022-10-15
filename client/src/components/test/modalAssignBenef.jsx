@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getProfessor } from "../../services/usuario";
 import {
-  addProfessorToTest,
+  addBenefToTest,
   getBeneficiaryNoAssign,
 } from "../../services/test";
 const ModalAssignProfessor = ({ id, actualizar }) => {
@@ -44,10 +44,10 @@ const ModalAssignProfessor = ({ id, actualizar }) => {
       vecAux.push(value);
     }
     const obj = Object.assign({}, vecAux);
-    const resp = await addProfessorToTest(obj, id);
-    if (resp.mensaje === "se guardo correctamente") {
+    const resp = await addBenefToTest(obj, id);
+     if (resp.mensaje === "se guardo correctamente") {
       actualizar();
-    }
+    } 
   };
   return (
     <div>

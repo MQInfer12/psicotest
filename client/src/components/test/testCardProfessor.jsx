@@ -143,7 +143,7 @@ const TestCard = (props) => {
           <ModalAssignBenef
             id={props.id}
             actualizar={() => {
-              props.llenarTests();
+/*               props.llenarTests(); */
               setShowAddBenef(false);
             }}
           />

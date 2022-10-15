@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BeneficiarioDocenteTest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -51,4 +52,38 @@ class BeneficiarioDocenteController extends Controller
 
         return response()->json($getProfessorsNotAssigning);
     }
+
+   public function assignBenefToTest(Request $request)
+    {
+        $request->validate([
+            "objeto" => "required",
+            "id_docente_test" => "required"
+        ]);
+
+        $objeto = $request->objeto;
+
+        foreach ($objeto as $valor) {
+            $professorTest = new BeneficiarioDocenteTest();
+            $professorTest->id_beneficiario = $valor;
+            $professorTest->id_docente_test = $request->id_docente_test;
+            $professorTest->save();
+        }
+
+        return response()->json(["mensaje" => "se guardo correctamente"], 201);
+    }/*
+
+    public function deleteProfessorAssigning(Request $request)
+    {
+        $request->validate([
+            "objeto" => "required",
+            "id_test" => "required"
+        ]);
+
+        $objeto = $request->objeto;
+
+        foreach ($objeto as $valor) {
+            DB::delete("delete from docente_tests where id_test=$request->id_test and id_docente=$valor");
+        }
+        return response()->json(["msg" => "se ha eliminado"], 200);
+    }*/
 }
