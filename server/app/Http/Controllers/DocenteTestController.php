@@ -23,6 +23,11 @@ class DocenteTestController extends Controller
         return response()->json($showTests);
     }
 
+    public function show($id)
+    {
+        return DocenteTest::find($id);
+    }
+
     public function getProfessorNotAssigning($id)
     {
         $getIdDocente = DB::select("select * from docente_tests where id_test=$id");

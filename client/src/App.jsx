@@ -106,9 +106,27 @@ function App() {
             <Route
               path="testview/:idTest"
               element={
-                <ProtectedRole roles={[3]}>
+                <ProtectedRole roles={[2, 3]}>
                   <OutletContext
-                    titlePage="Información del test"
+                    titlePage="Vista previa"
+                    calendar={false}
+                    links={
+                      <>
+                        <StyledLink to="/dashboard/tests">Tests</StyledLink>/
+                      </>
+                    }
+                  >
+                    <TestView />
+                  </OutletContext>
+                </ProtectedRole>
+              }
+            />
+            <Route
+              path="testresolve/:idDocenteTest"
+              element={
+                <ProtectedRole roles={[1]}>
+                  <OutletContext
+                    titlePage="Resolver el test"
                     calendar={false}
                     links={
                       <>

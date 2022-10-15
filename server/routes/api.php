@@ -43,6 +43,7 @@ Route::group(['middleware' => 'api'], function(){
     Route::get("test/full/{id}", [TestController::class, 'getFullTest']);
     Route::post("test/assignateProfessor", [DocenteTestController::class, 'store']);
     Route::get("test/professor/{id}", [DocenteTestController::class, 'index']);
+    Route::get("docentetest/{id}", [DocenteTestController::class, 'show']);
     Route::get("test/professorNotAssigning/{id}", [DocenteTestController::class, 'getProfessorNotAssigning']);
     Route::get("test/professorAssigning/{id}", [DocenteTestController::class, 'getProfessorAssigning']);
     Route::post("test/deleteprofessorAssigning", [DocenteTestController::class, 'deleteProfessorAssigning']);

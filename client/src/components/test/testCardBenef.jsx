@@ -82,7 +82,7 @@ const TestCardBenef = (props) => {
       </ContainerIcon>
 
       <ButtonContainer>
-        <WhiteIconButton onClick={() => navigate(`../testview/${props.id_test}`)}>
+        <WhiteIconButton onClick={() => navigate(`../testresolve/${props.id_docente_test}`)}>
           <i className="fa-solid fa-newspaper"></i>
         </WhiteIconButton>
       </ButtonContainer>

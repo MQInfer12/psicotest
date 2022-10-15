@@ -5,7 +5,7 @@ import styled from "styled-components";
 import TestFeatures from "../components/testView/testFeatures";
 import TestParagraphs from "../components/testView/testParagraphs";
 import TestResolution from "../components/testView/testResolution";
-import { getTest } from "../services/test";
+import { getDocenteTest, getTest } from "../services/test";
 
 const TestViewContainer = styled.div`
   min-height: 100%;
@@ -34,8 +34,9 @@ const TestTitle = styled.h2`
 
 const TestView = () => {
   const { idTest } = useParams();
+  const { idDocenteTest } = useParams();
   const [test, setTest] = useState([]);
-  const activateSend = idTest? false : true;
+  const activateSend = idDocenteTest? true : false;
 
   const llenarTest = async () => {
     const res = await getTest(idTest);
@@ -43,8 +44,21 @@ const TestView = () => {
     setTest(resJson[0]);
   }
 
+  const getTestId = async () => {
+    const res = await getDocenteTest(idDocenteTest);
+    const resJson = await res?.json();
+    const restest = await getTest(resJson.id_test);
+    const restestJson = await restest?.json();
+    setTest(restestJson[0]);
+  }
+
   useEffect(() => {
-    llenarTest();
+    if(idTest) {
+      llenarTest();
+    }
+    if(idDocenteTest) {
+      getTestId();
+    }
   }, []);
 
   return (
@@ -56,7 +70,7 @@ const TestView = () => {
           <TestParagraphs />
         </TestTextContainer>
       </InformationContainer>
-      <TestResolution activateSend={activateSend} idTest={idTest} nombreTest={test.nombre} />
+      <TestResolution activateSend={activateSend} idTest={test.id} nombreTest={test.nombre} />
     </TestViewContainer>
   )
 }

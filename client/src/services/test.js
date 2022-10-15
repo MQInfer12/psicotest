@@ -281,3 +281,15 @@ export const getTestsToBenef = async (id) => {
     console.log(error);
   }
 }
+
+export const getDocenteTest = async (id) => {
+  try {
+    const response = await fetch(`${http}docentetest/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

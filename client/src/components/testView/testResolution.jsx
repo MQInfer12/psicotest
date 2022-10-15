@@ -3,6 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { getFullTest } from "../../services/test";
 import { UserContext } from "../../context/userContext";
+import { useParams } from "react-router-dom";
 import { addRespuesta } from "../../services/respuesta";
 
 const TestResolutionContainer = styled.div`
@@ -126,6 +127,7 @@ const PButton = styled.div`
 `;
 
 const TestResolution = ({ idTest, nombreTest, activateSend }) => {
+  const { idDocenteTest } = useParams();
   const { user } = useContext(UserContext);
   const [secciones, setSecciones] = useState([]);
   const [preguntasTotales, setPreguntasTotales] = useState(0);
@@ -145,20 +147,21 @@ const TestResolution = ({ idTest, nombreTest, activateSend }) => {
 
   const handleSubmit = async () => {
     const form = {
-      id_test: idTest,
       email_user: user.email,
+      id_docente_test: idDocenteTest,
       puntuaciones: resultados
     }
 
-    const res = await addRespuesta(form);
+    console.log(JSON.stringify(form));
+
+    /*const res = await addRespuesta(form);
     const resJson = await res?.json();
-    console.log(resJson);
+    console.log(resJson);*/
   }
 
   const llenarTestEntero = async () => {
     const res = await getFullTest(idTest);
     const resJson = await res?.json();
-    console.log(resJson);
     setSecciones(resJson.secciones);
 
     let contPreguntas = 0;
@@ -168,9 +171,14 @@ const TestResolution = ({ idTest, nombreTest, activateSend }) => {
     setPreguntasTotales(contPreguntas);
   }
 
+  const [secondTime, setSecondTime] = useState(false);
   useEffect(() => {
-    llenarTestEntero();
-  }, []);
+    if(secondTime) {
+      llenarTestEntero();
+    }
+
+    setSecondTime(true);
+  }, [idTest]);
 
   return (
     <TestResolutionContainer>

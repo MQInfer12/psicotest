@@ -84,11 +84,11 @@ const Test = () => {
 
   return (
     <AllContainer>
-      <ButtonContainer>
-        {idRole === 3 && (
-          <PurpleButton onClick={() => setShowForm(true)}>Añadir</PurpleButton>
-        )}
-      </ButtonContainer>
+      {idRole === 3 && (
+        <ButtonContainer>
+            <PurpleButton onClick={() => setShowForm(true)}>Añadir</PurpleButton>
+        </ButtonContainer>
+      )}
       {loading ? (
         <Cargando />
       ) : (
