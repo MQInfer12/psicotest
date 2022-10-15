@@ -100,5 +100,5 @@ class BeneficiarioDocenteController extends Controller
         }
         return response()->json(["msg" => "se ha eliminado"], 200);
     }
-
+    
 }
