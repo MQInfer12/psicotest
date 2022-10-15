@@ -107,7 +107,7 @@ const TestCard = (props) => {
 
       {idRole === 2 && (
         <ButtonContainer>
-          <WhiteIconButton onClick={() => navigate(`../testview/${props.id}`)}>
+          <WhiteIconButton onClick={() => navigate(`../testview/${props.id_test}`)}>
             <i className="fa-solid fa-newspaper"></i>
           </WhiteIconButton>
 
@@ -120,9 +120,6 @@ const TestCard = (props) => {
           </WhiteIconButton>
         </ButtonContainer>
       )}
-
-    
-      
 
      {showAddBenef && (
         <Modal
@@ -139,7 +136,7 @@ const TestCard = (props) => {
         </Modal>
       )} 
 
-    {showUnassignBenef && (
+      {showUnassignBenef && (
         <Modal
           titulo="Desasignar beneficiario"
           cerrar={() => setShowUnassignBenef(false)}

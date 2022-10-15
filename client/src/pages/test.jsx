@@ -58,6 +58,7 @@ const Test = () => {
   const llenarTestsToProfessor = async () => {
     const res = await getTestsToProfessor(user.id);
     const resJson = await res?.json();
+    console.log(resJson);
     setTests(resJson);
     setLoading(false);
   };

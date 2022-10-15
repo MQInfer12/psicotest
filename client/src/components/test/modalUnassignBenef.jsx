@@ -3,18 +3,23 @@ import { deleteBenefAssigned, getBeneficiaryAssign } from "../../services/test";
 import styled from "styled-components";
 import ProfilePic from "../globals/profilePic";
 import { FormContainer, PurpleButton } from "../../styles/formularios";
+import Cargando from "../globals/cargando";
 
-const DivPersonas = styled.div`
-  max-width: 400px;
-  max-height: 150px;
+const DivModal = styled.div`
+  background-color: #F4F4F4;
+  width: 400px;
+  height: 150px;
+  max-height: 250px;
   padding: 10px;
   border-radius: 10px;
-  background-color: #F4F4F4;
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
   overflow: scroll;
   overflow-x: hidden;
+`;
+
+const DivPersonas = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 `;
 
 const DivPersona = styled.div`
@@ -68,10 +73,12 @@ const ModalUnAssignProfessor = ({ id, actualizar }) => {
   const saveData = async () => {
     const vecAux = [];
     for (let val of checSelected) {
-      const value = parseInt(val);
-      vecAux.push(value);
+      vecAux.push(val);
     }
-    const resp = await deleteBenefAssigned(vecAux, id);
+    const obj = Object.assign({}, vecAux);
+    console.log(obj);
+    const resp = await deleteBenefAssigned(obj, id);
+    console.log(resp);
     if(resp.msg === "se ha eliminado"){
         actualizar();
     };
@@ -79,24 +86,26 @@ const ModalUnAssignProfessor = ({ id, actualizar }) => {
 
   return (
     <FormContainer>
-      {loading ? (
-        <p>cargando</p>
-      ) : (
-        <>
-          <DivPersonas>
+      <DivModal>
+        {
+          loading ? (
+            <Cargando />
+          ) : (
+            <DivPersonas>
             {data.map((v, i) => (
               <DivPersona key={i}>
                 <ProfilePic width="20px" height="20px" src={v.perfil} />
                 {v.nombre_user}
-                <input type="checkbox" value={v.id} onChange={handleChangeCheck}/>
+                <input type="checkbox" value={v.email} onChange={handleChangeCheck}/>
               </DivPersona>
             ))}
-          </DivPersonas>
-          <PurpleButton disabled={!btnActive ? true : false} onClick={saveData}>
-            Guardar
-          </PurpleButton>
-        </>
-      )}
+            </DivPersonas>
+          )
+        }
+      </DivModal>
+      <PurpleButton disabled={!btnActive ? true : false} onClick={saveData}>
+        Guardar
+      </PurpleButton>
     </FormContainer>
   );
 };

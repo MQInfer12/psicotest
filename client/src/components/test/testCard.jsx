@@ -79,7 +79,6 @@ const TestCard = (props) => {
   const borrarTest = async () => {
     const res = await deleteTest(props.id);
     const resJson = await res?.json();
-    console.log(resJson);
     if (resJson) props.llenarTests();
   };
 
@@ -115,30 +114,30 @@ const TestCard = (props) => {
       )}
 
 
-        <ButtonContainer>
-          <WhiteIconButton onClick={() => navigate(`../testview/${props.id}`)}>
-            <i className="fa-solid fa-newspaper"></i>
-          </WhiteIconButton>
-          <WhiteIconButton onClick={() => navigate(`./${props.id}`)}>
-            <i className="fa-solid fa-pen-to-square"></i>
-          </WhiteIconButton>
+      <ButtonContainer>
+        <WhiteIconButton onClick={() => navigate(`../testview/${props.id}`)}>
+          <i className="fa-solid fa-newspaper"></i>
+        </WhiteIconButton>
+        <WhiteIconButton onClick={() => navigate(`./${props.id}`)}>
+          <i className="fa-solid fa-pen-to-square"></i>
+        </WhiteIconButton>
 
-          <WhiteIconButton onClick={() => setShowForm(true)}>
-            <i className="fa-solid fa-pencil"></i>
-          </WhiteIconButton>
+        <WhiteIconButton onClick={() => setShowForm(true)}>
+          <i className="fa-solid fa-pencil"></i>
+        </WhiteIconButton>
 
-          <WhiteIconButton onClick={() => setShowAddProfessor(true)}>
-            <i className="fa-sharp fa-solid fa-user-plus"></i>
-          </WhiteIconButton>
+        <WhiteIconButton onClick={() => setShowAddProfessor(true)}>
+          <i className="fa-sharp fa-solid fa-user-plus"></i>
+        </WhiteIconButton>
 
-          <WhiteIconButton onClick={() => setShowUnassignProfessor(true)}>
-            <i className="fa-solid fa-user-minus"></i>
-          </WhiteIconButton>
+        <WhiteIconButton onClick={() => setShowUnassignProfessor(true)}>
+          <i className="fa-solid fa-user-minus"></i>
+        </WhiteIconButton>
 
-          <DangerIconButton onClick={() => setShowSure(true)}>
-            <i className="fa-solid fa-trash-can"></i>
-          </DangerIconButton>
-        </ButtonContainer>
+        <DangerIconButton onClick={() => setShowSure(true)}>
+          <i className="fa-solid fa-trash-can"></i>
+        </DangerIconButton>
+      </ButtonContainer>
      
 
       {showForm && (
