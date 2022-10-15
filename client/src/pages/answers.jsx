@@ -163,7 +163,7 @@ const Answers = () => {
   }
 
   useEffect(() => {
-    llenarRespuestas();
+    //llenarRespuestas();
   }, [])
 
   return (

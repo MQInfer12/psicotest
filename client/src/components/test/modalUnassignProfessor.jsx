@@ -2,21 +2,25 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { deleteProfessorAssigned, getProfessorAssigned } from "../../services/test";
 import { FormContainer, PurpleButton } from "../../styles/formularios";
+import Cargando from "../globals/cargando";
 import ProfilePic from "../globals/profilePic";
 
-const DivPersonas = styled.div`
-  max-width: 400px;
-  max-height: 150px;
+const DivModal = styled.div`
+  background-color: #F4F4F4;
+  width: 400px;
+  height: 150px;
+  max-height: 250px;
   padding: 10px;
   border-radius: 10px;
-  background-color: #F4F4F4;
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
   overflow: scroll;
   overflow-x: hidden;
 `;
 
+const DivPersonas = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+`;
 const DivPersona = styled.div`
   font-size: 14px;
   font-weight: 400;
@@ -79,11 +83,12 @@ const ModalUnAssignProfessor = ({ id, actualizar }) => {
 
   return (
     <FormContainer>
-      {loading ? (
-        <p>cargando</p>
-      ) : (
-        <>
-          <DivPersonas>
+      <DivModal>
+        {
+          loading ? (
+            <Cargando />
+          ) : (
+            <DivPersonas>
             {data.map((v, i) => (
               <DivPersona key={i}>
                 <ProfilePic width="20px" height="20px" src={v.perfil} />
@@ -91,12 +96,13 @@ const ModalUnAssignProfessor = ({ id, actualizar }) => {
                 <input type="checkbox" value={v.id} onChange={handleChangeCheck}/>
               </DivPersona>
             ))}
-          </DivPersonas>
-          <PurpleButton disabled={!btnActive ? true : false} onClick={saveData}>
-            Guardar
-          </PurpleButton>
-        </>
-      )}
+            </DivPersonas>
+          )
+        }
+      </DivModal>
+      <PurpleButton disabled={!btnActive ? true : false} onClick={saveData}>
+        Guardar
+      </PurpleButton>
     </FormContainer>
   );
 };

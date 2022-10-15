@@ -35,6 +35,7 @@ const TestTitle = styled.h2`
 const TestView = () => {
   const { idTest } = useParams();
   const [test, setTest] = useState([]);
+  const activateSend = idTest? false : true;
 
   const llenarTest = async () => {
     const res = await getTest(idTest);
@@ -55,7 +56,7 @@ const TestView = () => {
           <TestParagraphs />
         </TestTextContainer>
       </InformationContainer>
-      <TestResolution idTest={idTest} nombreTest={test.nombre} />
+      <TestResolution activateSend={activateSend} idTest={idTest} nombreTest={test.nombre} />
     </TestViewContainer>
   )
 }

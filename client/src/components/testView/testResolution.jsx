@@ -125,7 +125,7 @@ const PButton = styled.div`
   color: #D9D9D9;
 `;
 
-const TestResolution = ({ idTest, nombreTest }) => {
+const TestResolution = ({ idTest, nombreTest, activateSend }) => {
   const { user } = useContext(UserContext);
   const [secciones, setSecciones] = useState([]);
   const [preguntasTotales, setPreguntasTotales] = useState(0);
@@ -224,10 +224,14 @@ const TestResolution = ({ idTest, nombreTest }) => {
           </ButtonTransparent>
           {
             indexPregunta == preguntasTotales - 1 ? (
-              <ButtonTransparent onClick={ handleSubmit }>
-                <PButton>Enviar Test</PButton>
-                <IconButton className="fa-solid fa-share-from-square"></IconButton>
-              </ButtonTransparent>
+              activateSend ? (
+                <ButtonTransparent onClick={ handleSubmit }>
+                  <PButton>Enviar Test</PButton>
+                  <IconButton className="fa-solid fa-share-from-square"></IconButton>
+                </ButtonTransparent>
+              ) : (
+                <p>Los administradores y docentes no pueden enviar respuestas a los test.</p>
+              )
             ) : (
               <ButtonTransparent onClick={() => setIndexPregunta(indexPregunta + 1)}>
                 <PButton>Pregunta siguiente</PButton>

@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('respuestas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_test')->constrained('tests')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('email_user');
             $table->foreign('email_user')->references('email')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('id_docente_test')->constrained('docente_tests')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->integer('estado');                                      
             $table->timestamps();
         });
     }

@@ -2,27 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BeneficiarioDocenteTest;
+use App\Models\Respuesta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BeneficiarioDocenteController extends Controller
 {
-    public function showTestToProffessor($id)
+    public function showTestToProffessor($id) //BIEN
     {
-        $tests = DB::select("select dt.id, dt.id_docente, dt.id_test, t.nombre, t.tiempo, t.descripcion, t.autor
-        from docente_tests as dt, tests as t 
-        where dt.id_docente=$id and dt.id_test=t.id");
+        $tests = DB::select("SELECT dt.id, dt.id_docente, dt.id_test, t.nombre, t.tiempo, t.descripcion, t.autor
+                             from docente_tests as dt, tests as t 
+                             where dt.id_docente=$id and dt.id_test=t.id");
 
         return response()->json($tests);
     }
 
     public function getBenefAssigning($id)
     {
-        $getIdDocente = DB::select("select bdt.id, bdt.id_beneficiario, bdt.id_docente_test, u.email, 
-        u.nombre as nombre_user, s.nombre as sede, u.perfil
-        from beneficiario_docente_tests as bdt, users u, sedes as s
-        where bdt.id_beneficiario=u.id and s.id=u.id_sede and bdt.id_docente_test=$id");
+        $getIdDocente = DB::select("SELECT bdt.id, bdt.email_user, bdt.id_docente_test, u.email, 
+                                    u.nombre as nombre_user, s.nombre as sede, u.perfil
+                                    from respuestas as bdt, users u, sedes as s
+                                    where bdt.email_user=u.email and s.id=u.id_sede and bdt.id_docente_test=$id");
+
         foreach($getIdDocente as $benef) {
             if($benef->perfil != null) {
                 $benef->perfil = stream_get_contents($benef->perfil);
@@ -31,22 +32,23 @@ class BeneficiarioDocenteController extends Controller
         return response()->json($getIdDocente);
     }
 
-    public function getBenefNotAssigning($id)
+    public function getBenefNotAssigning($id) //FUNCIONA
     {
-        $getIdBenef = DB::select("select * from beneficiario_docente_tests where id_docente_test=$id");
+        $getIdBenef = DB::select("SELECT * from respuestas where id_docente_test=$id");
         $getIdsany = true;
-        $condition = "and id!=";
+        $condition = "and email !=";
+        
         foreach ($getIdBenef as $idBenef) {
             $getIdsany = false;
             if ($idBenef != end($getIdBenef)) {
-                $condition = $condition . ' ' . $idBenef->id_beneficiario . ' ' . $condition;
+                $condition = $condition . " '" . $idBenef->email_user . "' " . $condition;
             } else {
-                $condition = $condition . ' ' . $idBenef->id_beneficiario;
+                $condition = $condition . " '" . $idBenef->email_user . "'";
             }
         }
 
         if ($getIdsany) {
-            $getBenefNotAssigning = DB::select("select u.id, u.nombre as nombre_usuario, u.email, u.estado, u.perfil
+            $getBenefNotAssigning = DB::select("SELECT u.id, u.nombre as nombre_usuario, u.email, u.estado, u.perfil
             from users as u where u.id_rol=1");
             foreach($getBenefNotAssigning as $benef) {
                 if($benef->perfil != null) {
@@ -66,7 +68,7 @@ class BeneficiarioDocenteController extends Controller
         return response()->json($getBenefNotAssigning);
     }
 
-   public function assignBenefToTest(Request $request)
+   public function assignBenefToTest(Request $request) //FUNCIONA
     {
         $request->validate([
             "objeto" => "required",
@@ -76,10 +78,11 @@ class BeneficiarioDocenteController extends Controller
         $objeto = $request->objeto;
 
         foreach ($objeto as $valor) {
-            $professorTest = new BeneficiarioDocenteTest();
-            $professorTest->id_beneficiario = $valor;
-            $professorTest->id_docente_test = $request->id_docente_test;
-            $professorTest->save();
+            $benefTest = new Respuesta();
+            $benefTest->email_user = $valor;
+            $benefTest->id_docente_test = $request->id_docente_test;
+            $benefTest->estado = 0;
+            $benefTest->save();
         }
 
         return response()->json(["mensaje" => "se guardo correctamente"], 201);
@@ -95,10 +98,9 @@ class BeneficiarioDocenteController extends Controller
         $objeto = $request->objeto;
 
         foreach ($objeto as $valor) {
-            DB::delete("DELETE from beneficiario_docente_tests 
-            where id=$valor");
+            DB::delete("DELETE from respuestas where email_user='$valor' AND id_docente_test='$request->id_docente_test'");
         }
         return response()->json(["msg" => "se ha eliminado"], 200);
     }
-
+    
 }
