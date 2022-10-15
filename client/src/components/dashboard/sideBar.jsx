@@ -85,6 +85,13 @@ const SideBar = ({ rol, setUser }) => {
       icon: "fa-solid fa-clipboard",
     },
     {
+      roles: [3],
+      select: "answers",
+      title: "Respuestas",
+      goTo: "./answers",
+      icon: "fa-regular fa-folder-open",
+    },
+    {
       roles: [1, 2, 3],
       select: "calendar",
       title: "Calendario",
@@ -106,17 +113,17 @@ const SideBar = ({ rol, setUser }) => {
       icon: "fa-solid fa-users-line",
     },
     {
-      roles: [1, 2, 3],
-      select: "profile",
-      title: "Perfil",
-      goTo: "./profile",
-      icon: "fa-solid fa-address-card",
-    },
-    {
       roles: [1],
       select: "cita",
       title: "Cita",
       goTo: "./cita",
+      icon: "fa-solid fa-address-card",
+    },
+    {
+      roles: [1, 2, 3],
+      select: "profile",
+      title: "Perfil",
+      goTo: "./profile",
       icon: "fa-solid fa-address-card",
     },
   ]

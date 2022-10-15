@@ -7,6 +7,7 @@ const ModalUnAssignProfessor = ({ id, actualizar }) => {
   const handleGetData = async () => {
     const res = await getProfessorAssigned(id);
     setData(res);
+    console.log(res);
     setLoading(false);
   };
 

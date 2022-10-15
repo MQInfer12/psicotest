@@ -158,6 +158,7 @@ const TestResolution = ({ idTest, nombreTest }) => {
   const llenarTestEntero = async () => {
     const res = await getFullTest(idTest);
     const resJson = await res?.json();
+    console.log(resJson);
     setSecciones(resJson.secciones);
 
     let contPreguntas = 0;

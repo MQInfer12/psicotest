@@ -11,7 +11,38 @@ class RespuestaController extends Controller
 {
     public function index()
     {
-        return Respuesta::all();
+        $respuestas = DB::select("SELECT * FROM respuestas ORDER BY id");
+        
+        foreach($respuestas as $respuesta) {
+            $usuario = DB::select("SELECT nombre, email FROM users WHERE email='$respuesta->email_user'");
+            $test = DB::select("SELECT nombre, descripcion FROM tests WHERE id='$respuesta->id_test'");
+
+            $respuesta->usuario = $usuario;
+            $respuesta->test = $test;
+
+            $secciones = DB::select("SELECT id FROM seccions WHERE id_test='$respuesta->id_test'");
+            $total = 0;
+            foreach($secciones as $seccion) {                
+                $preguntas = DB::select("SELECT id FROM preguntas WHERE id_seccion='$seccion->id'");
+                foreach($preguntas as $pregunta) {
+                    $max = DB::select("SELECT MAX(asignado) FROM puntuacions WHERE id_pregunta='$pregunta->id'");
+                    $total = $total + $max[0]->max;
+                }
+            }
+            
+            $respuesta->total = $total;
+
+            $resultados = DB::select("SELECT * FROM resultados WHERE id_respuesta='$respuesta->id'");
+            $cont = 0;
+            foreach($resultados as $resultado) {
+                $puntuacion = DB::select("SELECT asignado FROM puntuacions WHERE id='$resultado->id_puntuacion'");
+                $cont = $cont + $puntuacion[0]->asignado;
+            }
+
+            $respuesta->puntuacion = $cont;
+        }
+
+        return $respuestas;
     }
 
     public function store(Request $request)

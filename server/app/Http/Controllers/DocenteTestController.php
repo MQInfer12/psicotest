@@ -38,13 +38,25 @@ class DocenteTestController extends Controller
         }
         if ($getIdsany) {
             $getProfessorsNotAssigning = DB::select("SELECT u.id, u.nombre as nombre_user, u.email, 
-            u.estado, s.nombre as nombre_sede from users u, sedes s 
+            u.estado, s.nombre as nombre_sede, u.perfil from users u, sedes s 
             where u.id_rol=2 and u.id_sede=s.id");
+
+            foreach($getProfessorsNotAssigning as $profesor) {
+                if($profesor->perfil != null) {
+                    $profesor->perfil = stream_get_contents($profesor->perfil);
+                }
+            }
         } else {
             $getProfessorsNotAssigning = DB::select("SELECT u.id, u.nombre as nombre_user, u.email,
-             u.estado, s.nombre as nombre_sede 
+             u.estado, s.nombre as nombre_sede, u.perfil
              from users u, sedes s 
             where u.id_rol=2 and u.id_sede=s.id " . $condition);
+
+            foreach($getProfessorsNotAssigning as $profesor) {
+                if($profesor->perfil != null) {
+                    $profesor->perfil = stream_get_contents($profesor->perfil);
+                }
+            }
         }
 
         return response()->json($getProfessorsNotAssigning);

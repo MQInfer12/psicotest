@@ -18,6 +18,7 @@ import Test from './pages/test';
 import TestCreator from "./pages/testCreator";
 import TestView from "./pages/testView";
 import Appoinment from "./pages/appoinment";
+import Answers from "./pages/answers";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -136,6 +137,16 @@ function App() {
                 <OutletContext titlePage="Calendario" calendar={false}>
                   <Calendar />
                 </OutletContext>
+              } 
+            />
+            <Route 
+              path="answers" 
+              element={
+                <ProtectedRole roles={[3]}>
+                  <OutletContext titlePage="Respuestas" calendar={false}>
+                    <Answers />
+                  </OutletContext>
+                </ProtectedRole>
               } 
             />
           </Route>
