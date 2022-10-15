@@ -36,6 +36,19 @@ export const getBeneficiaryAssign = async (id) => {
   }
 };
 
+export const getBeneficiaryNoAssign = async (id) => {
+  try {
+    const response = await fetch(`${http}test/benefNoAssigning/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    const res = await response.json();
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 export const getProfessorTests = async (id) => {
   try {

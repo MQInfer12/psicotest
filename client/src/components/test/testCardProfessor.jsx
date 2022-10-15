@@ -12,7 +12,7 @@ import {
 } from "../../services/test";
 import { useNavigate } from "react-router-dom";
 import { WhiteIconButton, DangerIconButton } from "../../styles/formularios";
-import ModalAssignProfessor from "./modalAssignProfessor";
+import ModalAssignBenef from "./modalAssignBenef";
 import ModalUnassign from "./modalUnassignBenef";
 import SureModal from "../globals/sureModal";
 import { UserContext } from "../../context/userContext";
@@ -72,7 +72,7 @@ const TestCard = (props) => {
 
   const [showForm, setShowForm] = useState(false);
   const [showSure, setShowSure] = useState(false);
-  const [showAddProfessor, setShowAddProfessor] = useState(false);
+  const [showAddBenef, setShowAddBenef] = useState(false);
   const [showUnassignBenef, setShowUnassignBenef] = useState(false);
   const { user } = useContext(UserContext);
   const idRole = user.id_rol;
@@ -122,7 +122,7 @@ const TestCard = (props) => {
             <i className="fa-solid fa-newspaper"></i>
           </WhiteIconButton>
 
-          <WhiteIconButton onClick={() => setShowAddProfessor(true)}>
+          <WhiteIconButton onClick={() => setShowAddBenef(true)}>
             <i className="fa-sharp fa-solid fa-user-plus"></i>
           </WhiteIconButton>
 
@@ -135,20 +135,20 @@ const TestCard = (props) => {
     
       
 
-     {/*  {showAddProfessor && (
+     {showAddBenef && (
         <Modal
           titulo="Asignar docente"
-          cerrar={() => setShowAddProfessor(false)}
+          cerrar={() => setShowAddBenef(false)}
         >
-          <ModalAssignProfessor
+          <ModalAssignBenef
             id={props.id}
             actualizar={() => {
               props.llenarTests();
-              setShowAddProfessor(false);
+              setShowAddBenef(false);
             }}
           />
         </Modal>
-      )} */}
+      )} 
 
     {showUnassignBenef && (
         <Modal
