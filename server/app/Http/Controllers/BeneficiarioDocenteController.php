@@ -103,4 +103,24 @@ class BeneficiarioDocenteController extends Controller
         return response()->json(["msg" => "se ha eliminado"], 200);
     }
     
+    public function showTestToBenef($id)
+    {
+        $email = DB::select("SELECT email FROM users WHERE id='$id'");
+        $email = $email[0]->email;
+        $respuestas = DB::select("SELECT * FROM respuestas WHERE email_user='$email'");
+
+        foreach($respuestas as $respuesta) {
+            $docente_test = DB::select("SELECT t.id, t.nombre, t.descripcion, t.autor, t.tiempo, u.nombre as nombre_docente
+                                        FROM tests as t, users as u, docente_tests as dt
+                                        WHERE t.id=dt.id_test AND u.id=dt.id_docente AND dt.id='$respuesta->id_docente_test'");
+            $respuesta->nombre_docente = $docente_test[0]->nombre_docente;
+            $respuesta->id_test = $docente_test[0]->id;
+            $respuesta->nombre_test = $docente_test[0]->nombre;
+            $respuesta->descripcion_test = $docente_test[0]->descripcion;
+            $respuesta->autor_test = $docente_test[0]->autor;
+            $respuesta->tiempo_test = $docente_test[0]->tiempo;
+        }
+
+        return $respuestas;
+    }
 }

@@ -269,3 +269,15 @@ export const deleteBenefAssigned = async (obj, id) => {
     console.error(err);
   }
 };
+
+export const getTestsToBenef = async (id) => {
+  try {
+    const response = await fetch(`${http}test/testToBenef/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

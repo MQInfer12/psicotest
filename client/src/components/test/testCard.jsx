@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Timer from "../../icons/timer";
-import People from "../../icons/people";
 import ProfilePic from "../globals/profilePic";
 import Modal from "../globals/modal";
 import ModalTest from "./modalTest";
@@ -14,8 +12,6 @@ import { WhiteIconButton, DangerIconButton } from "../../styles/formularios";
 import ModalAssignProfessor from "./modalAssignProfessor";
 import ModalUnassign from "./modalUnassignProfessor";
 import SureModal from "../globals/sureModal";
-import { UserContext } from "../../context/userContext";
-import { useContext } from "react";
 
 const Container = styled.div`
   width: 322px;
@@ -50,9 +46,15 @@ const Span = styled.span`
 `;
 
 const ContainerIcon = styled.div`
+  color: #D9D9D9;
   display: flex;
   align-items: center;
   gap: 8px;
+
+  & > div {
+    width: 25px;
+    text-align: center;
+  }
 `;
 
 const ContainerImg = styled.div`
@@ -73,8 +75,6 @@ const TestCard = (props) => {
   const [showSure, setShowSure] = useState(false);
   const [showAddProfessor, setShowAddProfessor] = useState(false);
   const [showUnassignProfessor, setShowUnassignProfessor] = useState(false);
-  const { user } = useContext(UserContext);
-  const idRole = user.id_rol;
 
   const borrarTest = async () => {
     const res = await deleteTest(props.id);
@@ -88,12 +88,12 @@ const TestCard = (props) => {
       <P>{props.descripcion}</P>
 
       <ContainerIcon>
-        <People />
+        <div><i className="fa-solid fa-user"></i></div>
         <Span>{props.autor}</Span>
       </ContainerIcon>
 
       <ContainerIcon>
-        <Timer />
+        <div><i className="fa-solid fa-clock"></i></div>
         <Span>{props.tiempo}</Span>
       </ContainerIcon>
 

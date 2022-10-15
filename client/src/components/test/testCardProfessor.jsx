@@ -47,9 +47,15 @@ const Span = styled.span`
 `;
 
 const ContainerIcon = styled.div`
+  color: #D9D9D9;
   display: flex;
   align-items: center;
   gap: 8px;
+
+  & > div {
+    width: 25px;
+    text-align: center;
+  }
 `;
 
 const ContainerImg = styled.div`
@@ -77,12 +83,12 @@ const TestCard = (props) => {
       <P>{props.descripcion}</P>
 
       <ContainerIcon>
-        <People />
+        <div><i className="fa-solid fa-user"></i></div>
         <Span>{props.autor}</Span>
       </ContainerIcon>
 
       <ContainerIcon>
-        <Timer />
+        <div><i className="fa-solid fa-clock"></i></div>
         <Span>{props.tiempo}</Span>
       </ContainerIcon>
 
