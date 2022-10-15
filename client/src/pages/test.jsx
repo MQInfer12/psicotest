@@ -94,7 +94,7 @@ const Test = () => {
           )}
           {idRole === 3 &&
             tests.map((v, i) => (
-              <TestCard key={i} {...v} llenarTests={llenarTests()} />
+              <TestCard key={i} {...v} llenarTests={llenarTests} />
             ))}
 
           {idRole === 2 &&
