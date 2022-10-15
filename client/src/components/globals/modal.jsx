@@ -21,6 +21,17 @@ const DivAtras = styled.div`
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.4);
+
+  animation-name: transitionBackground;
+  animation-duration: 1s;
+  @keyframes transitionBackground {
+    0% {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    100% {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+  }
 `;
 
 const DivChildContainer = styled.div`
@@ -28,6 +39,20 @@ const DivChildContainer = styled.div`
   border-radius: 16px;
   min-width: 400px;
   background-color: white;
+
+  animation: move 1s;
+  transform: translateY(50px);
+  margin-bottom: 100px;
+  @keyframes move {
+    0% {
+      transform: translateY(0px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(50px);
+      opacity: 1;
+    }
+  }
 `;
 
 const PTitulo = styled.p`
@@ -39,7 +64,7 @@ const PTitulo = styled.p`
 const DivCabecera = styled.div`
   width: 100%;
   padding: 10px 26px;
-  border-bottom: 1px solid #D9D9D9;
+  border-bottom: 1px solid #d9d9d9;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -49,21 +74,21 @@ const DivBody = styled.div`
   padding: 26px;
 `;
 
-const Modal = ({cerrar, children, titulo}) => {
+const Modal = ({ cerrar, children, titulo }) => {
   return (
     <DivModalContainer>
       <DivAtras onClick={cerrar}></DivAtras>
       <DivChildContainer>
-      <DivCabecera>
-        <PTitulo>{titulo}</PTitulo>
-        <WhiteIconButton onClick={cerrar}><i className="fa-solid fa-xmark"></i></WhiteIconButton>
-      </DivCabecera>
-        <DivBody>
-          { children }
-        </DivBody>
+        <DivCabecera>
+          <PTitulo>{titulo}</PTitulo>
+          <WhiteIconButton onClick={cerrar}>
+            <i className="fa-solid fa-xmark"></i>
+          </WhiteIconButton>
+        </DivCabecera>
+        <DivBody>{children}</DivBody>
       </DivChildContainer>
     </DivModalContainer>
-  )
-}
+  );
+};
 
 export default Modal;
