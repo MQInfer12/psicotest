@@ -113,18 +113,13 @@ const TestCard = (props) => {
         </ContainerImg>
       )}
 
-      {/* IF IS ADMI */}
-      {idRole === 3 && (
+    
+      {/*IF IS PROFESSOR */}
+
+      {idRole === 2 && (
         <ButtonContainer>
           <WhiteIconButton onClick={() => navigate(`../testview/${props.id}`)}>
             <i className="fa-solid fa-newspaper"></i>
-          </WhiteIconButton>
-          <WhiteIconButton onClick={() => navigate(`./${props.id}`)}>
-            <i className="fa-solid fa-pen-to-square"></i>
-          </WhiteIconButton>
-
-          <WhiteIconButton onClick={() => setShowForm(true)}>
-            <i className="fa-solid fa-pencil"></i>
           </WhiteIconButton>
 
           <WhiteIconButton onClick={() => setShowAddProfessor(true)}>
@@ -134,38 +129,13 @@ const TestCard = (props) => {
           <WhiteIconButton onClick={() => setShowUnassignProfessor(true)}>
             <i className="fa-solid fa-user-minus"></i>
           </WhiteIconButton>
-
-          <DangerIconButton onClick={() => setShowSure(true)}>
-            <i className="fa-solid fa-trash-can"></i>
-          </DangerIconButton>
         </ButtonContainer>
       )}
 
-      {showForm && (
-        <Modal titulo="Editar test" cerrar={() => setShowForm(false)}>
-          <ModalTest
-            test={props}
-            funcion="editar"
-            call={updateTest}
-            actualizar={() => {
-              props.llenarTests();
-              setShowForm(false);
-            }}
-          />
-        </Modal>
-      )}
+    
+      
 
-      {showSure && (
-        <Modal titulo="Eliminar test" cerrar={() => setShowSure(false)}>
-          <SureModal
-            cerrar={() => setShowSure(false)}
-            sure={borrarTest}
-            text={"Se eliminará el test '" + props.nombre + "' permanentemente"}
-          />
-        </Modal>
-      )}
-
-      {showAddProfessor && (
+     {/*  {showAddProfessor && (
         <Modal
           titulo="Asignar docente"
           cerrar={() => setShowAddProfessor(false)}
@@ -178,9 +148,9 @@ const TestCard = (props) => {
             }}
           />
         </Modal>
-      )}
+      )} */}
 
-      {showUnassignProfessor && (
+     {/*  {showUnassignProfessor && (
         <Modal
           titulo="Desasignar docente"
           cerrar={() => setShowUnassignProfessor(false)}
@@ -193,7 +163,7 @@ const TestCard = (props) => {
             }}
           />
         </Modal>
-      )}
+      )} */}
     </Container>
   );
 };

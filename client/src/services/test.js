@@ -12,6 +12,18 @@ export const getTests = async () => {
   }
 };
 
+export const getTestsToProfessor = async (id) => {
+  try {
+    const response = await fetch(`${http}test/testToprofessor/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getProfessorTests = async (id) => {
   try {
     const response = await fetch(`${http}test/professor/${id}`, {

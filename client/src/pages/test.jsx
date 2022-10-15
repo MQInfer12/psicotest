@@ -5,8 +5,8 @@ import Modal from "../components/globals/modal";
 import ModalTest from "../components/test/modalTest";
 import TestCard from "../components/test/testCard";
 import { UserContext } from "../context/userContext";
-import { addTest, getTests } from "../services/test";
-
+import { addTest, getTests, getTestsToProfessor } from "../services/test";
+import TestCardProfessor from "../components/test/testCardProfessor";
 const AllContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -52,9 +52,20 @@ const Test = () => {
     setTests(resJson);
     setLoading(false);
   };
+  const llenarTestsToProfessor = async () => {
+    const res = await getTestsToProfessor(user.id);
+    const resJson = await res?.json();
+    setTests(resJson);
+    setLoading(false);
+  };
 
   useEffect(() => {
-    llenarTests();
+    if (idRole === 3) {
+      llenarTests();
+    }
+    if (idRole === 2) {
+      llenarTestsToProfessor();
+    }
   }, []);
 
   return (
@@ -80,9 +91,13 @@ const Test = () => {
               />
             </Modal>
           )}
-          {tests.map((v, i) => (
-            <TestCard key={i} {...v} llenarTests={llenarTests} />
-          ))}
+          {idRole === 3 &&
+            tests.map((v, i) => (
+              <TestCard key={i} {...v} llenarTests={llenarTests()} />
+            ))}
+
+          {idRole === 2 &&
+            tests.map((v, i) => <TestCardProfessor key={i} {...v} />)}
         </TestContainer>
       )}
     </AllContainer>
