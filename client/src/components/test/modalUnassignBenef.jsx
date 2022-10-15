@@ -1,0 +1,90 @@
+import React, { useEffect, useState } from "react";
+import { deleteBenefAssigned, getBeneficiaryAssign } from "../../services/test";
+const ModalUnAssignProfessor = ({ id, actualizar }) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const handleGetData = async () => {
+    const res = await getBeneficiaryAssign(id);
+    const resJson = await res.json();
+    setData(resJson);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    handleGetData();
+  }, []);
+
+  const [checSelected, setChecSelected] = useState([]);
+  const [btnActive, setBtnActive] = useState(false);
+
+  const handleChangeCheck = (e) => {
+    var aux = null;
+    if (checSelected.includes(e.target.value)) {
+      //If the value is there we remove it.
+      aux = checSelected.filter((ele) => ele !== e.target.value);
+    } else {
+      aux = checSelected.concat(e.target.value);
+    }
+    setChecSelected(aux);
+    if (aux.length > 0) {
+      setBtnActive(true);
+    } else {
+      setBtnActive(false);
+    }
+  };
+  
+  const saveData = async () => {
+    const vecAux = [];
+    for (let val of checSelected) {
+      const value = parseInt(val);
+      vecAux.push(value);
+    }
+    const resp = await deleteBenefAssigned(vecAux, id);
+    if(resp.msg === "se ha eliminado"){
+        actualizar();
+    };
+  };
+
+  return (
+    <div>
+      {loading ? (
+        <p>cargando</p>
+      ) : (
+        <>
+          <table>
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>User</th>
+                <th>Sede</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((v, i) => (
+                <tr key={i}>
+                  <td>{v.email}</td>
+                  <td>{v.nombre_user}</td>
+                  <td>{v.sede}</td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      value={v.id}
+                      onChange={handleChangeCheck}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button disabled={!btnActive ? true : false} onClick={saveData}>
+            Guardar
+          </button>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default ModalUnAssignProfessor;

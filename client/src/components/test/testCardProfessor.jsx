@@ -12,8 +12,8 @@ import {
 } from "../../services/test";
 import { useNavigate } from "react-router-dom";
 import { WhiteIconButton, DangerIconButton } from "../../styles/formularios";
-import ModalAssignProfessor from "./modalAssignProfessor";
-import ModalUnassign from "./modalUnassignProfessor";
+import ModalAssignBenef from "./modalAssignBenef";
+import ModalUnassign from "./modalUnassignBenef";
 import SureModal from "../globals/sureModal";
 import { UserContext } from "../../context/userContext";
 import { useContext } from "react";
@@ -72,8 +72,8 @@ const TestCard = (props) => {
 
   const [showForm, setShowForm] = useState(false);
   const [showSure, setShowSure] = useState(false);
-  const [showAddProfessor, setShowAddProfessor] = useState(false);
-  const [showUnassignProfessor, setShowUnassignProfessor] = useState(false);
+  const [showAddBenef, setShowAddBenef] = useState(false);
+  const [showUnassignBenef, setShowUnassignBenef] = useState(false);
   const { user } = useContext(UserContext);
   const idRole = user.id_rol;
   const borrarTest = async () => {
@@ -113,86 +113,56 @@ const TestCard = (props) => {
         </ContainerImg>
       )}
 
+    
+      {/*IF IS PROFESSOR */}
 
+      {idRole === 2 && (
         <ButtonContainer>
           <WhiteIconButton onClick={() => navigate(`../testview/${props.id}`)}>
             <i className="fa-solid fa-newspaper"></i>
           </WhiteIconButton>
-          <WhiteIconButton onClick={() => navigate(`./${props.id}`)}>
-            <i className="fa-solid fa-pen-to-square"></i>
-          </WhiteIconButton>
 
-          <WhiteIconButton onClick={() => setShowForm(true)}>
-            <i className="fa-solid fa-pencil"></i>
-          </WhiteIconButton>
-
-          <WhiteIconButton onClick={() => setShowAddProfessor(true)}>
+          <WhiteIconButton onClick={() => setShowAddBenef(true)}>
             <i className="fa-sharp fa-solid fa-user-plus"></i>
           </WhiteIconButton>
 
-          <WhiteIconButton onClick={() => setShowUnassignProfessor(true)}>
+          <WhiteIconButton onClick={() => setShowUnassignBenef(true)}>
             <i className="fa-solid fa-user-minus"></i>
           </WhiteIconButton>
-
-          <DangerIconButton onClick={() => setShowSure(true)}>
-            <i className="fa-solid fa-trash-can"></i>
-          </DangerIconButton>
         </ButtonContainer>
-     
-
-      {showForm && (
-        <Modal titulo="Editar test" cerrar={() => setShowForm(false)}>
-          <ModalTest
-            test={props}
-            funcion="editar"
-            call={updateTest}
-            actualizar={() => {
-              props.llenarTests();
-              setShowForm(false);
-            }}
-          />
-        </Modal>
       )}
 
-      {showSure && (
-        <Modal titulo="Eliminar test" cerrar={() => setShowSure(false)}>
-          <SureModal
-            cerrar={() => setShowSure(false)}
-            sure={borrarTest}
-            text={"Se eliminará el test '" + props.nombre + "' permanentemente"}
-          />
-        </Modal>
-      )}
+    
+      
 
-      {showAddProfessor && (
+     {showAddBenef && (
         <Modal
-          titulo="Asignar docente"
-          cerrar={() => setShowAddProfessor(false)}
+          titulo="Asignar beneficiario"
+          cerrar={() => setShowAddBenef(false)}
         >
-          <ModalAssignProfessor
+          <ModalAssignBenef
             id={props.id}
             actualizar={() => {
-              props.llenarTests();
-              setShowAddProfessor(false);
+/*               props.llenarTests(); */
+              setShowAddBenef(false);
             }}
           />
         </Modal>
-      )}
+      )} 
 
-      {showUnassignProfessor && (
+    {showUnassignBenef && (
         <Modal
-          titulo="Desasignar docente"
-          cerrar={() => setShowUnassignProfessor(false)}
+          titulo="Desasignar beneficiario"
+          cerrar={() => setShowUnassignBenef(false)}
         >
           <ModalUnassign
             id={props.id}
             actualizar={() => {
-              props.llenarTests();
-              setShowUnassignProfessor(false);
+              setShowUnassignBenef(false);
             }}
           />
         </Modal>
-      )}
+      )} 
     </Container>
   );
 };

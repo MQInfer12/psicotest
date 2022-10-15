@@ -78,7 +78,7 @@ const SideBar = ({ rol, setUser }) => {
       icon: "fa-solid fa-house",
     },
     {
-      roles: [3],
+      roles: [3,2,1],
       select: "tests",
       title: "Tests",
       goTo: "./tests",
