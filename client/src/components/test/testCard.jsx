@@ -113,8 +113,7 @@ const TestCard = (props) => {
         </ContainerImg>
       )}
 
-      {/* IF IS ADMI */}
-      {idRole === 3 && (
+
         <ButtonContainer>
           <WhiteIconButton onClick={() => navigate(`../testview/${props.id}`)}>
             <i className="fa-solid fa-newspaper"></i>
@@ -139,7 +138,7 @@ const TestCard = (props) => {
             <i className="fa-solid fa-trash-can"></i>
           </DangerIconButton>
         </ButtonContainer>
-      )}
+     
 
       {showForm && (
         <Modal titulo="Editar test" cerrar={() => setShowForm(false)}>
