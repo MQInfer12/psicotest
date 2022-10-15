@@ -137,7 +137,7 @@ const TestCard = (props) => {
 
      {showAddBenef && (
         <Modal
-          titulo="Asignar docente"
+          titulo="Asignar beneficiario"
           cerrar={() => setShowAddBenef(false)}
         >
           <ModalAssignBenef
@@ -152,7 +152,7 @@ const TestCard = (props) => {
 
     {showUnassignBenef && (
         <Modal
-          titulo="Desasignar docente"
+          titulo="Desasignar beneficiario"
           cerrar={() => setShowUnassignBenef(false)}
         >
           <ModalUnassign

@@ -70,20 +70,22 @@ class BeneficiarioDocenteController extends Controller
         }
 
         return response()->json(["mensaje" => "se guardo correctamente"], 201);
-    }/*
+    }
 
-    public function deleteProfessorAssigning(Request $request)
+    public function deleteBenefAssigning(Request $request)
     {
         $request->validate([
             "objeto" => "required",
-            "id_test" => "required"
+            "id_docente_test" => "required"
         ]);
 
         $objeto = $request->objeto;
 
         foreach ($objeto as $valor) {
-            DB::delete("delete from docente_tests where id_test=$request->id_test and id_docente=$valor");
+            DB::delete("DELETE from beneficiario_docente_tests 
+            where id=$valor");
         }
         return response()->json(["msg" => "se ha eliminado"], 200);
-    }*/
+    }
+
 }

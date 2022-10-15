@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { deleteProfessorAssigned, getBeneficiaryAssign } from "../../services/test";
+import { deleteBenefAssigned, getBeneficiaryAssign } from "../../services/test";
 const ModalUnAssignProfessor = ({ id, actualizar }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -7,7 +7,6 @@ const ModalUnAssignProfessor = ({ id, actualizar }) => {
   const handleGetData = async () => {
     const res = await getBeneficiaryAssign(id);
     const resJson = await res.json();
-    console.log(resJson)
     setData(resJson);
     setLoading(false);
   };
@@ -41,8 +40,7 @@ const ModalUnAssignProfessor = ({ id, actualizar }) => {
       const value = parseInt(val);
       vecAux.push(value);
     }
-    //const obj = Object.assign({}, vecAux);
-    const resp = await deleteProfessorAssigned(vecAux, id);
+    const resp = await deleteBenefAssigned(vecAux, id);
     if(resp.msg === "se ha eliminado"){
         actualizar();
     };

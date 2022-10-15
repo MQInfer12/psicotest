@@ -11,7 +11,6 @@ const ModalAssignProfessor = ({ id, actualizar }) => {
   const handleGetData = async () => {
     const res = await getBeneficiaryNoAssign(id);
     setData(res);
-    console.log(res);
     setLoading(false);
   };
 

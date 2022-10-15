@@ -246,3 +246,27 @@ export const addBenefToTest = async (obj, id_docente_test) => {
     console.log(error);
   }
 };
+
+
+export const deleteBenefAssigned = async (vec, id) => {
+  try {
+    const response = await fetch(`${http}test/deleteBenefAssigning`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        objeto: vec,
+        id_docente_test: id,
+      }),
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      return result;
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
