@@ -19,6 +19,7 @@ import TestCreator from "./pages/testCreator";
 import TestView from "./pages/testView";
 import Appoinment from "./pages/appoinment";
 import Answers from "./pages/answers";
+import Chat from "./pages/chat";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -66,6 +67,14 @@ function App() {
               }
             />
             <Route
+              path="chat"
+              element={
+                <OutletContext titlePage="Chat">
+                  <Chat />
+                </OutletContext>
+              }
+            />
+            <Route
               path="users"
               element={
                 <ProtectedRole roles={[3]}>
@@ -78,7 +87,7 @@ function App() {
             <Route
               path="tests"
               element={
-                <ProtectedRole roles={[3,2,1]}>
+                <ProtectedRole roles={[3, 2, 1]}>
                   <OutletContext titlePage="Tests" calendar={true}>
                     <Test />
                   </OutletContext>
@@ -121,7 +130,7 @@ function App() {
                 </ProtectedRole>
               }
             />
-   
+
             <Route
               path="groups"
               element={
@@ -156,15 +165,15 @@ function App() {
                 </OutletContext>
               }
             />
-            <Route 
-              path="answers" 
+            <Route
+              path="answers"
               element={
                 <ProtectedRole roles={[3]}>
                   <OutletContext titlePage="Respuestas" calendar={false}>
                     <Answers />
                   </OutletContext>
                 </ProtectedRole>
-              } 
+              }
             />
           </Route>
           <Route path="*" element={<Login />} />
