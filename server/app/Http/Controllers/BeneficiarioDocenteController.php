@@ -42,10 +42,10 @@ class BeneficiarioDocenteController extends Controller
         }
 
         if ($getIdsany) {
-            $getProfessorsNotAssigning = DB::select("select u.nombre as nombre_usuario, u.email, u.estado
+            $getProfessorsNotAssigning = DB::select("select u.id, u.nombre as nombre_usuario, u.email, u.estado
             from users as u where u.id_rol=1");
         } else {
-            $getProfessorsNotAssigning = DB::select("SELECT u.nombre as nombre_usuario, u.email, u.estado
+            $getProfessorsNotAssigning = DB::select("SELECT u.id, u.nombre as nombre_usuario, u.email, u.estado
             from users as u where u.id_rol=1 " . $condition);
         }
 
