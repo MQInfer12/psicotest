@@ -13,7 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { WhiteIconButton, DangerIconButton } from "../../styles/formularios";
 import ModalAssignProfessor from "./modalAssignProfessor";
-import ModalUnassign from "./modalUnassignProfessor";
+import ModalUnassign from "./modalUnassignBenef";
 import SureModal from "../globals/sureModal";
 import { UserContext } from "../../context/userContext";
 import { useContext } from "react";
@@ -73,7 +73,7 @@ const TestCard = (props) => {
   const [showForm, setShowForm] = useState(false);
   const [showSure, setShowSure] = useState(false);
   const [showAddProfessor, setShowAddProfessor] = useState(false);
-  const [showUnassignProfessor, setShowUnassignProfessor] = useState(false);
+  const [showUnassignBenef, setShowUnassignBenef] = useState(false);
   const { user } = useContext(UserContext);
   const idRole = user.id_rol;
   const borrarTest = async () => {
@@ -126,7 +126,7 @@ const TestCard = (props) => {
             <i className="fa-sharp fa-solid fa-user-plus"></i>
           </WhiteIconButton>
 
-          <WhiteIconButton onClick={() => setShowUnassignProfessor(true)}>
+          <WhiteIconButton onClick={() => setShowUnassignBenef(true)}>
             <i className="fa-solid fa-user-minus"></i>
           </WhiteIconButton>
         </ButtonContainer>
@@ -150,20 +150,19 @@ const TestCard = (props) => {
         </Modal>
       )} */}
 
-     {/*  {showUnassignProfessor && (
+    {showUnassignBenef && (
         <Modal
           titulo="Desasignar docente"
-          cerrar={() => setShowUnassignProfessor(false)}
+          cerrar={() => setShowUnassignBenef(false)}
         >
           <ModalUnassign
             id={props.id}
             actualizar={() => {
-              props.llenarTests();
-              setShowUnassignProfessor(false);
+              setShowUnassignBenef(false);
             }}
           />
         </Modal>
-      )} */}
+      )} 
     </Container>
   );
 };

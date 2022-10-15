@@ -30,14 +30,7 @@ class TestController extends Controller
         return response()->json($tests);
     }
 
-    public function showTestToProffessor($id)
-    {   
-        $tests = DB::select("select dt.id_docente, dt.id_test, t.nombre, t.tiempo, t.descripcion, t.autor
-        from docente_tests as dt, tests as t 
-        where dt.id_docente=$id and dt.id_test=t.id");
-
-        return response()->json($tests);
-    }
+   
 
     
     public function store(Request $request)

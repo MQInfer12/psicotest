@@ -97,7 +97,7 @@ const Test = () => {
             ))}
 
           {idRole === 2 &&
-            tests.map((v, i) => <TestCardProfessor key={i} {...v} />)}
+            tests.map((v, i) => <TestCardProfessor key={i} {...v} id={v.id} />)}
         </TestContainer>
       )}
     </AllContainer>
