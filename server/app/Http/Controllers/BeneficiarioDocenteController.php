@@ -20,11 +20,14 @@ class BeneficiarioDocenteController extends Controller
     public function getBenefAssigning($id)
     {
         $getIdDocente = DB::select("select bdt.id, bdt.id_beneficiario, bdt.id_docente_test, u.email, 
-        u.nombre as nombre_user,
-        s.nombre as sede
+        u.nombre as nombre_user, s.nombre as sede, u.perfil
         from beneficiario_docente_tests as bdt, users u, sedes as s
         where bdt.id_beneficiario=u.id and s.id=u.id_sede and bdt.id_docente_test=$id");
-
+        foreach($getIdDocente as $benef) {
+            if($benef->perfil != null) {
+                $benef->perfil = stream_get_contents($benef->perfil);
+            }
+        }
         return response()->json($getIdDocente);
     }
 
@@ -43,14 +46,24 @@ class BeneficiarioDocenteController extends Controller
         }
 
         if ($getIdsany) {
-            $getProfessorsNotAssigning = DB::select("select u.id, u.nombre as nombre_usuario, u.email, u.estado
+            $getBenefNotAssigning = DB::select("select u.id, u.nombre as nombre_usuario, u.email, u.estado, u.perfil
             from users as u where u.id_rol=1");
+            foreach($getBenefNotAssigning as $benef) {
+                if($benef->perfil != null) {
+                    $benef->perfil = stream_get_contents($benef->perfil);
+                }
+            }
         } else {
-            $getProfessorsNotAssigning = DB::select("SELECT u.id, u.nombre as nombre_usuario, u.email, u.estado
+            $getBenefNotAssigning = DB::select("SELECT u.id, u.nombre as nombre_usuario, u.email, u.estado, u.perfil
             from users as u where u.id_rol=1 " . $condition);
+            foreach($getBenefNotAssigning as $benef) {
+                if($benef->perfil != null) {
+                    $benef->perfil = stream_get_contents($benef->perfil);
+                }
+            }
         }
 
-        return response()->json($getProfessorsNotAssigning);
+        return response()->json($getBenefNotAssigning);
     }
 
    public function assignBenefToTest(Request $request)

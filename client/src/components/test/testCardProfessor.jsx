@@ -4,17 +4,13 @@ import Timer from "../../icons/timer";
 import People from "../../icons/people";
 import ProfilePic from "../globals/profilePic";
 import Modal from "../globals/modal";
-import ModalTest from "./modalTest";
 import {
   deleteTest,
-  getProfessorAssigned,
-  updateTest,
 } from "../../services/test";
 import { useNavigate } from "react-router-dom";
-import { WhiteIconButton, DangerIconButton } from "../../styles/formularios";
+import { WhiteIconButton } from "../../styles/formularios";
 import ModalAssignBenef from "./modalAssignBenef";
 import ModalUnassign from "./modalUnassignBenef";
-import SureModal from "../globals/sureModal";
 import { UserContext } from "../../context/userContext";
 import { useContext } from "react";
 
@@ -70,17 +66,10 @@ const ButtonContainer = styled.div`
 const TestCard = (props) => {
   const navigate = useNavigate();
 
-  const [showForm, setShowForm] = useState(false);
-  const [showSure, setShowSure] = useState(false);
   const [showAddBenef, setShowAddBenef] = useState(false);
   const [showUnassignBenef, setShowUnassignBenef] = useState(false);
   const { user } = useContext(UserContext);
   const idRole = user.id_rol;
-  const borrarTest = async () => {
-    const res = await deleteTest(props.id);
-    const resJson = await res?.json();
-    if (resJson) props.llenarTests();
-  };
 
   return (
     <Container>

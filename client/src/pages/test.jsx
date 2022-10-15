@@ -7,6 +7,7 @@ import TestCard from "../components/test/testCard";
 import { UserContext } from "../context/userContext";
 import { addTest, getTests, getTestsToProfessor } from "../services/test";
 import TestCardProfessor from "../components/test/testCardProfessor";
+
 const AllContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -46,6 +47,7 @@ const Test = () => {
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
   const idRole = user.id_rol;
+
   const llenarTests = async () => {
     const res = await getTests();
     const resJson = await res?.json();
@@ -92,9 +94,10 @@ const Test = () => {
               />
             </Modal>
           )}
+          
           {idRole === 3 &&
             tests.map((v, i) => (
-              <TestCard key={i} {...v} llenarTests={llenarTests()} />
+              <TestCard key={i} {...v} llenarTests={llenarTests} />
             ))}
 
           {idRole === 2 &&

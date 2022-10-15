@@ -7,7 +7,6 @@ import Modal from "../globals/modal";
 import ModalTest from "./modalTest";
 import {
   deleteTest,
-  getProfessorAssigned,
   updateTest,
 } from "../../services/test";
 import { useNavigate } from "react-router-dom";
@@ -76,9 +75,11 @@ const TestCard = (props) => {
   const [showUnassignProfessor, setShowUnassignProfessor] = useState(false);
   const { user } = useContext(UserContext);
   const idRole = user.id_rol;
+
   const borrarTest = async () => {
     const res = await deleteTest(props.id);
     const resJson = await res?.json();
+    console.log(resJson);
     if (resJson) props.llenarTests();
   };
 

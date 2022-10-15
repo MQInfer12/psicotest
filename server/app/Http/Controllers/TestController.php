@@ -11,8 +11,8 @@ class TestController extends Controller
     public function index()
     {   
         $tests = DB::select("SELECT *
-                                 FROM tests
-                                 ORDER BY id");
+                             FROM tests
+                             ORDER BY id");
 
         foreach($tests as $test) {
             $id_test = $test->id;
