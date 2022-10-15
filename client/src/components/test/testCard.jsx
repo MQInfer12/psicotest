@@ -5,15 +5,18 @@ import People from "../../icons/people";
 import ProfilePic from "../globals/profilePic";
 import Modal from "../globals/modal";
 import ModalTest from "./modalTest";
-import { deleteTest, getProfessorAssigned, updateTest } from "../../services/test";
-import { useNavigate } from "react-router-dom";
 import {
-  WhiteIconButton,
-  DangerIconButton,
-} from "../../styles/formularios";
+  deleteTest,
+  getProfessorAssigned,
+  updateTest,
+} from "../../services/test";
+import { useNavigate } from "react-router-dom";
+import { WhiteIconButton, DangerIconButton } from "../../styles/formularios";
 import ModalAssignProfessor from "./modalAssignProfessor";
-import ModalUnassign from './modalUnassignProfessor'
+import ModalUnassign from "./modalUnassignProfessor";
 import SureModal from "../globals/sureModal";
+import { UserContext } from "../../context/userContext";
+import { useContext } from "react";
 
 const Container = styled.div`
   width: 322px;
@@ -66,12 +69,13 @@ const ButtonContainer = styled.div`
 
 const TestCard = (props) => {
   const navigate = useNavigate();
-  
+
   const [showForm, setShowForm] = useState(false);
   const [showSure, setShowSure] = useState(false);
   const [showAddProfessor, setShowAddProfessor] = useState(false);
   const [showUnassignProfessor, setShowUnassignProfessor] = useState(false);
-
+  const { user } = useContext(UserContext);
+  const idRole = user.id_rol;
   const borrarTest = async () => {
     const res = await deleteTest(props.id);
     const resJson = await res?.json();
@@ -94,8 +98,7 @@ const TestCard = (props) => {
       </ContainerIcon>
 
       <ContainerImg>
-        {
-          props.usuarios.map((v, i) => (
+        {props.usuarios.map((v, i) => (
           <div key={i}>
             <ProfilePic
               width="36px"
@@ -105,35 +108,64 @@ const TestCard = (props) => {
               translation={i}
             />
           </div>
-          ))
-        }
+        ))}
       </ContainerImg>
 
-      <ButtonContainer>
-        <WhiteIconButton onClick={() => navigate(`../testview/${props.id}`)}>
-          <i className="fa-solid fa-newspaper"></i>
-        </WhiteIconButton>
+      {/* IF IS ADMI */}
+      {idRole === 3 && (
+        <ButtonContainer>
+          <WhiteIconButton onClick={() => navigate(`../testview/${props.id}`)}>
+            <i className="fa-solid fa-newspaper"></i>
+          </WhiteIconButton>
+          <WhiteIconButton onClick={() => navigate(`./${props.id}`)}>
+            <i className="fa-solid fa-pen-to-square"></i>
+          </WhiteIconButton>
 
-        <WhiteIconButton onClick={() => navigate(`./${props.id}`)}>
-          <i className="fa-solid fa-pen-to-square"></i>
-        </WhiteIconButton>
+          <WhiteIconButton onClick={() => setShowForm(true)}>
+            <i className="fa-solid fa-pencil"></i>
+          </WhiteIconButton>
 
-        <WhiteIconButton onClick={() => setShowForm(true)}>
-          <i className="fa-solid fa-pencil"></i>
-        </WhiteIconButton>
+          <WhiteIconButton onClick={() => setShowAddProfessor(true)}>
+            <i className="fa-sharp fa-solid fa-user-plus"></i>
+          </WhiteIconButton>
 
-        <WhiteIconButton onClick={() => setShowAddProfessor(true)}>
-          <i className="fa-sharp fa-solid fa-user-plus"></i>
-        </WhiteIconButton>
+          <WhiteIconButton onClick={() => setShowUnassignProfessor(true)}>
+            <i className="fa-solid fa-user-minus"></i>
+          </WhiteIconButton>
 
-        <WhiteIconButton onClick={() => setShowUnassignProfessor(true)}>
-          <i className="fa-solid fa-user-minus"></i>
-        </WhiteIconButton>
-        
-        <DangerIconButton onClick={() => setShowSure(true)}>
-          <i className="fa-solid fa-trash-can"></i>
-        </DangerIconButton>
-      </ButtonContainer>
+          <DangerIconButton onClick={() => setShowSure(true)}>
+            <i className="fa-solid fa-trash-can"></i>
+          </DangerIconButton>
+        </ButtonContainer>
+      )}
+
+      {/*IF IS PROFESSOR */}
+
+      {idRole === 2 && (
+        <ButtonContainer>
+          <WhiteIconButton onClick={() => navigate(`../testview/${props.id}`)}>
+            <i className="fa-solid fa-newspaper"></i>
+          </WhiteIconButton>
+
+          <WhiteIconButton onClick={() => setShowAddProfessor(true)}>
+            <i className="fa-sharp fa-solid fa-user-plus"></i>
+          </WhiteIconButton>
+
+          <WhiteIconButton onClick={() => setShowUnassignProfessor(true)}>
+            <i className="fa-solid fa-user-minus"></i>
+          </WhiteIconButton>
+        </ButtonContainer>
+      )}
+
+      {/*IF IS STUDENT */}
+
+      {idRole === 1 && (
+        <ButtonContainer>
+          <WhiteIconButton onClick={() => navigate(`../testview/${props.id}`)}>
+            <i className="fa-solid fa-newspaper"></i>
+          </WhiteIconButton>
+        </ButtonContainer>
+      )}
 
       {showForm && (
         <Modal titulo="Editar test" cerrar={() => setShowForm(false)}>
@@ -148,17 +180,16 @@ const TestCard = (props) => {
           />
         </Modal>
       )}
-      
-      {
-        showSure && 
+
+      {showSure && (
         <Modal titulo="Eliminar test" cerrar={() => setShowSure(false)}>
-          <SureModal 
+          <SureModal
             cerrar={() => setShowSure(false)}
             sure={borrarTest}
             text={"Se eliminará el test '" + props.nombre + "' permanentemente"}
           />
         </Modal>
-      }
+      )}
 
       {showAddProfessor && (
         <Modal
