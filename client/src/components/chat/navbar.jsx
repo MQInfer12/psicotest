@@ -1,6 +1,7 @@
 import React from "react";
 import { useContext } from "react";
 import styled from "styled-components";
+import { UserContext } from "../../context/userContext";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
 import DefaultPhoto from '../../images/defaultPhoto.jpg'
 const Container = styled.div`
@@ -39,13 +40,13 @@ const Container = styled.div`
 const Navbar = () => {
 
 const {currentUser} = useContext(UserFirebaseContext)
-
+const {user} = useContext(UserContext)
   return (
     <Container>
       <span className="logo">UNIFRANZ</span>
       <div className="user">
         <img src={DefaultPhoto} alt="" />
-        <span>HOLA</span>
+        <span>{user.nombre}</span>
         <button>cerrar sesion</button>
       </div>
     </Container>
