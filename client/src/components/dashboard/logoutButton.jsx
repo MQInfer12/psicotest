@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { logOut } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
-
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 const SideBarIcon = styled.i`
   text-align: center;
   font-size: 16px;
@@ -18,7 +19,7 @@ const SideBarButton = styled.button`
   background-color: inherit;
   border: none;
   cursor: pointer;
-  color: #D9D9D9;
+  color: #d9d9d9;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -28,7 +29,7 @@ const SideBarButton = styled.button`
   transition: all 0.4s;
 
   &:hover {
-    color: #660BE1;
+    color: #660be1;
   }
 `;
 
@@ -38,20 +39,23 @@ const LogoutButton = ({ setUser }) => {
   const handleLogout = async () => {
     const resout = await logOut();
     const resoutJson = await resout?.json();
-    if(resoutJson.message == "Successfully logged out") {
+    if (resoutJson.message == "Successfully logged out") {
+      //logged out firebase
+      signOut(auth);
+      //logged out postgres
       setUser(undefined);
       navigate("/");
     }
-  }
+  };
 
   return (
     <li>
-      <SideBarButton onClick={ handleLogout }>
+      <SideBarButton onClick={handleLogout}>
         <SideBarIcon className="fa-solid fa-right-from-bracket"></SideBarIcon>
         <SideBarOptionText>Logout</SideBarOptionText>
       </SideBarButton>
     </li>
-  )
-}
+  );
+};
 
 export default LogoutButton;

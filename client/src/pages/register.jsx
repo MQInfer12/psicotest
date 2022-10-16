@@ -317,7 +317,7 @@ const Register = () => {
       name: nombre,
       email: email,
     });
-    await setDoc(doc(db, "userChats", resp.user.uid),{})
+    await setDoc(doc(db, "userChats", resp.user.uid), {});
     //save in postgres
     handleSubmit(e);
   };
