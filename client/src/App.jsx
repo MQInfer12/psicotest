@@ -21,7 +21,7 @@ import Appoinment from "./pages/appoinment";
 import Answers from "./pages/answers";
 import Chat from "./pages/chat";
 import { UserFirebaseContextProvider } from "./context/userFirebaseContext.jsx";
-
+import { ChatContextProvider } from "./context/chatContext";
 const StyledLink = styled(Link)`
   text-decoration: none;
   font-size: 16px;
@@ -49,137 +49,141 @@ function App() {
     <BrowserRouter>
       <UserContext.Provider value={value}>
         <UserFirebaseContextProvider>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            >
+          <ChatContextProvider>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/register" element={<Register />} />
               <Route
-                path=""
+                path="/dashboard"
                 element={
-                  <OutletContext titlePage="Home" calendar={true}>
-                    <Home />
-                  </OutletContext>
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
                 }
-              />
-              <Route
-                path="chat"
-                element={
-                  <OutletContext titlePage="Chat">
-                    <Chat />
-                  </OutletContext>
-                }
-              />
-              <Route
-                path="users"
-                element={
-                  <ProtectedRole roles={[3]}>
-                    <OutletContext titlePage="Usuarios" calendar={false}>
-                      <User />
+              >
+                <Route
+                  path=""
+                  element={
+                    <OutletContext titlePage="Home" calendar={true}>
+                      <Home />
                     </OutletContext>
-                  </ProtectedRole>
-                }
-              />
-              <Route
-                path="tests"
-                element={
-                  <ProtectedRole roles={[3, 2, 1]}>
-                    <OutletContext titlePage="Tests" calendar={true}>
-                      <Test />
+                  }
+                />
+                <Route
+                  path="chat"
+                  element={
+                    <OutletContext titlePage="Chat">
+                      <Chat />
                     </OutletContext>
-                  </ProtectedRole>
-                }
-              />
-              <Route
-                path="tests/:idTest"
-                element={
-                  <ProtectedRole roles={[3]}>
-                    <OutletContext
-                      titlePage="Creación de Test"
-                      calendar={false}
-                      links={
-                        <>
-                          <StyledLink to="/dashboard/tests">Tests</StyledLink>/
-                        </>
-                      }
-                    >
-                      <TestCreator />
-                    </OutletContext>
-                  </ProtectedRole>
-                }
-              />
-              <Route
-                path="testview/:idTest"
-                element={
-                  <ProtectedRole roles={[3]}>
-                    <OutletContext
-                      titlePage="Información del test"
-                      calendar={false}
-                      links={
-                        <>
-                          <StyledLink to="/dashboard/tests">Tests</StyledLink>/
-                        </>
-                      }
-                    >
-                      <TestView />
-                    </OutletContext>
-                  </ProtectedRole>
-                }
-              />
+                  }
+                />
+                <Route
+                  path="users"
+                  element={
+                    <ProtectedRole roles={[3]}>
+                      <OutletContext titlePage="Usuarios" calendar={false}>
+                        <User />
+                      </OutletContext>
+                    </ProtectedRole>
+                  }
+                />
+                <Route
+                  path="tests"
+                  element={
+                    <ProtectedRole roles={[3, 2, 1]}>
+                      <OutletContext titlePage="Tests" calendar={true}>
+                        <Test />
+                      </OutletContext>
+                    </ProtectedRole>
+                  }
+                />
+                <Route
+                  path="tests/:idTest"
+                  element={
+                    <ProtectedRole roles={[3]}>
+                      <OutletContext
+                        titlePage="Creación de Test"
+                        calendar={false}
+                        links={
+                          <>
+                            <StyledLink to="/dashboard/tests">Tests</StyledLink>
+                            /
+                          </>
+                        }
+                      >
+                        <TestCreator />
+                      </OutletContext>
+                    </ProtectedRole>
+                  }
+                />
+                <Route
+                  path="testview/:idTest"
+                  element={
+                    <ProtectedRole roles={[3]}>
+                      <OutletContext
+                        titlePage="Información del test"
+                        calendar={false}
+                        links={
+                          <>
+                            <StyledLink to="/dashboard/tests">Tests</StyledLink>
+                            /
+                          </>
+                        }
+                      >
+                        <TestView />
+                      </OutletContext>
+                    </ProtectedRole>
+                  }
+                />
 
-              <Route
-                path="groups"
-                element={
-                  <ProtectedRole roles={[2]}>
-                    <OutletContext titlePage="Grupos" calendar={false}>
-                      <Group />
+                <Route
+                  path="groups"
+                  element={
+                    <ProtectedRole roles={[2]}>
+                      <OutletContext titlePage="Grupos" calendar={false}>
+                        <Group />
+                      </OutletContext>
+                    </ProtectedRole>
+                  }
+                />
+                <Route
+                  path="profile"
+                  element={
+                    <OutletContext titlePage="Perfil" calendar={false}>
+                      <Profile />
                     </OutletContext>
-                  </ProtectedRole>
-                }
-              />
-              <Route
-                path="profile"
-                element={
-                  <OutletContext titlePage="Perfil" calendar={false}>
-                    <Profile />
-                  </OutletContext>
-                }
-              />
-              <Route
-                path="cita"
-                element={
-                  <OutletContext titlePage="Cita" calendar={false}>
-                    <Appoinment />
-                  </OutletContext>
-                }
-              />
-              <Route
-                path="calendar"
-                element={
-                  <OutletContext titlePage="Calendario" calendar={false}>
-                    <Calendar />
-                  </OutletContext>
-                }
-              />
-              <Route
-                path="answers"
-                element={
-                  <ProtectedRole roles={[3]}>
-                    <OutletContext titlePage="Respuestas" calendar={false}>
-                      <Answers />
+                  }
+                />
+                <Route
+                  path="cita"
+                  element={
+                    <OutletContext titlePage="Cita" calendar={false}>
+                      <Appoinment />
                     </OutletContext>
-                  </ProtectedRole>
-                }
-              />
-            </Route>
-            <Route path="*" element={<Login />} />
-          </Routes>
+                  }
+                />
+                <Route
+                  path="calendar"
+                  element={
+                    <OutletContext titlePage="Calendario" calendar={false}>
+                      <Calendar />
+                    </OutletContext>
+                  }
+                />
+                <Route
+                  path="answers"
+                  element={
+                    <ProtectedRole roles={[3]}>
+                      <OutletContext titlePage="Respuestas" calendar={false}>
+                        <Answers />
+                      </OutletContext>
+                    </ProtectedRole>
+                  }
+                />
+              </Route>
+              <Route path="*" element={<Login />} />
+            </Routes>
+          </ChatContextProvider>
         </UserFirebaseContextProvider>
       </UserContext.Provider>
     </BrowserRouter>

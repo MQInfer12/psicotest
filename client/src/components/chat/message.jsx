@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { useRef } from "react";
 import styled from "styled-components";
+import { ChatContext } from "../../context/chatContext";
+import { UserFirebaseContext } from "../../context/userFirebaseContext";
 import PhotoDefault from "../../images/defaultPhoto.jpg";
 const Container = styled.div`
   display: flex;
   gap: 20px;
   margin-bottom: 20px;
-
   .messageInfo {
     display: flex;
     flex-direction: column;
@@ -29,7 +31,7 @@ const Container = styled.div`
       background-color: white;
       padding: 10px 20px;
       border-radius: 0px 10px 10px 10px;
-      max-width: max-content;
+      max-width: auto;
     }
 
     img {
@@ -50,16 +52,30 @@ const Container = styled.div`
   }
 `;
 
-const Message = () => {
+const Message = ({ message }) => {
+  const { currentUser } = useContext(UserFirebaseContext);
+  const { data } = useContext(ChatContext);
+
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [message]);
+
   return (
-    <Container className="owner">
+    <Container
+      ref={ref}
+      className={`${message.senderId === currentUser.uid && "owner"}`}
+    >
       <div className="messageInfo">
         <img src={PhotoDefault} alt="" />
         <span>Just now</span>
       </div>
       <div className="messageContent">
-        <p>hello</p>
-        <img src={PhotoDefault} alt="" />
+        <p>{message.text}</p>
+        {/*  <img src={PhotoDefault} alt="" /> */}
       </div>
     </Container>
   );

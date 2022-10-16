@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import Img from "../../assets/msg/img.png";
 import Attach from "../../assets/msg/attach.png";
+import { UserFirebaseContext } from "../../context/userFirebaseContext";
+import { ChatContext } from "../../context/chatContext";
+import {
+  arrayUnion,
+  doc,
+  Timestamp,
+  updateDoc,
+  serverTimestamp,
+} from "firebase/firestore";
+import { db } from "../../firebase";
+import { v4 as uuid } from "uuid";
 const InputComp = styled.div`
   height: 50px;
   background-color: white;
@@ -41,16 +52,53 @@ const InputComp = styled.div`
   }
 `;
 const Input = () => {
+  const [text, setText] = useState("");
+
+  const { currentUser } = useContext(UserFirebaseContext);
+  const { data } = useContext(ChatContext);
+  const handleSend = async () => {
+    await updateDoc(doc(db, "chats", data.chatId), {
+      messages: arrayUnion({
+        id: uuid(),
+        text,
+        senderId: currentUser.uid,
+        date: Timestamp.now(),
+      }),
+    });
+
+    await updateDoc(doc(db, "userChats", currentUser.uid), {
+      [data.chatId + ".lastMessage"]: {
+        text,
+      },
+      [data.chatId + ".date"]: serverTimestamp(),
+    });
+
+    await updateDoc(doc(db, "userChats", data.user.uid), {
+      [data.chatId + ".lastMessage"]: {
+        text,
+      },
+      [data.chatId + ".date"]: serverTimestamp(),
+    });
+
+    setText("");
+  };
+
   return (
     <InputComp>
-      <input type="text" placeholder="Escribe algo" />
+      <input
+        type="text"
+        placeholder="Escribe algo"
+        onChange={(e) => setText(e.target.value)}
+        value={text}
+      />
       <div className="send">
         <img src={Attach} alt="" />
         <input type="file" style={{ display: "none" }} id="file" />
         <label htmlFor="file">
+          º
           <img src={Img} alt="" />
         </label>
-        <button>Enviar</button>
+        <button onClick={handleSend}>Enviar</button>
       </div>
     </InputComp>
   );

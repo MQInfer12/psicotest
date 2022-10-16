@@ -1,5 +1,9 @@
-import React from "react";
+import { doc, onSnapshot } from "firebase/firestore";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+import { ChatContext } from "../../context/chatContext";
+import { UserFirebaseContext } from "../../context/userFirebaseContext";
+import { db } from "../../firebase";
 import DefaultPhoto from "../../images/defaultPhoto.jpg";
 
 const Container = styled.div`
@@ -34,47 +38,43 @@ const Container = styled.div`
   }
 `;
 const Chats = () => {
+  const [chats, setChats] = useState([]);
+  const { currentUser } = useContext(UserFirebaseContext);
+  const { dispatch } = useContext(ChatContext);
+
+  useEffect(() => {
+    const getChats = () => {
+      const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
+        setChats(doc.data());
+      });
+      return () => {
+        unsub();
+      };
+    };
+    currentUser.uid && getChats();
+  }, [currentUser.uid]);
+
+  const handleSelect = (u) => {
+    dispatch({ type: "CHANGE_USER", payload: u });
+  };
+
   return (
     <Container>
-      <div className="userChat">
-        <img src={DefaultPhoto} alt="" />
-        <div className="userChatInfo">
-          <span>Jane</span>
-          <p>HELLO</p>
-        </div>
-      </div>
-
-      <div className="userChat">
-        <img src={DefaultPhoto} alt="" />
-        <div className="userChatInfo">
-          <span>Jane</span>
-          <p>HELLO</p>
-        </div>
-      </div>
-
-      <div className="userChat">
-        <img src={DefaultPhoto} alt="" />
-        <div className="userChatInfo">
-          <span>Jane</span>
-          <p>HELLO</p>
-        </div>
-      </div>
-
-      <div className="userChat">
-        <img src={DefaultPhoto} alt="" />
-        <div className="userChatInfo">
-          <span>Jane</span>
-          <p>HELLO</p>
-        </div>
-      </div>
-
-      <div className="userChat">
-        <img src={DefaultPhoto} alt="" />
-        <div className="userChatInfo">
-          <span>Jane</span>
-          <p>HELLO</p>
-        </div>
-      </div>
+      {Object.entries(chats)
+        .sort((a, b) => b[1].date - a[1].date)
+        .map((v, i) => (
+          <div
+            className="userChat"
+            key={i}
+            onClick={() => handleSelect(v[1].userInfo)}
+          >
+            <img src={DefaultPhoto} alt="" />
+            <div className="userChatInfo">
+              <span>{v[1].userInfo.email}</span>
+              <p>{v[1].lastMessage !=undefined && v[1].lastMessage.text }</p>
+            </div>
+          </div>
+        ))}
     </Container>
   );
 };
