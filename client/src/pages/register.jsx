@@ -311,7 +311,6 @@ const Register = () => {
     e.preventDefault();
     const { email, contrasenia, edad, nombre, genero, sede } = form;
     const resp = await createUserWithEmailAndPassword(auth, email, contrasenia);
-    console.log(resp);
     await setDoc(doc(db, "users", resp.user.uid), {
       uid: resp.user.uid,
       name: nombre,

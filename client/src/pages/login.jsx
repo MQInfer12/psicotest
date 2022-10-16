@@ -6,6 +6,9 @@ import styled from "styled-components";
 import { UseForm } from "../hooks/useForm";
 import { getProfile, signIn } from "../services/auth";
 import { ErrorCss } from "../styles/formularios";
+import { auth, db } from "../firebase";
+import {signInWithEmailAndPassword } from "firebase/auth";
+
 
 //STYLED COMPONENTS
 
@@ -213,6 +216,15 @@ const Login = () => {
     },
   ];
 
+  const sendSubmit = async (e) => {
+    //login in firebase
+    e.preventDefault();
+    const { email, contrasenia } = form;
+    await signInWithEmailAndPassword(auth, email, contrasenia)
+    //login in postgres
+    handleSubmit(e);
+  };
+
   return (
     <main>
       <section>
@@ -245,7 +257,9 @@ const Login = () => {
                 <GoToDescription>¿No tienes una cuenta?</GoToDescription><GoToText to='/register'>Regístrate</GoToText>
               </GoToContainer>
               <DivButton>
-                <ButtonSubmit onClick={handleSubmit}>LOGIN</ButtonSubmit>
+                <ButtonSubmit onClick={(e) => sendSubmit(e)}>
+                LOGIN
+                </ButtonSubmit>
               </DivButton>
             </form>
           </DivFormlog>

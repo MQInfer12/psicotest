@@ -40,10 +40,11 @@ const LogoutButton = ({ setUser }) => {
     const resout = await logOut();
     const resoutJson = await resout?.json();
     if (resoutJson.message == "Successfully logged out") {
-      //logged out firebase
-      signOut(auth);
       //logged out postgres
       setUser(undefined);
+      //logged out firebase
+      signOut(auth);
+      //redirect login
       navigate("/");
     }
   };
