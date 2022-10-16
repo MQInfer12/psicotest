@@ -1,9 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import DefaultPhoto from "../../images/defaultPhoto.jpg";
-import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
-import { async } from "@firebase/util";
+import { UserFirebaseContext } from "../../context/userFirebaseContext";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  setDoc,
+  doc,
+  updateDoc,
+  serverTimestamp,
+  getDoc,
+} from "firebase/firestore";
 const Container = styled.div`
   border-bottom: 1px solid gray;
   .searchForm {
@@ -51,7 +61,7 @@ const Container = styled.div`
 const Search = () => {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);
-
+  const { currentUser } = useContext(UserFirebaseContext);
   const handleSearch = async () => {
     const q = query(collection(db, "users"), where("name", "==", username));
     try {
@@ -68,6 +78,42 @@ const Search = () => {
     e.code === "Enter" && handleSearch();
   };
 
+  const handleSelect = async () => {
+    //check wheter the group(chat in firestore) exits
+    const combinedId =
+      currentUser.uid > user.uid
+        ? currentUser.uid + user.uid
+        : user.uid + currentUser.uid;
+    try {
+      const res = await getDoc(doc(db, "chats", combinedId));
+      if (!res.exists()) {
+        //create a chat in chats collection
+        await setDoc(doc(db, "chats", combinedId), { messages: [] });
+        //create user chats
+        await updateDoc(doc(db, "userChats", currentUser.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: user.uid,
+            email: user.email,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+
+        await updateDoc(doc(db, "userChats", user.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: currentUser.uid,
+            email: user.email,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setUser(null);
+    setUsername("");
+    //create user chats
+  };
+
   return (
     <Container>
       <div className="searchForm">
@@ -76,10 +122,11 @@ const Search = () => {
           placeholder="Encontrar usuario"
           onKeyDown={handleKey}
           onChange={(e) => setUsername(e.target.value)}
+          value={username}
         />
       </div>
       {user && (
-        <div className="userChat">
+        <div className="userChat" onClick={handleSelect}>
           <img src={DefaultPhoto} alt="" />
           <div className="userChatInfo">
             <span>{user.name}</span>
