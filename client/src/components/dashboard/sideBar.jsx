@@ -117,7 +117,7 @@ const SideBar = ({ rol, setUser }) => {
       select: "cita",
       title: "Cita",
       goTo: "./cita",
-      icon: "fa-solid fa-address-card",
+      icon: "fa-solid fa-calendar-day",
     },
     {
       roles: [1, 2, 3],

@@ -115,7 +115,7 @@ const TestCard = (props) => {
 
 
       <ButtonContainer>
-        <WhiteIconButton onClick={() => navigate(`../testview/${props.id}`)}>
+        <WhiteIconButton onClick={() => navigate(`./testview/${props.id}`)}>
           <i className="fa-solid fa-newspaper"></i>
         </WhiteIconButton>
         <WhiteIconButton onClick={() => navigate(`./${props.id}`)}>

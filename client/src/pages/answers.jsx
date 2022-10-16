@@ -159,11 +159,11 @@ const Answers = () => {
   const llenarRespuestas = async () => {
     const res = await getRespuestas();
     const resJson = await res?.json();
-    console.log(resJson);
+    setRespuestas(resJson);
   }
 
   useEffect(() => {
-    //llenarRespuestas();
+    llenarRespuestas();
   }, [])
 
   return (
@@ -184,48 +184,59 @@ const Answers = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <ThNumber>1</ThNumber>
-              <td>
-                <DivDouble>
-                  <PNombre>Admin</PNombre>
-                  <PLight>admin@gmail.com</PLight>
-                </DivDouble>
-              </td>
-              <td>
-                <DivDouble>
-                  <PLight>Videojuegos y vida diaria</PLight>
-                  <PLight>Mide la influencia de los videojuegos en la vida diaria</PLight>
-                </DivDouble>
-              </td>
-              <td>
-                <DivDouble>
-                  <PNombre>Mauricio Molina</PNombre>
-                  <PLight>maummq@gmail.com</PLight>
-                </DivDouble>
-              </td>
-              <td>
-                <DivDouble>
-                  <StatusContainer estado="0">Pendiente</StatusContainer>
-                </DivDouble>
-              </td>
-              <td>
-                <DivDouble>
-                  <PPuntaje>30 pts.</PPuntaje>
-                  <PSobre>/35</PSobre>
-                </DivDouble>
-              </td>
-              <td>
-                <DivCenter>
-                  <WhiteIconButton><i className="fa-solid fa-eye"></i></WhiteIconButton>
-                </DivCenter>
-              </td>
-            </tr>
+            {
+              respuestas.map((v, i) => (
+                <tr key={i}>
+                  <ThNumber>{i + 1}</ThNumber>
+                  <td>
+                    <DivDouble>
+                      <PNombre>{v.nombre_user}</PNombre>
+                      <PLight>{v.email_user}</PLight>
+                    </DivDouble>
+                  </td>
+                  <td>
+                    <DivDouble>
+                      <PLight>{v.nombre_test}</PLight>
+                      <PLight>{v.descripcion}</PLight>
+                    </DivDouble>
+                  </td>
+                  <td>
+                    <DivDouble>
+                      <PNombre>{v.nombre_docente}</PNombre>
+                      <PLight>{v.email_docente}</PLight>
+                    </DivDouble>
+                  </td>
+                  <td>
+                    <DivDouble>
+                      <StatusContainer estado={v.estado}>
+                        {
+                          v.estado == 0 ? "Pendiente" :
+                          v.estado == 1 ? "Recibido" :
+                          v.estado == 2 ? "Corregido" :
+                          v.estado == 3 && "Expiró"
+                        }
+                      </StatusContainer>
+                    </DivDouble>
+                  </td>
+                  <td>
+                    <DivDouble>
+                      <PPuntaje>{v.puntuacion}</PPuntaje>
+                      <PSobre>/{v.total}</PSobre>
+                    </DivDouble>
+                  </td>
+                  <td>
+                    <DivCenter>
+                      <WhiteIconButton><i className="fa-solid fa-eye"></i></WhiteIconButton>
+                    </DivCenter>
+                  </td>
+                </tr>
+              ))
+            }
           </tbody>
         </TableAnswers>
       </TableContainer>
       <Pagination 
-        cant="32"
+        cant={respuestas.length}
         rows="9"
         page="1"
         setPage={() => {}}

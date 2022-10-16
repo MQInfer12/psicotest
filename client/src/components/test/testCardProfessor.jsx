@@ -113,7 +113,7 @@ const TestCard = (props) => {
 
       {idRole === 2 && (
         <ButtonContainer>
-          <WhiteIconButton onClick={() => navigate(`../testview/${props.id_test}`)}>
+          <WhiteIconButton onClick={() => navigate(`./testview/${props.id_test}`)}>
             <i className="fa-solid fa-newspaper"></i>
           </WhiteIconButton>
 

@@ -5,7 +5,8 @@ import styled from "styled-components";
 import TestFeatures from "../components/testView/testFeatures";
 import TestParagraphs from "../components/testView/testParagraphs";
 import TestResolution from "../components/testView/testResolution";
-import { getDocenteTest, getTest } from "../services/test";
+import { getIdTest } from "../services/respuesta";
+import { getTest } from "../services/test";
 
 const TestViewContainer = styled.div`
   min-height: 100%;
@@ -34,9 +35,10 @@ const TestTitle = styled.h2`
 
 const TestView = () => {
   const { idTest } = useParams();
-  const { idDocenteTest } = useParams();
+  const { idRespuesta } = useParams();
+  
   const [test, setTest] = useState([]);
-  const activateSend = idDocenteTest? true : false;
+  const [activateSend, setActivateSend] = useState(idRespuesta? true : false);
 
   const llenarTest = async () => {
     const res = await getTest(idTest);
@@ -45,8 +47,11 @@ const TestView = () => {
   }
 
   const getTestId = async () => {
-    const res = await getDocenteTest(idDocenteTest);
+    const res = await getIdTest(idRespuesta);
     const resJson = await res?.json();
+    if(resJson.estado != 0) {
+      setActivateSend(false);
+    }
     const restest = await getTest(resJson.id_test);
     const restestJson = await restest?.json();
     setTest(restestJson[0]);
@@ -56,7 +61,7 @@ const TestView = () => {
     if(idTest) {
       llenarTest();
     }
-    if(idDocenteTest) {
+    if(idRespuesta) {
       getTestId();
     }
   }, []);
@@ -70,7 +75,13 @@ const TestView = () => {
           <TestParagraphs />
         </TestTextContainer>
       </InformationContainer>
-      <TestResolution activateSend={activateSend} idTest={test.id} nombreTest={test.nombre} />
+      <TestResolution 
+        idTest={test.id} 
+        nombreTest={test.nombre} 
+        activateSend={activateSend} 
+        setActivateSend={setActivateSend}
+        infoSend={idTest? "Solo los beneficiarios pueden enviar respuestas." : "Ya enviaste este test."}
+      />
     </TestViewContainer>
   )
 }

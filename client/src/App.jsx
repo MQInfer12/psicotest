@@ -104,7 +104,7 @@ function App() {
               }
             />
             <Route
-              path="testview/:idTest"
+              path="tests/testview/:idTest"
               element={
                 <ProtectedRole roles={[2, 3]}>
                   <OutletContext
@@ -122,7 +122,7 @@ function App() {
               }
             />
             <Route
-              path="testresolve/:idDocenteTest"
+              path="tests/testresolve/:idRespuesta"
               element={
                 <ProtectedRole roles={[1]}>
                   <OutletContext

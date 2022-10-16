@@ -2,9 +2,10 @@ import React, { useEffect , useContext } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { getFullTest } from "../../services/test";
-import { UserContext } from "../../context/userContext";
 import { useParams } from "react-router-dom";
-import { addRespuesta } from "../../services/respuesta";
+import { updateRespuesta } from "../../services/respuesta";
+import Modal from "../globals/modal";
+import ConfirmModal from "../globals/confirmModal";
 
 const TestResolutionContainer = styled.div`
   background-color: #FFFFFF;
@@ -126,9 +127,10 @@ const PButton = styled.div`
   color: #D9D9D9;
 `;
 
-const TestResolution = ({ idTest, nombreTest, activateSend }) => {
-  const { idDocenteTest } = useParams();
-  const { user } = useContext(UserContext);
+const TestResolution = ({ idTest, nombreTest, activateSend, setActivateSend, infoSend }) => {
+  const { idRespuesta } = useParams();
+
+  const [showAlert, setShowAlert] = useState(false);
   const [secciones, setSecciones] = useState([]);
   const [preguntasTotales, setPreguntasTotales] = useState(0);
   const [indexPregunta, setIndexPregunta] = useState(0);
@@ -147,16 +149,13 @@ const TestResolution = ({ idTest, nombreTest, activateSend }) => {
 
   const handleSubmit = async () => {
     const form = {
-      email_user: user.email,
-      id_docente_test: idDocenteTest,
       puntuaciones: resultados
     }
-
-    console.log(JSON.stringify(form));
-
-    /*const res = await addRespuesta(form);
+    const res = await updateRespuesta(form, idRespuesta);
     const resJson = await res?.json();
-    console.log(resJson);*/
+    if(resJson.mensaje == "se guardo correctamente") {
+      setActivateSend(false);
+    }
   }
 
   const llenarTestEntero = async () => {
@@ -182,6 +181,16 @@ const TestResolution = ({ idTest, nombreTest, activateSend }) => {
 
   return (
     <TestResolutionContainer>
+      {
+        showAlert &&
+        <Modal cerrar={() => setShowAlert(false)}>
+          <ConfirmModal 
+            sure={handleSubmit}
+            cerrar={() => setShowAlert(false)}
+            text="No podrás modificar tus respuestas luego"
+          />
+        </Modal>
+      }
       <ResolutionTitle>{nombreTest}</ResolutionTitle>
       <StartText>Comienza tu test</StartText>
       <TestContainer>
@@ -233,12 +242,12 @@ const TestResolution = ({ idTest, nombreTest, activateSend }) => {
           {
             indexPregunta == preguntasTotales - 1 ? (
               activateSend ? (
-                <ButtonTransparent onClick={ handleSubmit }>
+                <ButtonTransparent onClick={ () => setShowAlert(true) }>
                   <PButton>Enviar Test</PButton>
                   <IconButton className="fa-solid fa-share-from-square"></IconButton>
                 </ButtonTransparent>
               ) : (
-                <p>Los administradores y docentes no pueden enviar respuestas a los test.</p>
+                <p>{infoSend}</p>
               )
             ) : (
               <ButtonTransparent onClick={() => setIndexPregunta(indexPregunta + 1)}>
