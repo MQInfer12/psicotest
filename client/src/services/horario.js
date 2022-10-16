@@ -39,7 +39,7 @@ export const getTimeWithWhoHaveDate = async (id) => {
 }
 
 
-export const addHorario = async (form) => {
+export const addHorario = async (form, id_docente) => {
   try {
     const response = await fetch(`${http}horario`, {
       method: "POST",
@@ -51,18 +51,36 @@ export const addHorario = async (form) => {
         fecha: form.fecha,
         hora_inicio:form.hora_inicio,
         hora_final:form.hora_final,
-        id_docente: form.id_docente,
+        id_docente: id_docente,
       }),
     });
 
-    if (response.ok) {
-      const result = await response.json();
-      return result;
-    }
+    return response;
   } catch (err) {
     console.error(err);
   }
 };
+
+export const updateHorario = async (form, id) => {
+  try {
+    const response = await fetch(`${http}horario/${id}`, {
+      method: "PUT",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fecha: form.fecha,
+        hora_inicio:form.hora_inicio,
+        hora_final:form.hora_final
+      }),
+    });
+
+    return response;
+  } catch (err) {
+    console.error(err);
+  }
+}
 
 export const deleteHorario = async (id) => {
   try {
@@ -75,10 +93,7 @@ export const deleteHorario = async (id) => {
       body: JSON.stringify(false)
     });
   
-    if (response.ok) {
-      const result = await response.json();
-      console.log(result)
-    }
+    return response;
   } catch (err) {
     console.error(err);
   }

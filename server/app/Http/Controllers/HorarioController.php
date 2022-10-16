@@ -18,9 +18,15 @@ class HorarioController extends Controller
 
     public function showById($id)
     {
-        return DB::select("SELECT h.id, h.fecha, h.hora_inicio, h.hora_final, h.disponible, u.email, u.nombre 
-        from horarios h, users u 
-        where h.id_docente=u.id and u.id=$id");
+        $horarios = DB::select("SELECT h.id, h.fecha, h.hora_inicio, h.hora_final, h.disponible, u.email, u.nombre 
+                           from horarios h, users u 
+                           where h.id_docente=u.id and u.id=$id");
+        foreach($horarios as $horario) {
+            $horario->fecha = date_create($horario->fecha);
+            $horario->fecha = date_format($horario->fecha, "d/m/Y");
+        }
+
+        return $horarios;
     }
 
     public function showWhoHaveDateTheProfessor($id)
@@ -55,24 +61,22 @@ class HorarioController extends Controller
     {
         return Horario::find($id);
     }
+
     public function update(Request $request, $id)
     {
         $request->validate([
             'fecha' => 'required',
-            'disponible' => 'required',
             'hora_inicio' => 'required',
             'hora_final' => 'required',
-            'id_docente' => 'required',
         ]);
 
         $grupo = Horario::findOrFail($id);
         $grupo->fecha = $request->fecha;
         $grupo->hora_inicio = $request->hora_inicio;
         $grupo->hora_final = $request->hora_final;
-        $grupo->id_docente = $request->id_docente;
-        $grupo->disponible = true;
         $grupo->save();
-        return response()->json(["mensaje" => "se actualizo correctamente"], 201);
+
+        return response()->json(["mensaje" => "se guardo correctamente"], 201);
     }
 
     public function destroy($id)

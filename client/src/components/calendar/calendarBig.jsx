@@ -2,8 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import { PurpleButton, WhiteIconButton } from "../../styles/formularios";
-import { getTime } from "../../services/horario";
+import { addHorario, getTime, updateHorario } from "../../services/horario";
 import { UserContext } from "../../context/userContext";
+import Modal from "../globals/modal";
+import ModalHorario from "./modalHorario";
 
 const DivCalendarBig = styled.div`
   height: 100%;
@@ -58,21 +60,36 @@ const DivTd = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  padding: 10px;
   font-size: 14px;
 
   &:hover > div > button {
     display: block;
   }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #D9D9D9;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #660BE1;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #660BE1;
+  }
 `;
 
 const DivDay = styled.div`
   width: 100%;
-  padding-bottom: 5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   transition: all 0.2s;
+  min-height: 32px;
 
   & > button {
     display: none;
@@ -82,13 +99,14 @@ const DivDay = styled.div`
 
 const PDay = styled.p`
   color: ${props => props.today && '#660BE1'};
+  padding: 1px 10px;
 `;
 
 const DivTask = styled.div`
-  width: calc(100% + 18px);
+  width: 100%;
   background-color: #F0F1FA;
   color: #4F5AED;
-  padding: 1px 10px;
+  padding: 2px 10px;
   font-size: 12px;
   font-weight: 400;
   cursor: pointer;
@@ -100,6 +118,11 @@ const DivTask = styled.div`
 `;
 
 const CalendarBig = () => {
+  const [showForm, setShowForm] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [fechaSelected, setFechaSelected] = useState("");
+  const [horarioSelected, setHorarioSelected] = useState({});
+
   const [mesActual, setMesActual] = useState(dayjs().month());
   const [yearActual, setYearActual] = useState(dayjs().year());
 
@@ -201,18 +224,46 @@ const CalendarBig = () => {
     return mostrar;
   }
 
-  const getHorarios = async () => { //LLAMADA A LA API PARA OBTENER LOS HORARIOS
+  const llenarHorarios = async () => { //LLAMADA A LA API PARA OBTENER LOS HORARIOS
     const res = await getTime(user.id);
-    console.log(res);
     setHorarios(res);
   }
 
   useEffect(() => {
-    getHorarios();
+    llenarHorarios();
   }, []);
 
-  return(
+  return (
     <DivCalendarBig>
+      {
+        showForm &&
+        <Modal titulo="Anadir horario" cerrar={() => setShowForm(false)} >
+          <ModalHorario 
+            funcion="anadir"
+            call={ addHorario }
+            id_docente={user.id}
+            fecha={fechaSelected}
+            actualizar={() => {
+              llenarHorarios();
+              setShowForm(false);
+            }}
+          />
+        </Modal>
+      }
+      {
+        showEdit &&
+        <Modal titulo="Editar horario" cerrar={() => setShowEdit(false)} >
+          <ModalHorario 
+            funcion="editar"
+            call={updateHorario}
+            horario={horarioSelected}
+            actualizar={() => {
+              llenarHorarios();
+              setShowEdit(false);
+            }}
+          />
+        </Modal>
+      }
       <DivControls>
         <PurpleButton width="180px" onClick={lastMonth}>
           <i className="fa-solid fa-arrow-left"></i> {meses.at((mesActual - 1) % 12)}
@@ -258,14 +309,32 @@ const CalendarBig = () => {
                       )}
                     >
                       <PDay>{day.format("DD")}</PDay>
-                      <WhiteIconButton><i className="fa-solid fa-plus"></i></WhiteIconButton>
+                      <WhiteIconButton onClick={() => {
+                        setFechaSelected(day.format("DD/MM/YYYY"));
+                        setShowForm(true);
+                      }}>
+                        <i className="fa-solid fa-plus"></i>
+                      </WhiteIconButton>
                     </DivDay>
                     {
-                      horarios.filter(v => v.fecha == day.format("YYYY-MM-DD")).map((v, i) => {
+                      horarios.filter(v => v.fecha == day.format("DD/MM/YYYY")).map((v, i) => {
                         const hora_inicio = convertToDate(day, v.hora_inicio);
                         const hora_final = convertToDate(day, v.hora_final);
                         return (
-                          <DivTask key={i}>Libre {hora_inicio} a {hora_final}</DivTask>
+                          <DivTask 
+                            onClick={() => {
+                              setHorarioSelected({
+                                id: v.id,
+                                fecha: v.fecha,
+                                hora_inicio: v.hora_inicio,
+                                hora_final: v.hora_final,
+                              });
+                              setShowEdit(true);
+                            }} 
+                            key={i}
+                          >
+                            Libre {hora_inicio} a {hora_final}
+                          </DivTask>
                         )
                       })
                     }

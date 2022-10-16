@@ -36,78 +36,35 @@ const Index = () => {
   };
 
   useEffect(() => {
-    handlegetTime();
+    //handlegetTime();
     handlegetTimeWithWhoHaveDate();
   }, []);
 
   return (
     <>
-      <button onClick={() => setShowForm(true)}>Agregar horario</button>
-      {showForm && (
-        <Modal cerrar={hideModal} titulo="Añadir Horario">
-          <ModalSchedule hideModal={hideModal} handlegetTime={handlegetTime} />
-        </Modal>
-      )}
-      {!loading && (
-        <>
-          <p>listar horarios</p>
-
-          <table>
-            <thead>
-              <tr>
-                <th>fecha</th>
-                <th>hora_inicio</th>
-                <th>hora_final</th>
-                <th>disponible</th>
-                <th>email</th>
-                <th>nombre</th>
-                <th>Eliminar</th>
-              </tr>
-            </thead>
-            <tbody style={{ textAlign: "center" }}>
-              {dataTime.map((v, i) => (
-                <tr key={i}>
-                  <td>{v.fecha}</td>
-                  <td>{v.hora_inicio}</td>
-                  <td>{v.hora_final}</td>
-                  <td>{v.disponible ? "si" : "no"}</td>
-                  <td>{v.email}</td>
-                  <td>{v.nombre}</td>
-                  <td>
-                    <button onClick={() => handleDelete(v.id)}>Eliminar</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <hr />
-
-          <h2>Con quienes tiene cita</h2>
-
-          <table>
-            <thead>
-              <tr>
-                <th>fecha</th>
-                <th>hora_inicio</th>
-                <th>hora_final</th>
-                <th>email</th>
-                <th>nombre</th>
-              </tr>
-            </thead>
-            <tbody style={{ textAlign: "center" }}>
-              {dataTimeWhoHaveDate.map((v, i) => (
-                <tr key={i}>
-                  <td>{v.fecha}</td>
-                  <td>{v.hora_inicio}</td>
-                  <td>{v.hora_final}</td>
-                  <td>{v.email}</td>
-                  <td>{v.nombre}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </>
-      )}
+      <h2>Con quienes tiene cita</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>fecha</th>
+            <th>hora_inicio</th>
+            <th>hora_final</th>
+            <th>email</th>
+            <th>nombre</th>
+          </tr>
+        </thead>
+        <tbody style={{ textAlign: "center" }}>
+          {dataTimeWhoHaveDate.map((v, i) => (
+            <tr key={i}>
+              <td>{v.fecha}</td>
+              <td>{v.hora_inicio}</td>
+              <td>{v.hora_final}</td>
+              <td>{v.email}</td>
+              <td>{v.nombre}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </>
   );
 };

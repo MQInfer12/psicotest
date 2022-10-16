@@ -37,6 +37,11 @@ const P = styled.p`
   line-height: 24px;
   color: #000000;
   opacity: 0.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;  
 `;
 
 const Span = styled.span`
