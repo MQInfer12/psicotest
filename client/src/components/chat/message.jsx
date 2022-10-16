@@ -64,6 +64,17 @@ const Message = ({ message }) => {
     });
   }, [message]);
 
+  const convertSecondosToDate = (seconds) => {
+    var d = new Date(seconds * 1000);
+    var hora = d.getHours() == 0 ? 23 : d.getHours() - 1;
+    var hora = hora < 9 ? "0" + hora : hora;
+    var minuto = d.getMinutes() < 9 ? "0" + d.getMinutes() : d.getMinutes();
+    var segundo = d.getSeconds() < 9 ? "0" + d.getSeconds() : d.getSeconds();
+    var hora = d.getHours() == 0 ? 23 : d.getHours() - 1;
+    let val = hora + ":" + minuto + ":" + segundo;
+    return val;
+  };
+
   return (
     <Container
       ref={ref}
@@ -71,7 +82,7 @@ const Message = ({ message }) => {
     >
       <div className="messageInfo">
         <img src={PhotoDefault} alt="" />
-        <span>Just now</span>
+        <span>{convertSecondosToDate(message.date.seconds)}</span>
       </div>
       <div className="messageContent">
         <p>{message.text}</p>

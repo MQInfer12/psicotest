@@ -71,7 +71,7 @@ const Chats = () => {
             <img src={DefaultPhoto} alt="" />
             <div className="userChatInfo">
               <span>{v[1].userInfo.email}</span>
-              <p>{v[1].lastMessage !=undefined && v[1].lastMessage.text }</p>
+              <p>{v[1].lastMessage != undefined && v[1].lastMessage.text}</p>
             </div>
           </div>
         ))}
