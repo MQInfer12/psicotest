@@ -7,6 +7,9 @@ import { initialForm, validationsForm } from "../validations/register";
 import { ErrorCss } from "../styles/formularios";
 import Modal from "../components/globals/modal";
 import ModalRegister from "../components/register/modalRegister";
+import { auth, db } from "../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 //STYLED COMPONENTS
 
@@ -31,7 +34,7 @@ const DivItemlog = styled.div`
   grid-column-end: 17;
   grid-row-start: 1;
   grid-row-end: 11;
-  background: url('/src/images/imglogin.jpg') no-repeat;
+  background: url("/src/images/imglogin.jpg") no-repeat;
   background-size: cover;
   background-position-y: center;
 `;
@@ -63,7 +66,7 @@ const H1Title = styled.h1`
   &::after {
     content: "";
     width: 96px;
-    border-top: 2px solid #7613FD;
+    border-top: 2px solid #7613fd;
     background-color: #000000;
     transition: all 0.2s;
   }
@@ -127,21 +130,28 @@ const IInput = styled.i`
   overflow: hidden;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, #ff1b69, #ff0, #2196f3, #7613FD, #ff1b69);
+    background: linear-gradient(
+      90deg,
+      #ff1b69,
+      #ff0,
+      #2196f3,
+      #7613fd,
+      #ff1b69
+    );
     animation: animate 2s linear infinite;
   }
 
-  @keyframes animate{
-    0%{
-        background-position-x: 0;
+  @keyframes animate {
+    0% {
+      background-position-x: 0;
     }
-    100%{
-        background-position-x: 346px;
+    100% {
+      background-position-x: 346px;
     }
   }
 `;
@@ -162,17 +172,17 @@ const ButtonSubmit = styled.button`
   border: none;
   cursor: pointer;
   border-radius: 27px;
-  background: #7613FD;
+  background: #7613fd;
   box-shadow: 0px 0px 50px 0px rgb(0 0 0 / 10%);
 `;
 
 const InputSelect = styled.select`
   padding-left: 18px;
   font-size: 16px;
-  color: #FFFFFF;
+  color: #ffffff;
   font-weight: 400;
   height: 45px;
-  background-color: #7613FD;
+  background-color: #7613fd;
   border-radius: 10px;
   outline: none;
 `;
@@ -190,7 +200,7 @@ const GoToDescription = styled.p`
 `;
 
 const GoToText = styled(Link)`
-  color: #7613FD;
+  color: #7613fd;
   font-size: 12px;
   font-weight: 400;
   text-decoration: none;
@@ -201,14 +211,8 @@ const GoToText = styled(Link)`
 const Register = () => {
   const [showModal, setShowModal] = useState(false);
 
-  const {
-    form,
-    errors,
-    handleChange,
-    handleSubmit,
-    handleReset
-  } = UseForm(
-    initialForm, 
+  const { form, errors, handleChange, handleSubmit, handleReset } = UseForm(
+    initialForm,
     validationsForm,
     signUp,
     () => {
@@ -223,35 +227,35 @@ const Register = () => {
       value: form.nombre,
       placeholder: "Nombre",
       error: errors.nombre,
-      tipo: "text"
+      tipo: "text",
     },
     {
       name: "email",
       value: form.email,
       placeholder: "Correo",
       error: errors.email,
-      tipo: "text"
+      tipo: "text",
     },
     {
       name: "contrasenia",
       value: form.contrasenia,
       placeholder: "Contraseña",
       error: errors.contrasenia,
-      tipo: "password"
+      tipo: "password",
     },
     {
       name: "contraseniaRepeat",
       value: form.contraseniaRepeat,
       placeholder: "Repetir contraseña",
       error: errors.contraseniaRepeat,
-      tipo: "password"
+      tipo: "password",
     },
     {
       name: "edad",
       value: form.edad,
       placeholder: "Edad",
       error: errors.edad,
-      tipo: "number"
+      tipo: "number",
     },
   ];
 
@@ -270,7 +274,7 @@ const Register = () => {
         {
           nombre: "Mujer",
           value: "mujer",
-        }
+        },
       ],
       error: errors.genero,
     },
@@ -302,6 +306,22 @@ const Register = () => {
     },
   ];
 
+  const sendSubmit = async (e) => {
+    //save in firebase
+    e.preventDefault();
+    const { email, contrasenia, edad, nombre, genero, sede } = form;
+    const resp = await createUserWithEmailAndPassword(auth, email, contrasenia);
+    console.log(resp);
+    await setDoc(doc(db, "users", resp.user.uid), {
+      uid: resp.user.uid,
+      name: nombre,
+      email: email,
+    });
+    await setDoc(doc(db, "userChats", resp.user.uid),{})
+    //save in postgres
+    handleSubmit(e);
+  };
+
   return (
     <main>
       <section>
@@ -313,7 +333,7 @@ const Register = () => {
           <DivFormlog>
             <Form>
               <H1Title>Registro</H1Title>
-            
+
               {data.map((v, i) => (
                 <DivInputs key={i}>
                   <DivInputBox>
@@ -330,13 +350,10 @@ const Register = () => {
                   {v.error && <ErrorCss>{v.error}</ErrorCss>}
                 </DivInputs>
               ))}
-            
+
               {dataSelect.map((v, i) => (
                 <DivInputs key={i}>
-                  <InputSelect
-                    name={v.select}
-                    onChange={handleChange}
-                  >
+                  <InputSelect name={v.select} onChange={handleChange}>
                     {v.data.map((va, i) => (
                       <option key={i} value={va.value}>
                         {va.nombre}
@@ -347,21 +364,24 @@ const Register = () => {
                 </DivInputs>
               ))}
               <GoToContainer>
-                <GoToDescription>¿Ya tienes una cuenta?</GoToDescription><GoToText to='/'>Inicia sesión</GoToText>
+                <GoToDescription>¿Ya tienes una cuenta?</GoToDescription>
+                <GoToText to="/">Inicia sesión</GoToText>
               </GoToContainer>
 
               <DivButton>
-                <ButtonSubmit onClick={ handleSubmit }>REGISTRARSE</ButtonSubmit>
+                <ButtonSubmit onClick={(e) => sendSubmit(e)}>
+                  REGISTRARSE
+                </ButtonSubmit>
               </DivButton>
             </Form>
           </DivFormlog>
         </DivPrincipal>
       </section>
-      {showModal &&
+      {showModal && (
         <Modal cerrar={() => setShowModal(false)}>
           <ModalRegister />
         </Modal>
-      }
+      )}
     </main>
   );
 };
