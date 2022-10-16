@@ -59,11 +59,11 @@ const Container = styled.div`
   }
 `;
 const Search = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [user, setUser] = useState(null);
   const { currentUser } = useContext(UserFirebaseContext);
   const handleSearch = async () => {
-    const q = query(collection(db, "users"), where("name", "==", username));
+    const q = query(collection(db, "users"), where("email", "==", email));
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
@@ -101,7 +101,7 @@ const Search = () => {
         await updateDoc(doc(db, "userChats", user.uid), {
           [combinedId + ".userInfo"]: {
             uid: currentUser.uid,
-            email: user.email,
+            email: currentUser.email,
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
@@ -121,8 +121,8 @@ const Search = () => {
           type="text"
           placeholder="Encontrar usuario"
           onKeyDown={handleKey}
-          onChange={(e) => setUsername(e.target.value)}
-          value={username}
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
         />
       </div>
       {user && (
