@@ -158,14 +158,14 @@ function App() {
                 </OutletContext>
               }
             />
-            <Route
+            {/*<Route
               path="cita"
               element={
                 <OutletContext titlePage="Cita" calendar={false}>
                   <Appoinment />
                 </OutletContext>
               }
-            />
+            />*/}
             <Route
               path="calendar"
               element={

@@ -6,10 +6,12 @@ import {
   scheduleAppoinment,
   cancelAppoinment,
 } from "../services/cita";
+
 const Appoinment = () => {
   const [appointmentByUser, setAppointmentByUser] = useState([]);
   const [appointmentAll, setAppointmentAll] = useState([]);
   const { user } = useContext(UserContext);
+
   const handleGetAll = async () => {
     const resp = await getAllApoinments();
     setAppointmentAll(resp);

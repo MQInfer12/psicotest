@@ -11,21 +11,27 @@ class CitaController extends Controller
 {
     public function getAppointmentsSchedule($id)
     {
-        return DB::select("SELECT c.id, h.fecha, h.hora_inicio, h.hora_final, u.email, u.nombre,
-        c.id_horario 
-        from citas c, horarios h, users u 
-        where c.id_horario = h.id and h.id_docente=u.id and c.id_usuario=$id
-        ");
+        $appointments = DB::select("SELECT c.id, h.fecha, h.hora_inicio, h.hora_final, u.email, u.nombre, c.id_horario 
+                                    from citas c, horarios h, users u 
+                                    where c.id_horario = h.id and h.id_docente=u.id and c.id_usuario=$id");
+        foreach($appointments as $appointment) {
+            $appointment->fecha = date_create($appointment->fecha);
+            $appointment->fecha = date_format($appointment->fecha, "d/m/Y");
+        }
+        return $appointments;
     }
 
     public function allAppointmentsAvailables()
     {
-        return DB::select("SELECT h.id, h.fecha, h.hora_inicio, h.hora_final, h.disponible, u.email,u.nombre 
-        from horarios h, users u 
-        where h.id_docente=u.id and h.disponible=true
-        ");
+        $appointments = DB::select("SELECT h.id, h.fecha, h.hora_inicio, h.hora_final, h.disponible, u.email, u.nombre 
+                                    from horarios h, users u 
+                                    where h.id_docente=u.id and h.disponible=true");
+        foreach($appointments as $appointment) {
+            $appointment->fecha = date_create($appointment->fecha);
+            $appointment->fecha = date_format($appointment->fecha, "d/m/Y");
+        }
+        return $appointments;
     }
-
 
     public function scheduleAppointment(Request $request, $id)
     {
@@ -43,6 +49,15 @@ class CitaController extends Controller
         $cita->save();
 
         return response()->json(["mensaje" => "se asigno las cita correctamente"], 201);
+    }
+
+    public function cancelAppointment($idHorario, $idCita)
+    {
+        $horario = Horario::findOrFail($idHorario);
+        $horario->disponible = true;
+        $horario->save();
+
+        return Cita::destroy($idCita);
     }
 
     public function show($id)
@@ -64,15 +79,5 @@ class CitaController extends Controller
         $grupoestudiante->save();
 
         return response()->json(["mensaje" => "se modifico correctamente"], 201);
-    }
-
-
-    public function cancelAppointment($idHorario, $idCita)
-    {
-        $horario = Horario::findOrFail($idHorario);
-        $horario->disponible = true;
-        $horario->save();
-
-        return Cita::destroy($idCita);
     }
 }

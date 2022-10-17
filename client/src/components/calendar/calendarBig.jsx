@@ -2,10 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import { PurpleButton, WhiteIconButton } from "../../styles/formularios";
-import { addHorario, getTime, updateHorario } from "../../services/horario";
+import { addHorario, getTime, getTimeWithWhoHaveDate, updateHorario } from "../../services/horario";
 import { UserContext } from "../../context/userContext";
 import Modal from "../globals/modal";
 import ModalHorario from "./modalHorario";
+import { getAllApoinments, getAppointByUser } from "../../services/cita";
+import ModalAsignarCita from "./modalAsignarCita";
+import ModalCancelarCita from "./modalCancelarCita";
 
 const DivCalendarBig = styled.div`
   height: 100%;
@@ -117,17 +120,36 @@ const DivTask = styled.div`
   }
 `;
 
+const DivAppointment = styled.div`
+  width: 100%;
+  background-color: #E1FCEF;
+  color: #14804A;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
 const CalendarBig = () => {
+  const { user } = useContext(UserContext);
+
   const [showForm, setShowForm] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  const [showCancel, setShowCancel] = useState(false);
+
   const [fechaSelected, setFechaSelected] = useState("");
   const [horarioSelected, setHorarioSelected] = useState({});
 
   const [mesActual, setMesActual] = useState(dayjs().month());
   const [yearActual, setYearActual] = useState(dayjs().year());
 
-  const { user } = useContext(UserContext);
   const [horarios, setHorarios] = useState([]);
+  const [citas, setCitas] = useState([]);
 
   const meses = [
     "Enero",
@@ -224,22 +246,43 @@ const CalendarBig = () => {
     return mostrar;
   }
 
-  const llenarHorarios = async () => { //LLAMADA A LA API PARA OBTENER LOS HORARIOS
+  const llenarHorarios = async () => { //API PARA OBTENER LOS HORARIOS DE ADMINISTRADORES Y DOCENTES
     const res = await getTime(user.id);
     setHorarios(res);
   }
 
+  const llenarCitasDocente = async () => {
+    const res = await getTimeWithWhoHaveDate(user.id);
+    setCitas(res);
+  }
+
+  const llenarCitasDisponibles = async () => { //API PARA OBTENER LOS HORARIOS PARA QUE ELIJA EL USUARIO
+    const res = await getAllApoinments();
+    setHorarios(res);
+  }
+
+  const llenarCitasPorUsuario = async () => {
+    const resJson = await getAppointByUser(user.id);
+    setCitas(resJson);
+  }
+
   useEffect(() => {
-    llenarHorarios();
+    if(user.id_rol != 1) {
+      llenarHorarios();
+      llenarCitasDocente();
+    } else {
+      llenarCitasDisponibles();
+      llenarCitasPorUsuario();
+    }
   }, []);
 
   return (
     <DivCalendarBig>
       {
         showForm &&
-        <Modal titulo="Anadir horario" cerrar={() => setShowForm(false)} >
+        <Modal titulo="Añadir horario" cerrar={() => setShowForm(false)} >
           <ModalHorario 
-            funcion="anadir"
+            funcion="añadir"
             call={ addHorario }
             id_docente={user.id}
             fecha={fechaSelected}
@@ -252,14 +295,44 @@ const CalendarBig = () => {
       }
       {
         showEdit &&
-        <Modal titulo="Editar horario" cerrar={() => setShowEdit(false)} >
-          <ModalHorario 
-            funcion="editar"
-            call={updateHorario}
-            horario={horarioSelected}
+        <Modal titulo={user.id_rol != 1 ? "Editar horario" : "Asignar cita" } cerrar={() => setShowEdit(false)} >
+          { user.id_rol != 1 ? (
+              <ModalHorario 
+                funcion="editar"
+                call={updateHorario}
+                horario={horarioSelected}
+                actualizar={() => {
+                  llenarHorarios();
+                  setShowEdit(false);
+                }}
+              />
+            ) : (
+              <ModalAsignarCita 
+                actualizar={() => {
+                  llenarCitasDisponibles();
+                  llenarCitasPorUsuario();
+                  setShowEdit(false);
+                }}
+                horario={horarioSelected}
+              />
+            )
+          }
+        </Modal>
+      }
+      {
+        showCancel &&
+        <Modal titulo="Cancelar cita" cerrar={() => setShowCancel(false)} >
+          <ModalCancelarCita 
+            cita={horarioSelected}
             actualizar={() => {
-              llenarHorarios();
-              setShowEdit(false);
+              if(user.id_rol != 1) {
+                llenarCitasDocente();
+                llenarHorarios();
+              } else {
+                llenarCitasPorUsuario();
+                llenarCitasDisponibles();
+              }
+              setShowCancel(false);
             }}
           />
         </Modal>
@@ -309,32 +382,55 @@ const CalendarBig = () => {
                       )}
                     >
                       <PDay>{day.format("DD")}</PDay>
-                      <WhiteIconButton onClick={() => {
-                        setFechaSelected(day.format("DD/MM/YYYY"));
-                        setShowForm(true);
-                      }}>
-                        <i className="fa-solid fa-plus"></i>
-                      </WhiteIconButton>
+                      {
+                        user.id_rol != 1 && 
+                        <WhiteIconButton onClick={() => {
+                          setFechaSelected(day.format("DD/MM/YYYY"));
+                          setShowForm(true);
+                        }}>
+                          <i className="fa-solid fa-plus"></i>
+                        </WhiteIconButton>
+                      }
                     </DivDay>
                     {
                       horarios.filter(v => v.fecha == day.format("DD/MM/YYYY")).map((v, i) => {
                         const hora_inicio = convertToDate(day, v.hora_inicio);
                         const hora_final = convertToDate(day, v.hora_final);
+                        if(v.disponible) {
+                          return (
+                            <DivTask 
+                              onClick={() => {
+                                setHorarioSelected(v);
+                                setShowEdit(true);
+                              }} 
+                              key={i}
+                            >
+                              {
+                                user.id_rol != 1 ?
+                                "Libre - " :
+                                v.nombre + " - "
+                              }
+                              {hora_inicio} a {hora_final}
+                            </DivTask>
+                          )
+                        }
+                      })
+                    }
+                    {
+                      citas.filter(v => v.fecha == day.format("DD/MM/YYYY")).map((v, i) => {
+                        const hora_inicio = convertToDate(day, v.hora_inicio);
+                        const hora_final = convertToDate(day, v.hora_final);
                         return (
-                          <DivTask 
+                          <DivAppointment 
                             onClick={() => {
-                              setHorarioSelected({
-                                id: v.id,
-                                fecha: v.fecha,
-                                hora_inicio: v.hora_inicio,
-                                hora_final: v.hora_final,
-                              });
-                              setShowEdit(true);
+                              setHorarioSelected(v);
+                              setShowCancel(true);
                             }} 
                             key={i}
                           >
-                            Libre {hora_inicio} a {hora_final}
-                          </DivTask>
+                            {"Cita - "}
+                            {hora_inicio} a {hora_final}
+                          </DivAppointment>
                         )
                       })
                     }
