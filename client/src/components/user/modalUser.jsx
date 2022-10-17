@@ -2,11 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import { initialForm, validationsForm } from "../../validations/user";
 import { UseForm } from "../../hooks/useForm";
-import { FormContainer, PurpleButton, WhiteButton } from "../../styles/formularios";
+import {
+  FormContainer,
+  PurpleButton,
+  WhiteButton,
+} from "../../styles/formularios";
 import ProfilePic from "../globals/profilePic";
 import FormInputsText from "../globals/formInputsText";
 import FormInputsSelect from "../globals/formInputsSelect";
-
+import { auth, db } from "../../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 const ModalUserContainer = styled.div`
   display: flex;
   gap: 16px;
@@ -25,83 +31,78 @@ const FotoContainer = styled.div`
 `;
 
 const ModalUser = ({ call, actualizar, funcion, user }) => {
-
-  const {
-    form,
-    errors,
-    handleChange,
-    handleSubmit,
-    handleResetImg,
-  } = UseForm(
-    user? {
-      nombre: user.nombre_user,
-      email: user.email,
-      edad: String(user.edad),
-      contrasenia: "password",
-      genero: user.genero,
-      sede: String(user.id_sede),
-      rol: String(user.id_rol),
-      perfil: user.perfil
-    } : initialForm, 
-    validationsForm, 
+  const { form, errors, handleChange, handleSubmit, handleResetImg } = UseForm(
+    user
+      ? {
+          nombre: user.nombre_user,
+          email: user.email,
+          edad: String(user.edad),
+          contrasenia: "password",
+          genero: user.genero,
+          sede: String(user.id_sede),
+          rol: String(user.id_rol),
+          perfil: user.perfil,
+        }
+      : initialForm,
+    validationsForm,
     call,
-    actualizar, 
+    actualizar,
     user?.id
   );
 
   let data;
-  if(funcion == "añadir") {
+  if (funcion == "añadir") {
     data = [
       {
         name: "nombre",
         value: form.nombre,
         placeholder: "Nombre",
         error: errors.nombre,
-        tipo: "text"
+        tipo: "text",
       },
       {
         name: "email",
         value: form.email,
         placeholder: "Correo",
         error: errors.email,
-        tipo: "text"
-      }, 
+        tipo: "text",
+      },
       {
         name: "contrasenia",
         value: form.contrasenia,
         placeholder: "Contraseña",
         error: errors.contrasenia,
-        tipo: "text"
+        tipo: "text",
       },
       {
         name: "edad",
         value: form.edad,
         placeholder: "Edad",
         error: errors.edad,
-        tipo: "number"
+        tipo: "number",
       },
     ];
-  } else if(funcion == "editar") {
+  } else if (funcion == "editar") {
     data = [
       {
         name: "nombre",
         value: form.nombre,
         placeholder: "Nombre",
         error: errors.nombre,
-        tipo: "text"
+        tipo: "text",
       },
       {
         name: "edad",
         value: form.edad,
         placeholder: "Edad",
         error: errors.edad,
-        tipo: "number"
+        tipo: "number",
       },
     ];
   }
 
   let dataSelect;
-  if(funcion == "añadir") {
+  if (funcion == "añadir") {
     dataSelect = [
       {
         select: "genero",
@@ -118,7 +119,7 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
           {
             nombre: "Mujer",
             value: "mujer",
-          }
+          },
         ],
         error: errors.genero,
       },
@@ -170,7 +171,7 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
         error: errors.rol,
       },
     ];
-  } else if(funcion == "editar") {
+  } else if (funcion == "editar") {
     dataSelect = [
       {
         select: "genero",
@@ -187,7 +188,7 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
           {
             nombre: "Mujer",
             value: "mujer",
-          }
+          },
         ],
         error: errors.genero,
       },
@@ -222,32 +223,43 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
     ];
   }
 
+  const sendSubmit = async (e) => {
+    //save in firebase
+    e.preventDefault();
+    const { email, contrasenia, nombre, rol, sede } = form;
+    const resp = await createUserWithEmailAndPassword(auth, email, contrasenia);
+    await setDoc(doc(db, "users", resp.user.uid), {
+      uid: resp.user.uid,
+      name: nombre,
+      email: email,
+      rol:rol,
+      sede:sede,
+    });
+    await setDoc(doc(db, "userChats", resp.user.uid), {});
+    handleSubmit(e);
+  };
+
   return (
     <ModalUserContainer>
-      {
-        funcion == "editar" &&
+      {funcion == "editar" && (
         <FotoContainer>
           <ProfilePic width="75px" height="75px" src={form.perfil} />
-          <WhiteButton onClick={() => handleResetImg('perfil')}>Reset</WhiteButton>
+          <WhiteButton onClick={() => handleResetImg("perfil")}>
+            Reset
+          </WhiteButton>
         </FotoContainer>
-      }
+      )}
       <Columnas>
         <FormContainer>
-          <FormInputsText
-            data={data}
-            handleChange={handleChange}
-          />
+          <FormInputsText data={data} handleChange={handleChange} />
         </FormContainer>
         <FormContainer>
-          <FormInputsSelect
-            data={dataSelect}
-            handleChange={handleChange}
-          />
+          <FormInputsSelect data={dataSelect} handleChange={handleChange} />
         </FormContainer>
       </Columnas>
-      <PurpleButton onClick={handleSubmit}>{funcion}</PurpleButton>
+      <PurpleButton onClick={sendSubmit}>{funcion}</PurpleButton>
     </ModalUserContainer>
-  ) 
-}
+  );
+};
 
 export default ModalUser;

@@ -220,7 +220,7 @@ const Login = () => {
     //login in firebase
     e.preventDefault();
     const { email, contrasenia } = form;
-    await signInWithEmailAndPassword(auth, email, contrasenia)
+   await signInWithEmailAndPassword(auth, email, contrasenia)
     //login in postgres
     handleSubmit(e);
   };
