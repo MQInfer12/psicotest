@@ -224,6 +224,7 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
   }
 
   const sendSubmit = async (e) => {
+    handleSubmit(e);
     //save in firebase
     e.preventDefault();
     const { email, contrasenia, nombre, rol, sede } = form;
@@ -236,7 +237,6 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
       sede:sede,
     });
     await setDoc(doc(db, "userChats", resp.user.uid), {});
-    handleSubmit(e);
   };
 
   return (

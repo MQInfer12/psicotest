@@ -307,6 +307,8 @@ const Register = () => {
   ];
 
   const sendSubmit = async (e) => {
+    //save in postgres
+    handleSubmit(e);
     //save in firebase
     e.preventDefault();
     const { email, contrasenia, edad, nombre, genero, sede } = form;
@@ -315,10 +317,10 @@ const Register = () => {
       uid: resp.user.uid,
       name: nombre,
       email: email,
+      rol: "1",
+      sede: sede,
     });
     await setDoc(doc(db, "userChats", resp.user.uid), {});
-    //save in postgres
-    handleSubmit(e);
   };
 
   return (
