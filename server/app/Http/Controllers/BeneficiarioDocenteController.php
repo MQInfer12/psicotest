@@ -14,6 +14,19 @@ class BeneficiarioDocenteController extends Controller
                              from docente_tests as dt, tests as t 
                              where dt.id_docente=$id and dt.id_test=t.id");
 
+        foreach($tests as $test) {
+            $id_dt = $test->id;
+            $usuarios = DB::select("SELECT u.nombre, u.perfil
+                                    FROM users as u, respuestas as r, docente_tests as dt
+                                    WHERE r.email_user = u.email AND r.id_docente_test=dt.id AND dt.id='$id_dt'");
+            foreach($usuarios as $usuario) {
+                if($usuario->perfil != null) {
+                    $usuario->perfil = stream_get_contents($usuario->perfil);
+                }
+            }
+            $test->usuarios = $usuarios;
+        }  
+
         return response()->json($tests);
     }
 

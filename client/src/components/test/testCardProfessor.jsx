@@ -103,9 +103,13 @@ const TestCard = (props) => {
         <Span>{props.tiempo}</Span>
       </ContainerIcon>
 
-      {props.usuarios && (
-        <ContainerImg>
-          {props.usuarios.map((v, i) => (
+      <ContainerImg>
+        {
+          props.usuarios.length == 0 &&
+          <Span>¡Asigna beneficiarios a este Test!</Span>
+        }
+        {
+          props.usuarios.map((v, i) => (
             <div key={i}>
               <ProfilePic
                 width="36px"
@@ -115,9 +119,9 @@ const TestCard = (props) => {
                 translation={i}
               />
             </div>
-          ))}
-        </ContainerImg>
-      )}
+          ))
+        }
+      </ContainerImg>
     
       {/*IF IS PROFESSOR */}
 
@@ -145,7 +149,7 @@ const TestCard = (props) => {
           <ModalAssignBenef
             id={props.id}
             actualizar={() => {
-/*               props.llenarTests(); */
+              props.llenarTests();
               setShowAddBenef(false);
             }}
           />
@@ -160,6 +164,7 @@ const TestCard = (props) => {
           <ModalUnassign
             id={props.id}
             actualizar={() => {
+              props.llenarTests();
               setShowUnassignBenef(false);
             }}
           />

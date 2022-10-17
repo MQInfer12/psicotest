@@ -10,10 +10,12 @@ class DocenteTestController extends Controller
 {
     public function index($id)
     {
-        $showTests = DB::select("SELECT dt.id, u.email, u.perfil,
-        te.id as id_test, u.id as id_usuario
-        from docente_tests dt, users u, tests te
-        where dt.id_docente=u.id and dt.id_test=te.id and dt.id_test=$id");
+        $showTests = DB::select(
+            "SELECT dt.id, u.email, u.perfil,
+                    te.id as id_test, u.id as id_usuario
+            from docente_tests dt, users u, tests te
+            where dt.id_docente=u.id and dt.id_test=te.id and dt.id_test=$id
+        ");
 
         foreach ($showTests as $user) {
             if ($user->perfil != null) {
