@@ -177,7 +177,7 @@ function App() {
             <Route 
               path="answers" 
               element={
-                <ProtectedRole roles={[3]}>
+                <ProtectedRole roles={[2, 3]}>
                   <OutletContext titlePage="Respuestas" calendar={false}>
                     <Answers />
                   </OutletContext>

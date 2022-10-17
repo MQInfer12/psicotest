@@ -85,7 +85,7 @@ const SideBar = ({ rol, setUser }) => {
       icon: "fa-solid fa-clipboard",
     },
     {
-      roles: [3],
+      roles: [2, 3],
       select: "answers",
       title: "Respuestas",
       goTo: "./answers",

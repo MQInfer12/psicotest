@@ -73,6 +73,7 @@ Route::group(['middleware' => 'api'], function(){
     //RESPUESTA ROUTES
     Route::apiResource("respuesta", RespuestaController::class);
     Route::get("respuesta/test/{id}", [RespuestaController::class, 'getIdTest']);
+    Route::get("respuesta/docente/{id}", [RespuestaController::class, 'getRespuestasByDocente']);
 
     //HORARIOS
     Route::apiResource("horario", HorarioController::class);

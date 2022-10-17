@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Pagination from "../components/answers/pagination";
 import { WhiteIconButton } from "../styles/formularios";
-import { getRespuestas } from "../services/respuesta";
+import { getRespuestas, getRespuestasByDocente } from "../services/respuesta";
+import { UserContext } from "../context/userContext";
 
 const AnswersContainer = styled.div`
   height: 100%;
@@ -154,6 +155,7 @@ const TdCargando = styled.td`
 `;
 
 const Answers = () => {
+  const { user } = useContext(UserContext);
   const [respuestas, setRespuestas] = useState([]);
 
   const llenarRespuestas = async () => {
@@ -162,8 +164,18 @@ const Answers = () => {
     setRespuestas(resJson);
   }
 
+  const llenarRespuestasPorDocente = async () => {
+    const res = await getRespuestasByDocente(user.id);
+    const resJson = await res?.json();
+    setRespuestas(resJson);
+  }
+
   useEffect(() => {
-    llenarRespuestas();
+    if(user.id_rol === 3) {
+      llenarRespuestas();
+    } else if(user.id_rol === 2) {
+      llenarRespuestasPorDocente();
+    }
   }, [])
 
   return (
