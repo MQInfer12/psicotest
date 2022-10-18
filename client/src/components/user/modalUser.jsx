@@ -257,7 +257,7 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
           <FormInputsSelect data={dataSelect} handleChange={handleChange} />
         </FormContainer>
       </Columnas>
-      <PurpleButton onClick={sendSubmit}>{funcion}</PurpleButton>
+      <PurpleButton onClick={(e) => sendSubmit(e)}>{funcion}</PurpleButton>
     </ModalUserContainer>
   );
 };

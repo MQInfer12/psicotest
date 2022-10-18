@@ -95,7 +95,6 @@ const Input = () => {
         <img src={Attach} alt="" />
         <input type="file" style={{ display: "none" }} id="file" />
         <label htmlFor="file">
-          º
           <img src={Img} alt="" />
         </label>
         <button onClick={handleSend}>Enviar</button>

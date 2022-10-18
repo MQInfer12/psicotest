@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import DefaultPhoto from "../../images/defaultPhoto.jpg";
 import { db } from "../../firebase";
@@ -15,19 +15,6 @@ import {
   getDoc,
 } from "firebase/firestore";
 const Container = styled.div`
-  border-bottom: 1px solid gray;
-  .searchForm {
-    padding: 10px;
-    input {
-      background-color: transparent;
-      border: none;
-      color: white;
-      outline: none;
-      &::placeholder {
-        color: lightgray;
-      }
-    }
-  }
   .userChat {
     padding: 10px;
     display: flex;
@@ -58,36 +45,36 @@ const Container = styled.div`
     }
   }
 `;
-const Search = () => {
-  const [email, setEmail] = useState("");
+
+const FutureChats = () => {
+  const [professor, setProfessor] = useState([]);
   const [user, setUser] = useState(null);
+
   const { currentUser } = useContext(UserFirebaseContext);
-  const handleSearch = async () => {
-    const q = query(
-      collection(db, "users"),
-      where("email", "==", email),
-      where("rol", "==", "2")
-    );
+  const [loading, setLoading] = useState(true);
+  const getAllProfessor = async () => {
+    const q = query(collection(db, "users"), where("rol", "==", "2"));
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        setUser(doc.data());
+        professor.push(doc.data());
       });
+      setLoading(false);
     } catch (err) {
       console.log(error);
     }
   };
 
-  const handleKey = (e) => {
-    e.code === "Enter" && handleSearch();
-  };
+  useEffect(() => {
+    getAllProfessor();
+  }, []);
 
-  const handleSelect = async () => {
+  const handleSelect = async (userSelect, userEmail, e) => {
     //check wheter the group(chat in firestore) exits
     const combinedId =
-      currentUser.uid > user.uid
-        ? currentUser.uid + user.uid
-        : user.uid + currentUser.uid;
+      currentUser.uid > userSelect
+        ? currentUser.uid + userSelect
+        : userSelect + currentUser.uid;
     try {
       console.log(combinedId);
       const res = await getDoc(doc(db, "chats", combinedId));
@@ -95,54 +82,47 @@ const Search = () => {
       console.log(res);
       if (!res.exists()) {
         //create a chat in chats collection
-       await setDoc(doc(db, "chats", combinedId), {
-          messages: [],
-        });
+        await setDoc(doc(db, "chats", combinedId), { messages: [] });
         //create user chats
         await updateDoc(doc(db, "userChats", currentUser.uid), {
           [combinedId + ".userInfo"]: {
-            uid: user.uid,
-            email: user.email,
+            uid: userSelect,
+            email: userEmail,
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
-     
-         await updateDoc(doc(db, "userChats", user.uid), {
+
+        await updateDoc(doc(db, "userChats", userSelect), {
           [combinedId + ".userInfo"]: {
             uid: currentUser.uid,
             email: currentUser.email,
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
+        alert("se agrego a la opcion de chatear");
       }
     } catch (error) {
       console.log(error);
     }
-    setUser(null);
-    setEmail("");
   };
 
   return (
     <Container>
-      <div className="searchForm">
-        <input
-          type="text"
-          placeholder="Encontrar usuario"
-          onKeyDown={handleKey}
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        />
-      </div>
-      {user && (
-        <div className="userChat" onClick={handleSelect}>
-          <img src={DefaultPhoto} alt="" />
-          <div className="userChatInfo">
-            <span>{user.email}</span>
+      {!loading &&
+        professor.map((v, i) => (
+          <div
+            className="userChat"
+            key={i}
+            onClick={(e) => handleSelect(v.uid, v.email, e)}
+          >
+            <img src={DefaultPhoto} alt="" />
+            <div className="userChatInfo">
+              <span>{v.email}</span>
+            </div>
           </div>
-        </div>
-      )}
+        ))}
     </Container>
   );
 };
 
-export default Search;
+export default FutureChats;

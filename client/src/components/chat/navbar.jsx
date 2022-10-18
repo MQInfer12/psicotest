@@ -37,16 +37,20 @@ const Container = styled.div`
     }
   }
 `;
-const Navbar = () => {
+const Navbar = ({ handleChange }) => {
   const { currentUser } = useContext(UserFirebaseContext);
   const { user } = useContext(UserContext);
+
   return (
     <Container>
       <span className="logo">UNIFRANZ</span>
       <div className="user">
         <img src={DefaultPhoto} alt="" />
         <span>{user.nombre}</span>
-        {/*         <button>cerrar sesion</button> */}
+        <select onChange={(e) => handleChange(e.target.value)}>
+          <option value={1}>Chatear</option>
+          <option value={2}>Contactos</option>
+        </select>
       </div>
     </Container>
   );
