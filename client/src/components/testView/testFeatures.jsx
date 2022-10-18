@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { DangerIconButton, WhiteIconButton } from "../../styles/formularios";
+import { DangerIconButton, WhiteButton, WhiteIconButton } from "../../styles/formularios";
 
 const TestInfoContainer = styled.div`
   border-radius: 10px;
@@ -30,11 +30,17 @@ const Features = styled.div`
 
 const FeatureContainer = styled.div`
   display: flex;
-  gap: 30px;
+  gap: 20px;
   width: 272px;
+  overflow: hidden;
+
+  &:hover > div > .botones {
+    transform: translateY(35px);
+  }
 `;
 
 const IndexContainer = styled.div`
+  min-width: 40px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -43,9 +49,13 @@ const IndexContainer = styled.div`
 `;
 
 const FeatureIndex = styled.h3`
+  width: 100%;
+  text-align: center;
   font-size: 20px;
   font-weight: 600;
   color: #660BE1;
+  background-color: #FFFFFF;
+  z-index: 1;
 `;
 
 const FeatureLine = styled.span`
@@ -71,18 +81,21 @@ const ButtonContainer = styled.div`
   gap: 10px;
   position: absolute;
   top: 0;
+  transition: all 0.5s;
+  transform: translateY(-45px);
 `;
 
 const TestFeatures = ({ test }) => {
   return (
     <TestInfoContainer>
       <TestInfoTitle>Características del Test</TestInfoTitle>
+      <WhiteButton>Añadir</WhiteButton>
       <Features>
         <FeatureContainer>
           <IndexContainer>
             <FeatureIndex>01</FeatureIndex>
             <FeatureLine></FeatureLine>
-            <ButtonContainer>
+            <ButtonContainer className='botones'>
               <WhiteIconButton><i className="fa-solid fa-pencil"></i></WhiteIconButton>
               <DangerIconButton><i className="fa-solid fa-trash-can"></i></DangerIconButton>
             </ButtonContainer>
@@ -90,46 +103,6 @@ const TestFeatures = ({ test }) => {
           <IndexContainer>
             <FeatureTitle>Mayor eficacia.</FeatureTitle>
             <FeatureDescription>Es muy sencillo, solamente ingresa tu celular y listo.</FeatureDescription>
-          </IndexContainer>
-        </FeatureContainer>
-        <FeatureContainer>
-          <IndexContainer>
-            <FeatureIndex>02</FeatureIndex>
-            <FeatureLine></FeatureLine>
-          </IndexContainer>
-          <IndexContainer>
-            <FeatureTitle>Menor tiempo.</FeatureTitle>
-            <FeatureDescription>Selecciona el color que más te guste para tu tarjeta, la enviaremos a tu domicilio.</FeatureDescription>
-          </IndexContainer>
-        </FeatureContainer>
-        <FeatureContainer>
-          <IndexContainer>
-            <FeatureIndex>03</FeatureIndex>
-            <FeatureLine></FeatureLine>
-          </IndexContainer>
-          <IndexContainer>
-            <FeatureTitle>Mayor control.</FeatureTitle>
-            <FeatureDescription>Inicia sesión en la app e ingresa el número de la tarjeta.</FeatureDescription>
-          </IndexContainer>
-        </FeatureContainer>
-        <FeatureContainer>
-          <IndexContainer>
-            <FeatureIndex>04</FeatureIndex>
-            <FeatureLine></FeatureLine>
-          </IndexContainer>
-          <IndexContainer>
-            <FeatureTitle>Mayor control.</FeatureTitle>
-            <FeatureDescription>Inicia sesión en la app e ingresa el número de la tarjeta.</FeatureDescription>
-          </IndexContainer>
-        </FeatureContainer>
-        <FeatureContainer>
-          <IndexContainer>
-            <FeatureIndex>05</FeatureIndex>
-            <FeatureLine></FeatureLine>
-          </IndexContainer>
-          <IndexContainer>
-            <FeatureTitle>Mayor control.</FeatureTitle>
-            <FeatureDescription>Inicia sesión en la app e ingresa el número de la tarjeta.</FeatureDescription>
           </IndexContainer>
         </FeatureContainer>
       </Features>
