@@ -157,6 +157,7 @@ const TdCargando = styled.td`
 const Answers = () => {
   const { user } = useContext(UserContext);
   const [respuestas, setRespuestas] = useState([]);
+  const [page, setPage] = useState(1);
 
   const llenarRespuestas = async () => {
     const res = await getRespuestas();
@@ -197,9 +198,9 @@ const Answers = () => {
           </thead>
           <tbody>
             {
-              respuestas.map((v, i) => (
+              respuestas.filter((v, i) => i >= (page - 1) * 9 && i < page * 9).map((v, i) => (
                 <tr key={i}>
-                  <ThNumber>{i + 1}</ThNumber>
+                  <ThNumber>{((page - 1) * 9) + (i + 1)}</ThNumber>
                   <td>
                     <DivDouble>
                       <PNombre>{v.nombre_user}</PNombre>
@@ -250,8 +251,8 @@ const Answers = () => {
       <Pagination 
         cant={respuestas.length}
         rows="9"
-        page="1"
-        setPage={() => {}}
+        page={page}
+        setPage={setPage}
       />
     </AnswersContainer>
   )

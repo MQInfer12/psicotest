@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import TestFeatures from "../components/testView/testFeatures";
-import TestParagraphs from "../components/testView/testParagraphs";
 import TestResolution from "../components/testView/testResolution";
 import { getIdTest } from "../services/respuesta";
 import { getTest } from "../services/test";
@@ -16,15 +15,21 @@ const TestViewContainer = styled.div`
   flex-direction: column;
 `;
 
-const InformationContainer = styled.div`
-  display: flex;
+const Paragraph = styled.p`
+  width: 500px;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 138.4%;
 `;
 
 const TestTextContainer = styled.div`
+  width: 100%;
+  text-align: justify;
   display: flex;
   flex-direction: column;
-  gap: 65px;
-  padding: 20px 40px 20px 48px;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 50px;
 `;
 
 const TestTitle = styled.h2`
@@ -68,13 +73,13 @@ const TestView = () => {
 
   return (
     <TestViewContainer>
-      <InformationContainer>
-        <TestFeatures test={test} />
-        <TestTextContainer>
-          <TestTitle>Test {test.nombre}</TestTitle>
-          <TestParagraphs />
-        </TestTextContainer>
-      </InformationContainer>
+      <TestTextContainer>
+        <TestTitle>Test {test.nombre}</TestTitle>
+        <Paragraph>
+          {test.descripcion}
+        </Paragraph>
+      </TestTextContainer>
+      <TestFeatures test={test} />
       <TestResolution 
         idTest={test.id} 
         nombreTest={test.nombre} 

@@ -11,7 +11,7 @@ const TestResolutionContainer = styled.div`
   background-color: #FFFFFF;
   display: flex;
   flex-direction: column;
-  padding: 110px 65px 70px 65px;
+  padding: 65px;
 `;
 
 const ResolutionTitle = styled.h1`
@@ -49,7 +49,7 @@ const UnaPreguntaContainer = styled.div`
 const PreguntaContainer = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 50%;
+  width: 100%;
   gap: 30px;
 `;
 
@@ -67,7 +67,7 @@ const ReactivosContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
-  width: 100%;
+  width: 70%;
 `;
 
 const ReactivoContainer = styled.div`
