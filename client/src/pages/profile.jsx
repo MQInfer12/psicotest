@@ -5,20 +5,31 @@ import ProfilePic from "../components/globals/profilePic";
 import { initialForm, validationsForm } from "../validations/profile";
 import { UseForm } from "../hooks/useForm";
 import { getProfile } from "../services/auth";
-import { FormContainer, DivInput, PText, InputSelect, PurpleButton, WhiteButton } from "../styles/formularios";
+import {
+  FormContainer,
+  DivInput,
+  PText,
+  InputSelect,
+  PurpleButton,
+  WhiteButton,
+} from "../styles/formularios";
 import FormInputsText from "../components/globals/formInputsText";
 import { updateUser } from "../services/usuario";
 
+import { db } from "../firebase";
+import { UserFirebaseContext } from "../context/userFirebaseContext";
+import { doc, updateDoc } from "firebase/firestore";
+
 const ProfileContainer = styled.div`
   min-height: 100%;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 10px;
   position: relative;
 `;
 
 const UpContainer = styled.div`
   height: 200px;
-  border-bottom: 0.5px solid #ADA7A7;
+  border-bottom: 0.5px solid #ada7a7;
   padding: 31px 0px 18px 24px;
   display: flex;
   flex-direction: column;
@@ -64,7 +75,7 @@ const InputFile = styled.input`
 
 const InfoPhotoExtensions = styled.p`
   font-size: 15px;
-  color: #ADA7A7;
+  color: #ada7a7;
 `;
 
 const DownContainer = styled.div`
@@ -87,13 +98,13 @@ const DivButtonsDown = styled.div`
 
 const Profile = () => {
   const { user, setUser } = useContext(UserContext);
-  const [ editable, setEditable ] = useState(false);
+  const [editable, setEditable] = useState(false);
 
   const actualizar = async () => {
     const newUser = await getProfile();
     setUser(newUser);
     setEditable(false);
-  }
+  };
 
   const {
     form,
@@ -101,18 +112,20 @@ const Profile = () => {
     handleChange,
     handleSubmit,
     handleReset,
-    handleResetImg
+    handleResetImg,
   } = UseForm(
-    user? {
-      nombre: user.nombre,
-      edad: String(user.edad),
-      genero: user.genero,
-      sede: String(user.id_sede),
-      perfil: user.perfil
-    } : initialForm, 
-    validationsForm, 
+    user
+      ? {
+          nombre: user.nombre,
+          edad: String(user.edad),
+          genero: user.genero,
+          sede: String(user.id_sede),
+          perfil: user.perfil,
+        }
+      : initialForm,
+    validationsForm,
     updateUser,
-    actualizar, 
+    actualizar,
     user?.id
   );
 
@@ -123,7 +136,7 @@ const Profile = () => {
       placeholder: "Nombre",
       error: errors.nombre,
       tipo: "text",
-      disabled: false || !editable
+      disabled: false || !editable,
     },
     {
       name: "email",
@@ -131,7 +144,7 @@ const Profile = () => {
       placeholder: "Email",
       error: errors.email,
       tipo: "text",
-      disabled: true || !editable
+      disabled: true || !editable,
     },
     {
       name: "contrasenia",
@@ -139,7 +152,7 @@ const Profile = () => {
       placeholder: "Contraseña",
       error: errors.contrasenia,
       tipo: "password",
-      disabled: true || !editable
+      disabled: true || !editable,
     },
     {
       name: "edad",
@@ -147,9 +160,9 @@ const Profile = () => {
       placeholder: "Edad",
       error: errors.edad,
       tipo: "number",
-      disabled: false || !editable
+      disabled: false || !editable,
     },
-  ]
+  ];
 
   let dataSelect = [
     {
@@ -163,10 +176,10 @@ const Profile = () => {
         {
           nombre: "Mujer",
           value: "mujer",
-        }
+        },
       ],
       error: errors.genero,
-      disabled: !editable
+      disabled: !editable,
     },
     {
       select: "sede",
@@ -190,105 +203,119 @@ const Profile = () => {
         },
       ],
       error: errors.sede,
-      disabled: !editable
+      disabled: !editable,
     },
   ];
+
+  const { currentUser } = useContext(UserFirebaseContext);
+
+  const updateUserFirebase = async (stringImg) => {
+    const ref = doc(db, "users", currentUser.uid);
+    await updateDoc(ref, {
+      img: stringImg,
+    });
+  };
+  const sendData = (e) => {
+    updateUserFirebase(form.perfil);
+    handleSubmit(e);
+  };
 
   return (
     <ProfileContainer>
       <UpContainer>
         <PDetalles>Detalles Perfil</PDetalles>
         <DivPhoto>
-          <ProfilePic 
-            width="100px" 
+          <ProfilePic
+            width="100px"
             height="100px"
-            src={ editable? form.perfil : user?.perfil }
+            src={editable ? form.perfil : user?.perfil}
           />
-          {
-            editable &&
+          {editable && (
             <DivPhotoInfo>
               <DivPhotoButtons>
                 <DivFile>
-                  <InputFile 
-                    type="file" 
+                  <InputFile
+                    type="file"
                     name="perfil"
-                    onChange={ handleChange }
+                    onChange={handleChange}
                   />
                   <PurpleButton>Subir foto nueva</PurpleButton>
                 </DivFile>
-                <WhiteButton onClick={ () => handleResetImg('perfil') }>Reset</WhiteButton>
+                <WhiteButton onClick={() => handleResetImg("perfil")}>
+                  Reset
+                </WhiteButton>
               </DivPhotoButtons>
-              <InfoPhotoExtensions>Permitido JPG, JPEG o PNG. Tamaño máximo de 800Kb.</InfoPhotoExtensions>
+              <InfoPhotoExtensions>
+                Permitido JPG, JPEG o PNG. Tamaño máximo de 800Kb.
+              </InfoPhotoExtensions>
             </DivPhotoInfo>
-          }
+          )}
         </DivPhoto>
       </UpContainer>
       <DownContainer>
         <InputsContainer>
           <FormContainer>
-            <FormInputsText
-              data={dataleft}
-              handleChange={handleChange}
-            />
+            <FormInputsText data={dataleft} handleChange={handleChange} />
           </FormContainer>
           <FormContainer>
-            {
-              dataSelect.map((v, i) => (
-                <DivInput key={i}>
-                  <PText>{v.select}</PText>
-                  {
-                    editable? (
-                      <InputSelect
-                        onChange={ handleChange }
-                        name={v.select}
-                        defaultValue={v.seleccionado}
-                        disabled={!editable}
-                      >
-                        {
-                          v.data.map((va, i) => (
-                            <option key={i} value={va.value}>
-                              {va.nombre}
-                            </option>
-                          ))
-                        }
-                      </InputSelect> 
-                    ) : (
-                      <InputSelect
-                        onChange={ handleChange }
-                        name={v.select}
-                        value={v.seleccionado}
-                        disabled={!editable}
-                      >
-                        {
-                          v.data.map((va, i) => (
-                            <option key={i} value={va.value}>
-                              {va.nombre}
-                            </option>
-                          ))
-                        }
-                      </InputSelect>
-                    )
-                  }
-                </DivInput>
-              ))
-            }
+            {dataSelect.map((v, i) => (
+              <DivInput key={i}>
+                <PText>{v.select}</PText>
+                {editable ? (
+                  <InputSelect
+                    onChange={handleChange}
+                    name={v.select}
+                    defaultValue={v.seleccionado}
+                    disabled={!editable}
+                  >
+                    {v.data.map((va, i) => (
+                      <option key={i} value={va.value}>
+                        {va.nombre}
+                      </option>
+                    ))}
+                  </InputSelect>
+                ) : (
+                  <InputSelect
+                    onChange={handleChange}
+                    name={v.select}
+                    value={v.seleccionado}
+                    disabled={!editable}
+                  >
+                    {v.data.map((va, i) => (
+                      <option key={i} value={va.value}>
+                        {va.nombre}
+                      </option>
+                    ))}
+                  </InputSelect>
+                )}
+              </DivInput>
+            ))}
           </FormContainer>
         </InputsContainer>
         <DivButtonsDown>
-          {
-            editable? (
+          {editable ? (
             <>
-              <PurpleButton onClick={ handleSubmit }>Guardar cambios</PurpleButton>
-              <WhiteButton onClick={ () => { setEditable(false); handleReset(); }}>Cancelar</WhiteButton>
+              <PurpleButton onClick={(e) => sendData(e)}>
+                Guardar cambios
+              </PurpleButton>
+              <WhiteButton
+                onClick={() => {
+                  setEditable(false);
+                  handleReset();
+                }}
+              >
+                Cancelar
+              </WhiteButton>
             </>
-            ) : (
-              <PurpleButton onClick={ () => setEditable(true) }>Editar</PurpleButton>
-            )
-          }
+          ) : (
+            <PurpleButton onClick={() => setEditable(true)}>
+              Editar
+            </PurpleButton>
+          )}
         </DivButtonsDown>
       </DownContainer>
     </ProfileContainer>
-  )
-}
+  );
+};
 
 export default Profile;
