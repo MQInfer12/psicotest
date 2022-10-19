@@ -6,6 +6,7 @@ import TestFeatures from "../components/testView/testFeatures";
 import TestResolution from "../components/testView/testResolution";
 import { getIdTest } from "../services/respuesta";
 import { getTest } from "../services/test";
+import { GrayTextLoader, PurpleTextLoader, TextLoaderContainer } from "../styles/loaders";
 
 const TestViewContainer = styled.div`
   min-height: 100%;
@@ -33,6 +34,10 @@ const TestTextContainer = styled.div`
 `;
 
 const TestTitle = styled.h2`
+  height: 30px;
+  gap: 4px;
+  display: flex;
+  align-items: center;
   font-size: 20px;
   font-weight: 600;
   color: #660BE1;
@@ -42,6 +47,7 @@ const TestView = () => {
   const { idTest } = useParams();
   const { idRespuesta } = useParams();
   
+  const [loading, setLoading] = useState(true);
   const [test, setTest] = useState([]);
   const [activateSend, setActivateSend] = useState(idRespuesta? true : false);
 
@@ -49,6 +55,7 @@ const TestView = () => {
     const res = await getTest(idTest);
     const resJson = await res?.json();
     setTest(resJson[0]);
+    setLoading(false);
   }
 
   const getTestId = async () => {
@@ -74,13 +81,28 @@ const TestView = () => {
   return (
     <TestViewContainer>
       <TestTextContainer>
-        <TestTitle>Test {test.nombre}</TestTitle>
-        <Paragraph>
-          {test.descripcion}
-        </Paragraph>
+        <TestTitle>
+          {
+            loading ? 
+            <PurpleTextLoader width="100px"/> :
+            test.nombre
+          }
+        </TestTitle>
+        {
+          loading ?
+          <TextLoaderContainer>
+            <GrayTextLoader width="500px" fontSize="20px" />
+            <GrayTextLoader width="500px" fontSize="20px" />
+            <GrayTextLoader width="500px" fontSize="20px" />
+            <GrayTextLoader width="500px" fontSize="20px" />
+            <GrayTextLoader width="500px" fontSize="20px" />
+          </TextLoaderContainer> :
+          <Paragraph>{test.descripcion}</Paragraph>
+        }
       </TestTextContainer>
-      <TestFeatures idTest={idTest} />
+      <TestFeatures idTest={test.id} />
       <TestResolution 
+        loading={loading}
         idTest={test.id} 
         nombreTest={test.nombre} 
         activateSend={activateSend} 

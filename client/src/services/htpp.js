@@ -1,1 +1,1 @@
-export const http = "http://127.0.0.1:8000/api/";
+export const http = "https://psicologiaunifranz.herokuapp.com/api/";

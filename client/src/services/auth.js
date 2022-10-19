@@ -1,8 +1,10 @@
 import { http } from "./htpp";
 
 export const signIn = async (form) => {
+  console.log(form);
   try {
     const response = await fetch(`${http}auth/login`, {
+      credentials: 'include',
       method: "POST",
       headers: {
         "Content-Type": "application/json",

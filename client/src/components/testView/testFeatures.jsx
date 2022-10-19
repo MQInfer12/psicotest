@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { UserContext } from "../../context/userContext";
 import styled from "styled-components";
 import { addCaracteristica, getCaracteristicasByTest, updateCaracteristica, deleteCaracteristica } from "../../services/caracteristica";
 import { DangerIconButton, WhiteButton, WhiteIconButton } from "../../styles/formularios";
 import Modal from "../globals/modal";
 import SureModal from "../globals/sureModal";
 import ModalFeature from "./modalFeature";
+import { BlackTextLoader, GrayTextLoader, PurpleTextLoader } from "../../styles/loaders";
 
 const TestInfoContainer = styled.div`
   border-radius: 10px;
@@ -89,7 +91,32 @@ const ButtonContainer = styled.div`
   transform: translateY(-45px);
 `;
 
+const FeatureIndexContainer = styled.div`
+  height: 30px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const FeatureTitleContainer = styled.div`
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+`;
+
+const FeatureDescripcionContainer = styled.div`
+  height: 75px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 7.2px;
+`;
+
 const TestFeatures = ({ idTest }) => {
+  const { user } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [showUpdate, setShowUpdate] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -100,6 +127,7 @@ const TestFeatures = ({ idTest }) => {
     const res = await getCaracteristicasByTest(idTest);
     const resJson = await res?.json();
     setFeatures(resJson);
+    setLoading(false);
   }
 
   const borrarCaracteristica = async () => {
@@ -111,8 +139,10 @@ const TestFeatures = ({ idTest }) => {
   }
 
   useEffect(() => {
-    llenarCaracteristicas();
-  }, []);
+    if(idTest) {
+      llenarCaracteristicas();
+    }
+  }, [idTest]);
 
   return (
     <TestInfoContainer>
@@ -154,19 +184,83 @@ const TestFeatures = ({ idTest }) => {
           />
         </Modal>
       }
+
       <TestInfoTitle>Características del Test</TestInfoTitle>
-      <WhiteButton onClick={() => setShowForm(true)}>Añadir</WhiteButton>
+      {
+        user.id_rol == 3 &&
+        <WhiteButton onClick={() => setShowForm(true)}>Añadir</WhiteButton>
+      }
       <Features>
         {
+          loading ?
+          <>
+          <FeatureContainer>
+            <IndexContainer>
+              <FeatureIndexContainer>
+                <PurpleTextLoader width="25px" />
+              </FeatureIndexContainer>
+              <FeatureLine></FeatureLine>
+            </IndexContainer>
+            <IndexContainer>
+              <FeatureTitleContainer>
+                <BlackTextLoader width="150px" fontSize="20px" />
+              </FeatureTitleContainer>
+              <FeatureDescripcionContainer>
+                <GrayTextLoader width="200px" fontSize="16px" />
+                <GrayTextLoader width="200px" fontSize="16px" />
+                <GrayTextLoader width="200px" fontSize="16px" />
+              </FeatureDescripcionContainer>
+            </IndexContainer>
+          </FeatureContainer>
+          <FeatureContainer>
+            <IndexContainer>
+              <FeatureIndexContainer>
+                <PurpleTextLoader width="25px" />
+              </FeatureIndexContainer>
+              <FeatureLine></FeatureLine>
+            </IndexContainer>
+            <IndexContainer>
+              <FeatureTitleContainer>
+                <BlackTextLoader width="150px" fontSize="20px" />
+              </FeatureTitleContainer>
+              <FeatureDescripcionContainer>
+                <GrayTextLoader width="200px" fontSize="16px" />
+                <GrayTextLoader width="200px" fontSize="16px" />
+                <GrayTextLoader width="200px" fontSize="16px" />
+              </FeatureDescripcionContainer>
+            </IndexContainer>
+          </FeatureContainer>
+          <FeatureContainer>
+            <IndexContainer>
+              <FeatureIndexContainer>
+                <PurpleTextLoader width="25px" />
+              </FeatureIndexContainer>
+              <FeatureLine></FeatureLine>
+            </IndexContainer>
+            <IndexContainer>
+              <FeatureTitleContainer>
+                <BlackTextLoader width="150px" fontSize="20px" />
+              </FeatureTitleContainer>
+              <FeatureDescripcionContainer>
+                <GrayTextLoader width="200px" fontSize="16px" />
+                <GrayTextLoader width="200px" fontSize="16px" />
+                <GrayTextLoader width="200px" fontSize="16px" />
+              </FeatureDescripcionContainer>
+            </IndexContainer>
+          </FeatureContainer>
+          </> :
           features.map((v, i) => (
             <FeatureContainer key={i}>
               <IndexContainer>
                 <FeatureIndex>{i < 10 ? "0" + (i + 1) : i + 1}</FeatureIndex>
                 <FeatureLine></FeatureLine>
-                <ButtonContainer className='botones'>
-                  <WhiteIconButton onClick={() => {setFeatureSelected(v); setShowUpdate(true);}}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
-                  <DangerIconButton onClick={() => {setFeatureSelected(v); setShowDelete(true);}}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
-                </ButtonContainer>
+                {
+                  user.id_rol == 3 &&
+                  <ButtonContainer className='botones'>
+                    <WhiteIconButton onClick={() => {setFeatureSelected(v); setShowUpdate(true);}}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
+                    <DangerIconButton onClick={() => {setFeatureSelected(v); setShowDelete(true);}}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
+                  </ButtonContainer>
+                }
               </IndexContainer>
               <IndexContainer>
                 <FeatureTitle>{v.titulo}</FeatureTitle>

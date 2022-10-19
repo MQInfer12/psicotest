@@ -6,12 +6,19 @@ import { useParams } from "react-router-dom";
 import { updateRespuesta } from "../../services/respuesta";
 import Modal from "../globals/modal";
 import ConfirmModal from "../globals/confirmModal";
+import { BlackTextLoader } from "../../styles/loaders";
 
 const TestResolutionContainer = styled.div`
   background-color: #FFFFFF;
   display: flex;
   flex-direction: column;
   padding: 0px 65px 65px;
+`;
+
+const TitleContainer = styled.div`
+  height: 90px;
+  display: flex;
+  align-items: center;
 `;
 
 const ResolutionTitle = styled.h1`
@@ -127,7 +134,7 @@ const PButton = styled.div`
   color: #D9D9D9;
 `;
 
-const TestResolution = ({ idTest, nombreTest, activateSend, setActivateSend, infoSend }) => {
+const TestResolution = ({ loading, idTest, nombreTest, activateSend, setActivateSend, infoSend }) => {
   const { idRespuesta } = useParams();
 
   const [showAlert, setShowAlert] = useState(false);
@@ -170,13 +177,10 @@ const TestResolution = ({ idTest, nombreTest, activateSend, setActivateSend, inf
     setPreguntasTotales(contPreguntas);
   }
 
-  const [secondTime, setSecondTime] = useState(false);
   useEffect(() => {
-    if(secondTime) {
+    if(idTest) {
       llenarTestEntero();
     }
-
-    setSecondTime(true);
   }, [idTest]);
 
   return (
@@ -191,7 +195,13 @@ const TestResolution = ({ idTest, nombreTest, activateSend, setActivateSend, inf
           />
         </Modal>
       }
-      <ResolutionTitle>{nombreTest}</ResolutionTitle>
+        {
+          loading ?
+          <TitleContainer>
+            <BlackTextLoader width="300px" fontSize="60px" /> 
+          </TitleContainer> :
+          <ResolutionTitle>{nombreTest}</ResolutionTitle>
+        }
       <StartText>Comienza tu test</StartText>
       <TestContainer>
 

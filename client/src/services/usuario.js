@@ -11,6 +11,7 @@ export const getUsers = async () => {
     console.log(error);
   }
 };
+
 export const getProfessor = async() => {
 
   try {
@@ -31,7 +32,6 @@ export const getProfessor = async() => {
   }
 
 }
-
 
 export const addUser = async (form) => {
   try {
@@ -95,6 +95,21 @@ export const ableUser = async (id) => {
       method: "PUT",
       headers: { "Content-Type": "application/json",
       "accept": "application/json", },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const deleteUser = async (id) => {
+  try {
+    const response = await fetch(`${http}user/${id}`, {
+      method: "DELETE",
+      headers: { 
+        "Content-Type": "application/json",
+        "Accept": "application/json", 
+      },
     });
     return response;
   } catch (error) {

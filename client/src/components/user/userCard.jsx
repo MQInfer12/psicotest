@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { WhiteIconButton } from "../../styles/formularios";
-import { ableUser, updateUser } from "../../services/usuario";
+import { DangerIconButton, WhiteIconButton } from "../../styles/formularios";
+import { ableUser, updateUser, deleteUser } from "../../services/usuario";
 import Modal from "../globals/modal";
 import ModalUser from "./modalUser";
 import ProfilePic from "../globals/profilePic";
+import SureModal from "../globals/sureModal";
 
 const DivCard = styled.div`
   margin-top: 35px;
@@ -97,14 +98,23 @@ const DivEstado = styled.div`
 
 const UserCard = (props) => {
   const [showForm, setShowForm] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
-  const cambiarHabilitado = async (id) => {
-    const res = await ableUser(id);
+  const cambiarHabilitado = async () => {
+    const res = await ableUser(props.id);
     const resJson = await res?.json();
     if ((resJson.mensaje = "se actualizo correctamente")) {
       props.onSubmit();
     }
   };
+
+  const borrarUsuario = async () => {
+    const res = await deleteUser(props.id);
+    const resJson = await res?.json();
+    if (resJson) {
+      props.onSubmit();
+    }
+  }
 
   return (
     <DivCard estado={props.estado}>
@@ -146,6 +156,10 @@ const UserCard = (props) => {
         >
           {props.estado ? <i className="fa-solid fa-user"></i> : <i className="fa-solid fa-user-slash"></i>}
         </WhiteIconButton>
+        <DangerIconButton 
+          onClick={() => setShowDelete(true)}
+          disabled={props.id_rol == 3}
+        ><i className="fa-solid fa-trash-can"></i></DangerIconButton>
       </DivCardButtons>
       {showForm && 
         <Modal cerrar={() => setShowForm(false)} titulo="Editar usuario">
@@ -157,6 +171,15 @@ const UserCard = (props) => {
             }}
             funcion="editar"
             user={props}
+          />
+        </Modal>
+      }
+      {showDelete && 
+        <Modal cerrar={() => setShowDelete(false)} titulo="Editar usuario">
+          <SureModal
+            cerrar={() => setShowDelete(false)}
+            sure={borrarUsuario}
+            text="Se eliminarán el usuario y sus datos permanentemente"
           />
         </Modal>
       }
