@@ -157,8 +157,8 @@ const UserCard = (props) => {
           {props.estado ? <i className="fa-solid fa-user"></i> : <i className="fa-solid fa-user-slash"></i>}
         </WhiteIconButton>
         <DangerIconButton 
-          onClick={() => setShowDelete(true)}
           disabled={props.id_rol == 3}
+          onClick={() => setShowDelete(true)}
         ><i className="fa-solid fa-trash-can"></i></DangerIconButton>
       </DivCardButtons>
       {showForm && 
