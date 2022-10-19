@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { UseForm } from "../hooks/useForm";
 import { getProfile, signIn } from "../services/auth";
 import { ErrorCss } from "../styles/formularios";
+import { auth, db } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 //STYLED COMPONENTS
 
@@ -30,7 +32,7 @@ const DivItemlog = styled.div`
   grid-column-end: 17;
   grid-row-start: 1;
   grid-row-end: 11;
-  background: url('/src/images/imglogin.jpg') no-repeat;
+  background: url("/src/images/imglogin.jpg") no-repeat;
   background-size: cover;
   background-position-y: center;
 `;
@@ -54,7 +56,7 @@ const H1Title = styled.h1`
   &::after {
     content: "";
     width: 96px;
-    border-top: 2px solid #7613FD;
+    border-top: 2px solid #7613fd;
     background-color: #000000;
     transition: all 0.2s;
   }
@@ -119,21 +121,28 @@ const IInput = styled.i`
   overflow: hidden;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, #ff1b69, #ff0, #2196f3, #7613FD, #ff1b69);
+    background: linear-gradient(
+      90deg,
+      #ff1b69,
+      #ff0,
+      #2196f3,
+      #7613fd,
+      #ff1b69
+    );
     animation: animate 2s linear infinite;
   }
 
-  @keyframes animate{
-    0%{
-        background-position-x: 0;
+  @keyframes animate {
+    0% {
+      background-position-x: 0;
     }
-    100%{
-        background-position-x: 250px;
+    100% {
+      background-position-x: 250px;
     }
   }
 `;
@@ -153,7 +162,7 @@ const ButtonSubmit = styled.button`
   border: none;
   cursor: pointer;
   border-radius: 27px;
-  background: #7613FD;
+  background: #7613fd;
   box-shadow: 0px 0px 50px 0px rgb(0 0 0 / 10%);
 `;
 
@@ -170,7 +179,7 @@ const GoToDescription = styled.p`
 `;
 
 const GoToText = styled(Link)`
-  color: #7613FD;
+  color: #7613fd;
   font-size: 12px;
   font-weight: 400;
   text-decoration: none;
@@ -182,19 +191,14 @@ const Login = () => {
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const {
-    form,
-    errors,
-    handleChange,
-    handleSubmit,
-  } = UseForm(
-    initialForm, 
+  const { form, errors, handleChange, handleSubmit } = UseForm(
+    initialForm,
     validationsForm,
     signIn,
     async () => {
       const profile = await getProfile();
       setUser(profile);
-      navigate('/dashboard');
+      navigate("/dashboard");
     }
   );
 
@@ -211,7 +215,16 @@ const Login = () => {
       placeholder: "Contraseña",
       error: errors.contrasenia,
     },
-  ];
+  ];      
+
+  const sendSubmit = async (e) => {
+    e.preventDefault();
+    //login in postgres
+    handleSubmit(e);
+    //login in firebase
+    const { email, contrasenia } = form;
+    await signInWithEmailAndPassword(auth, email, contrasenia); 
+  };
 
   return (
     <main>
@@ -220,7 +233,7 @@ const Login = () => {
           <DivImagelog>
             <DivItemlog></DivItemlog>
           </DivImagelog>
-    
+
           <DivFormlog>
             <form>
               <H1Title>Login</H1Title>
@@ -230,7 +243,7 @@ const Login = () => {
                   <DivInputBox>
                     <InputText
                       required
-                      type={(v.name != 'contrasenia')? "text" : "password"}
+                      type={v.name != "contrasenia" ? "text" : "password"}
                       name={v.name}
                       onChange={handleChange}
                       value={v.value}
@@ -242,10 +255,13 @@ const Login = () => {
                 </DivInputs>
               ))}
               <GoToContainer>
-                <GoToDescription>¿No tienes una cuenta?</GoToDescription><GoToText to='/register'>Regístrate</GoToText>
+                <GoToDescription>¿No tienes una cuenta?</GoToDescription>
+                <GoToText to="/register">Regístrate</GoToText>
               </GoToContainer>
               <DivButton>
-                <ButtonSubmit onClick={handleSubmit}>LOGIN</ButtonSubmit>
+                <ButtonSubmit onClick={(e) => sendSubmit(e)}>
+                  LOGIN
+                </ButtonSubmit>
               </DivButton>
             </form>
           </DivFormlog>

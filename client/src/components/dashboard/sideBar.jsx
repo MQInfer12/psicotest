@@ -78,6 +78,13 @@ const SideBar = ({ rol, setUser }) => {
       icon: "fa-solid fa-house",
     },
     {
+      roles: [1, 2], 
+      select: "chat",
+      title: "Chat",
+      goTo: "./chat",
+      icon: "fa-solid fa-comments",
+    },
+    {
       roles: [3,2,1],
       select: "tests",
       title: "Tests",
