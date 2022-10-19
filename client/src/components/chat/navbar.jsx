@@ -45,7 +45,7 @@ const Navbar = ({ handleChange }) => {
     <Container>
       <span className="logo">UNIFRANZ</span>
       <div className="user">
-        <img src={DefaultPhoto} alt="" />
+        <img src={user.perfil ? user.perfil : DefaultPhoto} alt="" />
         <span>{user.nombre}</span>
         <select onChange={(e) => handleChange(e.target.value)}>
           <option value={1}>Chatear</option>

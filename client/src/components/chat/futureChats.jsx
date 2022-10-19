@@ -103,7 +103,7 @@ const FutureChats = () => {
             [combinedId + ".date"]: serverTimestamp(),
           });
         }
-        if (currentUser.img) {
+        if (user.perfil) {
           await updateDoc(doc(db, "userChats", userSelect), {
             [combinedId + ".userInfo"]: {
               uid: currentUser.uid,
