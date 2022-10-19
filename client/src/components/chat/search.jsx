@@ -89,31 +89,50 @@ const Search = () => {
         ? currentUser.uid + user.uid
         : user.uid + currentUser.uid;
     try {
-      console.log(combinedId);
       const res = await getDoc(doc(db, "chats", combinedId));
-      console.log("cero");
-      console.log(res);
       if (!res.exists()) {
         //create a chat in chats collection
-       await setDoc(doc(db, "chats", combinedId), {
+        await setDoc(doc(db, "chats", combinedId), {
           messages: [],
         });
         //create user chats
-        await updateDoc(doc(db, "userChats", currentUser.uid), {
-          [combinedId + ".userInfo"]: {
-            uid: user.uid,
-            email: user.email,
-          },
-          [combinedId + ".date"]: serverTimestamp(),
-        });
-     
-         await updateDoc(doc(db, "userChats", user.uid), {
-          [combinedId + ".userInfo"]: {
-            uid: currentUser.uid,
-            email: currentUser.email,
-          },
-          [combinedId + ".date"]: serverTimestamp(),
-        });
+        if (user.img) {
+          await updateDoc(doc(db, "userChats", currentUser.uid), {
+            [combinedId + ".userInfo"]: {
+              uid: user.uid,
+              email: user.email,
+              img: user.img,
+            },
+            [combinedId + ".date"]: serverTimestamp(),
+          });
+        } else {
+          await updateDoc(doc(db, "userChats", currentUser.uid), {
+            [combinedId + ".userInfo"]: {
+              uid: user.uid,
+              email: user.email,
+            },
+            [combinedId + ".date"]: serverTimestamp(),
+          });
+        }
+
+        if (currentUser.img) {
+          await updateDoc(doc(db, "userChats", user.uid), {
+            [combinedId + ".userInfo"]: {
+              uid: currentUser.uid,
+              email: currentUser.email,
+              img: currentUser.img,
+            },
+            [combinedId + ".date"]: serverTimestamp(),
+          });
+        } else {
+          await updateDoc(doc(db, "userChats", user.uid), {
+            [combinedId + ".userInfo"]: {
+              uid: currentUser.uid,
+              email: currentUser.email,
+            },
+            [combinedId + ".date"]: serverTimestamp(),
+          });
+        }
       }
     } catch (error) {
       console.log(error);
@@ -135,7 +154,7 @@ const Search = () => {
       </div>
       {user && (
         <div className="userChat" onClick={handleSelect}>
-          <img src={DefaultPhoto} alt="" />
+          <img src={user.img ? user.img : DefaultPhoto} alt="" />
           <div className="userChatInfo">
             <span>{user.email}</span>
           </div>

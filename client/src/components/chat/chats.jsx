@@ -57,24 +57,30 @@ const Chats = () => {
   const handleSelect = (u) => {
     dispatch({ type: "CHANGE_USER", payload: u });
   };
+ 
+console.log(chats)
 
   return (
     <Container>
-      {chats && Object.entries(chats)
-        .sort((a, b) => b[1].date - a[1].date)
-        .map((v, i) => (
-          <div
-            className="userChat"
-            key={i}
-            onClick={() => handleSelect(v[1].userInfo)}
-          >
-            <img src={DefaultPhoto} alt="" />
-            <div className="userChatInfo">
-              <span>{v[1].userInfo.email}</span>
-              <p>{v[1].lastMessage != undefined && v[1].lastMessage.text}</p>
+      {chats &&
+        Object.entries(chats)
+          .sort((a, b) => b[1].date - a[1].date)
+          .map((v, i) => (
+            <div
+              className="userChat"
+              key={i}
+              onClick={() => handleSelect(v[1].userInfo)}
+            >
+              <img
+                src={v[1].userInfo.img ? v[1].userInfo.img : DefaultPhoto}
+                alt=""
+              />
+              <div className="userChatInfo">
+                <span>{v[1].userInfo.email}</span>
+               <p>{v[1].lastMessage != undefined && v[1].lastMessage.text}</p> 
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
     </Container>
   );
 };

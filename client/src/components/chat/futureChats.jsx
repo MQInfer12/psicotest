@@ -14,6 +14,7 @@ import {
   serverTimestamp,
   getDoc,
 } from "firebase/firestore";
+import { UserContext } from "../../context/userContext";
 const Container = styled.div`
   .userChat {
     padding: 10px;
@@ -48,7 +49,7 @@ const Container = styled.div`
 
 const FutureChats = () => {
   const [professor, setProfessor] = useState([]);
-  const [user, setUser] = useState(null);
+  const { user } = useContext(UserContext);
 
   const { currentUser } = useContext(UserFirebaseContext);
   const [loading, setLoading] = useState(true);
@@ -69,7 +70,8 @@ const FutureChats = () => {
     getAllProfessor();
   }, []);
 
-  const handleSelect = async (userSelect, userEmail, e) => {
+  const handleSelect = async (userSelect, userEmail, img, e) => {
+    console.log(img); //undefined or value
     //check wheter the group(chat in firestore) exits
     const combinedId =
       currentUser.uid > userSelect
@@ -81,24 +83,45 @@ const FutureChats = () => {
       console.log("cero");
       console.log(res);
       if (!res.exists()) {
-        //create a chat in chats collection
         await setDoc(doc(db, "chats", combinedId), { messages: [] });
-        //create user chats
-        await updateDoc(doc(db, "userChats", currentUser.uid), {
-          [combinedId + ".userInfo"]: {
-            uid: userSelect,
-            email: userEmail,
-          },
-          [combinedId + ".date"]: serverTimestamp(),
-        });
 
-        await updateDoc(doc(db, "userChats", userSelect), {
-          [combinedId + ".userInfo"]: {
-            uid: currentUser.uid,
-            email: currentUser.email,
-          },
-          [combinedId + ".date"]: serverTimestamp(),
-        });
+        if (img) {
+          await updateDoc(doc(db, "userChats", currentUser.uid), {
+            [combinedId + ".userInfo"]: {
+              uid: userSelect,
+              email: userEmail,
+              img: img,
+            },
+            [combinedId + ".date"]: serverTimestamp(),
+          });
+        } else if (img === undefined) {
+          await updateDoc(doc(db, "userChats", currentUser.uid), {
+            [combinedId + ".userInfo"]: {
+              uid: userSelect,
+              email: userEmail,
+            },
+            [combinedId + ".date"]: serverTimestamp(),
+          });
+        }
+        if (currentUser.img) {
+          await updateDoc(doc(db, "userChats", userSelect), {
+            [combinedId + ".userInfo"]: {
+              uid: currentUser.uid,
+              email: currentUser.email,
+              img: user.perfil,
+            },
+            [combinedId + ".date"]: serverTimestamp(),
+          });
+        } else {
+          await updateDoc(doc(db, "userChats", userSelect), {
+            [combinedId + ".userInfo"]: {
+              uid: currentUser.uid,
+              email: currentUser.email,
+            },
+            [combinedId + ".date"]: serverTimestamp(),
+          });
+        }
+
         alert("se agrego a la opcion de chatear");
       }
     } catch (error) {
@@ -113,9 +136,9 @@ const FutureChats = () => {
           <div
             className="userChat"
             key={i}
-            onClick={(e) => handleSelect(v.uid, v.email, e)}
+            onClick={(e) => handleSelect(v.uid, v.email, v.img, e)}
           >
-            <img src={DefaultPhoto} alt="" />
+            <img src={v.img ? v.img : DefaultPhoto} alt="" />
             <div className="userChatInfo">
               <span>{v.email}</span>
             </div>

@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useRef } from "react";
 import styled from "styled-components";
 import { ChatContext } from "../../context/chatContext";
+import { UserContext } from "../../context/userContext";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
 import PhotoDefault from "../../images/defaultPhoto.jpg";
 const Container = styled.div`
@@ -81,7 +82,7 @@ const Message = ({ message }) => {
       className={`${message.senderId === currentUser.uid && "owner"}`}
     >
       <div className="messageInfo">
-        <img src={PhotoDefault} alt="" />
+        <img src={message.img ? message.img : PhotoDefault} alt="" />
         <span>{convertSecondosToDate(message.date.seconds)}</span>
       </div>
       <div className="messageContent">

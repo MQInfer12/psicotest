@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { v4 as uuid } from "uuid";
+import { UserContext } from "../../context/userContext";
 const InputComp = styled.div`
   height: 50px;
   background-color: white;
@@ -53,8 +54,9 @@ const InputComp = styled.div`
 `;
 const Input = () => {
   const [text, setText] = useState("");
-
+  const { user } = useContext(UserContext);
   const { currentUser } = useContext(UserFirebaseContext);
+
   const { data } = useContext(ChatContext);
   const handleSend = async () => {
     await updateDoc(doc(db, "chats", data.chatId), {
@@ -63,6 +65,7 @@ const Input = () => {
         text,
         senderId: currentUser.uid,
         date: Timestamp.now(),
+        img:user.perfil
       }),
     });
 
