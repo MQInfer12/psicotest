@@ -11,7 +11,7 @@ const TestResolutionContainer = styled.div`
   background-color: #FFFFFF;
   display: flex;
   flex-direction: column;
-  padding: 65px;
+  padding: 0px 65px 65px;
 `;
 
 const ResolutionTitle = styled.h1`

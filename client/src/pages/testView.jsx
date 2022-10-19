@@ -79,7 +79,7 @@ const TestView = () => {
           {test.descripcion}
         </Paragraph>
       </TestTextContainer>
-      <TestFeatures test={test} />
+      <TestFeatures idTest={idTest} />
       <TestResolution 
         idTest={test.id} 
         nombreTest={test.nombre} 

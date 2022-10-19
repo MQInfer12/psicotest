@@ -18,6 +18,7 @@ export const UseForm = (initialForm, validateForm, APICall, success, primaryId, 
 
   //ENVIAR PETICION
   const handleSend = async (form) => {
+    console.log(form);
     try {
       let res;
       if(primaryId) { //LLAMAR A LA API PARA EDITAR

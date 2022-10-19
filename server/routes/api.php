@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BeneficiarioDocenteController;
+use App\Http\Controllers\CaracteristicaController;
 use App\Http\Controllers\CitaController;
 use App\Http\Controllers\DocenteTestController;
 use App\Http\Controllers\GrupoBeneficiarioController;
@@ -53,6 +54,10 @@ Route::group(['middleware' => 'api'], function(){
     Route::post("test/deleteBenefAssigning", [BeneficiarioDocenteController::class, 'deleteBenefAssigning']);
     Route::get("test/testToBenef/{id}", [BeneficiarioDocenteController::class, 'showTestToBenef']);
     
+    //CARACTERISTICAS ROUTES
+    Route::apiResource("caracteristica", CaracteristicaController::class);
+    Route::get("caracteristica/test/{id}", [CaracteristicaController::class, 'CaracteristicasByTest']);
+
     //SECCIONES ROUTES
     Route::apiResource("seccion", SeccionController::class);
     Route::get("seccion/test/{idTest}", [SeccionController::class, 'seccionByTest']);
