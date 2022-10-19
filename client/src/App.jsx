@@ -17,11 +17,11 @@ import Calendar from "./pages/calendar";
 import Test from "./pages/test";
 import TestCreator from "./pages/testCreator";
 import TestView from "./pages/testView";
-import Appoinment from "./pages/appoinment";
 import Answers from "./pages/answers";
 import Chat from "./pages/chat";
 import { UserFirebaseContextProvider } from "./context/userFirebaseContext.jsx";
 import { ChatContextProvider } from "./context/chatContext";
+
 const StyledLink = styled(Link)`
   text-decoration: none;
   font-size: 16px;
@@ -190,14 +190,6 @@ function App() {
                   }
                 />
                 <Route
-                  path="cita"
-                  element={
-                    <OutletContext titlePage="Cita" calendar={false}>
-                      <Appoinment />
-                    </OutletContext>
-                  }
-                />
-                <Route
                   path="calendar"
                   element={
                     <OutletContext titlePage="Calendario" calendar={false}>
@@ -208,7 +200,7 @@ function App() {
                 <Route
                   path="answers"
                   element={
-                    <ProtectedRole roles={[3]}>
+                    <ProtectedRole roles={[3, 2]}>
                       <OutletContext titlePage="Respuestas" calendar={false}>
                         <Answers />
                       </OutletContext>
