@@ -1,6 +1,6 @@
 import "./App.css";
 import styled from "styled-components";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { HashRouter, Route, Routes, Link } from "react-router-dom";
 import { useState, useMemo, useContext } from "react";
 import { UserContext } from "./context/userContext";
 import OutletContext from "./wrappers/outletContext";
@@ -46,7 +46,7 @@ function App() {
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <UserContext.Provider value={value}>
         <UserFirebaseContextProvider>
           <ChatContextProvider>
@@ -221,7 +221,7 @@ function App() {
           </ChatContextProvider>
         </UserFirebaseContextProvider>
       </UserContext.Provider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
