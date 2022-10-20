@@ -119,13 +119,6 @@ const SideBar = ({ rol, setUser }) => {
       goTo: "./groups",
       icon: "fa-solid fa-users-line",
     },
-    /*{
-      roles: [1],
-      select: "cita",
-      title: "Cita",
-      goTo: "./cita",
-      icon: "fa-solid fa-calendar-day",
-    },*/
     {
       roles: [1, 2, 3],
       select: "profile",
@@ -152,7 +145,6 @@ const SideBar = ({ rol, setUser }) => {
             </li>
           ))
         }
-
         <LogoutButton setUser={setUser}/>
       </SideBarList>
     </SideBarContainer>
