@@ -21,6 +21,7 @@ import Answers from "./pages/answers";
 import Chat from "./pages/chat";
 import { UserFirebaseContextProvider } from "./context/userFirebaseContext.jsx";
 import { ChatContextProvider } from "./context/chatContext";
+import Answer from "./pages/answer";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -170,7 +171,6 @@ function App() {
                     </ProtectedRole>
                   }
                 />
-
                 <Route
                   path="groups"
                   element={
@@ -203,6 +203,24 @@ function App() {
                     <ProtectedRole roles={[3, 2]}>
                       <OutletContext titlePage="Respuestas" calendar={false}>
                         <Answers />
+                      </OutletContext>
+                    </ProtectedRole>
+                  }
+                />
+                <Route
+                  path="answers/:idRespuesta"
+                  element={
+                    <ProtectedRole roles={[3]}>
+                      <OutletContext
+                        titlePage="Detalles de Respuesta"
+                        calendar={false}
+                        links={
+                          <>
+                            <StyledLink to="/dashboard/answers">Respuestas</StyledLink>/
+                          </>
+                        }
+                      >
+                        <Answer />
                       </OutletContext>
                     </ProtectedRole>
                   }

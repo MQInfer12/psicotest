@@ -40,11 +40,13 @@ export const getTimeWithWhoHaveDate = async (id) => {
 
 
 export const addHorario = async (form, id_docente) => {
+  console.log(form)
+  console.log(id_docente)
   try {
     const response = await fetch(`${http}horario`, {
       method: "POST",
       headers: {
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -54,7 +56,7 @@ export const addHorario = async (form, id_docente) => {
         id_docente: id_docente,
       }),
     });
-
+    console.log(response);
     return response;
   } catch (err) {
     console.error(err);

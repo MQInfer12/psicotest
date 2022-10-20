@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Pagination from "../components/answers/pagination";
+import { useNavigate } from "react-router-dom";
 import { WhiteIconButton } from "../styles/formularios";
 import { getRespuestas, getRespuestasByDocente } from "../services/respuesta";
 import { UserContext } from "../context/userContext";
@@ -156,6 +157,7 @@ const TdCargando = styled.td`
 
 const Answers = () => {
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
   const [respuestas, setRespuestas] = useState([]);
   const [page, setPage] = useState(1);
 
@@ -239,7 +241,7 @@ const Answers = () => {
                   </td>
                   <td>
                     <DivCenter>
-                      <WhiteIconButton><i className="fa-solid fa-eye"></i></WhiteIconButton>
+                      <WhiteIconButton onClick={() => navigate("./" + v.id)}><i className="fa-solid fa-eye"></i></WhiteIconButton>
                     </DivCenter>
                   </td>
                 </tr>
