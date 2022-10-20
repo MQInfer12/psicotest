@@ -15,6 +15,21 @@ export const getRespuestas = async () => {
   }
 }
 
+export const getRespuesta = async (id) => {
+  try {
+    const response = await fetch(`${http}respuesta/${id}`, {
+      method: "GET",
+      headers: { 
+        "Content-Type": "application/json",
+        "accept": "application/json", 
+      },
+    });
+    return response;
+  } catch (error) {
+      console.log(error);
+  }
+}
+
 export const getRespuestasByDocente = async(id) => {
   try {
     const response = await fetch(`${http}respuesta/docente/${id}`, {

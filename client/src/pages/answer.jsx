@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
+import { getIdTest, getRespuesta } from "../services/respuesta";
+import { getFullTest } from "../services/test";
+import Cargando from "../components/globals/cargando";
 
 const AnswerPage = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 24px;
+  height: 100%;
+`;
+
+const SeccionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 16px;
 `;
 
 const AnswersContainer = styled.div`
+  max-width: 1200px;
   height: 100%;
   box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
   background-color: #EBF0FA;
@@ -17,15 +29,8 @@ const AnswersContainer = styled.div`
   flex-direction: column;
 `;
 
-const ControlsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 68px;
-  padding: 0px 11px;
-`;
-
 //TABLA
+
 const TableContainer = styled.div`
   overflow: hidden;
 `;
@@ -88,12 +93,6 @@ const DivDouble = styled.div`
   text-align: start;
 `;
 
-const PNombre = styled.p`
-  font-size: 14px;
-  color: #171C26;
-  font-weight: 500;
-`;
-
 const PLight = styled.p`
   color: #687182;
   font-size: 12px;
@@ -115,45 +114,6 @@ const PLightDouble = styled.p`
   -webkit-box-orient: vertical;  
 `;
 
-const StatusContainer = styled.div`
-  width: fit-content;
-  border-radius: 10px;
-  padding: 1px 10px;
-  font-size: 12px;
-  font-weight: 500;
-  background-color: ${props => props.estado == 0? "#E9EDF5" :
-                               props.estado == 1? "#F0F1FA" :
-                               props.estado == 2? "#E1FCEF" :
-                               props.estado == 3 && "#FAF0F3"};
-  color: ${props => props.estado == 0? "#5A6376" :
-                    props.estado == 1? "#4F5AED" :
-                    props.estado == 2? "#14804A" :
-                    props.estado == 3 && "#D12953"};
-`;
-
-const PPuntaje = styled.p`
-  font-size: 14px;
-  font-weight: 400;
-  color: #464F60;
-  width: 100%;
-  text-align: end;
-`;
-
-const PSobre = styled.p`
-  font-size: 12px;
-  font-weight: 400;
-  color: #687182;
-  width: 100%;
-  text-align: end;
-`;
-
-const DivCenter = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 const ThNumber = styled.th`
   font-size: 14px;
   font-weight: 500;
@@ -167,116 +127,109 @@ const TitleSeccion = styled.span`
   font-size: 24px;
   font-weight: 600;
   color: #3E435D;
+  width: 100%;
+  text-align: start;
 `;
 
 const Answer = () => {
   const { idRespuesta } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [respuesta, setRespuesta] = useState({});
+  const [test, setTest] = useState({secciones: [{reactivos: [], preguntas: [{puntuaciones: []}]}]});
+
+  const llenarRespuesta = async () => {
+    const res = await getRespuesta(idRespuesta);
+    const resJson = await res?.json();
+    //RESPUESTA CON PUNTUACIONES
+    setRespuesta(resJson);
+  }
+
+  const llenarTest = async () => {
+    const res = await getIdTest(idRespuesta);
+    const resJson = await res?.json();
+    const resTest = await getFullTest(resJson.id_test);
+    const resTestJson = await resTest?.json();
+    //TEST PARA DIBUJARLO EN LA PAGINA
+    setTest(resTestJson);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    llenarRespuesta();
+    llenarTest();
+  }, []);
 
   return (
     <AnswerPage>
-      <TitleSeccion>Sección 1</TitleSeccion>
-      <AnswersContainer>
-        <TableContainer>
-          <TableAnswers>
-            <thead>
-              <tr>
-                <ThNumberal>#</ThNumberal>
-                <ThAnswer>Pregunta</ThAnswer>
-                <ThReactivo width="100px">Puntaje</ThReactivo>
-                <ThReactivo width="100px">No me identifica</ThReactivo>
-                <ThReactivo width="100px">Casi me identifica</ThReactivo>
-                <ThReactivo width="100px">Me identifica un poco</ThReactivo>
-                <ThReactivo width="100px">Me identifica mucho</ThReactivo>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <ThNumber>1</ThNumber>
-                <td>
-                  <DivDouble>
-                    <PLightDouble>
-                      Son leales y fiables cumplidores, y durante años pueden permanecer en la misma compañía, 
-                      donde se les valora por la consistencia en su trabajo y por la minuciosidad con que completan sus tareas.
-                    </PLightDouble>
-                  </DivDouble>
-                </td>
-                <td>
-                  <PNombre>5</PNombre>
-                </td>
-                <td>
-                  <input type="radio" name="1" disabled />
-                </td>
-                <td>
-                  <input type="radio" name="1" disabled />
-                </td>
-                <td>
-                  <input  type="radio" name="1" disabled />
-                </td>
-                <td>
-                  <input type="radio" name="1" disabled defaultChecked />
-                </td>
-              </tr>
-            </tbody>
-          </TableAnswers>
-        </TableContainer>
-      </AnswersContainer>
-
-      <TitleSeccion>Sección 2</TitleSeccion>
-      <AnswersContainer>
-        <TableContainer>
-          <TableAnswers>
-            <thead>
-              <tr>
-                <ThNumberal>#</ThNumberal>
-                <ThAnswer>Pregunta</ThAnswer>
-                <ThReactivo width="100px">Puntaje</ThReactivo>
-                <ThReactivo width="100px">Si</ThReactivo>
-                <ThReactivo width="100px">No</ThReactivo>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <ThNumber>1</ThNumber>
-                <td>
-                  <DivDouble>
-                    <PLightDouble>
-                      Destaco en que mantengo las cosas organizadas.
-                    </PLightDouble>
-                  </DivDouble>
-                </td>
-                <td>
-                  <PNombre>1</PNombre>
-                </td>
-                <td>
-                  <input type="radio" name="1" />
-                </td>
-                <td>
-                  <input type="radio" name="1" />
-                </td>
-              </tr>
-              <tr>
-                <ThNumber>2</ThNumber>
-                <td>
-                  <DivDouble>
-                    <PLightDouble>
-                      Me gusta dedicarme y trabajar en los detalles.
-                    </PLightDouble>
-                  </DivDouble>
-                </td>
-                <td>
-                  <PNombre>0</PNombre>
-                </td>
-                <td>
-                  <input type="radio" name="1" />
-                </td>
-                <td>
-                  <input type="radio" name="1" />
-                </td>
-              </tr>
-            </tbody>
-          </TableAnswers>
-        </TableContainer>
-      </AnswersContainer>
+      {
+        loading ? (
+          <Cargando />
+        ) : (
+          test.secciones.map((seccion, i) => (
+            <SeccionContainer key={i}>
+              <TitleSeccion>Sección {i + 1}</TitleSeccion>
+              <AnswersContainer>
+                <TableContainer>
+                  <TableAnswers>
+                    <thead>
+                      <tr>
+                        <ThNumberal>#</ThNumberal>
+                        <ThAnswer>Pregunta</ThAnswer>
+                        <ThReactivo width="90px">Puntaje</ThReactivo>
+                        {
+                          seccion.reactivos.map((reactivo, j) => (
+                            <ThReactivo width="90px" key={j}>{reactivo.descripcion}</ThReactivo>
+                          ))
+                        }
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        seccion.preguntas.map((pregunta, j) => (
+                        <tr key={j}>
+                          <ThNumber>{j + 1}</ThNumber>
+                          <td>
+                            <DivDouble>
+                              <PLightDouble>
+                                {pregunta.descripcion}
+                              </PLightDouble>
+                            </DivDouble>
+                          </td>
+                          <td>
+                            {
+                              respuesta.resultados.filter(resultado => 
+                                resultado.puntuacion[0].id_pregunta == pregunta.id
+                              ).map((puntaje, k) => (
+                                <PLight key={k}>{puntaje.puntuacion[0].asignado}</PLight>
+                              ))
+                            }
+                          </td>
+                          {
+                            pregunta.puntuaciones.map((puntuacion, k) => (
+                              <td key={k}>
+                                <input
+                                  type="radio"
+                                  name={pregunta.id}
+                                  value={puntuacion.id}
+                                  disabled
+                                  defaultChecked={
+                                    respuesta.resultados.filter(resultado => puntuacion.id == resultado.id_puntuacion)[0]
+                                  }
+                                />
+                              </td>
+                            ))
+                          }
+                        </tr>
+                        ))
+                      }
+                    </tbody>
+                  </TableAnswers>
+                </TableContainer>
+              </AnswersContainer>
+            </SeccionContainer>
+          ))
+        )
+      }
     </AnswerPage>
   )
 }

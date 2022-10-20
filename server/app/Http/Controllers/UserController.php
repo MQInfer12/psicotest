@@ -12,8 +12,8 @@ class UserController extends Controller
     {
         /*  $users = User::all();
         return $users; */
-        $showUser = DB::select("SELECT u.id, u.nombre as nombre_user, u.email, u.perfil, u.id_rol, u.genero, 
-                                u.edad, u.id_sede, u.estado, r.nombre as nombre_rol, 
+        $showUser = DB::select("SELECT u.id, u.nombre as nombre_user, u.email, u.perfil, u.genero, 
+                                u.edad, u.id_sede, u.id_rol, u.estado, r.nombre as nombre_rol, 
                                 s.nombre as nombre_sede 
                                 from users u, rols r, sedes s 
                                 where u.id_rol=r.id 
@@ -28,7 +28,7 @@ class UserController extends Controller
         return response()->json($showUser);
     }
 
-    
+
     public function getProfessor($id)
     {
         $showUser = DB::select("SELECT u.id, u.nombre as nombre_user, u.email, u.perfil, u.genero, 
