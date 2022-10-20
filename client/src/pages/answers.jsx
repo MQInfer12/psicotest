@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { WhiteIconButton } from "../styles/formularios";
 import { getRespuestas, getRespuestasByDocente } from "../services/respuesta";
 import { UserContext } from "../context/userContext";
+import Cargando from "../components/globals/cargando";
 
 const AnswersContainer = styled.div`
   height: 100%;
@@ -158,6 +159,7 @@ const TdCargando = styled.td`
 const Answers = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [respuestas, setRespuestas] = useState([]);
   const [page, setPage] = useState(1);
 
@@ -165,12 +167,14 @@ const Answers = () => {
     const res = await getRespuestas();
     const resJson = await res?.json();
     setRespuestas(resJson);
+    setLoading(false);
   }
 
   const llenarRespuestasPorDocente = async () => {
     const res = await getRespuestasByDocente(user.id);
     const resJson = await res?.json();
     setRespuestas(resJson);
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -186,69 +190,75 @@ const Answers = () => {
       <ControlsContainer>
       </ControlsContainer>
       <TableContainer>
-        <TableAnswers>
-          <thead>
-            <tr>
-              <ThNumberal>#</ThNumberal>
-              <ThAnswer width="180px">Nombre</ThAnswer>
-              <ThAnswer>Test</ThAnswer>
-              <ThAnswer width="180px">Docente</ThAnswer>
-              <ThAnswer width="100px">Estado</ThAnswer>
-              <ThAnswer width="100px">Puntuación</ThAnswer>
-              <ThAnswer width="120px">Controles</ThAnswer>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              respuestas.filter((v, i) => i >= (page - 1) * 9 && i < page * 9).map((v, i) => (
-                <tr key={i}>
-                  <ThNumber>{((page - 1) * 9) + (i + 1)}</ThNumber>
-                  <td>
-                    <DivDouble>
-                      <PNombre>{v.nombre_user}</PNombre>
-                      <PLight>{v.email_user}</PLight>
-                    </DivDouble>
-                  </td>
-                  <td>
-                    <DivDouble>
-                      <PLight>{v.nombre_test}</PLight>
-                      <PLight>{v.descripcion}</PLight>
-                    </DivDouble>
-                  </td>
-                  <td>
-                    <DivDouble>
-                      <PNombre>{v.nombre_docente}</PNombre>
-                      <PLight>{v.email_docente}</PLight>
-                    </DivDouble>
-                  </td>
-                  <td>
-                    <DivDouble>
-                      <StatusContainer estado={v.estado}>
-                        {
-                          v.estado == 0 ? "Pendiente" :
-                          v.estado == 1 ? "Recibido" :
-                          v.estado == 2 ? "Corregido" :
-                          v.estado == 3 && "Expiró"
-                        }
-                      </StatusContainer>
-                    </DivDouble>
-                  </td>
-                  <td>
-                    <DivDouble>
-                      <PPuntaje>{v.puntuacion}</PPuntaje>
-                      <PSobre>/{v.total}</PSobre>
-                    </DivDouble>
-                  </td>
-                  <td>
-                    <DivCenter>
-                      <WhiteIconButton onClick={() => navigate("./" + v.id)}><i className="fa-solid fa-eye"></i></WhiteIconButton>
-                    </DivCenter>
-                  </td>
+        {
+          loading ? (
+            <Cargando />
+          ) : (
+            <TableAnswers>
+              <thead>
+                <tr>
+                  <ThNumberal>#</ThNumberal>
+                  <ThAnswer width="180px">Nombre</ThAnswer>
+                  <ThAnswer>Test</ThAnswer>
+                  <ThAnswer width="180px">Docente</ThAnswer>
+                  <ThAnswer width="100px">Estado</ThAnswer>
+                  <ThAnswer width="100px">Puntuación</ThAnswer>
+                  <ThAnswer width="120px">Controles</ThAnswer>
                 </tr>
-              ))
-            }
-          </tbody>
-        </TableAnswers>
+              </thead>
+              <tbody>
+                {
+                  respuestas.filter((v, i) => i >= (page - 1) * 9 && i < page * 9).map((v, i) => (
+                    <tr key={i}>
+                      <ThNumber>{((page - 1) * 9) + (i + 1)}</ThNumber>
+                      <td>
+                        <DivDouble>
+                          <PNombre>{v.nombre_user}</PNombre>
+                          <PLight>{v.email_user}</PLight>
+                        </DivDouble>
+                      </td>
+                      <td>
+                        <DivDouble>
+                          <PLight>{v.nombre_test}</PLight>
+                          <PLight>{v.descripcion}</PLight>
+                        </DivDouble>
+                      </td>
+                      <td>
+                        <DivDouble>
+                          <PNombre>{v.nombre_docente}</PNombre>
+                          <PLight>{v.email_docente}</PLight>
+                        </DivDouble>
+                      </td>
+                      <td>
+                        <DivDouble>
+                          <StatusContainer estado={v.estado}>
+                            {
+                              v.estado == 0 ? "Pendiente" :
+                              v.estado == 1 ? "Recibido" :
+                              v.estado == 2 ? "Corregido" :
+                              v.estado == 3 && "Expiró"
+                            }
+                          </StatusContainer>
+                        </DivDouble>
+                      </td>
+                      <td>
+                        <DivDouble>
+                          <PPuntaje>{v.puntuacion}</PPuntaje>
+                          <PSobre>/{v.total}</PSobre>
+                        </DivDouble>
+                      </td>
+                      <td>
+                        <DivCenter>
+                          <WhiteIconButton onClick={() => navigate("./" + v.id)}><i className="fa-solid fa-eye"></i></WhiteIconButton>
+                        </DivCenter>
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </TableAnswers>
+          )
+        }
       </TableContainer>
       <Pagination 
         cant={respuestas.length}

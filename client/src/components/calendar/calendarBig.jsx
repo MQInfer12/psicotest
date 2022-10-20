@@ -393,7 +393,7 @@ const CalendarBig = () => {
                       }
                     </DivDay>
                     {
-                      horarios.filter(v => v.fecha == day.format("DD/MM/YYYY")).map((v, i) => {
+                      horarios.filter(v => v.fecha == day.format("MM/DD/YYYY")).map((v, i) => {
                         const hora_inicio = convertToDate(day, v.hora_inicio);
                         const hora_final = convertToDate(day, v.hora_final);
                         if(v.disponible) {
@@ -417,7 +417,7 @@ const CalendarBig = () => {
                       })
                     }
                     {
-                      citas.filter(v => v.fecha == day.format("DD/MM/YYYY")).map((v, i) => {
+                      citas.filter(v => v.fecha == day.format("MM/DD/YYYY")).map((v, i) => {
                         const hora_inicio = convertToDate(day, v.hora_inicio);
                         const hora_final = convertToDate(day, v.hora_final);
                         return (
