@@ -317,7 +317,7 @@ const Register = () => {
       uid: resp.user.uid,
       name: nombre,
       email: email,
-      rol: "1",
+      rol: "3",
       sede: sede,
     });
     await setDoc(doc(db, "userChats", resp.user.uid), {});

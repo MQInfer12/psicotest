@@ -76,9 +76,7 @@ const ModalUnAssignProfessor = ({ id, actualizar }) => {
       vecAux.push(val);
     }
     const obj = Object.assign({}, vecAux);
-    console.log(obj);
     const resp = await deleteBenefAssigned(obj, id);
-    console.log(resp);
     if(resp.msg === "se ha eliminado"){
         actualizar();
     };
