@@ -6,15 +6,15 @@ export const initialForm = {
 };
 
 export const validationsForm = (form) => {
-  var regexDate =
-    /^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|(([1][26]|[2468][048]|[3579][26])00))))$/g;
+  var regexDate = /^((0?[1-9]|1[012])[/.](0?[1-9]|[12][0-9]|3[01])[/.](19|20)?[0-9]{2})*$/;
 
   var regexTime = /^(2[0-3]|[0-1]?[\d]):[0-5][\d]:[0-5][\d]$/;
 
   let errors = {};
   if (!form.fecha.trim()) {
     errors.fecha = "'Fecha' es requerido";
-  } else if (!regexDate.test(form.fecha.trim())) {
+  } 
+  else if (!regexDate.test(form.fecha.trim())) {
     errors.fecha = "'Fecha' esta en formato incorrecto";
   }
   if (!form.hora_inicio.trim()) {

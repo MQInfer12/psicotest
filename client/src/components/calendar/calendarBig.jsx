@@ -385,7 +385,7 @@ const CalendarBig = () => {
                       {
                         user.id_rol != 1 && 
                         <WhiteIconButton onClick={() => {
-                          setFechaSelected(day.format("DD/MM/YYYY"));
+                          setFechaSelected(day.format("MM/DD/YYYY"));
                           setShowForm(true);
                         }}>
                           <i className="fa-solid fa-plus"></i>
@@ -393,14 +393,22 @@ const CalendarBig = () => {
                       }
                     </DivDay>
                     {
-                      horarios.filter(v => v.fecha == day.format("MM/DD/YYYY")).map((v, i) => {
+                      horarios.filter(v => v.fecha == day.format("DD/MM/YYYY")).map((v, i) => {
                         const hora_inicio = convertToDate(day, v.hora_inicio);
                         const hora_final = convertToDate(day, v.hora_final);
                         if(v.disponible) {
                           return (
                             <DivTask 
                               onClick={() => {
-                                setHorarioSelected(v);
+                                setHorarioSelected({
+                                  id: v.id,
+                                  nombre: v.nombre,
+                                  email: v.email,
+                                  disponible: v.disponible,
+                                  fecha: day.format("MM/DD/YYYY"),
+                                  hora_final: v.hora_final,
+                                  hora_inicio: v.hora_inicio
+                                });
                                 setShowEdit(true);
                               }} 
                               key={i}
@@ -417,13 +425,22 @@ const CalendarBig = () => {
                       })
                     }
                     {
-                      citas.filter(v => v.fecha == day.format("MM/DD/YYYY")).map((v, i) => {
+                      citas.filter(v => v.fecha == day.format("DD/MM/YYYY")).map((v, i) => {
                         const hora_inicio = convertToDate(day, v.hora_inicio);
                         const hora_final = convertToDate(day, v.hora_final);
                         return (
                           <DivAppointment 
                             onClick={() => {
-                              setHorarioSelected(v);
+                              setHorarioSelected({
+                                id: v.id,
+                                id_horario: v.id_horario,
+                                nombre: v.nombre,
+                                email: v.email,
+                                disponible: v.disponible,
+                                fecha: day.format("MM/DD/YYYY"),
+                                hora_final: v.hora_final,
+                                hora_inicio: v.hora_inicio
+                              });
                               setShowCancel(true);
                             }} 
                             key={i}
