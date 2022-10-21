@@ -1,20 +1,9 @@
 import { useState, useEffect } from "react";
+import { validarInputFile, getBase64 } from "../functions";
 
 export const UseForm = (initialForm, validateForm, APICall, success, primaryId, foreignId) => {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({reseted: true});
-
-  //CONVERTIR IMAGENES A BASE 64
-  const getBase64 = (file, cb) => {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      cb(reader.result);
-    };
-    reader.onerror = function (error) {
-      return console.log('Error: ', error);
-    };
-  }
 
   //ENVIAR PETICION
   const handleSend = async (form) => {
@@ -48,19 +37,19 @@ export const UseForm = (initialForm, validateForm, APICall, success, primaryId, 
 
   //IR CAMBIANDO EL FORM
   const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    //SI EL INPUT ES DE TIPO FILE CONVERTIR A BASE64
+    //SI EL INPUT ES DE TIPO FILE VALIDAR Y CONVERTIR A BASE64
     if(e.target.type == 'file') {
+      if(validarInputFile(e)) return;
       getBase64(e.target.files[0], (resultado) => {
         setForm({
           ...form,
-          [name]: resultado,
+          [e.target.name]: resultado,
         });
       });
       return;
     }
 
+    const { name, value } = e.target;
     setForm({
       ...form,
       [name]: value,

@@ -56,6 +56,7 @@ const Container = styled.div`
 const Message = ({ message }) => {
   const { currentUser } = useContext(UserFirebaseContext);
   const { data } = useContext(ChatContext);
+  const { user } = useContext(UserContext);
 
   const ref = useRef();
 
@@ -82,7 +83,7 @@ const Message = ({ message }) => {
       className={`${message.senderId === currentUser.uid && "owner"}`}
     >
       <div className="messageInfo">
-        <img src={message.img ? message.img : PhotoDefault} alt="" />
+        <img src={message.email == user.email && user.perfil ? user.perfil : PhotoDefault} alt="" />
         <span>{convertSecondosToDate(message.date.seconds)}</span>
       </div>
       <div className="messageContent">

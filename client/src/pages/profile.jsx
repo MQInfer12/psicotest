@@ -238,6 +238,7 @@ const Profile = () => {
                     type="file"
                     name="perfil"
                     onChange={handleChange}
+                    accept='.jpg,.png,.jpeg'
                   />
                   <PurpleButton>Subir foto nueva</PurpleButton>
                 </DivFile>
@@ -246,7 +247,7 @@ const Profile = () => {
                 </WhiteButton>
               </DivPhotoButtons>
               <InfoPhotoExtensions>
-                Permitido JPG, JPEG o PNG. Tamaño máximo de 800Kb.
+                Permitido JPG, JPEG o PNG. {/*Tamaño máximo de 800Kb.*/}
               </InfoPhotoExtensions>
             </DivPhotoInfo>
           )}

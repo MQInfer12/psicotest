@@ -58,7 +58,7 @@ const Container = styled.div`
     }
   }
 `;
-const Search = () => {
+const   Search = () => {
   const [email, setEmail] = useState("");
   const [user, setUser] = useState(null);
   const { currentUser } = useContext(UserFirebaseContext);
