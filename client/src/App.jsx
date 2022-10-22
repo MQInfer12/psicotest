@@ -1,8 +1,7 @@
 import "./App.css";
 import styled from "styled-components";
 import { HashRouter, Route, Routes, Link } from "react-router-dom";
-import { useState, useMemo } from "react";
-import { UserContext } from "./context/userContext";
+import Contexts from "./wrappers/contexts";
 import OutletContext from "./wrappers/outletContext";
 import ProtectedRoute from "./wrappers/protectedRoute";
 import ProtectedRole from "./wrappers/protectedRole";
@@ -19,9 +18,6 @@ import TestCreator from "./pages/testCreator";
 import TestView from "./pages/testView";
 import Answers from "./pages/answers";
 import Chat from "./pages/chat";
-import { UserFirebaseContextProvider } from "./context/userFirebaseContext.jsx";
-import { ChatContextProvider } from "./context/chatContext";
-import { ProfilePicContextProvider } from "./context/profilePicContext";
 import Answer from "./pages/answer";
 
 const StyledLink = styled(Link)`
@@ -44,196 +40,188 @@ const StyledLink = styled(Link)`
 `;
 
 function App() {
-  const [user, setUser] = useState(null);
-  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 
   return (
     <HashRouter>
-      <UserContext.Provider value={value}>
-        <ProfilePicContextProvider>
-          <UserFirebaseContextProvider>
-            <ChatContextProvider>
-              <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route
-                  path="/dashboard"
-                  element={
-                    <ProtectedRoute>
-                      <Dashboard />
-                    </ProtectedRoute>
-                  }
-                >
-                  <Route
-                    path=""
-                    element={
-                      <OutletContext titlePage="Home" calendar={true}>
-                        <Home />
-                      </OutletContext>
+      <Contexts>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          >
+            <Route
+              path=""
+              element={
+                <OutletContext titlePage="Home" calendar={true}>
+                  <Home />
+                </OutletContext>
+              }
+            />
+            <Route
+              path="chat"
+              element={
+                <OutletContext titlePage="Chat">
+                  <Chat />
+                </OutletContext>
+              }
+            />
+            <Route
+              path="users"
+              element={
+                <ProtectedRole roles={[3]}>
+                  <OutletContext titlePage="Usuarios" calendar={false}>
+                    <User />
+                  </OutletContext>
+                </ProtectedRole>
+              }
+            />
+            <Route
+              path="tests"
+              element={
+                <ProtectedRole roles={[3, 2, 1]}>
+                  <OutletContext titlePage="Tests" calendar={true}>
+                    <Test />
+                  </OutletContext>
+                </ProtectedRole>
+              }
+            />
+            <Route
+              path="tests/:idTest"
+              element={
+                <ProtectedRole roles={[3]}>
+                  <OutletContext
+                    titlePage="Creación de Test"
+                    calendar={false}
+                    links={
+                      <>
+                        <StyledLink to="/dashboard/tests">Tests</StyledLink>
+                        /
+                      </>
                     }
-                  />
-                  <Route
-                    path="chat"
-                    element={
-                      <OutletContext titlePage="Chat">
-                        <Chat />
-                      </OutletContext>
+                  >
+                    <TestCreator />
+                  </OutletContext>
+                </ProtectedRole>
+              }
+            />
+            <Route
+              path="tests/:idTest"
+              element={
+                <ProtectedRole roles={[3]}>
+                  <OutletContext
+                    titlePage="Creación de Test"
+                    calendar={false}
+                    links={
+                      <>
+                        <StyledLink to="/dashboard/tests">Tests</StyledLink>/
+                      </>
                     }
-                  />
-                  <Route
-                    path="users"
-                    element={
-                      <ProtectedRole roles={[3]}>
-                        <OutletContext titlePage="Usuarios" calendar={false}>
-                          <User />
-                        </OutletContext>
-                      </ProtectedRole>
+                  >
+                    <TestCreator />
+                  </OutletContext>
+                </ProtectedRole>
+              }
+            />
+            <Route
+              path="tests/testview/:idTest"
+              element={
+                <ProtectedRole roles={[2, 3]}>
+                  <OutletContext
+                    titlePage="Vista previa"
+                    calendar={false}
+                    links={
+                      <>
+                        <StyledLink to="/dashboard/tests">Tests</StyledLink>/
+                      </>
                     }
-                  />
-                  <Route
-                    path="tests"
-                    element={
-                      <ProtectedRole roles={[3, 2, 1]}>
-                        <OutletContext titlePage="Tests" calendar={true}>
-                          <Test />
-                        </OutletContext>
-                      </ProtectedRole>
+                  >
+                    <TestView />
+                  </OutletContext>
+                </ProtectedRole>
+              }
+            />
+            <Route
+              path="tests/testresolve/:idRespuesta"
+              element={
+                <ProtectedRole roles={[1]}>
+                  <OutletContext
+                    titlePage="Resolver el test"
+                    calendar={false}
+                    links={
+                      <>
+                        <StyledLink to="/dashboard/tests">Tests</StyledLink>/
+                      </>
                     }
-                  />
-                  <Route
-                    path="tests/:idTest"
-                    element={
-                      <ProtectedRole roles={[3]}>
-                        <OutletContext
-                          titlePage="Creación de Test"
-                          calendar={false}
-                          links={
-                            <>
-                              <StyledLink to="/dashboard/tests">Tests</StyledLink>
-                              /
-                            </>
-                          }
-                        >
-                          <TestCreator />
-                        </OutletContext>
-                      </ProtectedRole>
+                  >
+                    <TestView />
+                  </OutletContext>
+                </ProtectedRole>
+              }
+            />
+            <Route
+              path="groups"
+              element={
+                <ProtectedRole roles={[2]}>
+                  <OutletContext titlePage="Grupos" calendar={false}>
+                    <Group />
+                  </OutletContext>
+                </ProtectedRole>
+              }
+            />
+            <Route
+              path="profile"
+              element={
+                <OutletContext titlePage="Perfil" calendar={false}>
+                  <Profile />
+                </OutletContext>
+              }
+            />
+            <Route
+              path="calendar"
+              element={
+                <OutletContext titlePage="Calendario" calendar={false}>
+                  <Calendar />
+                </OutletContext>
+              }
+            />
+            <Route
+              path="answers"
+              element={
+                <ProtectedRole roles={[3, 2]}>
+                  <OutletContext titlePage="Respuestas" calendar={false}>
+                    <Answers />
+                  </OutletContext>
+                </ProtectedRole>
+              }
+            />
+            <Route
+              path="answers/:idRespuesta"
+              element={
+                <ProtectedRole roles={[3]}>
+                  <OutletContext
+                    titlePage="Detalles de Respuesta"
+                    calendar={false}
+                    links={
+                      <>
+                        <StyledLink to="/dashboard/answers">Respuestas</StyledLink>/
+                      </>
                     }
-                  />
-                  <Route
-                    path="tests/:idTest"
-                    element={
-                      <ProtectedRole roles={[3]}>
-                        <OutletContext
-                          titlePage="Creación de Test"
-                          calendar={false}
-                          links={
-                            <>
-                              <StyledLink to="/dashboard/tests">Tests</StyledLink>/
-                            </>
-                          }
-                        >
-                          <TestCreator />
-                        </OutletContext>
-                      </ProtectedRole>
-                    }
-                  />
-                  <Route
-                    path="tests/testview/:idTest"
-                    element={
-                      <ProtectedRole roles={[2, 3]}>
-                        <OutletContext
-                          titlePage="Vista previa"
-                          calendar={false}
-                          links={
-                            <>
-                              <StyledLink to="/dashboard/tests">Tests</StyledLink>/
-                            </>
-                          }
-                        >
-                          <TestView />
-                        </OutletContext>
-                      </ProtectedRole>
-                    }
-                  />
-                  <Route
-                    path="tests/testresolve/:idRespuesta"
-                    element={
-                      <ProtectedRole roles={[1]}>
-                        <OutletContext
-                          titlePage="Resolver el test"
-                          calendar={false}
-                          links={
-                            <>
-                              <StyledLink to="/dashboard/tests">Tests</StyledLink>/
-                            </>
-                          }
-                        >
-                          <TestView />
-                        </OutletContext>
-                      </ProtectedRole>
-                    }
-                  />
-                  <Route
-                    path="groups"
-                    element={
-                      <ProtectedRole roles={[2]}>
-                        <OutletContext titlePage="Grupos" calendar={false}>
-                          <Group />
-                        </OutletContext>
-                      </ProtectedRole>
-                    }
-                  />
-                  <Route
-                    path="profile"
-                    element={
-                      <OutletContext titlePage="Perfil" calendar={false}>
-                        <Profile />
-                      </OutletContext>
-                    }
-                  />
-                  <Route
-                    path="calendar"
-                    element={
-                      <OutletContext titlePage="Calendario" calendar={false}>
-                        <Calendar />
-                      </OutletContext>
-                    }
-                  />
-                  <Route
-                    path="answers"
-                    element={
-                      <ProtectedRole roles={[3, 2]}>
-                        <OutletContext titlePage="Respuestas" calendar={false}>
-                          <Answers />
-                        </OutletContext>
-                      </ProtectedRole>
-                    }
-                  />
-                  <Route
-                    path="answers/:idRespuesta"
-                    element={
-                      <ProtectedRole roles={[3]}>
-                        <OutletContext
-                          titlePage="Detalles de Respuesta"
-                          calendar={false}
-                          links={
-                            <>
-                              <StyledLink to="/dashboard/answers">Respuestas</StyledLink>/
-                            </>
-                          }
-                        >
-                          <Answer />
-                        </OutletContext>
-                      </ProtectedRole>
-                    }
-                  />
-                </Route>
-                <Route path="*" element={<Login />} />
-              </Routes>
-            </ChatContextProvider>
-          </UserFirebaseContextProvider>
-        </ProfilePicContextProvider>
-      </UserContext.Provider>
+                  >
+                    <Answer />
+                  </OutletContext>
+                </ProtectedRole>
+              }
+            />
+          </Route>
+          <Route path="*" element={<Login />} />
+        </Routes>
+      </Contexts>
     </HashRouter>
   );
 }
