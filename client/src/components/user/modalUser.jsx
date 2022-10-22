@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { ProfilePicContext } from "../../context/profilePicContext";
 import styled from "styled-components";
 import { initialForm, validationsForm } from "../../validations/user";
 import { UseForm } from "../../hooks/useForm";
@@ -7,12 +8,13 @@ import {
   PurpleButton,
   WhiteButton,
 } from "../../styles/formularios";
-import PhotoForm from "../globals/photoForm";
 import FormInputsText from "../globals/formInputsText";
 import FormInputsSelect from "../globals/formInputsSelect";
 import { auth, db } from "../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+import ProfilePic from "../globals/profilePic";
+import { useState } from "react";
 
 const ModalUserContainer = styled.div`
   display: flex;
@@ -32,22 +34,29 @@ const FotoContainer = styled.div`
 `;
 
 const ModalUser = ({ call, actualizar, funcion, user }) => {
-  const { form, errors, handleChange, handleSubmit, handleResetImg } = UseForm(
-    user
-      ? {
-          nombre: user.nombre_user,
-          email: user.email,
-          edad: String(user.edad),
-          contrasenia: "password",
-          genero: user.genero,
-          sede: String(user.id_sede),
-          rol: String(user.id_rol),
-          perfil: user.perfil,
-        }
-      : initialForm,
+  const { profilePics, setProfilePics } = useContext(ProfilePicContext);
+  const [loadingEditable, setLoadingEditable] = useState(true);
+
+  const { form, errors, handleChange, handleSubmit, handleResetImg, handleReset } = UseForm(
+    user ? {
+      nombre: user.nombre_user,
+      email: user.email,
+      edad: String(user.edad),
+      contrasenia: "password",
+      genero: user.genero,
+      sede: String(user.id_sede),
+      rol: String(user.id_rol),
+      perfil: profilePics[user.id],
+    } : initialForm,
     validationsForm,
     call,
-    actualizar,
+    () => {
+      setProfilePics(old => ({
+        ...old,
+        [user.id]: form.perfil 
+      }));
+      actualizar();
+    },
     user?.id
   );
 
@@ -240,11 +249,29 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
     await setDoc(doc(db, "userChats", resp.user.uid), {});
   };
 
+  useEffect(() => {
+    if(user.perfil) {
+      if(profilePics[user.id]) {
+        handleReset();
+        setLoadingEditable(false);
+      }
+    } else {
+      setLoadingEditable(false);
+    }
+  }, [profilePics[user.id]]);
+
   return (
     <ModalUserContainer>
       {funcion == "editar" && (
         <FotoContainer>
-          <PhotoForm width="75px" height="75px" src={form.perfil} />
+          <ProfilePic
+            width="75px" 
+            height="75px" 
+            id={user.id}
+            perfil={user.perfil}
+            editable={true}
+            prev={form.perfil} 
+          />
           <WhiteButton onClick={() => handleResetImg("perfil")}>
             Reset
           </WhiteButton>
@@ -258,7 +285,7 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
           <FormInputsSelect data={dataSelect} handleChange={handleChange} />
         </FormContainer>
       </Columnas>
-      <PurpleButton onClick={(e) => sendSubmit(e)}>{funcion}</PurpleButton>
+      <PurpleButton onClick={(e) => sendSubmit(e)} disabled={loadingEditable}>{funcion}</PurpleButton>
     </ModalUserContainer>
   );
 };

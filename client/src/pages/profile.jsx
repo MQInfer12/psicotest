@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/userContext";
 import styled from "styled-components";
-import PhotoForm from "../components/globals/photoForm";
 import { initialForm, validationsForm } from "../validations/profile";
 import { UseForm } from "../hooks/useForm";
 import { getProfile } from "../services/auth";

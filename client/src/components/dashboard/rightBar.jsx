@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import ProfilePic from "../globals/profilePic";
-import PhotoForm from '../globals/photoForm';
 import CalendarMini from "../calendar/calendarMini";
 
 const RightContainer = styled.aside`
