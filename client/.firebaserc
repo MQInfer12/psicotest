@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "psicologia-b32b5"
-  }
+    "default": "chat-6f082",
+    "chat": "chat-6f082"
+  },
+  "targets": {},
+  "etags": {}
 }

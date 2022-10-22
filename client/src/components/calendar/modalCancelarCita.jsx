@@ -3,9 +3,9 @@ import { cancelAppoinment } from "../../services/cita";
 import { DangerButton, FormContainer } from "../../styles/formularios";
 
 const ModalCancelarCita = ({ actualizar, cita }) => {
-  console.log(cita);
   const handleAppointment = async () => {
     const res = await cancelAppoinment(cita.id_horario, cita.id);
+    console.log(res);
     if(res) {
       actualizar();
     }

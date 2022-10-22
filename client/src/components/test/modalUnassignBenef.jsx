@@ -76,9 +76,7 @@ const ModalUnAssignProfessor = ({ id, actualizar }) => {
       vecAux.push(val);
     }
     const obj = Object.assign({}, vecAux);
-    console.log(obj);
     const resp = await deleteBenefAssigned(obj, id);
-    console.log(resp);
     if(resp.msg === "se ha eliminado"){
         actualizar();
     };
@@ -94,7 +92,12 @@ const ModalUnAssignProfessor = ({ id, actualizar }) => {
             <DivPersonas>
             {data.map((v, i) => (
               <DivPersona key={i}>
-                <ProfilePic width="20px" height="20px" src={v.perfil} />
+                <ProfilePic 
+                  width="20px" 
+                  height="20px" 
+                  id={v.id_user}
+                  perfil={v.perfil} 
+                />
                 {v.nombre_user}
                 <input type="checkbox" value={v.email} onChange={handleChangeCheck}/>
               </DivPersona>

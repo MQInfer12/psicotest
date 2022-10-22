@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/userContext";
 import styled from "styled-components";
-import ProfilePic from "../components/globals/profilePic";
 import { initialForm, validationsForm } from "../validations/profile";
 import { UseForm } from "../hooks/useForm";
 import { getProfile } from "../services/auth";
@@ -15,10 +14,12 @@ import {
 } from "../styles/formularios";
 import FormInputsText from "../components/globals/formInputsText";
 import { updateUser } from "../services/usuario";
-
 import { db } from "../firebase";
 import { UserFirebaseContext } from "../context/userFirebaseContext";
+import { ProfilePicContext } from "../context/profilePicContext";
 import { doc, updateDoc } from "firebase/firestore";
+import { useEffect } from "react";
+import ProfilePic from "../components/globals/profilePic";
 
 const ProfileContainer = styled.div`
   min-height: 100%;
@@ -97,12 +98,18 @@ const DivButtonsDown = styled.div`
 `;
 
 const Profile = () => {
+  const { profilePics, setProfilePics } = useContext(ProfilePicContext);
   const { user, setUser } = useContext(UserContext);
+  const [loadingEditable, setLoadingEditable] = useState(true);
   const [editable, setEditable] = useState(false);
 
   const actualizar = async () => {
     const newUser = await getProfile();
     setUser(newUser);
+    setProfilePics(old => ({
+      ...old,
+      [user.id]: form.perfil 
+    }))
     setEditable(false);
   };
 
@@ -114,15 +121,13 @@ const Profile = () => {
     handleReset,
     handleResetImg,
   } = UseForm(
-    user
-      ? {
-          nombre: user.nombre,
-          edad: String(user.edad),
-          genero: user.genero,
-          sede: String(user.id_sede),
-          perfil: user.perfil,
-        }
-      : initialForm,
+    user ? {
+      nombre: user.nombre,
+      edad: String(user.edad),
+      genero: user.genero,
+      sede: String(user.id_sede),
+      perfil: profilePics[user.id],
+    } : initialForm,
     validationsForm,
     updateUser,
     actualizar,
@@ -215,10 +220,22 @@ const Profile = () => {
       img: stringImg,
     });
   };
+
   const sendData = (e) => {
     updateUserFirebase(form.perfil);
     handleSubmit(e);
   };
+
+  useEffect(() => {
+    if(user.perfil) {
+      if(profilePics[user.id]) {
+        handleReset();
+        setLoadingEditable(false);
+      }
+    } else {
+      setLoadingEditable(false);
+    }
+  }, [profilePics]);
 
   return (
     <ProfileContainer>
@@ -228,7 +245,10 @@ const Profile = () => {
           <ProfilePic
             width="100px"
             height="100px"
-            src={editable ? form.perfil : user?.perfil}
+            id={user.id}
+            perfil={user.perfil}
+            editable={editable}
+            prev={form.perfil}
           />
           {editable && (
             <DivPhotoInfo>
@@ -238,6 +258,7 @@ const Profile = () => {
                     type="file"
                     name="perfil"
                     onChange={handleChange}
+                    accept='.jpg,.png,.jpeg'
                   />
                   <PurpleButton>Subir foto nueva</PurpleButton>
                 </DivFile>
@@ -246,7 +267,7 @@ const Profile = () => {
                 </WhiteButton>
               </DivPhotoButtons>
               <InfoPhotoExtensions>
-                Permitido JPG, JPEG o PNG. Tamaño máximo de 800Kb.
+                Permitido JPG, JPEG o PNG. {/*Tamaño máximo de 800Kb.*/}
               </InfoPhotoExtensions>
             </DivPhotoInfo>
           )}
@@ -308,7 +329,7 @@ const Profile = () => {
               </WhiteButton>
             </>
           ) : (
-            <PurpleButton onClick={() => setEditable(true)}>
+            <PurpleButton onClick={() => setEditable(true)} disabled={loadingEditable}>
               Editar
             </PurpleButton>
           )}

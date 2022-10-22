@@ -65,7 +65,7 @@ const Input = () => {
         text,
         senderId: currentUser.uid,
         date: Timestamp.now(),
-        img:user.perfil
+        email: user.email
       }),
     });
 

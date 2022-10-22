@@ -12,6 +12,18 @@ export const getUsers = async () => {
   }
 };
 
+export const getPic = async (id) => {
+  try {
+    const response = await fetch(`${http}user/pic/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" }
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const getProfessor = async() => {
 
   try {

@@ -62,7 +62,6 @@ export const PurpleButton = styled.button`
   align-items: center;
   justify-content: center;
   gap: 20px;
-  
   min-height: 42px;
   width: ${props => props.width};
   border: none;
@@ -74,6 +73,17 @@ export const PurpleButton = styled.button`
   font-size: 15px;
   cursor: pointer;
   text-transform: capitalize;
+  transition: all 0.2s;
+  
+  &:hover {
+    filter: grayscale(0.2);
+  }
+
+  &:disabled {
+    pointer-events: none;
+    background-color: #ADA7A7;
+    color: #D9D9D9;
+  }
 `;
 
 export const WhiteButton = styled.button`
@@ -93,6 +103,13 @@ export const WhiteButton = styled.button`
     background-color: #660be1;
     border: 1px solid #660be1;
   }
+
+  &:disabled {
+    pointer-events: none;
+    border: 1px solid #ADA7A7;
+    background-color: #ADA7A7;
+    color: #D9D9D9;
+  }
 `;
 
 export const DangerButton = styled.button`
@@ -105,13 +122,19 @@ export const DangerButton = styled.button`
   text-align: center;
   font-size: 15px;
   cursor: pointer;
-
   transition: all 0.2s;
 
   &:hover {
     color: #FFFFFF;
     background-color: #DC4067;
     border: 1px solid #DC4067;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    border: 1px solid #ADA7A7;
+    background-color: #ADA7A7;
+    color: #D9D9D9;
   }
 `;
 
@@ -128,6 +151,18 @@ export const PurpleIconButton = styled.button`
   text-align: center;
   font-size: 16px;
   cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    filter: grayscale(0.2);
+  }
+
+  &:disabled {
+    pointer-events: none;
+    border: 1px solid #ADA7A7;
+    background-color: #ADA7A7;
+    color: #D9D9D9;
+  }
 `;
 
 export const WhiteIconButton = styled.button`
@@ -150,6 +185,13 @@ export const WhiteIconButton = styled.button`
     background-color: #660be1;
     border: 1px solid #660be1;
   }
+
+  &:disabled {
+    pointer-events: none;
+    border: 1px solid #ADA7A7;
+    background-color: #ADA7A7;
+    color: #D9D9D9;
+  }
 `;
 
 export const DangerIconButton = styled.button`
@@ -171,5 +213,12 @@ export const DangerIconButton = styled.button`
     color: #FFFFFF;
     background-color: #DC4067;
     border: 1px solid #DC4067;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    border: 1px solid #ADA7A7;
+    background-color: #ADA7A7;
+    color: #D9D9D9;
   }
 `;

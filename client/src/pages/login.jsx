@@ -8,6 +8,7 @@ import { getProfile, signIn } from "../services/auth";
 import { ErrorCss } from "../styles/formularios";
 import { auth, db } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import ImagenLogin from "../images/imglogin.jpg";
 
 //STYLED COMPONENTS
 
@@ -32,7 +33,7 @@ const DivItemlog = styled.div`
   grid-column-end: 17;
   grid-row-start: 1;
   grid-row-end: 11;
-  background: url("/src/images/imglogin.jpg") no-repeat;
+  background: url(${ImagenLogin}) no-repeat;
   background-size: cover;
   background-position-y: center;
 `;

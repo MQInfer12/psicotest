@@ -71,17 +71,13 @@ const FutureChats = () => {
   }, []);
 
   const handleSelect = async (userSelect, userEmail, img, e) => {
-    console.log(img); //undefined or value
     //check wheter the group(chat in firestore) exits
     const combinedId =
       currentUser.uid > userSelect
         ? currentUser.uid + userSelect
         : userSelect + currentUser.uid;
     try {
-      console.log(combinedId);
       const res = await getDoc(doc(db, "chats", combinedId));
-      console.log("cero");
-      console.log(res);
       if (!res.exists()) {
         await setDoc(doc(db, "chats", combinedId), { messages: [] });
 

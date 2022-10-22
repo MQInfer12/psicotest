@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class BeneficiarioDocenteController extends Controller
 {
-    public function showTestToProffessor($id) //BIEN
+    public function showTestToProffessor($id) //MOSTRAR TESTS A LOS PROFESORES
     {
         $tests = DB::select("SELECT dt.id, dt.id_docente, dt.id_test, t.nombre, t.tiempo, t.descripcion, t.autor
                              from docente_tests as dt, tests as t 
@@ -16,12 +16,12 @@ class BeneficiarioDocenteController extends Controller
 
         foreach($tests as $test) {
             $id_dt = $test->id;
-            $usuarios = DB::select("SELECT u.nombre, u.perfil
+            $usuarios = DB::select("SELECT u.id, u.nombre, u.perfil
                                     FROM users as u, respuestas as r, docente_tests as dt
                                     WHERE r.email_user = u.email AND r.id_docente_test=dt.id AND dt.id='$id_dt'");
             foreach($usuarios as $usuario) {
                 if($usuario->perfil != null) {
-                    $usuario->perfil = stream_get_contents($usuario->perfil);
+                    $usuario->perfil = "pendiente...";
                 }
             }
             $test->usuarios = $usuarios;
@@ -30,22 +30,22 @@ class BeneficiarioDocenteController extends Controller
         return response()->json($tests);
     }
 
-    public function getBenefAssigning($id)
+    public function getBenefAssigning($id) //BENEFICIARIOS ASIGNADOS PARA DESASIGNARLOS
     {
         $getIdDocente = DB::select("SELECT bdt.id, bdt.email_user, bdt.id_docente_test, u.email, 
-                                    u.nombre as nombre_user, s.nombre as sede, u.perfil
+                                    u.id as id_user, u.nombre as nombre_user, s.nombre as sede, u.perfil
                                     from respuestas as bdt, users u, sedes as s
                                     where bdt.email_user=u.email and s.id=u.id_sede and bdt.id_docente_test=$id");
 
         foreach($getIdDocente as $benef) {
             if($benef->perfil != null) {
-                $benef->perfil = stream_get_contents($benef->perfil);
+                $benef->perfil = "pendiente...";
             }
         }
         return response()->json($getIdDocente);
     }
 
-    public function getBenefNotAssigning($id) //FUNCIONA
+    public function getBenefNotAssigning($id) //BENEFICIARIOS NO ASIGNADOS PARA ASIGNARLOS
     {
         $getIdBenef = DB::select("SELECT * from respuestas where id_docente_test=$id");
         $getIdsany = true;
@@ -65,7 +65,7 @@ class BeneficiarioDocenteController extends Controller
             from users as u where u.id_rol=1");
             foreach($getBenefNotAssigning as $benef) {
                 if($benef->perfil != null) {
-                    $benef->perfil = stream_get_contents($benef->perfil);
+                    $benef->perfil = "pendiente...";
                 }
             }
         } else {
@@ -73,7 +73,7 @@ class BeneficiarioDocenteController extends Controller
             from users as u where u.id_rol=1 " . $condition);
             foreach($getBenefNotAssigning as $benef) {
                 if($benef->perfil != null) {
-                    $benef->perfil = stream_get_contents($benef->perfil);
+                    $benef->perfil = "pendiente...";
                 }
             }
         }
@@ -81,7 +81,7 @@ class BeneficiarioDocenteController extends Controller
         return response()->json($getBenefNotAssigning);
     }
 
-   public function assignBenefToTest(Request $request) //FUNCIONA
+   public function assignBenefToTest(Request $request)
     {
         $request->validate([
             "objeto" => "required",

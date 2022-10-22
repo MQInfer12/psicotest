@@ -8,26 +8,23 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index() //PEDIR USUARIOS PARA LA PAGINA USERS DEL ADMINISTRADOR
     {
-        /*  $users = User::all();
-        return $users; */
-        $showUser = DB::select("SELECT u.id, u.nombre as nombre_user, u.email, u.perfil, u.genero, 
+        $showUser = DB::select("SELECT u.id, u.nombre as nombre_user, u.email, u.genero, u.perfil, 
                                 u.edad, u.id_sede, u.id_rol, u.estado, r.nombre as nombre_rol, 
                                 s.nombre as nombre_sede 
                                 from users u, rols r, sedes s 
                                 where u.id_rol=r.id 
                                 and u.id_sede=s.id
                                 order by u.id;");
-
-        foreach ($showUser as $user) {
-            if ($user->perfil != null) {
-                $user->perfil = stream_get_contents($user->perfil);
+        foreach($showUser as $user) {
+            if($user->perfil != null) {
+                $user->perfil = "pendiente...";
             }
         }
+
         return response()->json($showUser);
     }
-
 
     public function getProfessor($id)
     {
@@ -44,6 +41,13 @@ class UserController extends Controller
         }
 
         return response()->json($showUser);
+    }
+
+    public function getPic($id)
+    {
+        $usuario = DB::select("SELECT perfil from users where id='$id'");
+        $foto = stream_get_contents($usuario[0]->perfil);
+        return response()->json(["perfil" => $foto], 201);
     }
 
     public function store(Request $request)

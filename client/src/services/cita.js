@@ -62,6 +62,7 @@ export const scheduleAppoinment = async (idHorario, idUsuario) => {
 };
 
 export const cancelAppoinment = async (idHorario, idCita) => {
+  console.log(idHorario + " " + idCita);
   try {
     const response = await fetch(
       `${http}cita/allschedule/${idHorario}/${idCita}`,

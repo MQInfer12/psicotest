@@ -11,7 +11,6 @@ export const UseForm = ( initialForm, validateForm, success, funcion, id, id_doc
   const [errors, setErrors] = useState({});
 
   const handleSend = async (form) => {
-    console.log(funcion);
     if(funcion == "añadir") {
       try {
         const res = await addGrupo(form, id_docente);

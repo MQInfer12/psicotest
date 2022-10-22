@@ -94,7 +94,12 @@ const ModalAssignProfessor = ({ id, actualizar }) => {
             <DivPersonas>
             {data.map((v, i) => (
               <DivPersona key={i}>
-                <ProfilePic width="20px" height="20px" src={v.perfil} />
+                <ProfilePic 
+                  width="20px" 
+                  height="20px" 
+                  id={v.id}
+                  perfil={v.perfil} 
+                />
                 {v.nombre_usuario}
                 <input type="checkbox" value={v.email} onChange={handleChangeCheck}/>
               </DivPersona>

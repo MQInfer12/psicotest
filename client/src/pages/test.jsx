@@ -8,6 +8,7 @@ import { UserContext } from "../context/userContext";
 import { addTest, getTests, getTestsToBenef, getTestsToProfessor } from "../services/test";
 import TestCardProfessor from "../components/test/testCardProfessor";
 import TestCardBenef from "../components/test/testCardBenef";
+import { PurpleButton } from "../styles/formularios";
 
 const AllContainer = styled.div`
   display: flex;
@@ -27,19 +28,6 @@ const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-`;
-
-const PurpleButton = styled.button`
-  height: 42px;
-  border: none;
-  padding: 8px 26px 8px 26px;
-  background-color: #660be1;
-  border-radius: 8px;
-  color: #d9d9d9;
-  text-align: center;
-  font-size: 15px;
-  cursor: pointer;
-  text-transform: capitalize;
 `;
 
 const Test = () => {

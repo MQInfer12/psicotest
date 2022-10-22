@@ -67,6 +67,7 @@ const TestView = () => {
     const restest = await getTest(resJson.id_test);
     const restestJson = await restest?.json();
     setTest(restestJson[0]);
+    setLoading(false);
   }
 
   useEffect(() => {

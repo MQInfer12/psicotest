@@ -120,8 +120,9 @@ const TestCard = (props) => {
                 width="36px"
                 height="36px"
                 border={true}
-                src={v.perfil}
                 translation={i}
+                id={v.id}
+                perfil={v.perfil}
               />
             </div>
           ))

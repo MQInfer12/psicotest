@@ -1,11 +1,6 @@
 import { http } from "./htpp";
 
 export const addCaracteristica = async (form, id_test) => {
-  console.log(JSON.stringify({
-    titulo: form.titulo,
-    descripcion: form.descripcion,
-    id_docente: id_test,
-  }));
   try {
     const response = await fetch(`${http}caracteristica`, {
       method: "POST",

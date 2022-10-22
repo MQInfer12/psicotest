@@ -45,7 +45,7 @@ const ModalHorario = ({ funcion, call, actualizar, horario, fecha, id_docente })
       tipo: "text",
       value: form.fecha,
       error: errors.fecha,
-      placeholder:"fecha - dd/mm/yyyy",
+      placeholder:"fecha - mm/dd/yyyy",
       disabled: false
     },
     {

@@ -40,12 +40,13 @@ const RightBar = ({ user, calendar }) => {
   return (
     <RightContainer calendar={calendar}>
       <UpbarSquares>
-        <UpbarName>Bienvenido {user?.nombre}</UpbarName>
+        <UpbarName>Bienvenido {user?.nombre} {user?.id}</UpbarName>
         <UpbarNot></UpbarNot>
         <ProfilePic 
           width="52px"
           height="52px"
-          src={user?.perfil}
+          id={user?.id}
+          perfil={user?.perfil}
         />
       </UpbarSquares>
       {

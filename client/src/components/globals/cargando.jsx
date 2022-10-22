@@ -12,8 +12,8 @@ const DivLoader = styled.div`
 `;
 
 const Loader = styled.div`
-  width: 80px;
-  height: 80px;
+  width: ${props => props.width};
+  height: ${props => props.height};
   border-radius: 50%;
   border: 8px solid rgba(0, 0, 0, 0.2);
   border-top-color: #2264E6;
@@ -38,11 +38,14 @@ const SpanLoader = styled.span`
   text-transform: uppercase;
 `;
 
-const Cargando = () => {
+const Cargando = ({ text = true, width = "80px", height = "80px" }) => {
   return (
     <DivLoader>
-      <Loader></Loader>
-      <SpanLoader>Cargando...</SpanLoader>
+      <Loader width={width} height={height}></Loader>
+      {
+        text && 
+        <SpanLoader>Cargando...</SpanLoader>
+      }
     </DivLoader>
   )
 }
