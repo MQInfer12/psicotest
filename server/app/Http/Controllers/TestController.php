@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class TestController extends Controller
 {
-    public function index()
+    public function index() //PEDIR TODOS LOS TESTS EN EL ADMINISTRADOR
     {   
         $tests = DB::select("SELECT *
                              FROM tests
@@ -16,12 +16,12 @@ class TestController extends Controller
 
         foreach($tests as $test) {
             $id_test = $test->id;
-            $usuarios = DB::select("SELECT u.nombre, u.perfil
+            $usuarios = DB::select("SELECT u.id, u.nombre, u.perfil
                                     FROM users as u, docente_tests as dt
                                     WHERE dt.id_test = '$id_test' AND dt.id_docente = u.id");
             foreach($usuarios as $usuario) {
                 if($usuario->perfil != null) {
-                    $usuario->perfil = stream_get_contents($usuario->perfil);
+                    $usuario->perfil = "pendiente...";
                 }
             }
             $test->usuarios = $usuarios;
