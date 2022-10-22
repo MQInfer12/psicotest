@@ -7,12 +7,13 @@ import {
   PurpleButton,
   WhiteButton,
 } from "../../styles/formularios";
-import ProfilePic from "../globals/profilePic";
+import PhotoForm from "../globals/photoForm";
 import FormInputsText from "../globals/formInputsText";
 import FormInputsSelect from "../globals/formInputsSelect";
 import { auth, db } from "../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+
 const ModalUserContainer = styled.div`
   display: flex;
   gap: 16px;
@@ -243,7 +244,7 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
     <ModalUserContainer>
       {funcion == "editar" && (
         <FotoContainer>
-          <ProfilePic width="75px" height="75px" src={form.perfil} />
+          <PhotoForm width="75px" height="75px" src={form.perfil} />
           <WhiteButton onClick={() => handleResetImg("perfil")}>
             Reset
           </WhiteButton>

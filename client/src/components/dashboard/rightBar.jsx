@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ProfilePic from "../globals/profilePic";
+import PhotoForm from '../globals/photoForm';
 import CalendarMini from "../calendar/calendarMini";
 
 const RightContainer = styled.aside`
@@ -42,7 +43,7 @@ const RightBar = ({ user, calendar }) => {
       <UpbarSquares>
         <UpbarName>Bienvenido {user?.nombre} {user?.id}</UpbarName>
         <UpbarNot></UpbarNot>
-        <ProfilePic 
+        <PhotoForm 
           width="52px"
           height="52px"
           src={user?.perfil}

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/userContext";
 import styled from "styled-components";
-import ProfilePic from "../components/globals/profilePic";
+import PhotoForm from "../components/globals/photoForm";
 import { initialForm, validationsForm } from "../validations/profile";
 import { UseForm } from "../hooks/useForm";
 import { getProfile } from "../services/auth";
@@ -15,7 +15,6 @@ import {
 } from "../styles/formularios";
 import FormInputsText from "../components/globals/formInputsText";
 import { updateUser } from "../services/usuario";
-
 import { db } from "../firebase";
 import { UserFirebaseContext } from "../context/userFirebaseContext";
 import { doc, updateDoc } from "firebase/firestore";
@@ -114,15 +113,13 @@ const Profile = () => {
     handleReset,
     handleResetImg,
   } = UseForm(
-    user
-      ? {
-          nombre: user.nombre,
-          edad: String(user.edad),
-          genero: user.genero,
-          sede: String(user.id_sede),
-          perfil: user.perfil,
-        }
-      : initialForm,
+    user ? {
+      nombre: user.nombre,
+      edad: String(user.edad),
+      genero: user.genero,
+      sede: String(user.id_sede),
+      perfil: user.perfil,
+    } : initialForm,
     validationsForm,
     updateUser,
     actualizar,
@@ -215,6 +212,7 @@ const Profile = () => {
       img: stringImg,
     });
   };
+
   const sendData = (e) => {
     updateUserFirebase(form.perfil);
     handleSubmit(e);
@@ -225,7 +223,7 @@ const Profile = () => {
       <UpContainer>
         <PDetalles>Detalles Perfil</PDetalles>
         <DivPhoto>
-          <ProfilePic
+          <PhotoForm
             width="100px"
             height="100px"
             src={editable ? form.perfil : user?.perfil}

@@ -16,7 +16,7 @@ const DivCard = styled.div`
   border-radius: 20px;
   position: relative;
 
-  & > img {
+  & > .img {
     position: absolute;
     top: -50px;
     left: 125px;
@@ -118,7 +118,7 @@ const UserCard = (props) => {
 
   return (
     <DivCard estado={props.estado}>
-      <ProfilePic width="100px" height="100px" src={props.perfil} />
+      <ProfilePic width="100px" height="100px" id={props.id} perfil={props.perfil} />
       <DivEstado estado={props.estado}><i className="fa-solid fa-circle"></i>{props.estado ? "Habilitado" : "Deshabilitado"}</DivEstado>
       <DivCardText>
         <PNombre>{props.nombre_user}</PNombre>
