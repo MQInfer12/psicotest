@@ -17,6 +17,7 @@ import FormInputsText from "../components/globals/formInputsText";
 import { updateUser } from "../services/usuario";
 import { db } from "../firebase";
 import { UserFirebaseContext } from "../context/userFirebaseContext";
+import { ProfilePicContext } from "../context/profilePicContext";
 import { doc, updateDoc } from "firebase/firestore";
 
 const ProfileContainer = styled.div`
@@ -96,10 +97,15 @@ const DivButtonsDown = styled.div`
 `;
 
 const Profile = () => {
+  const { setProfilePics } = useContext(ProfilePicContext);
   const { user, setUser } = useContext(UserContext);
   const [editable, setEditable] = useState(false);
 
   const actualizar = async () => {
+    setProfilePics(old => ({
+      ...old,
+      [user.id]: form.perfil 
+    }))
     const newUser = await getProfile();
     setUser(newUser);
     setEditable(false);
