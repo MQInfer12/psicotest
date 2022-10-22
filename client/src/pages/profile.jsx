@@ -19,6 +19,8 @@ import { db } from "../firebase";
 import { UserFirebaseContext } from "../context/userFirebaseContext";
 import { ProfilePicContext } from "../context/profilePicContext";
 import { doc, updateDoc } from "firebase/firestore";
+import { useEffect } from "react";
+import ProfilePic from "../components/globals/profilePic";
 
 const ProfileContainer = styled.div`
   min-height: 100%;
@@ -97,17 +99,18 @@ const DivButtonsDown = styled.div`
 `;
 
 const Profile = () => {
-  const { setProfilePics } = useContext(ProfilePicContext);
+  const { profilePics, setProfilePics } = useContext(ProfilePicContext);
   const { user, setUser } = useContext(UserContext);
+  const [loadingEditable, setLoadingEditable] = useState(true);
   const [editable, setEditable] = useState(false);
 
   const actualizar = async () => {
+    const newUser = await getProfile();
+    setUser(newUser);
     setProfilePics(old => ({
       ...old,
       [user.id]: form.perfil 
     }))
-    const newUser = await getProfile();
-    setUser(newUser);
     setEditable(false);
   };
 
@@ -124,7 +127,7 @@ const Profile = () => {
       edad: String(user.edad),
       genero: user.genero,
       sede: String(user.id_sede),
-      perfil: user.perfil,
+      perfil: profilePics[user.id],
     } : initialForm,
     validationsForm,
     updateUser,
@@ -224,15 +227,29 @@ const Profile = () => {
     handleSubmit(e);
   };
 
+  useEffect(() => {
+    if(user.perfil) {
+      if(profilePics[user.id]) {
+        handleReset();
+        setLoadingEditable(false);
+      }
+    } else {
+      setLoadingEditable(false);
+    }
+  }, [profilePics]);
+
   return (
     <ProfileContainer>
       <UpContainer>
         <PDetalles>Detalles Perfil</PDetalles>
         <DivPhoto>
-          <PhotoForm
+          <ProfilePic
             width="100px"
             height="100px"
-            src={editable ? form.perfil : user?.perfil}
+            id={user.id}
+            perfil={user.perfil}
+            editable={editable}
+            prev={form.perfil}
           />
           {editable && (
             <DivPhotoInfo>
@@ -313,7 +330,7 @@ const Profile = () => {
               </WhiteButton>
             </>
           ) : (
-            <PurpleButton onClick={() => setEditable(true)}>
+            <PurpleButton onClick={() => setEditable(true)} disabled={loadingEditable}>
               Editar
             </PurpleButton>
           )}

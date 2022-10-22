@@ -41,7 +41,7 @@ const Pic = styled.img`
   object-position: center;
 `;
 
-const ProfilePic = ({ width, height, id, perfil, border, translation }) => {
+const ProfilePic = ({ width, height, border, translation, id, perfil, editable, prev }) => {
   const { profilePics, setProfilePics } = useContext(ProfilePicContext);
 
   const getProfilePic = async () => {
@@ -86,15 +86,15 @@ const ProfilePic = ({ width, height, id, perfil, border, translation }) => {
             <Cargando text={false} width={"calc(" + width + " - 10px)"} height={"calc(" + height + " - 10px)"} />
           </DivLoading>
         ) : (
-          //FOTO CARGADA
+          //FOTO DE PERFIL CARGADA
           <Pic
-            src={profilePics[id]}
+            src={editable? (prev? prev : DefaultPhoto) : profilePics[id]}
           />
         )
       ) : (
         //NO TIENE FOTO DE PERFIL
         <Pic 
-          src={DefaultPhoto}
+          src={prev? prev : DefaultPhoto}
         />
       )
     }

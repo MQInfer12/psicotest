@@ -43,10 +43,11 @@ const RightBar = ({ user, calendar }) => {
       <UpbarSquares>
         <UpbarName>Bienvenido {user?.nombre} {user?.id}</UpbarName>
         <UpbarNot></UpbarNot>
-        <PhotoForm 
+        <ProfilePic 
           width="52px"
           height="52px"
-          src={user?.perfil}
+          id={user?.id}
+          perfil={user?.perfil}
         />
       </UpbarSquares>
       {
