@@ -218,15 +218,6 @@ const Login = () => {
     },
   ];      
 
-  const sendSubmit = async (e) => {
-    e.preventDefault();
-    //login in postgres
-    handleSubmit(e);
-    //login in firebase
-    const { email, contrasenia } = form;
-    await signInWithEmailAndPassword(auth, email, contrasenia); 
-  };
-
   return (
     <main>
       <section>
@@ -260,7 +251,7 @@ const Login = () => {
                 <GoToText to="/register">Regístrate</GoToText>
               </GoToContainer>
               <DivButton>
-                <ButtonSubmit onClick={(e) => sendSubmit(e)}>
+                <ButtonSubmit onClick={handleSubmit}>
                   LOGIN
                 </ButtonSubmit>
               </DivButton>

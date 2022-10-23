@@ -23,6 +23,9 @@ export const UseForm = (initialForm, validateForm, APICall, success, primaryId, 
       } else if(res.status == 200) { //ESTADO DE LOGEADO
         console.log("¡Logeado con éxito!");
         success();
+      } else if(res.status == 209){ //ESTADO DE REGISTRO
+        const resJson = await res?.json();
+        success(resJson);
       } else if(res.status == 401) { //NO AUTORIZADO
         console.log("¡Correo o contraseña incorrectos!");
         alert("¡Correo o contraseña incorrectos!");

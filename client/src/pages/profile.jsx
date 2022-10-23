@@ -99,6 +99,7 @@ const DivButtonsDown = styled.div`
 
 const Profile = () => {
   const { profilePics, setProfilePics } = useContext(ProfilePicContext);
+  const { currentUser, setCurrentUser } = useContext(UserFirebaseContext);
   const { user, setUser } = useContext(UserContext);
   const [loadingEditable, setLoadingEditable] = useState(true);
   const [editable, setEditable] = useState(false);
@@ -130,7 +131,10 @@ const Profile = () => {
     } : initialForm,
     validationsForm,
     updateUser,
-    actualizar,
+    () => {
+      updateUserFirebase();
+      actualizar();
+    },
     user?.id
   );
 
@@ -212,18 +216,18 @@ const Profile = () => {
     },
   ];
 
-  const { currentUser } = useContext(UserFirebaseContext);
-
-  const updateUserFirebase = async (stringImg) => {
-    const ref = doc(db, "users", currentUser.uid);
-    await updateDoc(ref, {
-      img: stringImg,
+  const updateUserFirebase = async () => {
+    let llenado = null;
+    if(form.perfil != null) {
+      llenado = "pendiente...";
+    }
+    setCurrentUser(old => ({
+      ...old,
+      perfil: llenado
+    }));
+    await updateDoc(doc(db, "users", String(user?.id)), {
+      perfil: llenado,
     });
-  };
-
-  const sendData = (e) => {
-    updateUserFirebase(form.perfil);
-    handleSubmit(e);
   };
 
   useEffect(() => {
@@ -316,7 +320,7 @@ const Profile = () => {
         <DivButtonsDown>
           {editable ? (
             <>
-              <PurpleButton onClick={(e) => sendData(e)}>
+              <PurpleButton onClick={handleSubmit}>
                 Guardar cambios
               </PurpleButton>
               <WhiteButton

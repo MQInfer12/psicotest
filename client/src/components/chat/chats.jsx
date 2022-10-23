@@ -5,6 +5,7 @@ import { ChatContext } from "../../context/chatContext";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
 import { db } from "../../firebase";
 import DefaultPhoto from "../../images/defaultPhoto.jpg";
+import ProfilePic from "../globals/profilePic";
 
 const Container = styled.div`
   .userChat {
@@ -19,12 +20,6 @@ const Container = styled.div`
       background-color: #2f2d52;
     }
 
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
     .userChatInfo {
       span {
         font-size: 18px;
@@ -37,6 +32,7 @@ const Container = styled.div`
     }
   }
 `;
+
 const Chats = () => {
   const [chats, setChats] = useState([]);
   const { currentUser } = useContext(UserFirebaseContext);
@@ -44,14 +40,14 @@ const Chats = () => {
 
   useEffect(() => {
     const getChats = () => {
-      const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
+      const unsub = onSnapshot(doc(db, "userChats", currentUser?.uid), (doc) => {
         setChats(doc.data());
       });
       return () => {
         unsub();
       };
     };
-    currentUser.uid && getChats();
+    currentUser?.uid && getChats();
   }, [currentUser.uid]);
 
   const handleSelect = (u) => {
@@ -63,22 +59,24 @@ const Chats = () => {
       {chats &&
         Object.entries(chats)
           .sort((a, b) => b[1].date - a[1].date)
-          .map((v, i) => (
+          .map((v, i) => { console.log(v[1].userInfo); return (
             <div
               className="userChat"
               key={i}
               onClick={() => handleSelect(v[1].userInfo)}
             >
-              <img
-                src={v[1].userInfo.img ? v[1].userInfo.img : DefaultPhoto}
-                alt=""
+              <ProfilePic
+                width="50px"
+                height="50px"
+                id={v[1].userInfo.uid}
+                perfil={v[1].userInfo.perfil}
               />
               <div className="userChatInfo">
                 <span>{v[1].userInfo.email}</span>
                <p>{v[1].lastMessage != undefined && v[1].lastMessage.text}</p> 
               </div>
             </div>
-          ))}
+          )})}
     </Container>
   );
 };

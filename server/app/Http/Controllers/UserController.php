@@ -75,7 +75,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return response()->json(["mensaje" => "se guardo correctamente"], 201);
+        return response()->json(["mensaje" => "se guardo correctamente", "user" => $user], 209);
     }
 
     public function show($id)
@@ -100,10 +100,13 @@ class UserController extends Controller
         $user->genero = $request->genero;
         $user->edad = $request->edad;
         $user->id_sede = $request->id_sede;
-
         $user->save();
 
-        return response()->json(["mensaje" => "se actualizo correctamente"], 201);
+        if($user->perfil != null) {
+            $user->perfil = "pendiente...";
+        }
+
+        return response()->json(["mensaje" => "se actualizo correctamente", "user" => $user], 209);
     }
 
     public function able($id)

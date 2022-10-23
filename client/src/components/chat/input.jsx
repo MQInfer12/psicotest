@@ -14,6 +14,7 @@ import {
 import { db } from "../../firebase";
 import { v4 as uuid } from "uuid";
 import { UserContext } from "../../context/userContext";
+
 const InputComp = styled.div`
   height: 50px;
   background-color: white;
@@ -52,31 +53,34 @@ const InputComp = styled.div`
     }
   }
 `;
+
 const Input = () => {
   const [text, setText] = useState("");
   const { user } = useContext(UserContext);
   const { currentUser } = useContext(UserFirebaseContext);
 
   const { data } = useContext(ChatContext);
+  
   const handleSend = async () => {
     await updateDoc(doc(db, "chats", data.chatId), {
       messages: arrayUnion({
         id: uuid(),
         text,
-        senderId: currentUser.uid,
+        senderId: currentUser?.uid,
         date: Timestamp.now(),
-        email: user.email
+        email: user.email,
+        perfil: user.perfil
       }),
     });
 
-    await updateDoc(doc(db, "userChats", currentUser.uid), {
+    await updateDoc(doc(db, "userChats", currentUser?.uid), {
       [data.chatId + ".lastMessage"]: {
         text,
       },
       [data.chatId + ".date"]: serverTimestamp(),
     });
 
-    await updateDoc(doc(db, "userChats", data.user.uid), {
+    await updateDoc(doc(db, "userChats", String(data.user.uid)), {
       [data.chatId + ".lastMessage"]: {
         text,
       },

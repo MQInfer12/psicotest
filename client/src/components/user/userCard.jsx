@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { DangerIconButton, WhiteIconButton } from "../../styles/formularios";
-import { ableUser, updateUser, deleteUser } from "../../services/usuario";
+import { ableUser, updateUser, deleteUser as serviceDeleteUser } from "../../services/usuario";
 import Modal from "../globals/modal";
 import ModalUser from "./modalUser";
 import ProfilePic from "../globals/profilePic";
 import SureModal from "../globals/sureModal";
+import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
+import { auth, db } from "../../firebase";
 
 const DivCard = styled.div`
   margin-top: 35px;
@@ -99,6 +101,7 @@ const DivEstado = styled.div`
 const UserCard = (props) => {
   const [showForm, setShowForm] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const newUser = [];
 
   const cambiarHabilitado = async () => {
     const res = await ableUser(props.id);
@@ -109,10 +112,35 @@ const UserCard = (props) => {
   };
 
   const borrarUsuario = async () => {
-    const res = await deleteUser(props.id);
+    const res = await serviceDeleteUser(props.id);
     const resJson = await res?.json();
     if (resJson) {
+      deleteFirebaseUser(props.id);
       props.onSubmit();
+    }
+  }
+
+  const deleteFirebaseUser = async (id) => {
+    const q = query(collection(db, "users"), where("id", "==", id));
+    try {
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        newUser.push(doc.data());
+      });
+      const newUserObj = Object.assign({}, newUser[0]);
+
+      await deleteDoc(doc(db, "users", newUserObj.uid));
+      await deleteDoc(doc(db, "userChats", newUserObj.uid));
+
+      //TODO
+      //FALTA BORRAR DE AUTHENTICATION
+      //FALTA BORRAR DE AUTHENTICATION
+      //FALTA BORRAR DE AUTHENTICATION
+      //FALTA BORRAR DE AUTHENTICATION
+      //FALTA BORRAR DE AUTHENTICATION
+
+    } catch (err) {
+      console.log(err);
     }
   }
 

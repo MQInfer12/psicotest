@@ -20,10 +20,10 @@ const Sidebar = () => {
   return (
     <Container>
       <Navbar handleChange={handleChange} />
-      <Search />
+      {/*<Search />*/}
       {value == 1 && <Chats />}
       {value == 2 && <FutureChats />}  
-{/* <Chats /> */}
+      {/* <Chats /> */}
     </Container>
   );
 };

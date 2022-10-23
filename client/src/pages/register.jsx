@@ -216,7 +216,8 @@ const Register = () => {
     initialForm,
     validationsForm,
     signUp,
-    () => {
+    (respuesta) => {
+      createFirebaseUser(respuesta.user);
       setShowModal(true);
       handleReset();
     }
@@ -307,22 +308,18 @@ const Register = () => {
     },
   ];
 
-  const sendSubmit = async (e) => {
-    //save in postgres
-    handleSubmit(e);
-    //save in firebase
-    e.preventDefault();
-    const { email, contrasenia, edad, nombre, genero, sede } = form;
-    const resp = await createUserWithEmailAndPassword(auth, email, contrasenia);
-    await setDoc(doc(db, "users", resp.user.uid), {
-      uid: resp.user.uid,
+  const createFirebaseUser = async (nuevoUsuario) => {
+    const { email, nombre, id } = nuevoUsuario;
+
+    await setDoc(doc(db, "users", String(id)), {
+      uid: id,
       name: nombre,
       email: email,
       rol: "1",
-      sede: sede,
+      perfil: null,
     });
-    await setDoc(doc(db, "userChats", resp.user.uid), {});
-  };
+    await setDoc(doc(db, "userChats", String(id)), {});
+  }
 
   return (
     <main>
@@ -371,7 +368,7 @@ const Register = () => {
               </GoToContainer>
 
               <DivButton>
-                <ButtonSubmit onClick={(e) => sendSubmit(e)}>
+                <ButtonSubmit onClick={handleSubmit}>
                   REGISTRARSE
                 </ButtonSubmit>
               </DivButton>

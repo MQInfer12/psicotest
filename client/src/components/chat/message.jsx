@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import { useRef } from "react";
 import styled from "styled-components";
-import { ChatContext } from "../../context/chatContext";
 import { UserContext } from "../../context/userContext";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
 import PhotoDefault from "../../images/defaultPhoto.jpg";
+import ProfilePic from "../globals/profilePic";
+
 const Container = styled.div`
   display: flex;
   gap: 20px;
@@ -14,13 +15,6 @@ const Container = styled.div`
     flex-direction: column;
     color: gray;
     font-weight: 300;
-
-    img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
   }
   .messageContent {
     max-width: 80%;
@@ -55,7 +49,6 @@ const Container = styled.div`
 
 const Message = ({ message }) => {
   const { currentUser } = useContext(UserFirebaseContext);
-  const { data } = useContext(ChatContext);
   const { user } = useContext(UserContext);
 
   const ref = useRef();
@@ -83,7 +76,12 @@ const Message = ({ message }) => {
       className={`${message.senderId === currentUser.uid && "owner"}`}
     >
       <div className="messageInfo">
-        <img src={message.email == user.email && user.perfil ? user.perfil : PhotoDefault} alt="" />
+        <ProfilePic
+          width="40px"
+          height="40px"
+          id={message.senderId}
+          perfil={message.perfil}
+        />
         <span>{convertSecondosToDate(message.date.seconds)}</span>
       </div>
       <div className="messageContent">

@@ -3,7 +3,8 @@ import { useContext } from "react";
 import styled from "styled-components";
 import { UserContext } from "../../context/userContext";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
-import DefaultPhoto from "../../images/defaultPhoto.jpg";
+import ProfilePic from "../globals/profilePic";
+
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -20,14 +21,6 @@ const Container = styled.div`
     display: flex;
     gap: 10px;
 
-    img {
-      background-color: #ddddf7;
-      height: 24px;
-      width: 24px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
     button {
       background-color: #5d5b8d;
       color: #ddddf7;
@@ -37,6 +30,7 @@ const Container = styled.div`
     }
   }
 `;
+
 const Navbar = ({ handleChange }) => {
   const { currentUser } = useContext(UserFirebaseContext);
   const { user } = useContext(UserContext);
@@ -45,7 +39,7 @@ const Navbar = ({ handleChange }) => {
     <Container>
       <span className="logo">UNIFRANZ</span>
       <div className="user">
-        <img src={user.perfil ? user.perfil : DefaultPhoto} alt="" />
+        <ProfilePic width="24px" height="24px" id={user.id} perfil={user.perfil} />
         <span>{user.nombre}</span>
         <select onChange={(e) => handleChange(e.target.value)}>
           <option value={1}>Chatear</option>

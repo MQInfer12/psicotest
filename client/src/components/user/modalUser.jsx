@@ -10,9 +10,8 @@ import {
 } from "../../styles/formularios";
 import FormInputsText from "../globals/formInputsText";
 import FormInputsSelect from "../globals/formInputsSelect";
-import { auth, db } from "../../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+import { collection, doc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import ProfilePic from "../globals/profilePic";
 import { useState } from "react";
 
@@ -36,6 +35,7 @@ const FotoContainer = styled.div`
 const ModalUser = ({ call, actualizar, funcion, user }) => {
   const { profilePics, setProfilePics } = useContext(ProfilePicContext);
   const [loadingEditable, setLoadingEditable] = useState(true);
+  const newUser = [];
 
   const { form, errors, handleChange, handleSubmit, handleResetImg, handleReset } = UseForm(
     user ? {
@@ -50,19 +50,24 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
     } : initialForm,
     validationsForm,
     call,
-    () => {
-      setProfilePics(old => ({
-        ...old,
-        [user.id]: form.perfil 
-      }));
+    (respuesta) => {
+      if(funcion == "añadir") {
+        createFirebaseUser(respuesta.user);
+      } else if(funcion == "editar") {
+        updateFirebaseUser(respuesta.user);
+        setProfilePics(old => ({
+          ...old,
+          [user.id]: form.perfil 
+        }));
+      }
       actualizar();
     },
     user?.id
   );
 
-  let data;
+  let dataText;
   if (funcion == "añadir") {
-    data = [
+    dataText = [
       {
         name: "nombre",
         value: form.nombre,
@@ -93,7 +98,7 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
       },
     ];
   } else if (funcion == "editar") {
-    data = [
+    dataText = [
       {
         name: "nombre",
         value: form.nombre,
@@ -233,32 +238,47 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
     ];
   }
 
-  const sendSubmit = async (e) => {
-    handleSubmit(e);
-    //save in firebase
-    e.preventDefault();
-    const { email, contrasenia, nombre, rol, sede } = form;
-    const resp = await createUserWithEmailAndPassword(auth, email, contrasenia);
-    await setDoc(doc(db, "users", resp.user.uid), {
-      uid: resp.user.uid,
+  const createFirebaseUser = async (nuevoUsuario) => {
+    const { email, nombre, id, id_rol } = nuevoUsuario;
+
+    await setDoc(doc(db, "users", String(id)), {
+      uid: id,
       name: nombre,
       email: email,
-      rol:rol,
-      sede:sede,
+      rol: id_rol,
+      perfil: null,
     });
-    await setDoc(doc(db, "userChats", resp.user.uid), {});
-  };
+    await setDoc(doc(db, "userChats", String(id)), {});
+  }
+
+  const updateFirebaseUser = async (nuevoUsuario) => {
+    const { nombre, perfil, id } = nuevoUsuario;
+    const q = query(collection(db, "users"), where("uid", "==", String(id)));
+    try {
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        newUser.push(doc.data());
+      });
+      const newUserObj = Object.assign({}, newUser[0]);
+      await updateDoc(doc(db, "users", newUserObj.uid), {
+        name: nombre,
+        perfil: perfil 
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
-    if(user.perfil) {
-      if(profilePics[user.id]) {
+    if(user?.perfil) {
+      if(profilePics[user?.id]) {
         handleReset();
         setLoadingEditable(false);
       }
     } else {
       setLoadingEditable(false);
     }
-  }, [profilePics[user.id]]);
+  }, [profilePics[user?.id]]);
 
   return (
     <ModalUserContainer>
@@ -279,13 +299,13 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
       )}
       <Columnas>
         <FormContainer>
-          <FormInputsText data={data} handleChange={handleChange} />
+          <FormInputsText data={dataText} handleChange={handleChange} />
         </FormContainer>
         <FormContainer>
           <FormInputsSelect data={dataSelect} handleChange={handleChange} />
         </FormContainer>
       </Columnas>
-      <PurpleButton onClick={(e) => sendSubmit(e)} disabled={loadingEditable}>{funcion}</PurpleButton>
+      <PurpleButton onClick={handleSubmit} disabled={loadingEditable}>{funcion}</PurpleButton>
     </ModalUserContainer>
   );
 };

@@ -17,6 +17,7 @@ const Container = styled.div`
 const Messages = () => {
   const [messagesEstate, setMessagesEstate] = useState([]);
   const { data } = useContext(ChatContext);
+  
   useEffect(() => {
     const unSub = onSnapshot(doc(db, "chats", data.chatId), (doc) => {
       doc.exists() && setMessagesEstate(doc.data().messages);
