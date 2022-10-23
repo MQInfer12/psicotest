@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
+import { UserContext } from "../../context/userContext";
+import { UserFirebaseContext } from "../../context/userFirebaseContext";
 import styled from "styled-components";
 import { logOut } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase";
+
 const SideBarIcon = styled.i`
   text-align: center;
   font-size: 16px;
@@ -33,7 +34,10 @@ const SideBarButton = styled.button`
   }
 `;
 
-const LogoutButton = ({ setUser }) => {
+const LogoutButton = () => {
+  const { setUser } = useContext(UserContext);
+  const { setCurrentUser } = useContext(UserFirebaseContext);
+
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -42,8 +46,8 @@ const LogoutButton = ({ setUser }) => {
     if (resoutJson.message == "Successfully logged out") {
       //logged out postgres
       setUser(undefined);
-      //logged out firebase
-      signOut(auth);
+      //setFirebaseUser to {}
+      setCurrentUser({});
       //redirect login
       navigate("/");
     }

@@ -1,10 +1,10 @@
-import { doc, onSnapshot } from "firebase/firestore";
+import { async } from "@firebase/util";
+import { collection, doc, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { ChatContext } from "../../context/chatContext";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
 import { db } from "../../firebase";
-import DefaultPhoto from "../../images/defaultPhoto.jpg";
 import ProfilePic from "../globals/profilePic";
 
 const Container = styled.div`
@@ -37,18 +37,56 @@ const Chats = () => {
   const [chats, setChats] = useState([]);
   const { currentUser } = useContext(UserFirebaseContext);
   const { dispatch } = useContext(ChatContext);
+  let userData = {};
+  let chatsData = [];
+
+  const getUserInfo = async (userChat) => {
+    const userInfo = userChat.userInfo;
+    const uid = userInfo.uid;
+
+    const q = query(collection(db, "users"), where("uid", "==", Number(uid)));
+    try {
+      const querySnapshot = await getDocs(q);
+      userData = querySnapshot.docs[0].data();
+      console.log(userData);
+
+      const { email, perfil } = userData;
+
+      userChat.userInfo.email = email;
+      userChat.userInfo.perfil = perfil;
+
+      chatsData.push(userChat);
+      console.log(chatsData)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const assignUserToChat = async (userChat) => {
+    await getUserInfo(userChat);
+    /* console.log(userData);
+    const { email, perfil } = userData;
+    userChat.userInfo.email = email;
+    userChat.userInfo.perfil = perfil;
+    chatsData.push(userChat);
+    setChats(chatsData); */
+  }
 
   useEffect(() => {
-    const getChats = () => {
+    const getChats = async () => {
       const unsub = onSnapshot(doc(db, "userChats", currentUser?.uid), (doc) => {
-        setChats(doc.data());
+        const data = doc.data();
+        for(let key in data) {
+          getUserInfo(data[key]);
+        }
+        setChats(chatsData);
       });
       return () => {
         unsub();
       };
     };
     currentUser?.uid && getChats();
-  }, [currentUser.uid]);
+  }, [currentUser?.uid]);
 
   const handleSelect = (u) => {
     dispatch({ type: "CHANGE_USER", payload: u });
@@ -59,7 +97,7 @@ const Chats = () => {
       {chats &&
         Object.entries(chats)
         .sort((a, b) => b[1].date - a[1].date)
-        .map((v, i) => (
+        .map((v, i) => { console.log(v[1].userInfo); return (
           <div
             className="userChat"
             key={i}
@@ -76,7 +114,7 @@ const Chats = () => {
               <p>{v[1].lastMessage != undefined && v[1].lastMessage.text}</p> 
             </div>
           </div>
-        ))
+        )})
       }
     </Container>
   );
