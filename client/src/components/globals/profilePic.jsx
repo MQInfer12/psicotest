@@ -56,7 +56,7 @@ const ProfilePic = ({ width, height, border, translation, id, perfil, editable, 
   useEffect(() => {
     //SI NO SE ENCUENTRA LA FOTO EN EL CONTEXTO PEDIRLA AL SERVIDOR
     if(!Object.keys(profilePics).includes(String(id)) && perfil != null) {
-      console.log("Pidiendo foto: " + id);
+      //console.log("Pidiendo foto: " + id);
       //RESERVAR ESPACIO PARA NO PEDIR VARIAS VECES SI ES QUE EXISTEN VARIOS COMPONENTES IGUALES EN LA PAGINA
       setProfilePics(old => ({
         ...old,
