@@ -253,14 +253,14 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
 
   const updateFirebaseUser = async (nuevoUsuario) => {
     const { nombre, perfil, id } = nuevoUsuario;
-    const q = query(collection(db, "users"), where("uid", "==", String(id)));
+    const q = query(collection(db, "users"), where("uid", "==", id));
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         newUser.push(doc.data());
       });
       const newUserObj = Object.assign({}, newUser[0]);
-      await updateDoc(doc(db, "users", newUserObj.uid), {
+      await updateDoc(doc(db, "users", String(newUserObj.uid)), {
         name: nombre,
         perfil: perfil 
       });

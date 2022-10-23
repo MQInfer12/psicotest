@@ -121,23 +121,20 @@ const UserCard = (props) => {
   }
 
   const deleteFirebaseUser = async (id) => {
-    const q = query(collection(db, "users"), where("id", "==", id));
+    const q = query(collection(db, "users"), where("uid", "==", id));
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         newUser.push(doc.data());
       });
       const newUserObj = Object.assign({}, newUser[0]);
+      console.log(newUserObj);
 
-      await deleteDoc(doc(db, "users", newUserObj.uid));
-      await deleteDoc(doc(db, "userChats", newUserObj.uid));
+      await deleteDoc(doc(db, "users", String(newUserObj.uid)));
+      await deleteDoc(doc(db, "userChats", String(newUserObj.uid)));
 
       //TODO
-      //FALTA BORRAR DE AUTHENTICATION
-      //FALTA BORRAR DE AUTHENTICATION
-      //FALTA BORRAR DE AUTHENTICATION
-      //FALTA BORRAR DE AUTHENTICATION
-      //FALTA BORRAR DE AUTHENTICATION
+      //FALTA BORRAR LOS CHATS QUE INCLUYEN A ESTE USUARIO
 
     } catch (err) {
       console.log(err);

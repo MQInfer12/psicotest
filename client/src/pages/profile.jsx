@@ -99,7 +99,7 @@ const DivButtonsDown = styled.div`
 
 const Profile = () => {
   const { profilePics, setProfilePics } = useContext(ProfilePicContext);
-  const { currentUser, setCurrentUser } = useContext(UserFirebaseContext);
+  const { setCurrentUser } = useContext(UserFirebaseContext);
   const { user, setUser } = useContext(UserContext);
   const [loadingEditable, setLoadingEditable] = useState(true);
   const [editable, setEditable] = useState(false);
@@ -221,12 +221,16 @@ const Profile = () => {
     if(form.perfil != null) {
       llenado = "pendiente...";
     }
+    //ACTUALIZAR EL CONTEXTO DEL USUARIO
     setCurrentUser(old => ({
       ...old,
+      name: form.nombre,
       perfil: llenado
     }));
+    //ACTUALIZAR EN EL FIREBASE
     await updateDoc(doc(db, "users", String(user?.id)), {
-      perfil: llenado,
+      name: form.nombre,
+      perfil: llenado
     });
   };
 

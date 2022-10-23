@@ -58,25 +58,26 @@ const Chats = () => {
     <Container>
       {chats &&
         Object.entries(chats)
-          .sort((a, b) => b[1].date - a[1].date)
-          .map((v, i) => { console.log(v[1].userInfo); return (
-            <div
-              className="userChat"
-              key={i}
-              onClick={() => handleSelect(v[1].userInfo)}
-            >
-              <ProfilePic
-                width="50px"
-                height="50px"
-                id={v[1].userInfo.uid}
-                perfil={v[1].userInfo.perfil}
-              />
-              <div className="userChatInfo">
-                <span>{v[1].userInfo.email}</span>
-               <p>{v[1].lastMessage != undefined && v[1].lastMessage.text}</p> 
-              </div>
+        .sort((a, b) => b[1].date - a[1].date)
+        .map((v, i) => (
+          <div
+            className="userChat"
+            key={i}
+            onClick={() => handleSelect(v[1].userInfo)}
+          >
+            <ProfilePic
+              width="50px"
+              height="50px"
+              id={v[1].userInfo.uid}
+              perfil={v[1].userInfo.perfil}
+            />
+            <div className="userChatInfo">
+              <span>{v[1].userInfo.email}</span>
+              <p>{v[1].lastMessage != undefined && v[1].lastMessage.text}</p> 
             </div>
-          )})}
+          </div>
+        ))
+      }
     </Container>
   );
 };
