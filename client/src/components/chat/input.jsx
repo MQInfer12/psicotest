@@ -13,7 +13,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { v4 as uuid } from "uuid";
-import { UserContext } from "../../context/userContext";
 
 const InputComp = styled.div`
   height: 50px;
@@ -56,9 +55,7 @@ const InputComp = styled.div`
 
 const Input = () => {
   const [text, setText] = useState("");
-  const { user } = useContext(UserContext);
   const { currentUser } = useContext(UserFirebaseContext);
-
   const { data } = useContext(ChatContext);
   
   const handleSend = async () => {
@@ -68,8 +65,6 @@ const Input = () => {
         text,
         senderId: currentUser?.uid,
         date: Timestamp.now(),
-        email: user.email,
-        perfil: user.perfil
       }),
     });
 

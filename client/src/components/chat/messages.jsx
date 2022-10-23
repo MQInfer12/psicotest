@@ -4,9 +4,8 @@ import { ChatContext } from "../../context/chatContext";
 import Message from "./message";
 import { db } from "../../firebase";
 import { onSnapshot } from "firebase/firestore";
-import {
-  doc
-} from "firebase/firestore";
+import { doc } from "firebase/firestore";
+
 const Container = styled.div`
   background-color: #ddddf7;
   padding: 10px;
@@ -33,7 +32,6 @@ const Messages = () => {
         {messagesEstate.map((v, i) => (
           <Message message={v} key={i} />
         ))}
-
       </div>
     </Container>
   );

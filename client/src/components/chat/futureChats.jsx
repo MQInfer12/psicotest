@@ -1,21 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import DefaultPhoto from "../../images/defaultPhoto.jpg";
 import { db } from "../../firebase";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  setDoc,
-  doc,
-  updateDoc,
-  serverTimestamp,
-  getDoc,
-} from "firebase/firestore";
+import { collection, query, where, getDocs, setDoc, doc, updateDoc, serverTimestamp, getDoc } from "firebase/firestore";
 import { UserContext } from "../../context/userContext";
 import ProfilePic from "../globals/profilePic";
+
 const Container = styled.div`
   .userChat {
     padding: 10px;
@@ -65,7 +55,7 @@ const FutureChats = () => {
     getAllProfessor();
   }, []);
 
-  const handleSelect = async (userSelect, userEmail, userPerfil) => {
+  const handleSelect = async (userSelect) => {
     //check wheter the group(chat in firestore) exits
     const combinedId =
       currentUser?.uid > userSelect
@@ -79,18 +69,14 @@ const FutureChats = () => {
 
         await updateDoc(doc(db, "userChats", currentUser?.uid), {
           [combinedId + ".userInfo"]: {
-            uid: userSelect,
-            email: userEmail,
-            perfil: userPerfil
+            uid: userSelect
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
 
         await updateDoc(doc(db, "userChats", String(userSelect)), {
           [combinedId + ".userInfo"]: {
-            uid: currentUser?.uid,
-            email: currentUser?.email,
-            perfil: currentUser?.perfil
+            uid: currentUser?.uid
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
@@ -109,7 +95,7 @@ const FutureChats = () => {
           <div
             className="userChat"
             key={i}
-            onClick={(e) => handleSelect(v.uid, v.email, v.perfil)}
+            onClick={(e) => handleSelect(v.uid)}
           >
             <ProfilePic width="50px" height="50px" id={v.uid} perfil={v.perfil} />
             <div className="userChatInfo">

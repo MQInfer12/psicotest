@@ -58,7 +58,7 @@ function App() {
             <Route
               path=""
               element={
-                <OutletContext titlePage="Home" calendar={true}>
+                <OutletContext titlePage="Home" calendar={false}>
                   <Home />
                 </OutletContext>
               }

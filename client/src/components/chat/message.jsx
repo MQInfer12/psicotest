@@ -1,9 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { useRef } from "react";
 import styled from "styled-components";
-import { UserContext } from "../../context/userContext";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
-import PhotoDefault from "../../images/defaultPhoto.jpg";
+import { ChatContext } from "../../context/chatContext";
 import ProfilePic from "../globals/profilePic";
 
 const Container = styled.div`
@@ -49,7 +48,8 @@ const Container = styled.div`
 
 const Message = ({ message }) => {
   const { currentUser } = useContext(UserFirebaseContext);
-  const { user } = useContext(UserContext);
+  const { data } = useContext(ChatContext);
+  const otherUser = data.user;
 
   const ref = useRef();
 
@@ -79,8 +79,8 @@ const Message = ({ message }) => {
         <ProfilePic
           width="40px"
           height="40px"
-          id={message.senderId}
-          perfil={message.perfil}
+          id={message.senderId == currentUser.uid ? currentUser.uid : otherUser.uid}
+          perfil={message.senderId == currentUser.uid ? currentUser.perfil : otherUser.perfil}
         />
         <span>{convertSecondosToDate(message.date.seconds)}</span>
       </div>
