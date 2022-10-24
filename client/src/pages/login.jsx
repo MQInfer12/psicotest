@@ -199,7 +199,7 @@ const Login = () => {
     async () => {
       const profile = await getProfile();
       setUser(profile);
-      navigate("/dashboard");
+      navigate("/dashboard/tests");
     }
   );
 

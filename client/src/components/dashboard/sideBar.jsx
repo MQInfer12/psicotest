@@ -70,20 +70,13 @@ const SideBarOptionText = styled.span`
 const SideBar = ({ rol, setUser }) => {
 
   const linksData = [
-    {
+    /*{
       roles: [1, 2, 3], 
       select: "home",
       title: "Home",
       goTo: "./",
       icon: "fa-solid fa-house",
-    },
-    {
-      roles: [1, 2], 
-      select: "chat",
-      title: "Chat",
-      goTo: "./chat",
-      icon: "fa-solid fa-comments",
-    },
+    },*/
     {
       roles: [3,2,1],
       select: "tests",
@@ -99,6 +92,13 @@ const SideBar = ({ rol, setUser }) => {
       icon: "fa-regular fa-folder-open",
     },
     {
+      roles: [1, 2], 
+      select: "chat",
+      title: "Chat",
+      goTo: "./chat",
+      icon: "fa-solid fa-comments",
+    },
+    {
       roles: [1, 2, 3],
       select: "calendar",
       title: "Calendario",
@@ -112,13 +112,13 @@ const SideBar = ({ rol, setUser }) => {
       goTo: "./users",
       icon: "fa-solid fa-user-group",
     },
-    {
+    /* {
       roles: [2],
       select: "groups",
       title: "Grupos",
       goTo: "./groups",
       icon: "fa-solid fa-users-line",
-    },
+    }, */
     {
       roles: [1, 2, 3],
       select: "profile",

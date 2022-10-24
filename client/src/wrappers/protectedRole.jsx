@@ -9,11 +9,11 @@ const ProtectedRole = ({ children, roles = [] }) => {
 
   useEffect(() => {
     if (!roles.includes(user.id_rol)) {
-      return navigate("/dashboard");
+      return navigate("/dashboard/tests");
     } else {
       setAuthorized(true);
     }
-  }, [])
+  })
 
   return (
     <>

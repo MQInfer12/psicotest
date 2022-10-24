@@ -19,6 +19,7 @@ import TestView from "./pages/testView";
 import Answers from "./pages/answers";
 import Chat from "./pages/chat";
 import Answer from "./pages/answer";
+import None from "./pages/none";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -164,7 +165,7 @@ function App() {
                 </ProtectedRole>
               }
             />
-            <Route
+            {/* <Route
               path="groups"
               element={
                 <ProtectedRole roles={[2]}>
@@ -173,7 +174,7 @@ function App() {
                   </OutletContext>
                 </ProtectedRole>
               }
-            />
+            /> */}
             <Route
               path="profile"
               element={
@@ -218,8 +219,9 @@ function App() {
                 </ProtectedRole>
               }
             />
+            <Route path="*" element={<None redirect="/dashboard/tests" />} />
           </Route>
-          <Route path="*" element={<Login />} />
+          <Route path="*" element={<None redirect="/" />} />
         </Routes>
       </Contexts>
     </HashRouter>
