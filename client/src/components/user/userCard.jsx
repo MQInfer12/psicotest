@@ -7,7 +7,7 @@ import ModalUser from "./modalUser";
 import ProfilePic from "../globals/profilePic";
 import SureModal from "../globals/sureModal";
 import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
-import { auth, db } from "../../firebase";
+import { db } from "../../firebase";
 
 const DivCard = styled.div`
   margin-top: 35px;
@@ -37,6 +37,9 @@ const PNombre = styled.p`
   color: #3E435D;
   font-size: 22px;
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const PRol = styled.p`
@@ -128,7 +131,6 @@ const UserCard = (props) => {
         newUser.push(doc.data());
       });
       const newUserObj = Object.assign({}, newUser[0]);
-      console.log(newUserObj);
 
       await deleteDoc(doc(db, "users", String(newUserObj.uid)));
       await deleteDoc(doc(db, "userChats", String(newUserObj.uid)));
@@ -155,8 +157,10 @@ const UserCard = (props) => {
               {
                 props.genero == "hombre"? (
                   <i className="fa-solid fa-mars"></i>
-                ) : (
+                ) : props.genero == "mujer"? (
                   <i className="fa-solid fa-venus"></i>
+                ) : (
+                  <i className="fa-solid fa-genderless"></i>
                 )
               }
               {props.genero}

@@ -135,6 +135,10 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
             nombre: "Mujer",
             value: "mujer",
           },
+          {
+            nombre: "No binario",
+            value: "no binario",
+          },
         ],
         error: errors.genero,
       },
@@ -203,6 +207,10 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
           {
             nombre: "Mujer",
             value: "mujer",
+          },
+          {
+            nombre: "No binario",
+            value: "no binario",
           },
         ],
         error: errors.genero,

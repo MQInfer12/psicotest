@@ -83,7 +83,7 @@ const ProfilePic = ({ width, height, border, translation, id, perfil, editable, 
             <Pic
               src={DefaultPhoto}
             />
-            <Cargando text={false} width={"calc(" + width + " - 10px)"} height={"calc(" + height + " - 10px)"} />
+            <Cargando text={false} width={"calc(" + width + " - 20px)"} height={"calc(" + height + " - 20px)"} />
           </DivLoading>
         ) : (
           //FOTO DE PERFIL CARGADA

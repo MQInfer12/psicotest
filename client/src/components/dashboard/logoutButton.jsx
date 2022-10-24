@@ -1,6 +1,7 @@
 import React, {useContext} from "react";
 import { UserContext } from "../../context/userContext";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
+import { ChatContext } from "../../context/chatContext";
 import styled from "styled-components";
 import { logOut } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
@@ -37,6 +38,7 @@ const SideBarButton = styled.button`
 const LogoutButton = () => {
   const { setUser } = useContext(UserContext);
   const { setCurrentUser } = useContext(UserFirebaseContext);
+  const { dispatch } = useContext(ChatContext);
 
   const navigate = useNavigate();
 
@@ -48,6 +50,8 @@ const LogoutButton = () => {
       setUser(undefined);
       //setFirebaseUser to {}
       setCurrentUser({});
+      //resetChatContext
+      dispatch({type: "RESET_USER"});
       //redirect login
       navigate("/");
     }

@@ -37,9 +37,9 @@ const Chats = () => {
   const [chats, setChats] = useState([]);
   const { currentUser } = useContext(UserFirebaseContext);
   const { dispatch } = useContext(ChatContext);
-  let chatsData = [];
 
   const getUserByChat = async (data) => {
+    let chatsData = [];
     for(let key in data) {
       const userChat = data[key];
       const userInfo = userChat.userInfo;
@@ -56,15 +56,15 @@ const Chats = () => {
         console.log(err);
       }
     }
+    return chatsData;
   }
 
   useEffect(() => {
     const getChats = async () => {
       const unsub = onSnapshot(doc(db, "userChats", currentUser?.uid), async (doc) => {
-        console.log("snapshot");
         const data = doc.data();
-        chatsData = [];
-        await getUserByChat(data);
+        const chatsData = await getUserByChat(data);
+        chatsData.sort((a, b) => b.date - a.date);
         setChats(chatsData);
       });
       return () => {
@@ -82,23 +82,22 @@ const Chats = () => {
   return (
     <Container>
       {chats &&
-        Object.entries(chats)
-        .sort((a, b) => b[1].date - a[1].date)
+        chats
         .map((v, i) => (
           <div
             className="userChat"
             key={i}
-            onClick={() => handleSelect(v[1].userInfo)}
+            onClick={() => handleSelect(v.userInfo)}
           >
             <ProfilePic
               width="50px"
               height="50px"
-              id={v[1].userInfo.uid}
-              perfil={v[1].userInfo.perfil}
+              id={v.userInfo.uid}
+              perfil={v.userInfo.perfil}
             />
             <div className="userChatInfo">
-              <span>{v[1].userInfo.email}</span>
-              <p>{v[1].lastMessage != undefined && v[1].lastMessage.text}</p> 
+              <span>{v.userInfo.email}</span>
+              <p>{v.lastMessage != undefined && v.lastMessage.text}</p> 
             </div>
           </div>
         ))

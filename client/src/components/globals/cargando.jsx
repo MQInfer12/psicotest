@@ -15,22 +15,21 @@ const Loader = styled.div`
   width: ${props => props.width};
   height: ${props => props.height};
   border-radius: 50%;
-  border: 8px solid rgba(0, 0, 0, 0.2);
-  border-top-color: #2264E6;
-  animation: spin 1.2s ease infinite;
+  display: inline-block;
+  position: relative;
+  border: 10px solid;
+  border-color: rgba(102, 11, 225, 0.15) rgba(102, 11, 225, 0.25) rgba(102, 11, 225, 0.35) rgba(102, 11, 225, 0.5);
+  box-sizing: border-box;
+  animation: rotation 1s infinite;
 
-  @keyframes spin {
+  @keyframes rotation {
     0% {
-      border-top-color: #2264E6;
       transform: rotate(0deg);
-    }
-    50% {
-      border-top-color: #660BE1;
     }
     100% {
       transform: rotate(360deg);
     }
-  }
+  } 
 `;
 
 const SpanLoader = styled.span`

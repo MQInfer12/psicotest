@@ -27,6 +27,9 @@ const UpbarName = styled.p`
   font-weight: 300;
   font-size: 16px;
   color: #ADA7A7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const UpbarNot = styled.div`
@@ -40,7 +43,7 @@ const RightBar = ({ user, calendar }) => {
   return (
     <RightContainer calendar={calendar}>
       <UpbarSquares>
-        <UpbarName>Bienvenido {user?.nombre} {user?.id}</UpbarName>
+        <UpbarName>{user?.nombre}{/*user?.id*/}</UpbarName>
         <UpbarNot></UpbarNot>
         <ProfilePic 
           width="52px"

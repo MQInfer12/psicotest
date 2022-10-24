@@ -186,6 +186,10 @@ const Profile = () => {
           nombre: "Mujer",
           value: "mujer",
         },
+        {
+          nombre: "No binario",
+          value: "no binario",
+        },
       ],
       error: errors.genero,
       disabled: !editable,

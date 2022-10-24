@@ -58,7 +58,16 @@ const Input = () => {
   const { currentUser } = useContext(UserFirebaseContext);
   const { data } = useContext(ChatContext);
   
+  const handleKeyPress = (e) => {
+    if(e.key === 'Enter') {
+      handleSend(e);
+    }
+  }
+
   const handleSend = async () => {
+    if(!text.trim()) return;
+    setText("");
+
     await updateDoc(doc(db, "chats", data.chatId), {
       messages: arrayUnion({
         id: uuid(),
@@ -81,8 +90,6 @@ const Input = () => {
       },
       [data.chatId + ".date"]: serverTimestamp(),
     });
-
-    setText("");
   };
 
   return (
@@ -92,6 +99,7 @@ const Input = () => {
         placeholder="Escribe algo"
         onChange={(e) => setText(e.target.value)}
         value={text}
+        onKeyPress={handleKeyPress}
       />
       <div className="send">
         <img src={Attach} alt="" />
