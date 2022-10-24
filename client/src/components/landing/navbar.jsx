@@ -13,9 +13,18 @@ const Nav = styled.nav`
   z-index: 5;
 `;
 
+const TitleLink = styled(Link)`
+  text-decoration: none;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 6px;
+  backdrop-filter: blur(5px);
+`;
+
 const PageTitle = styled.h1`
   font-size: 20px;
   font-weight: 600;
+  color: #000000;
 `;
 
 const OptionList = styled.ul`
@@ -84,17 +93,19 @@ const RegisterLink = styled(Link)`
 const Navbar = () => {
   return (
     <Nav>
-      <PageTitle>Psico Test</PageTitle>
+      <TitleLink to="/">
+        <PageTitle>Psico Test</PageTitle>
+      </TitleLink>
       <OptionList>
         <li>
-          <OptionLink to="#">Inicio</OptionLink>
+          <OptionLink to="/">Inicio</OptionLink>
         </li>
-        <li>
+        {/* <li>
           <OptionLink to="#">Funcionalidades</OptionLink>
         </li>
         <li>
           <OptionLink to="#">Contacto</OptionLink>
-        </li>
+        </li> */}
         <li>
           <LoginLink to="/login">Inicia sesión</LoginLink>
         </li>

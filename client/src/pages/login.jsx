@@ -9,6 +9,7 @@ import { ErrorCss } from "../styles/formularios";
 import { auth, db } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import ImagenLogin from "../images/imglogin.jpg";
+import Navbar from "../components/landing/navbar";
 
 //STYLED COMPONENTS
 
@@ -219,47 +220,50 @@ const Login = () => {
   ];      
 
   return (
-    <main>
-      <section>
-        <DivPrincipal>
-          <DivImagelog>
-            <DivItemlog></DivItemlog>
-          </DivImagelog>
-
-          <DivFormlog>
-            <form>
-              <H1Title>Login</H1Title>
-
-              {data.map((v, i) => (
-                <DivInputs key={i}>
-                  <DivInputBox>
-                    <InputText
-                      required
-                      type={v.name != "contrasenia" ? "text" : "password"}
-                      name={v.name}
-                      onChange={handleChange}
-                      value={v.value}
-                    />
-                    <SpanText>{v.placeholder}</SpanText>
-                    <IInput></IInput>
-                  </DivInputBox>
-                  {v.error && <ErrorCss>{v.error}</ErrorCss>}
-                </DivInputs>
-              ))}
-              <GoToContainer>
-                <GoToDescription>¿No tienes una cuenta?</GoToDescription>
-                <GoToText to="/register">Regístrate</GoToText>
-              </GoToContainer>
-              <DivButton>
-                <ButtonSubmit onClick={handleSubmit}>
-                  LOGIN
-                </ButtonSubmit>
-              </DivButton>
-            </form>
-          </DivFormlog>
-        </DivPrincipal>
-      </section>
-    </main>
+    <>
+      <Navbar />
+      <main>
+        <section>
+          <DivPrincipal>
+            <DivImagelog>
+              <DivItemlog></DivItemlog>
+            </DivImagelog>
+      
+            <DivFormlog>
+              <form>
+                <H1Title>Login</H1Title>
+      
+                {data.map((v, i) => (
+                  <DivInputs key={i}>
+                    <DivInputBox>
+                      <InputText
+                        required
+                        type={v.name != "contrasenia" ? "text" : "password"}
+                        name={v.name}
+                        onChange={handleChange}
+                        value={v.value}
+                      />
+                      <SpanText>{v.placeholder}</SpanText>
+                      <IInput></IInput>
+                    </DivInputBox>
+                    {v.error && <ErrorCss>{v.error}</ErrorCss>}
+                  </DivInputs>
+                ))}
+                <GoToContainer>
+                  <GoToDescription>¿No tienes una cuenta?</GoToDescription>
+                  <GoToText to="/register">Regístrate</GoToText>
+                </GoToContainer>
+                <DivButton>
+                  <ButtonSubmit onClick={handleSubmit}>
+                    LOGIN
+                  </ButtonSubmit>
+                </DivButton>
+              </form>
+            </DivFormlog>
+          </DivPrincipal>
+        </section>
+      </main>
+    </>
   );
 };
 

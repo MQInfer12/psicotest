@@ -7,10 +7,10 @@ import { initialForm, validationsForm } from "../validations/register";
 import { ErrorCss } from "../styles/formularios";
 import Modal from "../components/globals/modal";
 import ModalRegister from "../components/register/modalRegister";
-import { auth, db } from "../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import ImagenLogin from "../images/imglogin.jpg";
+import Navbar from "../components/landing/navbar";
 
 //STYLED COMPONENTS
 
@@ -44,7 +44,7 @@ const DivFormlog = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: scroll;
+  overflow: auto;
 `;
 
 const Form = styled.form`
@@ -326,66 +326,69 @@ const Register = () => {
   }
 
   return (
-    <main>
-      <section>
-        <DivPrincipal>
-          <DivImagelog>
-            <DivItemlog></DivItemlog>
-          </DivImagelog>
-
-          <DivFormlog>
-            <Form>
-              <H1Title>Registro</H1Title>
-
-              {data.map((v, i) => (
-                <DivInputs key={i}>
-                  <DivInputBox>
-                    <InputText
-                      required
-                      type={v.tipo}
-                      name={v.name}
-                      onChange={handleChange}
-                      value={v.value}
-                    />
-                    <SpanText>{v.placeholder}</SpanText>
-                    <IInput></IInput>
-                  </DivInputBox>
-                  {v.error && <ErrorCss>{v.error}</ErrorCss>}
-                </DivInputs>
-              ))}
-
-              {dataSelect.map((v, i) => (
-                <DivInputs key={i}>
-                  <InputSelect name={v.select} onChange={handleChange}>
-                    {v.data.map((va, i) => (
-                      <option key={i} value={va.value}>
-                        {va.nombre}
-                      </option>
-                    ))}
-                  </InputSelect>
-                  {v.error && <ErrorCss>{v.error}</ErrorCss>}
-                </DivInputs>
-              ))}
-              <GoToContainer>
-                <GoToDescription>¿Ya tienes una cuenta?</GoToDescription>
-                <GoToText to="/login">Inicia sesión</GoToText>
-              </GoToContainer>
-
-              <DivButton>
-                <ButtonSubmit onClick={handleSubmit}>
-                  REGISTRARSE
-                </ButtonSubmit>
-              </DivButton>
-            </Form>
-          </DivFormlog>
-        </DivPrincipal>
-      </section>
-      {showModal && (
-        <Modal cerrar={() => setShowModal(false)}>
-          <ModalRegister />
-        </Modal>
-      )}
-    </main>
+    <>
+      <Navbar />
+      <main>
+        <section>
+          <DivPrincipal>
+            <DivImagelog>
+              <DivItemlog></DivItemlog>
+            </DivImagelog>
+      
+            <DivFormlog>
+              <Form>
+                <H1Title>Registro</H1Title>
+      
+                {data.map((v, i) => (
+                  <DivInputs key={i}>
+                    <DivInputBox>
+                      <InputText
+                        required
+                        type={v.tipo}
+                        name={v.name}
+                        onChange={handleChange}
+                        value={v.value}
+                      />
+                      <SpanText>{v.placeholder}</SpanText>
+                      <IInput></IInput>
+                    </DivInputBox>
+                    {v.error && <ErrorCss>{v.error}</ErrorCss>}
+                  </DivInputs>
+                ))}
+      
+                {dataSelect.map((v, i) => (
+                  <DivInputs key={i}>
+                    <InputSelect name={v.select} onChange={handleChange}>
+                      {v.data.map((va, i) => (
+                        <option key={i} value={va.value}>
+                          {va.nombre}
+                        </option>
+                      ))}
+                    </InputSelect>
+                    {v.error && <ErrorCss>{v.error}</ErrorCss>}
+                  </DivInputs>
+                ))}
+                <GoToContainer>
+                  <GoToDescription>¿Ya tienes una cuenta?</GoToDescription>
+                  <GoToText to="/login">Inicia sesión</GoToText>
+                </GoToContainer>
+      
+                <DivButton>
+                  <ButtonSubmit onClick={handleSubmit}>
+                    REGISTRARSE
+                  </ButtonSubmit>
+                </DivButton>
+              </Form>
+            </DivFormlog>
+          </DivPrincipal>
+        </section>
+        {showModal && (
+          <Modal cerrar={() => setShowModal(false)}>
+            <ModalRegister />
+          </Modal>
+        )}
+      </main>
+    </>
   );
 };
 

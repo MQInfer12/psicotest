@@ -53,7 +53,7 @@ const LogoutButton = () => {
       //resetChatContext
       dispatch({type: "RESET_USER"});
       //redirect login
-      navigate("/");
+      navigate("/login");
     }
   };
 
