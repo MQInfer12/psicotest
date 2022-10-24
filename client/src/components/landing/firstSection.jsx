@@ -6,6 +6,10 @@ import FirstSectionImg from '../../images/landing/womanPhone.png';
 const Container = styled.div`
   min-height: 100vh;
   display: flex;
+
+  & > div {
+    padding-top: 90px;
+  }
 `;
 
 const LeftContainer = styled.div`
@@ -40,7 +44,7 @@ const NewContainer = styled.div`
   }
 `;
 
-const BestPlatform = styled.h1`
+const BestPlatform = styled.h2`
   font-size: 60px;
   font-weight: 700;
   padding-bottom: 30px;
