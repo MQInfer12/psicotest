@@ -30,6 +30,7 @@ const PurpleDiv = styled.div`
 const YouDecide = styled.h2`
   font-size: 60px;
   font-weight: 700;
+  line-height: 138.4%;
   color: #FFFFFF;
 `;
 
@@ -43,6 +44,7 @@ const MakeYourTests = styled.h2`
   font-size: 60px;
   font-weight: 700;
   padding-bottom: 40px;
+  line-height: 138.4%;
 
   &::after {
     content: ".";

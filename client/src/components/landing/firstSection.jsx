@@ -47,6 +47,7 @@ const NewContainer = styled.div`
 const BestPlatform = styled.h2`
   font-size: 60px;
   font-weight: 700;
+  line-height: 138.4%;
   padding-bottom: 30px;
 
   &::after {
@@ -69,6 +70,11 @@ const OpenAccountLink = styled(Link)`
   padding: 20px;
   color: #FFFFFF;
   font-weight: 300;
+  transition: all 0.3s;
+
+  &:hover {
+    filter: grayscale(0.2);
+  }
 `;
 
 const RightContainer = styled.div`

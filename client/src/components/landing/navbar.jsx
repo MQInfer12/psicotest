@@ -10,6 +10,7 @@ const Nav = styled.nav`
   justify-content: space-between;
   padding: 0px 100px;
   position: fixed;
+  z-index: 5;
 `;
 
 const PageTitle = styled.h1`
@@ -60,7 +61,7 @@ const LoginLink = styled(Link)`
   color: #000000;
 
   &:hover {
-    opacity: 0.8;
+    opacity: 0.7;
   }
 `;
 
@@ -76,7 +77,7 @@ const RegisterLink = styled(Link)`
   transition: all 0.3s;
 
   &:hover {
-    opacity: 0.8;
+    filter: grayscale(0.2);
   }
 `;
 
