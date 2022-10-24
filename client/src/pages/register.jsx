@@ -368,7 +368,7 @@ const Register = () => {
               ))}
               <GoToContainer>
                 <GoToDescription>¿Ya tienes una cuenta?</GoToDescription>
-                <GoToText to="/">Inicia sesión</GoToText>
+                <GoToText to="/login">Inicia sesión</GoToText>
               </GoToContainer>
 
               <DivButton>

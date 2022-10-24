@@ -18,7 +18,7 @@ const DivEntero = styled.div`
 const Home = () => {
   useEffect(() => {
     const sound = new Audio(Secret);
-    sound.play();
+    setTimeout(() => sound.play(), 200);
   }, []);
 
   return (

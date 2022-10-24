@@ -20,6 +20,7 @@ import Answers from "./pages/answers";
 import Chat from "./pages/chat";
 import Answer from "./pages/answer";
 import None from "./pages/none";
+import Landing from "./pages/landing";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -46,7 +47,8 @@ function App() {
     <HashRouter>
       <Contexts>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
             path="/dashboard"
@@ -221,7 +223,7 @@ function App() {
             />
             <Route path="*" element={<None redirect="/dashboard/tests" />} />
           </Route>
-          <Route path="*" element={<None redirect="/" />} />
+          <Route path="*" element={<None redirect="/login" />} />
         </Routes>
       </Contexts>
     </HashRouter>

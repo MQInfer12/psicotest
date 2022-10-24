@@ -20,7 +20,7 @@ const ProtectedRoute = ({ children }) => {
       setAuthenticated(true);
       setLoading(false);
     } else if(user === undefined) {
-      navigate("/");
+      navigate("/login");
     }
   }, [user]);
 
