@@ -20,7 +20,7 @@ const Navbar = () => {
           }
         </DisplayButton>
       </ButtonContainer>
-      <OptionList display={displayOptions}>
+      <OptionList open={displayOptions}>
         <li>
           <OptionLink to="/">Inicio</OptionLink>
         </li>
@@ -120,7 +120,7 @@ const OptionList = styled.ul`
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    display: ${props => props.display ? "auto" : "none"};
+    display: ${props => props.open ? "auto" : "none"};
   }
 `;
 

@@ -1,30 +1,72 @@
 import React from 'react';
 import styled from 'styled-components';
+import { device } from '../../styles/devices';
 import { Link } from 'react-router-dom';
 import StatsPhone2 from '../../images/landing/statsPhone2.png'
 
+const ThirdSection = () => {
+  return (
+    <Container>
+      <GrayDiv>
+        <LeftDiv>
+          <SendResponses>Manda y recibe tus respuestas al instante</SendResponses>
+          <LeftInfo>Tu dinero está seguro en todo momento, puedes consultar todos los movimientos de tu cuenta directamente desde tu celular.</LeftInfo>
+          <OpenAccountLink to="/register">Abre tu cuenta hoy</OpenAccountLink>
+        </LeftDiv>
+        <RightDiv>
+          <PurpleCircle>
+            <ImgClip>
+              <img src={StatsPhone2}/>
+            </ImgClip>
+          </PurpleCircle>
+        </RightDiv>
+      </GrayDiv>
+    </Container>
+  )
+}
+
+export default ThirdSection
+
 const Container = styled.div`
-  min-height: 100vh;
+  padding: 60px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
 const GrayDiv = styled.div`
-  height: 535px;
+  min-height: 535px;
   width: 1200px;
   background-color: #F5F5F5;
   border-radius: 50px;
-  padding: 50px 100px;
+  padding: 50px 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+
+  @media ${device.laptop} {
+    width: max-content;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px;
+    gap: 20px;
+  }
 `;
 
 const LeftDiv = styled.div`
-  width: 590px;
+  max-width: 590px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  
+  @media ${device.laptop} {
+    gap: 30px;
+    transform: scale(0.7);
+
+    & > a {
+      align-self: center;
+    }
+  }
 `;
 
 const SendResponses = styled.h2`
@@ -83,26 +125,3 @@ const ImgClip = styled.div`
   border-radius: 0 0 175px 175px;
   overflow: hidden;
 `;
-
-const ThirdSection = () => {
-  return (
-    <Container>
-      <GrayDiv>
-        <LeftDiv>
-          <SendResponses>Manda y recibe tus respuestas al instante</SendResponses>
-          <LeftInfo>Tu dinero está seguro en todo momento, puedes consultar todos los movimientos de tu cuenta directamente desde tu celular.</LeftInfo>
-          <OpenAccountLink to="/register">Abre tu cuenta hoy</OpenAccountLink>
-        </LeftDiv>
-        <RightDiv>
-          <PurpleCircle>
-            <ImgClip>
-              <img src={StatsPhone2}/>
-            </ImgClip>
-          </PurpleCircle>
-        </RightDiv>
-      </GrayDiv>
-    </Container>
-  )
-}
-
-export default ThirdSection

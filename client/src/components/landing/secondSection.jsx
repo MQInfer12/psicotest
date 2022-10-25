@@ -1,10 +1,65 @@
 import React from 'react';
 import styled from 'styled-components';
+import { device } from '../../styles/devices';
 import StatsPhone from '../../images/landing/statsPhone.png';
 
+const SecondSection = () => {
+  return (
+    <Container>
+      <ColumnContainer>
+        <PurpleDiv>
+          <YouDecide>Tú decides.</YouDecide>
+          <img src={StatsPhone} />
+        </PurpleDiv>
+      </ColumnContainer>
+      <ColumnContainer>
+        <InfoContainer>
+          <MakeYourTests>Realiza tus tests</MakeYourTests>
+          <FeatureContainer>
+            <IndexContainer>
+              <FeatureIndex>01</FeatureIndex>
+              <FeatureLine></FeatureLine>
+            </IndexContainer>
+            <IndexContainer>
+              <FeatureTitle>Mayor eficacia</FeatureTitle>
+              <FeatureDescription>Es muy sencillo, solamente ingresa tu celular y listo.</FeatureDescription>
+            </IndexContainer>
+          </FeatureContainer>
+          <FeatureContainer>
+            <IndexContainer>
+              <FeatureIndex>02</FeatureIndex>
+              <FeatureLine></FeatureLine>
+            </IndexContainer>
+            <IndexContainer>
+              <FeatureTitle>Menor tiempo</FeatureTitle>
+              <FeatureDescription>Selecciona el color que más te guste para tu tarjeta, la enviaremos a tu domicilio.</FeatureDescription>
+            </IndexContainer>
+          </FeatureContainer>
+          <FeatureContainer>
+            <IndexContainer>
+              <FeatureIndex>03</FeatureIndex>
+              <FeatureLine></FeatureLine>
+            </IndexContainer>
+            <IndexContainer>
+              <FeatureTitle>Mayor control</FeatureTitle>
+              <FeatureDescription>Inicia sesión en la app e ingresa el número de tarjeta.</FeatureDescription>
+            </IndexContainer>
+          </FeatureContainer>
+        </InfoContainer>
+      </ColumnContainer>
+    </Container>
+  )
+}
+
+export default SecondSection
+
 const Container = styled.div`
-  min-height: 100vh;
+  padding: 60px 0;
   display: flex;
+
+  @media ${device.laptop} {
+    flex-direction: reverse;
+  }
 `;
 
 const ColumnContainer = styled.div`
@@ -13,6 +68,13 @@ const ColumnContainer = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #FFFFFF;
+  padding: 10px;
+
+  @media ${device.laptop} {
+    &:first-child {
+      display: none;
+    }
+  }
 `;
 
 const PurpleDiv = styled.div`
@@ -25,6 +87,7 @@ const PurpleDiv = styled.div`
   height: 600px;
   background: linear-gradient(180deg, #6209DB 0%, #7613FD 100%);
   border-radius: 50px;
+  overflow: hidden;
 `;
 
 const YouDecide = styled.h2`
@@ -38,6 +101,10 @@ const InfoContainer = styled.div`
   width: 482px;
   display: flex;
   flex-direction: column;
+
+  @media ${device.laptop} {
+    transform: scale(0.8);
+  }
 `;
 
 const MakeYourTests = styled.h2`
@@ -97,53 +164,3 @@ const FeatureDescription = styled.p`
   font-size: 16px;
   font-weight: 400;
 `;
-
-const SecondSection = () => {
-  return (
-    <Container>
-      <ColumnContainer>
-        <PurpleDiv>
-          <YouDecide>Tú decides.</YouDecide>
-          <img src={StatsPhone} />
-        </PurpleDiv>
-      </ColumnContainer>
-      <ColumnContainer>
-        <InfoContainer>
-          <MakeYourTests>Realiza tus tests</MakeYourTests>
-          <FeatureContainer>
-            <IndexContainer>
-              <FeatureIndex>01</FeatureIndex>
-              <FeatureLine></FeatureLine>
-            </IndexContainer>
-            <IndexContainer>
-              <FeatureTitle>Mayor eficacia</FeatureTitle>
-              <FeatureDescription>Es muy sencillo, solamente ingresa tu celular y listo.</FeatureDescription>
-            </IndexContainer>
-          </FeatureContainer>
-          <FeatureContainer>
-            <IndexContainer>
-              <FeatureIndex>02</FeatureIndex>
-              <FeatureLine></FeatureLine>
-            </IndexContainer>
-            <IndexContainer>
-              <FeatureTitle>Menor tiempo</FeatureTitle>
-              <FeatureDescription>Selecciona el color que más te guste para tu tarjeta, la enviaremos a tu domicilio.</FeatureDescription>
-            </IndexContainer>
-          </FeatureContainer>
-          <FeatureContainer>
-            <IndexContainer>
-              <FeatureIndex>03</FeatureIndex>
-              <FeatureLine></FeatureLine>
-            </IndexContainer>
-            <IndexContainer>
-              <FeatureTitle>Mayor control</FeatureTitle>
-              <FeatureDescription>Inicia sesión en la app e ingresa el número de tarjeta.</FeatureDescription>
-            </IndexContainer>
-          </FeatureContainer>
-        </InfoContainer>
-      </ColumnContainer>
-    </Container>
-  )
-}
-
-export default SecondSection
