@@ -18,7 +18,7 @@ const FirstSection = () => {
       <RightContainer>
         <PurpleCircle>
           <ImgClip>
-            <img src={FirstSectionImg} />
+            <Img src={FirstSectionImg} />
           </ImgClip>
         </PurpleCircle>
       </RightContainer>
@@ -147,4 +147,10 @@ const ImgClip = styled.div`
   justify-content: center;
   border-radius: 0 0 50% 50%;
   overflow: hidden;
+`;
+
+const Img = styled.img`
+  @media (max-width: 520px) {
+    width: 218.75px;
+  }
 `;
