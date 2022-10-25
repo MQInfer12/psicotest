@@ -10,9 +10,9 @@ const Landing = () => {
     <>
       <Navbar />
       <FirstSection />
-      <SecondSection />
+      {/* <SecondSection />
       <ThirdSection />
-      <Footer />
+      <Footer /> */}
     </>
   )
 }
