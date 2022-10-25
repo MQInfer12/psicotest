@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { device } from '../../styles/devices';
+import { useNavigate } from 'react-router-dom';
 
 const FourthSection = () => {
+  const navigate = useNavigate();
+  const [userEmail, setUserEmail] = useState('');
+
   return (
     <Container>
       <PurpleDiv>
@@ -10,9 +14,13 @@ const FourthSection = () => {
           <OpenYourAccount>Abre tu cuenta hoy</OpenYourAccount>
           <OpenP>Es rápido y sencillo, te tomará menos de 2 minutos</OpenP>
           <InputDiv>
-            <Input placeholder='Ingresa tu correo electrónico' />
+            <Input 
+              placeholder='Ingresa tu correo electrónico' 
+              value={userEmail}  
+              onChange={(e) => setUserEmail(e.target.value)}
+            />
             <DivButtonInput>
-              <OpenAccountButton>Abre tu cuenta</OpenAccountButton>
+              <OpenAccountButton onClick={() => navigate('/register/' + userEmail)}>Abre tu cuenta</OpenAccountButton>
             </DivButtonInput>
           </InputDiv>
         </InfoContainer>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { UseForm } from "../hooks/useForm";
@@ -11,6 +12,201 @@ import { db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import ImagenLogin from "../images/imglogin.jpg";
 import Navbar from "../components/landing/navbar";
+
+const Register = () => {
+  const userEmail = useParams();
+  const [showModal, setShowModal] = useState(false);
+
+  const { form, errors, handleChange, handleSubmit, handleReset } = UseForm(
+    Object.keys(userEmail).length ? {
+      email: userEmail.userEmail,
+      contrasenia: "",
+      contraseniaRepeat: "",
+      edad: "",
+      nombre: "",
+      genero: "",
+      sede: "",
+    } : initialForm,
+    validationsForm,
+    signUp,
+    (respuesta) => {
+      createFirebaseUser(respuesta.user);
+      setShowModal(true);
+      handleReset();
+    }
+  );
+
+  let data = [
+    {
+      name: "nombre",
+      value: form.nombre,
+      placeholder: "Nombre",
+      error: errors.nombre,
+      tipo: "text",
+    },
+    {
+      name: "email",
+      value: form.email,
+      placeholder: "Correo",
+      error: errors.email,
+      tipo: "text",
+    },
+    {
+      name: "contrasenia",
+      value: form.contrasenia,
+      placeholder: "Contraseña",
+      error: errors.contrasenia,
+      tipo: "password",
+    },
+    {
+      name: "contraseniaRepeat",
+      value: form.contraseniaRepeat,
+      placeholder: "Repetir contraseña",
+      error: errors.contraseniaRepeat,
+      tipo: "password",
+    },
+    {
+      name: "edad",
+      value: form.edad,
+      placeholder: "Edad",
+      error: errors.edad,
+      tipo: "number",
+    },
+  ];
+
+  let dataSelect = [
+    {
+      select: "genero",
+      data: [
+        {
+          nombre: "Elija un género",
+          value: 0,
+        },
+        {
+          nombre: "Hombre",
+          value: "hombre",
+        },
+        {
+          nombre: "Mujer",
+          value: "mujer",
+        },
+        {
+          nombre: "No binario",
+          value: "no binario",
+        },
+      ],
+      error: errors.genero,
+    },
+    {
+      select: "sede",
+      data: [
+        {
+          nombre: "Elija una sede",
+          value: 0,
+        },
+        {
+          nombre: "Cochabamba",
+          value: 1,
+        },
+        {
+          nombre: "La Paz",
+          value: 2,
+        },
+        {
+          nombre: "El Alto",
+          value: 3,
+        },
+        {
+          nombre: "Santa Cruz",
+          value: 4,
+        },
+      ],
+      error: errors.sede,
+    },
+  ];
+
+  const createFirebaseUser = async (nuevoUsuario) => {
+    const { email, nombre, id } = nuevoUsuario;
+
+    await setDoc(doc(db, "users", String(id)), {
+      uid: id,
+      name: nombre,
+      email: email,
+      rol: "1",
+      perfil: null,
+    });
+    await setDoc(doc(db, "userChats", String(id)), {});
+  }
+
+  return (
+    <>
+      <Navbar />
+      <main>
+        <section>
+          <DivPrincipal>
+            <DivImagelog>
+              <DivItemlog></DivItemlog>
+            </DivImagelog>
+      
+            <DivFormlog>
+              <Form>
+                <H1Title>Registro</H1Title>
+      
+                {data.map((v, i) => (
+                  <DivInputs key={i}>
+                    <DivInputBox>
+                      <InputText
+                        required
+                        type={v.tipo}
+                        name={v.name}
+                        onChange={handleChange}
+                        value={v.value}
+                      />
+                      <SpanText>{v.placeholder}</SpanText>
+                      <IInput></IInput>
+                    </DivInputBox>
+                    {v.error && <ErrorCss>{v.error}</ErrorCss>}
+                  </DivInputs>
+                ))}
+      
+                {dataSelect.map((v, i) => (
+                  <DivInputs key={i}>
+                    <InputSelect name={v.select} onChange={handleChange}>
+                      {v.data.map((va, i) => (
+                        <option key={i} value={va.value}>
+                          {va.nombre}
+                        </option>
+                      ))}
+                    </InputSelect>
+                    {v.error && <ErrorCss>{v.error}</ErrorCss>}
+                  </DivInputs>
+                ))}
+                <GoToContainer>
+                  <GoToDescription>¿Ya tienes una cuenta?</GoToDescription>
+                  <GoToText to="/login">Inicia sesión</GoToText>
+                </GoToContainer>
+      
+                <DivButton>
+                  <ButtonSubmit onClick={handleSubmit}>
+                    REGISTRARSE
+                  </ButtonSubmit>
+                </DivButton>
+              </Form>
+            </DivFormlog>
+          </DivPrincipal>
+        </section>
+        {showModal && (
+          <Modal cerrar={() => setShowModal(false)}>
+            <ModalRegister />
+          </Modal>
+        )}
+      </main>
+    </>
+  );
+};
+
+export default Register;
+
 
 //STYLED COMPONENTS
 
@@ -208,188 +404,3 @@ const GoToText = styled(Link)`
 `;
 
 //STYLED COMPONENTS
-
-const Register = () => {
-  const [showModal, setShowModal] = useState(false);
-
-  const { form, errors, handleChange, handleSubmit, handleReset } = UseForm(
-    initialForm,
-    validationsForm,
-    signUp,
-    (respuesta) => {
-      createFirebaseUser(respuesta.user);
-      setShowModal(true);
-      handleReset();
-    }
-  );
-
-  let data = [
-    {
-      name: "nombre",
-      value: form.nombre,
-      placeholder: "Nombre",
-      error: errors.nombre,
-      tipo: "text",
-    },
-    {
-      name: "email",
-      value: form.email,
-      placeholder: "Correo",
-      error: errors.email,
-      tipo: "text",
-    },
-    {
-      name: "contrasenia",
-      value: form.contrasenia,
-      placeholder: "Contraseña",
-      error: errors.contrasenia,
-      tipo: "password",
-    },
-    {
-      name: "contraseniaRepeat",
-      value: form.contraseniaRepeat,
-      placeholder: "Repetir contraseña",
-      error: errors.contraseniaRepeat,
-      tipo: "password",
-    },
-    {
-      name: "edad",
-      value: form.edad,
-      placeholder: "Edad",
-      error: errors.edad,
-      tipo: "number",
-    },
-  ];
-
-  let dataSelect = [
-    {
-      select: "genero",
-      data: [
-        {
-          nombre: "Elija un género",
-          value: 0,
-        },
-        {
-          nombre: "Hombre",
-          value: "hombre",
-        },
-        {
-          nombre: "Mujer",
-          value: "mujer",
-        },
-        {
-          nombre: "No binario",
-          value: "no binario",
-        },
-      ],
-      error: errors.genero,
-    },
-    {
-      select: "sede",
-      data: [
-        {
-          nombre: "Elija una sede",
-          value: 0,
-        },
-        {
-          nombre: "Cochabamba",
-          value: 1,
-        },
-        {
-          nombre: "La Paz",
-          value: 2,
-        },
-        {
-          nombre: "El Alto",
-          value: 3,
-        },
-        {
-          nombre: "Santa Cruz",
-          value: 4,
-        },
-      ],
-      error: errors.sede,
-    },
-  ];
-
-  const createFirebaseUser = async (nuevoUsuario) => {
-    const { email, nombre, id } = nuevoUsuario;
-
-    await setDoc(doc(db, "users", String(id)), {
-      uid: id,
-      name: nombre,
-      email: email,
-      rol: "1",
-      perfil: null,
-    });
-    await setDoc(doc(db, "userChats", String(id)), {});
-  }
-
-  return (
-    <>
-      <Navbar />
-      <main>
-        <section>
-          <DivPrincipal>
-            <DivImagelog>
-              <DivItemlog></DivItemlog>
-            </DivImagelog>
-      
-            <DivFormlog>
-              <Form>
-                <H1Title>Registro</H1Title>
-      
-                {data.map((v, i) => (
-                  <DivInputs key={i}>
-                    <DivInputBox>
-                      <InputText
-                        required
-                        type={v.tipo}
-                        name={v.name}
-                        onChange={handleChange}
-                        value={v.value}
-                      />
-                      <SpanText>{v.placeholder}</SpanText>
-                      <IInput></IInput>
-                    </DivInputBox>
-                    {v.error && <ErrorCss>{v.error}</ErrorCss>}
-                  </DivInputs>
-                ))}
-      
-                {dataSelect.map((v, i) => (
-                  <DivInputs key={i}>
-                    <InputSelect name={v.select} onChange={handleChange}>
-                      {v.data.map((va, i) => (
-                        <option key={i} value={va.value}>
-                          {va.nombre}
-                        </option>
-                      ))}
-                    </InputSelect>
-                    {v.error && <ErrorCss>{v.error}</ErrorCss>}
-                  </DivInputs>
-                ))}
-                <GoToContainer>
-                  <GoToDescription>¿Ya tienes una cuenta?</GoToDescription>
-                  <GoToText to="/login">Inicia sesión</GoToText>
-                </GoToContainer>
-      
-                <DivButton>
-                  <ButtonSubmit onClick={handleSubmit}>
-                    REGISTRARSE
-                  </ButtonSubmit>
-                </DivButton>
-              </Form>
-            </DivFormlog>
-          </DivPrincipal>
-        </section>
-        {showModal && (
-          <Modal cerrar={() => setShowModal(false)}>
-            <ModalRegister />
-          </Modal>
-        )}
-      </main>
-    </>
-  );
-};
-
-export default Register;

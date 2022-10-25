@@ -42,7 +42,6 @@ const StyledLink = styled(Link)`
 `;
 
 function App() {
-
   return (
     <HashRouter>
       <Contexts>
@@ -50,6 +49,7 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/register/:userEmail" element={<Register />} />
           <Route
             path="/dashboard"
             element={
