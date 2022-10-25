@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { device } from "../styles/devices";
 import { Link } from "react-router-dom";
 import { UseForm } from "../hooks/useForm";
 import { signUp } from "../services/auth";
@@ -141,66 +142,62 @@ const Register = () => {
   return (
     <>
       <Navbar />
-      <main>
-        <section>
-          <DivPrincipal>
-            <DivImagelog>
-              <DivItemlog></DivItemlog>
-            </DivImagelog>
-      
-            <DivFormlog>
-              <Form>
-                <H1Title>Registro</H1Title>
-      
-                {data.map((v, i) => (
-                  <DivInputs key={i}>
-                    <DivInputBox>
-                      <InputText
-                        required
-                        type={v.tipo}
-                        name={v.name}
-                        onChange={handleChange}
-                        value={v.value}
-                      />
-                      <SpanText>{v.placeholder}</SpanText>
-                      <IInput></IInput>
-                    </DivInputBox>
-                    {v.error && <ErrorCss>{v.error}</ErrorCss>}
-                  </DivInputs>
-                ))}
-      
-                {dataSelect.map((v, i) => (
-                  <DivInputs key={i}>
-                    <InputSelect name={v.select} onChange={handleChange}>
-                      {v.data.map((va, i) => (
-                        <option key={i} value={va.value}>
-                          {va.nombre}
-                        </option>
-                      ))}
-                    </InputSelect>
-                    {v.error && <ErrorCss>{v.error}</ErrorCss>}
-                  </DivInputs>
-                ))}
-                <GoToContainer>
-                  <GoToDescription>¿Ya tienes una cuenta?</GoToDescription>
-                  <GoToText to="/login">Inicia sesión</GoToText>
-                </GoToContainer>
-      
-                <DivButton>
-                  <ButtonSubmit onClick={handleSubmit}>
-                    REGISTRARSE
-                  </ButtonSubmit>
-                </DivButton>
-              </Form>
-            </DivFormlog>
-          </DivPrincipal>
-        </section>
-        {showModal && (
-          <Modal cerrar={() => setShowModal(false)}>
-            <ModalRegister />
-          </Modal>
-        )}
-      </main>
+      <DivPrincipal>
+        <DivImagelog>
+          <DivItemlog></DivItemlog>
+        </DivImagelog>
+  
+        <DivFormlog>
+          <Form>
+            <H1Title>Registro</H1Title>
+  
+            {data.map((v, i) => (
+              <DivInputs key={i}>
+                <DivInputBox>
+                  <InputText
+                    required
+                    type={v.tipo}
+                    name={v.name}
+                    onChange={handleChange}
+                    value={v.value}
+                  />
+                  <SpanText>{v.placeholder}</SpanText>
+                  <IInput></IInput>
+                </DivInputBox>
+                {v.error && <ErrorCss>{v.error}</ErrorCss>}
+              </DivInputs>
+            ))}
+  
+            {dataSelect.map((v, i) => (
+              <DivInputs key={i}>
+                <InputSelect name={v.select} onChange={handleChange}>
+                  {v.data.map((va, i) => (
+                    <option key={i} value={va.value}>
+                      {va.nombre}
+                    </option>
+                  ))}
+                </InputSelect>
+                {v.error && <ErrorCss>{v.error}</ErrorCss>}
+              </DivInputs>
+            ))}
+            <GoToContainer>
+              <GoToDescription>¿Ya tienes una cuenta?</GoToDescription>
+              <GoToText to="/login">Inicia sesión</GoToText>
+            </GoToContainer>
+  
+            <DivButton>
+              <ButtonSubmit onClick={handleSubmit}>
+                REGISTRARSE
+              </ButtonSubmit>
+            </DivButton>
+          </Form>
+        </DivFormlog>
+      </DivPrincipal>
+      {showModal && (
+        <Modal cerrar={() => setShowModal(false)}>
+          <ModalRegister />
+        </Modal>
+      )}
     </>
   );
 };
@@ -211,47 +208,61 @@ export default Register;
 //STYLED COMPONENTS
 
 const DivPrincipal = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
   text-align: center;
-  height: 100vh;
+  min-height: 100vh;
   overflow: hidden;
+
+  @media ${device.tablet} {
+    flex-direction: column;
+  }
 `;
 
 const DivImagelog = styled.div`
+  width: 145%;
   height: 100vh;
-  display: grid;
-  grid-template-columns: repeat(16, minmax(10px, 1fr));
-  grid-template-rows: repeat(10, minmax(95px, 1fr));
+  @media ${device.tablet} {
+    height: 80vh;
+    filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
+  }
 `;
 
 const DivItemlog = styled.div`
-  height: 100vh;
-  grid-column-start: 1;
-  grid-column-end: 17;
-  grid-row-start: 1;
-  grid-row-end: 11;
+  height: 100%;
   background: url(${ImagenLogin}) no-repeat;
   background-size: cover;
   background-position-y: center;
+
+  @media ${device.tablet} {
+    background-position-y: top;
+  }
 `;
 
 const DivFormlog = styled.div`
+  width: 100%;
+  margin-top: 90px;
+  height: calc(100% - 90px);
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: auto;
+  padding-bottom: 2rem;
+
+  @media ${device.tablet} {
+    margin-top: 0;
+    overflow: visible;
+  }
 `;
 
 const Form = styled.form`
-  margin: auto;
-  width: 346px;
-  height: max-content;
+  margin: auto 0;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const H1Title = styled.h1`
-  padding-top: 2rem;
-  padding-bottom: 3rem;
+  height: 20vh;
   font-size: 60px;
   font-weight: 700;
   color: #000000;
@@ -271,6 +282,10 @@ const H1Title = styled.h1`
   &:hover::after {
     width: 250px;
   }
+
+  @media ${device.tablet} {
+    justify-content: center;
+  }
 `;
 
 const DivInputs = styled.div`
@@ -281,6 +296,7 @@ const DivInputs = styled.div`
 
 const DivInputBox = styled.div`
   position: relative;
+  width: 250px;
 `;
 
 const InputText = styled.input`
@@ -348,14 +364,14 @@ const IInput = styled.i`
       background-position-x: 0;
     }
     100% {
-      background-position-x: 346px;
+      background-position-x: 250px;
     }
   }
 `;
 
 const DivButton = styled.div`
   padding-top: 2rem;
-  padding-bottom: 2rem;
+  width: 250px;
 `;
 
 const ButtonSubmit = styled.button`
@@ -374,6 +390,7 @@ const ButtonSubmit = styled.button`
 `;
 
 const InputSelect = styled.select`
+  width: 250px;
   padding-left: 18px;
   font-size: 16px;
   color: #ffffff;

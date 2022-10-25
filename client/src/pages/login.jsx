@@ -3,50 +3,133 @@ import { UserContext } from "../context/userContext";
 import { useNavigate, Link } from "react-router-dom";
 import { initialForm, validationsForm } from "../validations/login";
 import styled from "styled-components";
+import { device } from "../styles/devices";
 import { UseForm } from "../hooks/useForm";
 import { getProfile, signIn } from "../services/auth";
 import { ErrorCss } from "../styles/formularios";
-import { auth, db } from "../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import ImagenLogin from "../images/imglogin.jpg";
 import Navbar from "../components/landing/navbar";
+
+const Login = () => {
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const { form, errors, handleChange, handleSubmit } = UseForm(
+    initialForm,
+    validationsForm,
+    signIn,
+    async () => {
+      const profile = await getProfile();
+      setUser(profile);
+      navigate("/dashboard/tests");
+    }
+  );
+
+  let data = [
+    {
+      name: "email",
+      value: form.email,
+      placeholder: "Correo",
+      error: errors.email,
+    },
+    {
+      name: "contrasenia",
+      value: form.contrasenia,
+      placeholder: "Contraseña",
+      error: errors.contrasenia,
+    },
+  ];      
+
+  return (
+    <>
+      <Navbar />
+      <DivPrincipal>
+        <DivImagelog>
+          <DivItemlog></DivItemlog>
+        </DivImagelog>
+  
+        <DivFormlog>
+          <form>
+            <H1Title>Login</H1Title>
+  
+            {data.map((v, i) => (
+              <DivInputs key={i}>
+                <DivInputBox>
+                  <InputText
+                    required
+                    type={v.name != "contrasenia" ? "text" : "password"}
+                    name={v.name}
+                    onChange={handleChange}
+                    value={v.value}
+                  />
+                  <SpanText>{v.placeholder}</SpanText>
+                  <IInput></IInput>
+                </DivInputBox>
+                {v.error && <ErrorCss>{v.error}</ErrorCss>}
+              </DivInputs>
+            ))}
+            <GoToContainer>
+              <GoToDescription>¿No tienes una cuenta?</GoToDescription>
+              <GoToText to="/register">Regístrate</GoToText>
+            </GoToContainer>
+            <DivButton>
+              <ButtonSubmit onClick={handleSubmit}>
+                LOGIN
+              </ButtonSubmit>
+            </DivButton>
+          </form>
+        </DivFormlog>
+      </DivPrincipal>
+    </>
+  );
+};
+
+export default Login;
 
 //STYLED COMPONENTS
 
 const DivPrincipal = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
   text-align: center;
-  height: 100vh;
+  min-height: 100vh;
   overflow: hidden;
+
+  @media ${device.tablet} {
+    flex-direction: column;
+  }
 `;
 
 const DivImagelog = styled.div`
+  width: 145%;
   height: 100vh;
-  display: grid;
-  grid-template-columns: repeat(16, minmax(10px, 1fr));
-  grid-template-rows: repeat(10, minmax(95px, 1fr));
+  @media ${device.tablet} {
+    height: 80vh;
+    filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
+  }
 `;
 
 const DivItemlog = styled.div`
-  height: 100vh;
-  grid-column-start: 1;
-  grid-column-end: 17;
-  grid-row-start: 1;
-  grid-row-end: 11;
+  height: 100%;
   background: url(${ImagenLogin}) no-repeat;
   background-size: cover;
   background-position-y: center;
+
+  @media ${device.tablet} {
+    background-position-y: top;
+  }
 `;
 
 const DivFormlog = styled.div`
+  background-color: #FFFFFF;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 40px;
 `;
 
 const H1Title = styled.h1`
-  padding-bottom: 3rem;
+  height: 20vh;
   font-size: 60px;
   font-weight: 700;
   color: #000000;
@@ -63,8 +146,8 @@ const H1Title = styled.h1`
     transition: all 0.2s;
   }
 
-  &:hover::after {
-    width: 165px;
+  @media ${device.tablet} {
+    justify-content: center;
   }
 `;
 
@@ -188,83 +271,3 @@ const GoToText = styled(Link)`
 `;
 
 //STYLED COMPONENTS
-
-const Login = () => {
-  const { setUser } = useContext(UserContext);
-  const navigate = useNavigate();
-
-  const { form, errors, handleChange, handleSubmit } = UseForm(
-    initialForm,
-    validationsForm,
-    signIn,
-    async () => {
-      const profile = await getProfile();
-      setUser(profile);
-      navigate("/dashboard/tests");
-    }
-  );
-
-  let data = [
-    {
-      name: "email",
-      value: form.email,
-      placeholder: "Correo",
-      error: errors.email,
-    },
-    {
-      name: "contrasenia",
-      value: form.contrasenia,
-      placeholder: "Contraseña",
-      error: errors.contrasenia,
-    },
-  ];      
-
-  return (
-    <>
-      <Navbar />
-      <main>
-        <section>
-          <DivPrincipal>
-            <DivImagelog>
-              <DivItemlog></DivItemlog>
-            </DivImagelog>
-      
-            <DivFormlog>
-              <form>
-                <H1Title>Login</H1Title>
-      
-                {data.map((v, i) => (
-                  <DivInputs key={i}>
-                    <DivInputBox>
-                      <InputText
-                        required
-                        type={v.name != "contrasenia" ? "text" : "password"}
-                        name={v.name}
-                        onChange={handleChange}
-                        value={v.value}
-                      />
-                      <SpanText>{v.placeholder}</SpanText>
-                      <IInput></IInput>
-                    </DivInputBox>
-                    {v.error && <ErrorCss>{v.error}</ErrorCss>}
-                  </DivInputs>
-                ))}
-                <GoToContainer>
-                  <GoToDescription>¿No tienes una cuenta?</GoToDescription>
-                  <GoToText to="/register">Regístrate</GoToText>
-                </GoToContainer>
-                <DivButton>
-                  <ButtonSubmit onClick={handleSubmit}>
-                    LOGIN
-                  </ButtonSubmit>
-                </DivButton>
-              </form>
-            </DivFormlog>
-          </DivPrincipal>
-        </section>
-      </main>
-    </>
-  );
-};
-
-export default Login;
