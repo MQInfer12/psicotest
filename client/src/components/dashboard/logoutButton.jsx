@@ -49,6 +49,7 @@ const SideBarIcon = styled.i`
 const SideBarOptionText = styled.span`
   font-size: 16px;
   line-height: 27px;
+  //display: none;
 `;
 
 const SideBarButton = styled.button`

@@ -25,15 +25,19 @@ const CenterScreen = ({ titlePage, setTitlePage, calendar, setCalendar, links, s
 export default CenterScreen;
 
 const CenterContainer = styled.div`
-  margin-left: 263px;
-  margin-right: ${props => props.calendar && "433px"};
+  padding-left: 263px;
+  padding-right: ${props => props.calendar && "433px"};
   background-color: #F4F4F4;
-  width: calc(100% - 263px); 
+  width: 100%; 
   display: flex;
   flex-direction: column;
 
+  @media (max-width: 1135px) {
+    padding-right: 0;
+  }
+
   @media ${device.tablet} {
-    margin-left: 0;
+    padding-left: 0;
     width: 100%;
   }
 `;
@@ -51,6 +55,10 @@ const UpbarContainer = styled.div`
     width: 100%;
     position: fixed;
     top: 0;
+  }
+
+  @media ${device.tablet} {
+    padding: 47px 10px 31px;
   }
 `;
 
@@ -121,7 +129,6 @@ const OutletContainer = styled.div`
     height: max-content;
     min-height: calc(100vh - 157px);
     margin-top: 157px;
-    overflow: visible;
   }
 
   @media ${device.tablet} {

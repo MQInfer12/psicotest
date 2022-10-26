@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import LogoutButton from "./logoutButton";
 import { device } from "../../styles/devices";
 
-const SideBar = ({ rol, setUser, openNav }) => {
+const SideBar = ({ rol, setUser, openNav, setOpenNav }) => {
 
   const linksData = [
     /*{
@@ -76,6 +76,7 @@ const SideBar = ({ rol, setUser, openNav }) => {
             <li key={i}>
               <SideBarLink
                 to={v.goTo}
+                onClick={() => openNav && setOpenNav(false)}
               >
                 <SideBarIcon className={v.icon}></SideBarIcon>
                 <SideBarOptionText>{v.title}</SideBarOptionText>
@@ -92,28 +93,29 @@ const SideBar = ({ rol, setUser, openNav }) => {
 export default SideBar;
 
 const SideBarContainer = styled.nav`
+  z-index: 2;
   background-color: #FFFFFF;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 54px 44px;
-  position: fixed;
+  padding: 54px 0;
   overflow: hidden;
-  z-index: 2;
-  transition: width 0.2s;
+  transition: transform 0.4s;
+  transform-origin: left;
+  position: fixed;
   width: 263px;
 
   @media ${device.tablet} {
-    padding: 54px 0;
-    width: ${props => props.openNav? "263px" : "0"};
+    transform: scaleX(${props => props.openNav? "1" : "0"});
     box-shadow: 4px 1px 16px -7px rgba(0,0,0,0.6);
   }
 `;
 
 const SideBarLogo = styled.img`
   object-fit: cover;
-  width: 175px;
+  //width: 170px;
+  width: 170px;
   height: 38px;
   background-color: #D9D9D9;
   margin-bottom: 88px;
@@ -162,4 +164,5 @@ const SideBarIcon = styled.i`
 const SideBarOptionText = styled.span`
   font-size: 16px;
   line-height: 27px;
+  //display: none;
 `;

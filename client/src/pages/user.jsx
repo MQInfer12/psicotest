@@ -8,30 +8,6 @@ import UserFilter from "../components/user/filter/userFilter";
 import Modal from "../components/globals/modal";
 import ModalUser from "../components/user/modalUser";
 
-const DivUsersPage = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-`;
-
-const DivUsersContainer = styled.div`
-  border-radius: 20px;
-  padding: 30px 0px;
-  display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
-  justify-content: space-around;
-`;
-
-const DivControls = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-`;
-
 const User = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
@@ -89,7 +65,6 @@ const User = () => {
           />
         </Modal>
       }
-
       {
         loadingUsers ? (
           <Cargando />
@@ -109,3 +84,31 @@ const User = () => {
 };
 
 export default User;
+
+const DivUsersPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  height: 100%;
+
+  @media (max-width: 1135px) {
+    min-height: calc(100vh - 157px);
+  }
+`;
+
+const DivUsersContainer = styled.div`
+  border-radius: 20px;
+  padding: 30px 0px;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`;
+
+const DivControls = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+`;

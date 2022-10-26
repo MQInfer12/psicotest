@@ -63,6 +63,10 @@ const UpbarSquares = styled.div`
     top: 0;
     right: 0;
   }
+
+  @media ${device.tablet} {
+    padding: 47px 10px 31px;
+  }
 `;
 
 const UpbarName = styled.p`
@@ -73,6 +77,10 @@ const UpbarName = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media (max-width: 520px) {
+    display: none;
+  }
 `;
 
 const UpbarNot = styled.div`

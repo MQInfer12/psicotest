@@ -34,6 +34,7 @@ const Dashboard = () => {
         rol={user?.id_rol}
         setUser={setUser}
         openNav={openNav}
+        setOpenNav={setOpenNav}
       />
       
       <CenterScreen 

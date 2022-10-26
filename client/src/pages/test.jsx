@@ -10,26 +10,6 @@ import TestCardProfessor from "../components/test/testCardProfessor";
 import TestCardBenef from "../components/test/testCardBenef";
 import { PurpleButton } from "../styles/formularios";
 
-const AllContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  height: 100%;
-`;
-
-const TestContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: space-around;
-`;
-
-const ButtonContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-`;
-
 const Test = () => {
   const [tests, setTests] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -111,3 +91,23 @@ const Test = () => {
 };
 
 export default Test;
+
+const AllContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+`;
+
+const TestContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
+`;
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
