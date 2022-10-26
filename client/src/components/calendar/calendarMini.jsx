@@ -7,6 +7,10 @@ const CalendarContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 36px;
+
+  @media (max-width: 1135px) {
+    margin: 30px 0;
+  }
 `;
 
 const MonthContainer = styled.div`

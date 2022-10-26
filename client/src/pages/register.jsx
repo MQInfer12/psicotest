@@ -210,11 +210,12 @@ export default Register;
 const DivPrincipal = styled.div`
   display: flex;
   text-align: center;
-  min-height: 100vh;
+  height: 100vh;
   overflow: hidden;
 
   @media ${device.tablet} {
     flex-direction: column;
+    height: max-content;
   }
 `;
 
@@ -222,7 +223,7 @@ const DivImagelog = styled.div`
   width: 145%;
   height: 100vh;
   @media ${device.tablet} {
-    height: 80vh;
+    height: 50vh;
     filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
   }
 `;
@@ -246,6 +247,7 @@ const DivFormlog = styled.div`
   justify-content: center;
   align-items: center;
   overflow: auto;
+  overflow-x: hidden;
   padding-bottom: 2rem;
 
   @media ${device.tablet} {

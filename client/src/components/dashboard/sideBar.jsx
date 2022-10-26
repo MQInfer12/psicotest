@@ -3,71 +3,9 @@ import styled from "styled-components";
 import Logo from "../../images/logopsico.png";
 import { NavLink } from "react-router-dom";
 import LogoutButton from "./logoutButton";
+import { device } from "../../styles/devices";
 
-const SideBarContainer = styled.nav`
-  background-color: #FFFFFF;
-  width: 263px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 54px;
-  position: fixed;
-`;
-
-const SideBarLogo = styled.img`
-  object-fit: cover;
-  width: 175px;
-  height: 38px;
-  background-color: #D9D9D9;
-  margin-bottom: 88px;
-`;
-
-//ae2d68, c05299, ea698b, 9c5ad0, b5179e, 8e2de2
-
-//404be3, 5d7bd5, c586dd
-
-const SideBarList = styled.ul`
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-
-  .active {
-    background-color: #660BE1; 
-  }
-  .active:hover {
-    color: #D9D9D9;
-  }
-`;
-
-const SideBarLink = styled(NavLink)`
-  color: #D9D9D9;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  padding: 10px 20px 10px 20px;
-  border-radius: 8px;
-  transition: all 0.4s;
-
-  &:hover {
-    color: #660BE1;
-  }
-`;
-
-const SideBarIcon = styled.i`
-  text-align: center;
-  font-size: 16px;
-  width: 30px;
-`;
-
-const SideBarOptionText = styled.span`
-  font-size: 16px;
-  line-height: 27px;
-`;
-
-const SideBar = ({ rol, setUser }) => {
+const SideBar = ({ rol, setUser, openNav }) => {
 
   const linksData = [
     /*{
@@ -129,7 +67,7 @@ const SideBar = ({ rol, setUser }) => {
   ]
 
   return (
-    <SideBarContainer>
+    <SideBarContainer openNav={openNav}>
       <SideBarLogo src={Logo} />
       <SideBarList>
         {
@@ -152,3 +90,76 @@ const SideBar = ({ rol, setUser }) => {
 }
 
 export default SideBar;
+
+const SideBarContainer = styled.nav`
+  background-color: #FFFFFF;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 54px 44px;
+  position: fixed;
+  overflow: hidden;
+  z-index: 2;
+  transition: width 0.2s;
+  width: 263px;
+
+  @media ${device.tablet} {
+    padding: 54px 0;
+    width: ${props => props.openNav? "263px" : "0"};
+    box-shadow: 4px 1px 16px -7px rgba(0,0,0,0.6);
+  }
+`;
+
+const SideBarLogo = styled.img`
+  object-fit: cover;
+  width: 175px;
+  height: 38px;
+  background-color: #D9D9D9;
+  margin-bottom: 88px;
+`;
+
+//ae2d68, c05299, ea698b, 9c5ad0, b5179e, 8e2de2
+
+//404be3, 5d7bd5, c586dd
+
+const SideBarList = styled.ul`
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .active {
+    background-color: #660BE1; 
+  }
+  .active:hover {
+    color: #D9D9D9;
+  }
+`;
+
+const SideBarLink = styled(NavLink)`
+  color: #D9D9D9;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: all 0.4s;
+  height: 47px;
+
+  &:hover {
+    color: #660BE1;
+  }
+`;
+
+const SideBarIcon = styled.i`
+  text-align: center;
+  font-size: 16px;
+  width: 30px;
+`;
+
+const SideBarOptionText = styled.span`
+  font-size: 16px;
+  line-height: 27px;
+`;

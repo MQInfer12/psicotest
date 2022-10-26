@@ -18,7 +18,7 @@ const DivUsersPage = styled.div`
 
 const DivUsersContainer = styled.div`
   border-radius: 20px;
-  padding: 30px;
+  padding: 30px 0px;
   display: flex;
   gap: 30px;
   flex-wrap: wrap;

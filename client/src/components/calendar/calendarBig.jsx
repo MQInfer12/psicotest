@@ -10,131 +10,6 @@ import { getAllApoinments, getAppointByUser } from "../../services/cita";
 import ModalAsignarCita from "./modalAsignarCita";
 import ModalCancelarCita from "./modalCancelarCita";
 
-const DivCalendarBig = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
-
-const DivControls = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const CalendarMonth = styled.h2`
-  color: #000000;
-  font-size: 36px;
-  font-weight: 600;
-`;
-
-const TableCalendar = styled.table`
-  height: 100%;
-  width: 100%;
-  background-color: #FFFFFF;
-  border-radius: 10px;
-  table-layout: fixed;
-  border-collapse: collapse;
-  overflow: hidden;
-  border: 1px solid #D9D9D9;
-`;
-
-const DaysTh = styled.th`
-  height: 40px;
-  font-size: 18px;
-  color: #660BE1;
-  border: 1px solid #D9D9D9;
-`;
-
-const TdDay = styled.td`
-  opacity: ${props => props.month? 0.5 : 1};
-  border: 1px solid #D9D9D9;
-`;
-
-const DivTd = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  overflow: auto;
-  overflow-x: hidden;
-
-  position: relative;
-  width: 100%;
-  height: 100%;
-  font-size: 14px;
-
-  &:hover > div > button {
-    display: block;
-  }
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #D9D9D9;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #660BE1;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: #660BE1;
-  }
-`;
-
-const DivDay = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: all 0.2s;
-  min-height: 32px;
-
-  & > button {
-    display: none;
-    transform: scale(0.8);
-  }
-`;
-
-const PDay = styled.p`
-  color: ${props => props.today && '#660BE1'};
-  padding: 1px 10px;
-`;
-
-const DivTask = styled.div`
-  width: 100%;
-  background-color: #F0F1FA;
-  color: #4F5AED;
-  padding: 2px 10px;
-  font-size: 12px;
-  font-weight: 400;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
-const DivAppointment = styled.div`
-  width: 100%;
-  background-color: #E1FCEF;
-  color: #14804A;
-  padding: 2px 10px;
-  font-size: 12px;
-  font-weight: 400;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
 const CalendarBig = () => {
   const { user } = useContext(UserContext);
 
@@ -463,3 +338,128 @@ const CalendarBig = () => {
 }
 
 export default CalendarBig;
+
+const DivCalendarBig = styled.div`
+  height: calc(100vh - 197px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const DivControls = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const CalendarMonth = styled.h2`
+  color: #000000;
+  font-size: 36px;
+  font-weight: 600;
+`;
+
+const TableCalendar = styled.table`
+  height: 100%;
+  width: 100%;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  table-layout: fixed;
+  border-collapse: collapse;
+  overflow: hidden;
+  border: 1px solid #D9D9D9;
+`;
+
+const DaysTh = styled.th`
+  height: 40px;
+  font-size: 18px;
+  color: #660BE1;
+  border: 1px solid #D9D9D9;
+`;
+
+const TdDay = styled.td`
+  opacity: ${props => props.month? 0.5 : 1};
+  border: 1px solid #D9D9D9;
+`;
+
+const DivTd = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow: auto;
+  overflow-x: hidden;
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+
+  &:hover > div > button {
+    display: block;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #D9D9D9;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #660BE1;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #660BE1;
+  }
+`;
+
+const DivDay = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s;
+  min-height: 32px;
+
+  & > button {
+    display: none;
+    transform: scale(0.8);
+  }
+`;
+
+const PDay = styled.p`
+  color: ${props => props.today && '#660BE1'};
+  padding: 1px 10px;
+`;
+
+const DivTask = styled.div`
+  width: 100%;
+  background-color: #F0F1FA;
+  color: #4F5AED;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+const DivAppointment = styled.div`
+  width: 100%;
+  background-color: #E1FCEF;
+  color: #14804A;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;

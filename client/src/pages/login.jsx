@@ -103,7 +103,7 @@ const DivImagelog = styled.div`
   width: 145%;
   height: 100vh;
   @media ${device.tablet} {
-    height: 80vh;
+    height: 50vh;
     filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
   }
 `;
