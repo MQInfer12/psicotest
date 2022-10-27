@@ -37,7 +37,7 @@ const FutureChats = () => {
   const [loading, setLoading] = useState(true);
 
   const getAllProfessor = async () => {
-    const q = query(collection(db, "users"), where("rol", "==", "1"));
+    const q = query(collection(db, "users"), where("rol", "==", "2"));
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
