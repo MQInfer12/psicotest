@@ -33,8 +33,7 @@ const Container = styled.div`
 `;
 
 const FutureChats = () => {
-  const [professor, setProfessor] = useState([]);
-  const { user } = useContext(UserContext);
+  const [professor] = useState([]);
   const { currentUser } = useContext(UserFirebaseContext);
   const [loading, setLoading] = useState(true);
 
