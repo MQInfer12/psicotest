@@ -19,9 +19,9 @@ export const getAppointByUser = async (id) => {
   }
 };
 
-export const getAllApoinments = async () => {
+export const getAllApoinments = async (email) => {
   try {
-    const response = await fetch(`${http}cita/allschedule`, {
+    const response = await fetch(`${http}cita/allschedule/${email}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
