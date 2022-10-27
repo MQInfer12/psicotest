@@ -4,7 +4,7 @@ import ChatCom from "../components/chat/chat";
 import Sidebar from "../components/chat/sidebar";
 
 const Home = styled.div`
-  height: 100%;
+  height: calc(100vh - 197px);
   .container {
     border: 1px solid white;
     border-radius: 10px;
