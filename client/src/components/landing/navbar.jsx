@@ -35,9 +35,9 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default Navbar;
 
-const Nav = styled.nav`
+export const Nav = styled.nav`
   width: 100vw;
   height: 90px;
   display: flex;
@@ -59,7 +59,7 @@ const Nav = styled.nav`
   }
 `;
 
-const ButtonContainer = styled.div`
+export const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -70,7 +70,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const DisplayButton = styled.button`
+export const DisplayButton = styled.button`
   width: 52px;
   display: flex;
   align-items: center;
@@ -90,7 +90,7 @@ const DisplayButton = styled.button`
   }
 `;
 
-const TitleLink = styled(Link)`
+export const TitleLink = styled(Link)`
   text-decoration: none;
   padding: 10px 20px;
   background-color: rgba(255, 255, 255, 0.6);
@@ -103,13 +103,13 @@ const TitleLink = styled(Link)`
   }
 `;
 
-const PageTitle = styled.h1`
+export const PageTitle = styled.h1`
   font-size: 20px;
   font-weight: 600;
   color: #000000;
 `;
 
-const OptionList = styled.ul`
+export const OptionList = styled.ul`
   list-style: none;
   display: flex;
   gap: 30px;
@@ -124,7 +124,7 @@ const OptionList = styled.ul`
   }
 `;
 
-const OptionLink = styled(Link)`
+export const OptionLink = styled(Link)`
   text-decoration: none;
   font-size: 16px;
   font-weight: 400;
@@ -149,7 +149,7 @@ const OptionLink = styled(Link)`
   }
 `;
 
-const LoginLink = styled(Link)`
+export const LoginLink = styled(Link)`
   text-decoration: none;
   padding: 10px 20px;
   background: #FFFFFF;
@@ -169,7 +169,7 @@ const LoginLink = styled(Link)`
   }
 `;
 
-const RegisterLink = styled(Link)`
+export const RegisterLink = styled(Link)`
   text-decoration: none;
   padding: 10px 20px;
   background: linear-gradient(180deg, #6209DB 0%, #7613FD 100%);

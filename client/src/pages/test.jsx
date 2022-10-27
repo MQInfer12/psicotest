@@ -51,40 +51,42 @@ const Test = () => {
   }, []);
 
   return (
-    <AllContainer>
-      {idRole === 3 && (
-        <ButtonContainer>
-            <PurpleButton onClick={() => setShowForm(true)}>Añadir</PurpleButton>
-        </ButtonContainer>
-      )}
+    <AllContainer load={loading}>
       {loading ? (
         <Cargando />
       ) : (
-        <TestContainer>
-          {showForm && (
-            <Modal cerrar={() => setShowForm(false)} titulo="Añadir test">
-              <ModalTest
-                call={addTest}
-                actualizar={() => {
-                  llenarTests();
-                  setShowForm(false);
-                }}
-                funcion="añadir"
-              />
-            </Modal>
+        <>
+          {idRole === 3 && (
+            <ButtonContainer>
+                <PurpleButton onClick={() => setShowForm(true)}>Añadir</PurpleButton>
+            </ButtonContainer>
           )}
-          
-          {idRole === 3 &&
-            tests.map((v, i) => (
-              <TestCard key={i} {...v} llenarTests={llenarTests} />
-            ))}
+          <TestContainer>
+            {showForm && (
+              <Modal cerrar={() => setShowForm(false)} titulo="Añadir test">
+                <ModalTest
+                  call={addTest}
+                  actualizar={() => {
+                    llenarTests();
+                    setShowForm(false);
+                  }}
+                  funcion="añadir"
+                />
+              </Modal>
+            )}
+            
+            {idRole === 3 &&
+              tests.map((v, i) => (
+                <TestCard key={i} {...v} llenarTests={llenarTests} />
+              ))}
 
-          {idRole === 2 &&
-            tests.map((v, i) => <TestCardProfessor key={i} {...v} id={v.id} llenarTests={llenarTestsToProfessor} />)}
+            {idRole === 2 &&
+              tests.map((v, i) => <TestCardProfessor key={i} {...v} id={v.id} llenarTests={llenarTestsToProfessor} />)}
 
-          {idRole === 1 &&
-            tests.map((v, i) => <TestCardBenef key={i} {...v} llenarTests={llenarTests} />)}
-        </TestContainer>
+            {idRole === 1 &&
+              tests.map((v, i) => <TestCardBenef key={i} {...v} llenarTests={llenarTests} />)}
+          </TestContainer>
+        </>
       )}
     </AllContainer>
   );
@@ -97,6 +99,10 @@ const AllContainer = styled.div`
   flex-direction: column;
   gap: 20px;
   height: 100%;
+
+  @media (max-width: 1135px) {
+    height: ${props => props.load && "calc(100vh - 197px)"};
+  }
 `;
 
 const TestContainer = styled.div`
