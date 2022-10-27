@@ -22,7 +22,7 @@ const FirstSection = () => {
     <Container>
       <LeftContainer>
         <InfoContainer>
-          <NewContainer>{endCommit}</NewContainer>
+          <NewContainer>¡{endCommit}!</NewContainer>
           <BestPlatform>La mejor plataforma</BestPlatform>
           <PlatformInfo>
             Dile adiós a las plataformas de test psicológicos y disfruta de las

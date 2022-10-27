@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { db } from "../../firebase";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
 import { collection, query, where, getDocs, setDoc, doc, updateDoc, serverTimestamp, getDoc } from "firebase/firestore";
-import { UserContext } from "../../context/userContext";
 import ProfilePic from "../globals/profilePic";
 
 const Container = styled.div`
