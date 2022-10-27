@@ -1,17 +1,33 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { device } from '../../styles/devices';
-import FirstSectionImg from '../../images/landing/womanPhone.png';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { device } from "../../styles/devices";
+import FirstSectionImg from "../../images/landing/womanPhone.png";
+import { getCommits } from "../../services/github";
 
 const FirstSection = () => {
+  const [endCommit, setEndCommit] = useState("");
+
+  const handleGetCommit = async () => {
+    const res = await getCommits();
+    const auxMsg = res[0].commit.message;
+    setEndCommit(auxMsg);
+  };
+
+  useEffect(() => {
+    handleGetCommit();
+  }, []);
+
   return (
     <Container>
       <LeftContainer>
         <InfoContainer>
           <NewContainer>¡Lanzamos la aplicación!</NewContainer>
-          <BestPlatform>La mejor Plataforma</BestPlatform>
-          <PlatformInfo>Dile adiós a las plataformas de test psicológicos y disfruta de las funcionalidades por parte de Unifranz.</PlatformInfo>
+          <BestPlatform>{endCommit}</BestPlatform>
+          <PlatformInfo>
+            Dile adiós a las plataformas de test psicológicos y disfruta de las
+            funcionalidades por parte de Unifranz.
+          </PlatformInfo>
           <OpenAccountLink to="/register">Abre tu cuenta hoy</OpenAccountLink>
         </InfoContainer>
       </LeftContainer>
@@ -23,10 +39,10 @@ const FirstSection = () => {
         </PurpleCircle>
       </RightContainer>
     </Container>
-  )
-}
+  );
+};
 
-export default FirstSection
+export default FirstSection;
 
 const Container = styled.div`
   width: 100%;
@@ -45,7 +61,7 @@ const LeftContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 `;
 
 const InfoContainer = styled.div`
@@ -64,14 +80,14 @@ const NewContainer = styled.div`
   gap: 10px;
   font-size: 12px;
   font-weight: 400;
-  color: #6209DB;
+  color: #6209db;
   padding-bottom: 10px;
 
   &::before {
     content: "Nuevo";
     padding: 4px 6px;
-    color: #FFFFFF;
-    background: linear-gradient(180deg, #6209DB 0%, #7613FD 100%);
+    color: #ffffff;
+    background: linear-gradient(180deg, #6209db 0%, #7613fd 100%);
     border-radius: 6px;
   }
 `;
@@ -84,7 +100,7 @@ const BestPlatform = styled.h2`
 
   &::after {
     content: ".";
-    color: #6209DB;
+    color: #6209db;
   }
 `;
 
@@ -97,10 +113,10 @@ const PlatformInfo = styled.h3`
 const OpenAccountLink = styled(Link)`
   text-decoration: none;
   width: fit-content;
-  background: linear-gradient(180deg, #6209DB 0%, #7613FD 100%);
+  background: linear-gradient(180deg, #6209db 0%, #7613fd 100%);
   border-radius: 6px;
   padding: 20px;
-  color: #FFFFFF;
+  color: #ffffff;
   font-weight: 300;
   transition: all 0.3s;
 
@@ -117,7 +133,7 @@ const RightContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:  #F5F5F5;
+  background-color: #f5f5f5;
 
   @media ${device.laptop} {
     padding: 40px 10px;
@@ -129,7 +145,7 @@ const PurpleCircle = styled.div`
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  background: linear-gradient(180deg, #6209DB 0%, #7613FD 100%);
+  background: linear-gradient(180deg, #6209db 0%, #7613fd 100%);
   position: relative;
 
   @media (max-width: 520px) {

@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
+import ProtectedRoute from "./protectedRoute";
 
 const ProtectedRole = ({ children, roles = [] }) => {
   const navigate = useNavigate();
