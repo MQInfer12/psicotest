@@ -12,6 +12,9 @@ const Home = styled.div`
     height: 100%;
     display: flex;
     overflow: hidden;
+    @media (max-width: 768px) {
+      width: 90%;
+    }
   }
 `;
 

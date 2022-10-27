@@ -12,6 +12,7 @@ const DivPic = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   overflow: hidden;
+
 `;
 
 const DivLoading = styled.div`

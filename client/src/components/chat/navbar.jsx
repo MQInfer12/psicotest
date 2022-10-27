@@ -16,6 +16,15 @@ const Container = styled.div`
 
   .logo {
     font-weight: bold;
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .username{
+    @media (max-width: 1564px) {
+      display: none;
+    }
   }
   .user {
     display: flex;
@@ -27,6 +36,10 @@ const Container = styled.div`
       font-size: 10px;
       border: none;
       cursor: pointer;
+      @media (max-width: 768px) {
+        position: absolute;
+        bottom: 10px;
+      }
     }
   }
 `;
@@ -39,8 +52,13 @@ const Navbar = ({ handleChange }) => {
     <Container>
       <span className="logo">UNIFRANZ</span>
       <div className="user">
-        <ProfilePic width="24px" height="24px" id={user.id} perfil={user.perfil} />
-        <span>{user.nombre}</span>
+        <ProfilePic
+          width="24px"
+          height="24px"
+          id={user.id}
+          perfil={user.perfil}
+        />
+        <span className="username">{user.nombre}</span>
         <select onChange={(e) => handleChange(e.target.value)}>
           <option value={1}>Chatear</option>
           <option value={2}>Contactos</option>

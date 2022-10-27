@@ -9,6 +9,7 @@ const Container = styled.div`
   border-right: 1px solid #3d3c61;
   background-color: #3e3c61;
   overflow-y: scroll;
+  position: relative;
 `;
 
 const Sidebar = () => {
@@ -22,7 +23,7 @@ const Sidebar = () => {
       <Navbar handleChange={handleChange} />
       {/*<Search />*/}
       {value == 1 && <Chats />}
-      {value == 2 && <FutureChats />}  
+      {value == 2 && <FutureChats />}
       {/* <Chats /> */}
     </Container>
   );
