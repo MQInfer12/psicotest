@@ -10,31 +10,30 @@ const Footer = () => {
         <FooterColumn>
           <FooterLinks>
             <ColumnTitle>Inicio</ColumnTitle>
-            <OptionLink to="#">Tarjeta de débito</OptionLink>
-            <OptionLink to="#">Tarjeta de crédito</OptionLink>
-            <OptionLink to="#">Créditos hipotecarios</OptionLink>
+            <OptionLink to="/">Página principal</OptionLink>
+            <OptionLink to="/login">Inicia sesión</OptionLink>
+            <OptionLink to="/register">Crea una cuenta</OptionLink>
           </FooterLinks>
         </FooterColumn>
         <FooterColumn>
           <FooterLinks>
             <ColumnTitle>Empresa</ColumnTitle>
             <OptionLink to="#">Acerca</OptionLink>
-            <OptionLink to="#">Tarjeta de crédito</OptionLink>
-            <OptionLink to="#">Créditos hipotecarios</OptionLink>
+            <OptionLink to="#">Contacto</OptionLink>
+            <OptionLink to="#">Desarrolladores</OptionLink>
           </FooterLinks>
         </FooterColumn>
         <FooterColumn>
           <FooterLinks>
             <ColumnTitle>Productos</ColumnTitle>
-            <OptionLink to="#">Tarjeta de débito</OptionLink>
-            <OptionLink to="#">Tarjeta de crédito</OptionLink>
-            <OptionLink to="#">Créditos hipotecarios</OptionLink>
+            <OptionLink to="#">PsicoTest</OptionLink>
+            <OptionLink to="#">CIDTEC</OptionLink>
           </FooterLinks>
         </FooterColumn>
         <FooterColumn>
           <FooterLinks>
-            <ColumnTitle>Psico Test.</ColumnTitle>
-            <ColumnInfo>Av. Gualberto Villarroel y Tomás Oconor</ColumnInfo>
+            <ColumnTitle>Unifranz</ColumnTitle>
+            <ColumnA href="https://goo.gl/maps/CW4T8kaLciFi9ErW6">Av. Gualberto Villarroel y Tomás Oconor</ColumnA>
             <IconsDiv>
               <IconA href="https://www.facebook.com/unifranz.edu"><i className="fa-brands fa-facebook"></i></IconA>
               <IconA href="https://www.instagram.com/unifranz/"><i className="fa-brands fa-instagram"></i></IconA>
@@ -46,7 +45,6 @@ const Footer = () => {
       </FooterInfo>
       <FooterRights>
         <Rights>2022 PsicoTest y todos los derechos reservados</Rights>
-        <Rights>Términos y condiciones</Rights>
       </FooterRights>
     </Container>
   )
@@ -76,6 +74,7 @@ const FooterInfo = styled.div`
 
   @media ${device.laptop} {
     grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
   }
 
   @media (max-width: 520px) {
@@ -126,9 +125,31 @@ const OptionLink = styled(Link)`
   }
 `;
 
-const ColumnInfo = styled.div`
+const ColumnA = styled.a`
+  width: fit-content;
+  text-decoration: none;
   font-size: 12px;
   font-weight: 400;
+  color: #000000;
+  position: relative;
+  cursor: pointer;
+
+  &::after {
+    content: "";
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-bottom: 1px solid black;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s;
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
 `;
 
 const IconsDiv = styled.div`

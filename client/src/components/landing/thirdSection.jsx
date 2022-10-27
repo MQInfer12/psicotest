@@ -10,8 +10,8 @@ const ThirdSection = () => {
       <GrayDiv>
         <LeftDiv>
           <SendResponses>Manda y recibe tus respuestas al instante</SendResponses>
-          <LeftInfo>Tu dinero está seguro en todo momento, puedes consultar todos los movimientos de tu cuenta directamente desde tu celular.</LeftInfo>
-          <OpenAccountLink to="/register">Abre tu cuenta hoy</OpenAccountLink>
+          <LeftInfo>Tus respuestas serán revisadas por tus psicólogos, puedes acceder a las funcionalidades directamente desde tu computadora o celular.</LeftInfo>
+          <OpenAccountLink to="/register">Registra tu cuenta hoy</OpenAccountLink>
         </LeftDiv>
         <RightDiv>
           <PurpleCircle>

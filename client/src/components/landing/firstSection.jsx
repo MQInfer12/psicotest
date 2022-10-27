@@ -23,12 +23,12 @@ const FirstSection = () => {
       <LeftContainer>
         <InfoContainer>
           <NewContainer>¡{endCommit}!</NewContainer>
-          <BestPlatform>La mejor plataforma</BestPlatform>
+          <BestPlatform>La genial plataforma</BestPlatform>
           <PlatformInfo>
-            Dile adiós a las plataformas de test psicológicos y disfruta de las
+            Dile adiós a las plataformas de test psicológicas convencionales y disfruta de las
             funcionalidades por parte de Unifranz.
           </PlatformInfo>
-          <OpenAccountLink to="/register">Abre tu cuenta hoy</OpenAccountLink>
+          <OpenAccountLink to="/register">Registra tu cuenta hoy</OpenAccountLink>
         </InfoContainer>
       </LeftContainer>
       <RightContainer>
