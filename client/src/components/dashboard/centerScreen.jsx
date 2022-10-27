@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { device } from "../../styles/devices";
@@ -128,6 +128,7 @@ const OutletContainer = styled.div`
   @media (max-width: 1135px) {
     height: max-content;
     min-height: calc(100vh - 157px);
+    overflow: visible;
     margin-top: 157px;
   }
 

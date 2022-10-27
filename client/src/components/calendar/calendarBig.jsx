@@ -132,7 +132,7 @@ const CalendarBig = () => {
   }
 
   const llenarCitasDisponibles = async () => { //API PARA OBTENER LOS HORARIOS PARA QUE ELIJA EL USUARIO
-    const res = await getAllApoinments();
+    const res = await getAllApoinments(user.email);
     setHorarios(res);
   }
 
@@ -271,32 +271,30 @@ const CalendarBig = () => {
                       horarios.filter(v => v.fecha == day.format("DD/MM/YYYY")).map((v, i) => {
                         const hora_inicio = convertToDate(day, v.hora_inicio);
                         const hora_final = convertToDate(day, v.hora_final);
-                        if(v.disponible) {
-                          return (
-                            <DivTask 
-                              onClick={() => {
-                                setHorarioSelected({
-                                  id: v.id,
-                                  nombre: v.nombre,
-                                  email: v.email,
-                                  disponible: v.disponible,
-                                  fecha: day.format("MM/DD/YYYY"),
-                                  hora_final: v.hora_final,
-                                  hora_inicio: v.hora_inicio
-                                });
-                                setShowEdit(true);
-                              }} 
-                              key={i}
-                            >
-                              {
-                                user.id_rol != 1 ?
-                                "Libre - " :
-                                v.nombre + " - "
-                              }
-                              {hora_inicio} a {hora_final}
-                            </DivTask>
-                          )
-                        }
+                        return (
+                          <DivTask 
+                            onClick={() => {
+                              setHorarioSelected({
+                                id: v.id,
+                                nombre: v.nombre,
+                                email: v.email,
+                                disponible: v.disponible,
+                                fecha: day.format("MM/DD/YYYY"),
+                                hora_final: v.hora_final,
+                                hora_inicio: v.hora_inicio
+                              });
+                              setShowEdit(true);
+                            }} 
+                            key={i}
+                          >
+                            {
+                              user.id_rol != 1 ?
+                              "Libre - " :
+                              v.nombre + " - "
+                            }
+                            {hora_inicio} a {hora_final}
+                          </DivTask>
+                        )
                       })
                     }
                     {

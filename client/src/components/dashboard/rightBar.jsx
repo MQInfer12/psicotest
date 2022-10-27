@@ -8,7 +8,7 @@ const RightBar = ({ user, calendar }) => {
   return (
     <RightContainer calendar={calendar}>
       <UpbarSquares>
-        <UpbarName>{user?.nombre}{/*user?.id*/}</UpbarName>
+        <UpbarName>{user?.nombre}{user?.id}</UpbarName>
         <UpbarNot></UpbarNot>
         <ProfilePic 
           width="52px"
