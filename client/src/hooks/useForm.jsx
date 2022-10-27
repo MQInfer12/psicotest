@@ -1,35 +1,49 @@
 import { useState, useEffect } from "react";
 import { validarInputFile, getBase64 } from "../functions";
 
-export const UseForm = (initialForm, validateForm, APICall, success, primaryId, foreignId) => {
+export const UseForm = (
+  initialForm,
+  validateForm,
+  APICall,
+  success,
+  primaryId,
+  foreignId
+) => {
   const [form, setForm] = useState(initialForm);
-  const [errors, setErrors] = useState({reseted: true});
+  const [errors, setErrors] = useState({ reseted: true });
 
   //ENVIAR PETICION
   const handleSend = async (form) => {
     try {
       let res;
-      if(primaryId) { //LLAMAR A LA API PARA EDITAR
+      if (primaryId) {
+        //LLAMAR A LA API PARA EDITAR
         res = await APICall(form, primaryId);
-      } else if(foreignId) { //LLAMAR A LA API PARA AÑADIR UN DATO CON LLAVE FORANEA
+      } else if (foreignId) {
+        //LLAMAR A LA API PARA AÑADIR UN DATO CON LLAVE FORANEA
         res = await APICall(form, foreignId);
-      } else { //LLAMAR A LA API PARA AÑADIR
+      } else {
+        //LLAMAR A LA API PARA AÑADIR
         res = await APICall(form);
       }
 
-      if(res.status == 201) { //ESTADO DE GUARDADO O EDITADO
+      if (res.status == 201) {
+        //ESTADO DE GUARDADO O EDITADO
         console.log("¡Petición correcta!");
         success();
-      } else if(res.status == 200) { //ESTADO DE LOGEADO
+      } else if (res.status == 200) {
+        //ESTADO DE LOGEADO
         console.log("¡Logeado con éxito!");
         success();
-      } else if(res.status == 209){ //ESTADO DE REGISTRO
+      } else if (res.status == 209) {
+        //ESTADO DE REGISTRO
         const resJson = await res?.json();
         success(resJson);
-      } else if(res.status == 401) { //NO AUTORIZADO
+      } else if (res.status == 401) {
+        //NO AUTORIZADO
         console.log("¡Correo o contraseña incorrectos!");
         alert("¡Correo o contraseña incorrectos!");
-      } else if(res.status == 403) {
+      } else if (res.status == 403) {
         console.log("¡No se puede ingresar a esta cuenta!");
         alert("¡No se puede ingresar a esta cuenta!");
       }
@@ -41,8 +55,8 @@ export const UseForm = (initialForm, validateForm, APICall, success, primaryId, 
   //IR CAMBIANDO EL FORM
   const handleChange = (e) => {
     //SI EL INPUT ES DE TIPO FILE VALIDAR Y CONVERTIR A BASE64
-    if(e.target.type == 'file') {
-      if(validarInputFile(e)) return;
+    if (e.target.type == "file") {
+      if (validarInputFile(e)) return;
       getBase64(e.target.files[0], (resultado) => {
         setForm({
           ...form,
@@ -68,8 +82,8 @@ export const UseForm = (initialForm, validateForm, APICall, success, primaryId, 
   //RESETEAR A POR DEFECTO
   const handleReset = () => {
     setForm(initialForm);
-    setErrors({reseted: true});
-  }
+    setErrors({ reseted: true });
+  };
 
   //ELIMINAR IMAGEN
   const handleResetImg = (key) => {
@@ -77,12 +91,12 @@ export const UseForm = (initialForm, validateForm, APICall, success, primaryId, 
       ...form,
       [key]: null,
     });
-  }
+  };
 
   //LUEGO EJECUTAR SEND SI NO HAY ERRORES
   const [effects, setEffects] = useState(false);
   useEffect(() => {
-    if(effects) {
+    if (effects) {
       if (Object.keys(errors).length === 0) {
         handleSend(form);
       }
@@ -97,6 +111,6 @@ export const UseForm = (initialForm, validateForm, APICall, success, primaryId, 
     handleChange,
     handleSubmit,
     handleReset,
-    handleResetImg
+    handleResetImg,
   };
-}
+};

@@ -3,11 +3,11 @@ import { http } from "./htpp";
 export const signIn = async (form) => {
   try {
     const response = await fetch(`${http}auth/login`, {
-      credentials: 'include',
+      credentials: "include",
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "accept": "application/json",
+        accept: "application/json",
       },
       credentials: "include",
       body: JSON.stringify({
@@ -15,6 +15,14 @@ export const signIn = async (form) => {
         password: form.contrasenia,
       }),
     });
+
+    const res = await response.json();
+    if (res.token) {
+      document.cookie = `token=${res.token}; max-age=${
+        60 * 60 * 24
+      }; path=/; samesite=stric`;
+    }
+
     return response;
   } catch (error) {
     console.log(error);
@@ -25,9 +33,10 @@ export const signUp = async (form) => {
   try {
     const response = await fetch(`${http}auth/register`, {
       method: "POST",
-      headers: { "Content-Type": "application/json",
-      "accept": "application/json",
-    },
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
       credentials: "include",
       body: JSON.stringify({
         nombre: form.nombre,
@@ -48,9 +57,10 @@ export const signUp = async (form) => {
 
 export const getProfile = async () => {
   try {
+    const token = document.cookie.replace("token=", "");
     const response = await fetch(`${http}auth/me`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "token": token },
       credentials: "include",
     });
     const resJson = await response?.json();
@@ -62,11 +72,13 @@ export const getProfile = async () => {
 
 export const logOut = async () => {
   try {
+    const token = document.cookie.replace("token=", "");
     const response = await fetch(`${http}auth/logout`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "token": token },
       credentials: "include",
     });
+    document.cookie = `token=; max-age=0`;
     return response;
   } catch (error) {
     console.log(error);
