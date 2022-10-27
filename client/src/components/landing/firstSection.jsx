@@ -22,8 +22,8 @@ const FirstSection = () => {
     <Container>
       <LeftContainer>
         <InfoContainer>
-          <NewContainer>¡Lanzamos la aplicación!</NewContainer>
-          <BestPlatform>{endCommit}</BestPlatform>
+          <NewContainer>{endCommit}</NewContainer>
+          <BestPlatform>La mejor plataforma</BestPlatform>
           <PlatformInfo>
             Dile adiós a las plataformas de test psicológicos y disfruta de las
             funcionalidades por parte de Unifranz.
