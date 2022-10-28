@@ -10,7 +10,7 @@ import Cargando from "../components/globals/cargando";
 const AnswersContainer = styled.div`
   height: 100%;
   box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
-  background-color: #EBF0FA;
+  background-color: #ebf0fa;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -42,19 +42,19 @@ const TableAnswers = styled.table`
   & > tbody > tr {
     max-width: 622px;
     height: 64px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     position: relative;
     text-align: center;
   }
 
   & > tbody > tr:nth-child(2n) {
-    background-color: #EBF0FA;
+    background-color: #ebf0fa;
   }
 `;
 
 const ThNumberal = styled.th`
   font-size: 11px;
-  color: #171C26;
+  color: #171c26;
   padding-left: 11px;
   width: 47px;
   text-align: start;
@@ -62,12 +62,12 @@ const ThNumberal = styled.th`
 `;
 
 const ThAnswer = styled.th`
-  width: ${props => props.width};
+  width: ${(props) => props.width};
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
   text-align: start;
-  color: #464F60;
+  color: #464f60;
 `;
 
 const DivDouble = styled.div`
@@ -82,7 +82,7 @@ const DivDouble = styled.div`
 
 const PNombre = styled.p`
   font-size: 14px;
-  color: #171C26;
+  color: #171c26;
   font-weight: 500;
 `;
 
@@ -101,20 +101,28 @@ const StatusContainer = styled.div`
   padding: 1px 10px;
   font-size: 12px;
   font-weight: 500;
-  background-color: ${props => props.estado == 0? "#E9EDF5" :
-                               props.estado == 1? "#F0F1FA" :
-                               props.estado == 2? "#E1FCEF" :
-                               props.estado == 3 && "#FAF0F3"};
-  color: ${props => props.estado == 0? "#5A6376" :
-                    props.estado == 1? "#4F5AED" :
-                    props.estado == 2? "#14804A" :
-                    props.estado == 3 && "#D12953"};
+  background-color: ${(props) =>
+    props.estado == 0
+      ? "#E9EDF5"
+      : props.estado == 1
+      ? "#F0F1FA"
+      : props.estado == 2
+      ? "#E1FCEF"
+      : props.estado == 3 && "#FAF0F3"};
+  color: ${(props) =>
+    props.estado == 0
+      ? "#5A6376"
+      : props.estado == 1
+      ? "#4F5AED"
+      : props.estado == 2
+      ? "#14804A"
+      : props.estado == 3 && "#D12953"};
 `;
 
 const PPuntaje = styled.p`
   font-size: 14px;
   font-weight: 400;
-  color: #464F60;
+  color: #464f60;
   width: 100%;
   text-align: end;
 `;
@@ -137,7 +145,7 @@ const DivCenter = styled.div`
 const ThNumber = styled.th`
   font-size: 14px;
   font-weight: 500;
-  color: #171C26;
+  color: #171c26;
   padding-left: 11px;
   width: 47px;
   text-align: start;
@@ -150,7 +158,7 @@ const TrCargando = styled.tr`
 `;
 
 const TdCargando = styled.td`
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   display: flex;
   width: 622px;
   height: 512px;
@@ -168,32 +176,71 @@ const Answers = () => {
     const resJson = await res?.json();
     setRespuestas(resJson);
     setLoading(false);
-  }
+  };
 
   const llenarRespuestasPorDocente = async () => {
     const res = await getRespuestasByDocente(user.id);
     const resJson = await res?.json();
     setRespuestas(resJson);
     setLoading(false);
-  }
+  };
 
   useEffect(() => {
-    if(user.id_rol === 3) {
+    if (user.id_rol === 3) {
       llenarRespuestas();
-    } else if(user.id_rol === 2) {
+    } else if (user.id_rol === 2) {
       llenarRespuestasPorDocente();
     }
-  }, [])
+  }, []);
+
+  const [select, setSelect] = useState("name");
+  const [filter, setFilter] = useState("");
+
+  const handleChooseFilter = async (e) => {
+    setFilter(e.target.value);
+  };
+
+  const handleSelect = (e) => {
+    setSelect(e.target.value);
+  };
+
+  const search = (v) => {
+    if (filter === "") return v;
+    if (select === "name") {
+      if (v.nombre_user.toLocaleLowerCase().includes(filter.toLowerCase())) {
+        return v;
+      }
+    }
+    if (select === "test") {
+      if (v.nombre_test.toLocaleLowerCase().includes(filter.toLowerCase())) {
+        return v;
+      }
+    }
+    if (select === "professor") {
+      if (v.nombre_docente.toLocaleLowerCase().includes(filter.toLowerCase())) {
+        return v;
+      }
+    }
+    if (select === "state") {
+      console.log(v)
+    }
+  };
 
   return (
     <AnswersContainer>
-      <ControlsContainer>
-      </ControlsContainer>
+      <ControlsContainer></ControlsContainer>
       <TableContainer>
-        {
-          loading ? (
-            <Cargando />
-          ) : (
+        {loading ? (
+          <Cargando />
+        ) : (
+          <>
+            <input type="text" onChange={handleChooseFilter} />
+            <select onChange={handleSelect}>
+              <option value="name">Nombre</option>
+              <option value="test">Test</option>
+              <option value="professor">Docente</option>
+              <option value="state">Estado</option>
+            </select>
             <TableAnswers>
               <thead>
                 <tr>
@@ -207,10 +254,15 @@ const Answers = () => {
                 </tr>
               </thead>
               <tbody>
-                {
-                  respuestas.filter((v, i) => i >= (page - 1) * 9 && i < page * 9).map((v, i) => (
+                {respuestas
+                  .filter((v, i) => i >= (page - 1) * 9 && i < page * 9)
+                  .filter((v) => {
+                    const res = search(v);
+                    return res;
+                  })
+                  .map((v, i) => (
                     <tr key={i}>
-                      <ThNumber>{((page - 1) * 9) + (i + 1)}</ThNumber>
+                      <ThNumber>{(page - 1) * 9 + (i + 1)}</ThNumber>
                       <td>
                         <DivDouble>
                           <PNombre>{v.nombre_user}</PNombre>
@@ -232,12 +284,13 @@ const Answers = () => {
                       <td>
                         <DivDouble>
                           <StatusContainer estado={v.estado}>
-                            {
-                              v.estado == 0 ? "Pendiente" :
-                              v.estado == 1 ? "Recibido" :
-                              v.estado == 2 ? "Corregido" :
-                              v.estado == 3 && "Expiró"
-                            }
+                            {v.estado == 0
+                              ? "Pendiente"
+                              : v.estado == 1
+                              ? "Recibido"
+                              : v.estado == 2
+                              ? "Corregido"
+                              : v.estado == 3 && "Expiró"}
                           </StatusContainer>
                         </DivDouble>
                       </td>
@@ -249,25 +302,28 @@ const Answers = () => {
                       </td>
                       <td>
                         <DivCenter>
-                          <WhiteIconButton onClick={() => navigate("./" + v.id)}><i className="fa-solid fa-eye"></i></WhiteIconButton>
+                          <WhiteIconButton
+                            onClick={() => navigate("./" + v.id)}
+                          >
+                            <i className="fa-solid fa-eye"></i>
+                          </WhiteIconButton>
                         </DivCenter>
                       </td>
                     </tr>
-                  ))
-                }
+                  ))}
               </tbody>
             </TableAnswers>
-          )
-        }
+          </>
+        )}
       </TableContainer>
-      <Pagination 
+      <Pagination
         cant={respuestas.length}
         rows="9"
         page={page}
         setPage={setPage}
       />
     </AnswersContainer>
-  )
-}
+  );
+};
 
 export default Answers;
