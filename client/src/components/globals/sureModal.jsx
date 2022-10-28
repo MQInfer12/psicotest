@@ -2,6 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import { DangerButton ,WhiteButton } from "../../styles/formularios";
 
+const SureModal = ({ cerrar, sure, text }) => {
+  return (
+    <DivAlerta>
+      <DivAlertaText>
+        <DivIcon className='fa-solid fa-circle-exclamation'></DivIcon>
+        <H2Title>¿Estás seguro?</H2Title>
+        <PText>{text}.</PText>
+      </DivAlertaText>
+      <DivButtons>
+        <WhiteButton onClick={cerrar}>Cerrar</WhiteButton>
+        <DangerButton onClick={() => {sure(); cerrar();}}>Eliminar</DangerButton>
+      </DivButtons>
+    </DivAlerta>
+  )
+}
+
+export default SureModal;
+
 const DivAlerta = styled.div`
   display: flex;
   flex-direction: column;
@@ -38,21 +56,3 @@ const DivButtons = styled.div`
   justify-content: center;
   gap: 20px;
 `;
-
-const SureModal = ({ cerrar, sure, text }) => {
-  return (
-    <DivAlerta>
-      <DivAlertaText>
-        <DivIcon className='fa-solid fa-circle-exclamation'></DivIcon>
-        <H2Title>¿Estás seguro?</H2Title>
-        <PText>{text}.</PText>
-      </DivAlertaText>
-      <DivButtons>
-        <WhiteButton onClick={cerrar}>Cerrar</WhiteButton>
-        <DangerButton onClick={() => {sure(); cerrar();}}>Eliminar</DangerButton>
-      </DivButtons>
-    </DivAlerta>
-  )
-}
-
-export default SureModal;

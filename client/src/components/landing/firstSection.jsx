@@ -134,6 +134,7 @@ const RightContainer = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #f5f5f5;
+  border-radius: 0 0 0 50px;
 
   @media ${device.laptop} {
     padding: 40px 10px;
