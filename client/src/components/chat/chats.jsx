@@ -22,6 +22,8 @@ const Container = styled.div`
     gap: 10px;
     color: white;
     cursor: pointer;
+    width: 100%;
+
     &>div:first-child{
       min-width: 50px;
     }
@@ -37,6 +39,8 @@ const Container = styled.div`
       p {
         font-size: 14px;
         color: lightgray;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }

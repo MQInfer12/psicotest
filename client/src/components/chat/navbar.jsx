@@ -13,7 +13,8 @@ const Container = styled.div`
   padding: 10px;
   justify-content: space-between;
   color: #ddddf7;
-  @media (max-width: 1079px) {
+
+  @media (max-width: 1080px) {
       flex-direction: column;
       height: auto;
     }

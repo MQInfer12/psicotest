@@ -9,12 +9,14 @@ const Container = styled.div`
   display: flex;
   gap: 20px;
   margin-bottom: 20px;
+
   .messageInfo {
     display: flex;
     flex-direction: column;
     color: gray;
     font-weight: 300;
   }
+  
   .messageContent {
     max-width: 80%;
     display: flex;
@@ -32,6 +34,7 @@ const Container = styled.div`
       width: 50%;
     }
   }
+
   &.owner {
     flex-direction: row-reverse;
 

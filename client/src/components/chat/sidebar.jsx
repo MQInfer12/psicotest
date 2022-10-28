@@ -5,16 +5,15 @@ import Search from "./search";
 import Chats from "./chats";
 import FutureChats from "./futureChats";
 const Container = styled.div`
-  min-width: 33%;
+  width: 350px;
+  min-width: 350px;
+  max-width: 350px;
   border-right: 1px solid #3d3c61;
   background-color: #3e3c61;
   overflow-x: hidden;
   z-index: 1;
-  
-  @media (max-width: 1214px) {
-    min-width: 40%;
-  }
-  @media (max-width: 1060px) {
+
+  @media (max-width: 1080px) {
     min-width: 100%;
     max-width: 100%;
     position: absolute;

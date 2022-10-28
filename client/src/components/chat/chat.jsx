@@ -8,8 +8,8 @@ import Input from "./input";
 import { ChatContext } from "../../context/chatContext";
 const Container = styled.div`
   width: 100%;
+  
   .chatInfo {
-    height: 50px;
     background-color: #5d5b8d;
     display: flex;
     align-items: center;
