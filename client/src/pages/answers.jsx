@@ -222,7 +222,12 @@ const Answers = () => {
       }
     }
     if (select === "state") {
-      console.log(v)
+      if (v.case) {
+        if (v.case.toLocaleLowerCase().includes(filter.toLowerCase())) {
+          return v;
+        }
+      }
+      //   console.log(v.case)
     }
   };
 
