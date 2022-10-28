@@ -1,5 +1,12 @@
 import { async } from "@firebase/util";
-import { collection, doc, getDocs, onSnapshot, query, where } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { ChatContext } from "../../context/chatContext";
@@ -15,7 +22,9 @@ const Container = styled.div`
     gap: 10px;
     color: white;
     cursor: pointer;
-
+    &>div:first-child{
+      min-width: 50px;
+    }
     &:hover {
       background-color: #2f2d52;
     }
@@ -31,6 +40,8 @@ const Container = styled.div`
       }
     }
   }
+
+
 `;
 
 const Chats = () => {
@@ -40,11 +51,11 @@ const Chats = () => {
 
   const getUserByChat = async (data) => {
     let chatsData = [];
-    for(let key in data) {
+    for (let key in data) {
       const userChat = data[key];
       const userInfo = userChat.userInfo;
       const uid = userInfo.uid;
-  
+
       const q = query(collection(db, "users"), where("uid", "==", Number(uid)));
       try {
         const querySnapshot = await getDocs(q);
@@ -57,20 +68,23 @@ const Chats = () => {
       }
     }
     return chatsData;
-  }
+  };
 
   useEffect(() => {
     const getChats = async () => {
-      const unsub = onSnapshot(doc(db, "userChats", currentUser?.uid), async (doc) => {
-        const data = doc.data();
-        const chatsData = await getUserByChat(data);
-        chatsData.sort((a, b) => b.date - a.date);
-        setChats(chatsData);
-      });
+      const unsub = onSnapshot(
+        doc(db, "userChats", currentUser?.uid),
+        async (doc) => {
+          const data = doc.data();
+          const chatsData = await getUserByChat(data);
+          chatsData.sort((a, b) => b.date - a.date);
+          setChats(chatsData);
+        }
+      );
       return () => {
         unsub();
       };
-    }
+    };
 
     currentUser?.uid && getChats();
   }, [currentUser?.uid]);
@@ -82,8 +96,7 @@ const Chats = () => {
   return (
     <Container>
       {chats &&
-        chats
-        .map((v, i) => (
+        chats.map((v, i) => (
           <div
             className="userChat"
             key={i}
@@ -94,18 +107,16 @@ const Chats = () => {
               height="50px"
               id={v.userInfo.uid}
               perfil={v.userInfo.perfil}
+              className="img"
             />
             <div className="userChatInfo">
               <span>{v.userInfo.email}</span>
-              <p>{v.lastMessage != undefined && v.lastMessage.text}</p> 
+              <p>{v.lastMessage != undefined && v.lastMessage.text}</p>
             </div>
           </div>
-        ))
-      }
+        ))}
     </Container>
   );
 };
 
 export default Chats;
-
-

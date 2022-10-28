@@ -1,25 +1,35 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import Navbar from "./navbar";
 import Search from "./search";
 import Chats from "./chats";
 import FutureChats from "./futureChats";
 const Container = styled.div`
-  flex: 1;
+  min-width: 33%;
   border-right: 1px solid #3d3c61;
   background-color: #3e3c61;
-  overflow-y: scroll;
-  position: relative;
+  overflow-x: hidden;
+  z-index: 999;
+  @media (max-width: 1214px) {
+    min-width: 40%;
+  }
+  @media (max-width: 1060px) {
+    min-width: 60%;
+    position: absolute;
+    height: 100%;
+    top: 0;
+  }
 `;
 
-const Sidebar = () => {
+const Sidebar = ({ siderRef, handleClick }) => {
   const [value, setValue] = useState(1);
+
   const handleChange = (val) => {
     setValue(val);
   };
 
   return (
-    <Container>
+    <Container ref={siderRef}>
       <Navbar handleChange={handleChange} />
       {/*<Search />*/}
       {value == 1 && <Chats />}

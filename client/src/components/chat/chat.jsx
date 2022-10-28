@@ -7,7 +7,7 @@ import Messages from "./messages";
 import Input from "./input";
 import { ChatContext } from "../../context/chatContext";
 const Container = styled.div`
-  flex: 2;
+  width: 100%;
   .chatInfo {
     height: 50px;
     background-color: #5d5b8d;
@@ -29,16 +29,16 @@ const Container = styled.div`
   }
 `;
 
-const Message = () => {
+const Message = ({ handleClick }) => {
   const { data } = useContext(ChatContext);
   return (
     <Container>
       <div className="chatInfo">
         <span>{data.user.email}</span>
         <div className="chatIcons">
-          <img src={Cam} alt="" />
-          <img src={Add} alt="" />
-          <img src={More} alt="" />
+ {/*          <img src={Cam} alt="" />
+          <img src={Add} alt="" /> */}
+          <img src={More} onClick={handleClick} alt="" />
         </div>
       </div>
       <Messages />

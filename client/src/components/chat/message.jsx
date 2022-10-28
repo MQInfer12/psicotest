@@ -37,10 +37,12 @@ const Container = styled.div`
 
     .messageContent {
       align-items: flex-end;
+
       p {
         background-color: #8da4f1;
         color: white;
         border-radius: 10px 0px 10px 10px;
+     
       }
     }
   }
@@ -79,8 +81,16 @@ const Message = ({ message }) => {
         <ProfilePic
           width="40px"
           height="40px"
-          id={message.senderId == currentUser.uid ? currentUser.uid : otherUser.uid}
-          perfil={message.senderId == currentUser.uid ? currentUser.perfil : otherUser.perfil}
+          id={
+            message.senderId == currentUser.uid
+              ? currentUser.uid
+              : otherUser.uid
+          }
+          perfil={
+            message.senderId == currentUser.uid
+              ? currentUser.perfil
+              : otherUser.perfil
+          }
         />
         <span>{convertSecondosToDate(message.date.seconds)}</span>
       </div>

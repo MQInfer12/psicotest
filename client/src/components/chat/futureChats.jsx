@@ -13,7 +13,9 @@ const Container = styled.div`
     gap: 10px;
     color: white;
     cursor: pointer;
-
+    &>div:first-child{
+      min-width: 50px;
+    }
     &:hover {
       background-color: #2f2d52;
     }
@@ -22,6 +24,10 @@ const Container = styled.div`
       span {
         font-size: 18px;
         font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
       }
       p {
         font-size: 14px;

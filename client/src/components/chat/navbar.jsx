@@ -13,12 +13,13 @@ const Container = styled.div`
   padding: 10px;
   justify-content: space-between;
   color: #ddddf7;
-
+  @media (max-width: 1079px) {
+      flex-direction: column;
+      height: auto;
+    }
   .logo {
     font-weight: bold;
-    @media (max-width: 768px) {
-      display: none;
-    }
+
   }
 
   .username{
@@ -58,7 +59,7 @@ const Navbar = ({ handleChange }) => {
           id={user.id}
           perfil={user.perfil}
         />
-        <span className="username">{user.nombre}</span>
+       {/*  <span className="username">{user.nombre}</span> */}
         <select onChange={(e) => handleChange(e.target.value)}>
           <option value={1}>Chatear</option>
           <option value={2}>Contactos</option>
