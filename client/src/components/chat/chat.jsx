@@ -6,6 +6,7 @@ import More from "../../assets/msg/more.png";
 import Messages from "./messages";
 import Input from "./input";
 import { ChatContext } from "../../context/chatContext";
+
 const Container = styled.div`
   width: 100%;
   

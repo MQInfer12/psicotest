@@ -4,6 +4,7 @@ import Navbar from "./navbar";
 import Search from "./search";
 import Chats from "./chats";
 import FutureChats from "./futureChats";
+
 const Container = styled.div`
   width: 350px;
   min-width: 350px;
@@ -14,6 +15,7 @@ const Container = styled.div`
   z-index: 1;
 
   @media (max-width: 1080px) {
+    display: ${props => props.showSide ? "block" : "none"};
     min-width: 100%;
     max-width: 100%;
     position: absolute;
@@ -22,7 +24,7 @@ const Container = styled.div`
   }
 `;
 
-const Sidebar = ({ siderRef, handleClick }) => {
+const Sidebar = ({ showSide, handleClick }) => {
   const [value, setValue] = useState(1);
 
   const handleChange = (val) => {
@@ -30,10 +32,10 @@ const Sidebar = ({ siderRef, handleClick }) => {
   };
 
   return (
-    <Container ref={siderRef}>
+    <Container showSide={showSide}>
       <Navbar handleChange={handleChange} />
       {/*<Search />*/}
-      {value == 1 && <Chats />}
+      {value == 1 && <Chats handleClick={handleClick} />}
       {value == 2 && <FutureChats />}
       {/* <Chats /> */}
     </Container>

@@ -12,6 +12,7 @@ import { WhiteIconButton, DangerIconButton } from "../../styles/formularios";
 import ModalAssignProfessor from "./modalAssignProfessor";
 import ModalUnassign from "./modalUnassignProfessor";
 import SureModal from "../globals/sureModal";
+import { useOutletContext } from "react-router-dom";
 
 const Container = styled.div`
   width: 322px;
@@ -81,6 +82,7 @@ const ButtonContainer = styled.div`
 
 const TestCard = (props) => {
   const navigate = useNavigate();
+  const { handleScrollTop } = useOutletContext();
 
   const [showForm, setShowForm] = useState(false);
   const [showSure, setShowSure] = useState(false);
@@ -131,7 +133,12 @@ const TestCard = (props) => {
 
 
       <ButtonContainer>
-        <WhiteIconButton onClick={() => navigate(`./testview/${props.id}`)}>
+        <WhiteIconButton 
+          onClick={() => {
+            navigate(`./testview/${props.id}`);
+            handleScrollTop();
+          }}
+        >
           <i className="fa-solid fa-newspaper"></i>
         </WhiteIconButton>
         <WhiteIconButton onClick={() => navigate(`./${props.id}`)}>

@@ -22,12 +22,15 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    overflow: hidden;
 
     p {
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
       background-color: white;
       padding: 10px 20px;
       border-radius: 0px 10px 10px 10px;
-      max-width: auto;
     }
 
     img {
@@ -45,7 +48,6 @@ const Container = styled.div`
         background-color: #8da4f1;
         color: white;
         border-radius: 10px 0px 10px 10px;
-     
       }
     }
   }

@@ -19,7 +19,6 @@ const AnswersContainer = styled.div`
 const ControlsContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
   height: 68px;
   padding: 0px 11px;
 `;
@@ -181,6 +180,7 @@ const Answers = () => {
   const llenarRespuestasPorDocente = async () => {
     const res = await getRespuestasByDocente(user.id);
     const resJson = await res?.json();
+    console.log(resJson);
     setRespuestas(resJson);
     setLoading(false);
   };
@@ -233,19 +233,20 @@ const Answers = () => {
 
   return (
     <AnswersContainer>
-      <ControlsContainer></ControlsContainer>
+      <ControlsContainer>
+        <input type="text" onChange={handleChooseFilter} />
+        <select onChange={handleSelect}>
+          <option value="name">Nombre</option>
+          <option value="test">Test</option>
+          <option value="professor">Docente</option>
+          <option value="state">Estado</option>
+        </select>
+      </ControlsContainer>
       <TableContainer>
         {loading ? (
           <Cargando />
         ) : (
           <>
-            <input type="text" onChange={handleChooseFilter} />
-            <select onChange={handleSelect}>
-              <option value="name">Nombre</option>
-              <option value="test">Test</option>
-              <option value="professor">Docente</option>
-              <option value="state">Estado</option>
-            </select>
             <TableAnswers>
               <thead>
                 <tr>

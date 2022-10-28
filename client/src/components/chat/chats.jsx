@@ -48,7 +48,7 @@ const Container = styled.div`
 
 `;
 
-const Chats = () => {
+const Chats = ({ handleClick }) => {
   const [chats, setChats] = useState([]);
   const { currentUser } = useContext(UserFirebaseContext);
   const { dispatch } = useContext(ChatContext);
@@ -104,7 +104,10 @@ const Chats = () => {
           <div
             className="userChat"
             key={i}
-            onClick={() => handleSelect(v.userInfo)}
+            onClick={() => {
+              handleSelect(v.userInfo);
+              handleClick();
+            }}
           >
             <ProfilePic
               width="50px"

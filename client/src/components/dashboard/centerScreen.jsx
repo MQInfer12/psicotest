@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { device } from "../../styles/devices";
+import OutletContainer from "./outletContainer";
 
 const CenterScreen = ({ titlePage, setTitlePage, calendar, setCalendar, links, setLinks, openNav, setOpenNav }) => {
   const location = useLocation();
@@ -15,9 +16,7 @@ const CenterScreen = ({ titlePage, setTitlePage, calendar, setCalendar, links, s
           <TitlePage>{ titlePage }</TitlePage>
         </UpbarText>
       </UpbarContainer>
-      <OutletContainer>
-        <Outlet context={{setTitlePage, setCalendar, setLinks}} />
-      </OutletContainer>
+      <OutletContainer setTitlePage={setTitlePage} setCalendar={setCalendar} setLinks={setLinks}/>
     </CenterContainer>
   )
 }
@@ -101,42 +100,6 @@ const TitlePage = styled.span`
   font-size: 24px;
   font-weight: 600;
   color: #3E435D;
-`;
-
-const OutletContainer = styled.div`
-  height: calc(100vh - 157px);
-  overflow: auto;
-  overflow-x: hidden;
-  padding: 0px 40px 40px;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #ADA7A7;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #660BE1;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: #660BE1;
-  }
-
-  @media (max-width: 1135px) {
-    height: max-content;
-    min-height: calc(100vh - 157px);
-    overflow: visible;
-    margin-top: 157px;
-  }
-
-  @media ${device.tablet} {
-    margin-left: 0;
-    width: 100%;
-    padding: 0 10px 40px;
-  }
 `;
 
 const StyledLink = styled(Link)`

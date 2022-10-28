@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { WhiteIconButton } from "../../styles/formularios";
+import { useOutletContext } from "react-router-dom";
 
 const TestCardBenef = (props) => {
   const navigate = useNavigate();
+  const { handleScrollTop } = useOutletContext();
 
   return (
     <Container>
@@ -27,7 +29,12 @@ const TestCardBenef = (props) => {
       </ContainerIcon>
 
       <ButtonContainer>
-        <WhiteIconButton onClick={() => navigate(`./testresolve/${props.id}`)}>
+        <WhiteIconButton 
+          onClick={() => {
+            navigate(`./testview/${props.id}`);
+            handleScrollTop();
+          }}
+        >
           <i className="fa-solid fa-newspaper"></i>
         </WhiteIconButton>
       </ButtonContainer>
