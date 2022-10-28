@@ -206,7 +206,7 @@ function App() {
             <Route
               path="answers/:idRespuesta"
               element={
-                <ProtectedRole roles={[3]}>
+                <ProtectedRole roles={[3, 2]}>
                   <OutletContext
                     titlePage="Detalles de Respuesta"
                     calendar={false}

@@ -5,6 +5,111 @@ import { getIdTest, getRespuesta } from "../services/respuesta";
 import { getFullTest } from "../services/test";
 import Cargando from "../components/globals/cargando";
 
+const Answer = () => {
+  const { idRespuesta } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [respuesta, setRespuesta] = useState({});
+  const [test, setTest] = useState({secciones: [{reactivos: [], preguntas: [{puntuaciones: []}]}]});
+
+  const llenarRespuesta = async () => {
+    const res = await getRespuesta(idRespuesta);
+    const resJson = await res?.json();
+    //RESPUESTA CON PUNTUACIONES
+    setRespuesta(resJson);
+  }
+
+  const llenarTest = async () => {
+    const res = await getIdTest(idRespuesta);
+    const resJson = await res?.json();
+    const resTest = await getFullTest(resJson.id_test);
+    const resTestJson = await resTest?.json();
+    //TEST PARA DIBUJARLO EN LA PAGINA
+    setTest(resTestJson);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    llenarRespuesta();
+    llenarTest();
+  }, []);
+
+  return (
+    <AnswerPage>
+      {
+        loading ? (
+          <Cargando />
+        ) : (
+          test.secciones.map((seccion, i) => (
+            <SeccionContainer key={i}>
+              <TitleSeccion>Sección {i + 1}</TitleSeccion>
+              <AnswersContainer>
+                <TableContainer>
+                  <TableAnswers>
+                    <thead>
+                      <tr>
+                        <ThNumberal>#</ThNumberal>
+                        <ThAnswer>Pregunta</ThAnswer>
+                        <ThReactivo width="90px">Puntaje</ThReactivo>
+                        {
+                          seccion.reactivos.map((reactivo, j) => (
+                            <ThReactivo width="90px" key={j}>{reactivo.descripcion}</ThReactivo>
+                          ))
+                        }
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        seccion.preguntas.map((pregunta, j) => (
+                        <tr key={j}>
+                          <ThNumber>{j + 1}</ThNumber>
+                          <td>
+                            <DivDouble>
+                              <PLightDouble>
+                                {pregunta.descripcion}
+                              </PLightDouble>
+                            </DivDouble>
+                          </td>
+                          <td>
+                            {
+                              respuesta.resultados.filter(resultado => 
+                                resultado.puntuacion[0].id_pregunta == pregunta.id
+                              ).map((puntaje, k) => (
+                                <PLight key={k}>{puntaje.puntuacion[0].asignado}</PLight>
+                              ))
+                            }
+                          </td>
+                          {
+                            pregunta.puntuaciones.map((puntuacion, k) => (
+                              <td key={k}>
+                                <input
+                                  type="radio"
+                                  name={pregunta.id}
+                                  value={puntuacion.id}
+                                  disabled
+                                  defaultChecked={
+                                    respuesta.resultados.filter(resultado => puntuacion.id == resultado.id_puntuacion)[0]
+                                  }
+                                />
+                              </td>
+                            ))
+                          }
+                        </tr>
+                        ))
+                      }
+                    </tbody>
+                  </TableAnswers>
+                </TableContainer>
+              </AnswersContainer>
+            </SeccionContainer>
+          ))
+        )
+      }
+    </AnswerPage>
+  )
+}
+
+export default Answer;
+
 const AnswerPage = styled.div`
   display: flex;
   flex-direction: column;
@@ -130,108 +235,3 @@ const TitleSeccion = styled.span`
   width: 100%;
   text-align: start;
 `;
-
-const Answer = () => {
-  const { idRespuesta } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [respuesta, setRespuesta] = useState({});
-  const [test, setTest] = useState({secciones: [{reactivos: [], preguntas: [{puntuaciones: []}]}]});
-
-  const llenarRespuesta = async () => {
-    const res = await getRespuesta(idRespuesta);
-    const resJson = await res?.json();
-    //RESPUESTA CON PUNTUACIONES
-    setRespuesta(resJson);
-  }
-
-  const llenarTest = async () => {
-    const res = await getIdTest(idRespuesta);
-    const resJson = await res?.json();
-    const resTest = await getFullTest(resJson.id_test);
-    const resTestJson = await resTest?.json();
-    //TEST PARA DIBUJARLO EN LA PAGINA
-    setTest(resTestJson);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    llenarRespuesta();
-    llenarTest();
-  }, []);
-
-  return (
-    <AnswerPage>
-      {
-        loading ? (
-          <Cargando />
-        ) : (
-          test.secciones.map((seccion, i) => (
-            <SeccionContainer key={i}>
-              <TitleSeccion>Sección {i + 1}</TitleSeccion>
-              <AnswersContainer>
-                <TableContainer>
-                  <TableAnswers>
-                    <thead>
-                      <tr>
-                        <ThNumberal>#</ThNumberal>
-                        <ThAnswer>Pregunta</ThAnswer>
-                        <ThReactivo width="90px">Puntaje</ThReactivo>
-                        {
-                          seccion.reactivos.map((reactivo, j) => (
-                            <ThReactivo width="90px" key={j}>{reactivo.descripcion}</ThReactivo>
-                          ))
-                        }
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        seccion.preguntas.map((pregunta, j) => (
-                        <tr key={j}>
-                          <ThNumber>{j + 1}</ThNumber>
-                          <td>
-                            <DivDouble>
-                              <PLightDouble>
-                                {pregunta.descripcion}
-                              </PLightDouble>
-                            </DivDouble>
-                          </td>
-                          <td>
-                            {
-                              respuesta.resultados.filter(resultado => 
-                                resultado.puntuacion[0].id_pregunta == pregunta.id
-                              ).map((puntaje, k) => (
-                                <PLight key={k}>{puntaje.puntuacion[0].asignado}</PLight>
-                              ))
-                            }
-                          </td>
-                          {
-                            pregunta.puntuaciones.map((puntuacion, k) => (
-                              <td key={k}>
-                                <input
-                                  type="radio"
-                                  name={pregunta.id}
-                                  value={puntuacion.id}
-                                  disabled
-                                  defaultChecked={
-                                    respuesta.resultados.filter(resultado => puntuacion.id == resultado.id_puntuacion)[0]
-                                  }
-                                />
-                              </td>
-                            ))
-                          }
-                        </tr>
-                        ))
-                      }
-                    </tbody>
-                  </TableAnswers>
-                </TableContainer>
-              </AnswersContainer>
-            </SeccionContainer>
-          ))
-        )
-      }
-    </AnswerPage>
-  )
-}
-
-export default Answer;

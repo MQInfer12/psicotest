@@ -10,6 +10,130 @@ import PreguntaCard from "./preguntaCard";
 import Pagination from "../pagination";
 import SureModal from "../../globals/sureModal";
 
+const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPuntuaciones }) => {
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [showSure, setShowSure] = useState(false);
+  const [preguntasPage, setPreguntasPage] = useState(1);
+  const [selecteds, setSelecteds] = useState([]);
+
+  const llenarPreguntas = async () => {
+    const res = await getPreguntasBySeccion(idSeccion);
+    const resJson = await res?.json();
+    setPreguntas(resJson);
+
+    //BUSCAR PUNTUACIONES POR ID REACTIVOS
+    let idReactivos = [];
+    reactivos.forEach(reactivo => {
+      idReactivos.push(reactivo.id);
+    });
+
+    const resPunt = await getPuntuacionesByReactivos(idReactivos);
+    const resPuntJson = await resPunt?.json();
+    setPuntuaciones(resPuntJson);
+
+    //DEJAR DE CARGAR
+    setLoading(false);
+  }
+
+  const borrarPreguntas = async () => {
+    const res = await massDestroy(selecteds);
+    const resJson = await res?.json();
+    if(resJson.mensaje = "se borro correctamente") {
+      console.log("Se borraron las preguntas");
+      llenarPreguntas();
+      setSelecteds([]);
+    }
+  }
+
+  useState(() => {
+    llenarPreguntas();
+  }, []);
+
+  return (
+    <PreguntaCreatorContainer>
+      <ControlsContainer>
+        <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-plus"></i></WhiteIconButton>
+        <DeleteContainer>
+          <PSelected>{selecteds.length} seleccionadas</PSelected>
+          <DangerIconButton  
+            disabled={selecteds.length == 0} 
+            onClick={() => setShowSure(true)}
+          ><i className="fa-solid fa-trash-can"></i></DangerIconButton>
+        </DeleteContainer>
+        {
+          showForm &&
+          <Modal titulo="Añadir pregunta" cerrar={() => setShowForm(false)}>
+            <ModalPregunta
+              call={addPregunta}
+              actualizar={() => {
+                llenarPreguntas();
+                setShowForm(false);
+              }}
+              funcion="añadir"
+              idSeccion={idSeccion}
+            />
+          </Modal>
+        }
+        {
+          showSure &&
+          <Modal titulo="Eliminar preguntas" cerrar={() => setShowSure(false)}>
+            <SureModal
+              cerrar={() => setShowSure(false)}
+              sure={borrarPreguntas}
+              text={"Se eliminarán " + selecteds.length + " preguntas permanentemente"}
+            />
+          </Modal>
+        }
+      </ControlsContainer>
+      <TableContainer>
+        <TablePreguntas>
+          <thead>
+            <tr>
+              <ThNumberal>#</ThNumberal>
+              <ThPregunta>PREGUNTA</ThPregunta>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              loading? (
+                <TrCargando>
+                  <TdCargando>
+                    <Cargando />
+                  </TdCargando>
+                </TrCargando>
+              ) : (
+                <>
+                  {
+                    preguntas.filter((v, i) => i >= (preguntasPage - 1) * 8 && i < preguntasPage * 8).map((v, i) => (
+                      <PreguntaCard 
+                        key={i} 
+                        {...v} 
+                        index={((preguntasPage - 1) * 8) + (i + 1)} 
+                        llenarPreguntas={llenarPreguntas}
+                        selecteds={selecteds}
+                        setSelecteds={setSelecteds}
+                      />
+                    ))
+                  }
+                </>
+              )
+            }
+          </tbody>
+        </TablePreguntas>
+      </TableContainer>
+      <Pagination 
+        cant={preguntas.length}
+        rows={8}
+        page={preguntasPage}
+        setPage={setPreguntasPage}
+      />
+    </PreguntaCreatorContainer>
+  )
+}
+
+export default PreguntaCreator;
+
 const PreguntaCreatorContainer = styled.div`
   width: 622px;
   box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
@@ -94,124 +218,3 @@ const TdCargando = styled.td`
   width: 622px;
   height: 512px;
 `;
-
-const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPuntuaciones }) => {
-  const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const [showSure, setShowSure] = useState(false);
-  const [preguntasPage, setPreguntasPage] = useState(1);
-  const [selecteds, setSelecteds] = useState([]);
-
-  const llenarPreguntas = async () => {
-    const res = await getPreguntasBySeccion(idSeccion);
-    const resJson = await res?.json();
-    setPreguntas(resJson);
-
-    //BUSCAR PUNTUACIONES POR ID REACTIVOS
-    let idReactivos = [];
-    reactivos.forEach(reactivo => {
-      idReactivos.push(reactivo.id);
-    });
-
-    const resPunt = await getPuntuacionesByReactivos(idReactivos);
-    const resPuntJson = await resPunt?.json();
-    setPuntuaciones(resPuntJson);
-
-    //DEJAR DE CARGAR
-    setLoading(false);
-  }
-
-  const borrarPreguntas = async () => {
-    const res = await massDestroy(selecteds);
-    const resJson = await res?.json();
-    if(resJson.mensaje = "se borro correctamente") {
-      console.log("Se borraron las preguntas");
-      llenarPreguntas();
-      setSelecteds([]);
-    }
-  }
-
-  useState(() => {
-    llenarPreguntas();
-  }, []);
-
-  return (
-    <PreguntaCreatorContainer>
-      <ControlsContainer>
-        <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-plus"></i></WhiteIconButton>
-        <DeleteContainer>
-          <PSelected>{selecteds.length} selected</PSelected>
-          <DangerIconButton onClick={() => setShowSure(true)}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
-        </DeleteContainer>
-        {
-          showForm &&
-          <Modal titulo="Añadir pregunta" cerrar={() => setShowForm(false)}>
-            <ModalPregunta
-              call={addPregunta}
-              actualizar={() => {
-                llenarPreguntas();
-                setShowForm(false);
-              }}
-              funcion="añadir"
-              idSeccion={idSeccion}
-            />
-          </Modal>
-        }
-        {
-          showSure &&
-          <Modal titulo="Eliminar preguntas" cerrar={() => setShowSure(false)}>
-            <SureModal
-              cerrar={() => setShowSure(false)}
-              sure={borrarPreguntas}
-              text={"Se eliminarán " + selecteds.length + " preguntas permanentemente"}
-            />
-          </Modal>
-        }
-      </ControlsContainer>
-      <TableContainer>
-        <TablePreguntas>
-          <thead>
-            <tr>
-              <ThNumberal>#</ThNumberal>
-              <ThPregunta>PREGUNTA</ThPregunta>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              loading? (
-                <TrCargando>
-                  <TdCargando>
-                    <Cargando />
-                  </TdCargando>
-                </TrCargando>
-              ) : (
-                <>
-                  {
-                    preguntas.filter((v, i) => i >= (preguntasPage - 1) * 8 && i < preguntasPage * 8).map((v, i) => (
-                      <PreguntaCard 
-                        key={i} 
-                        {...v} 
-                        index={((preguntasPage - 1) * 8) + (i + 1)} 
-                        llenarPreguntas={llenarPreguntas}
-                        selecteds={selecteds}
-                        setSelecteds={setSelecteds}
-                      />
-                    ))
-                  }
-                </>
-              )
-            }
-          </tbody>
-        </TablePreguntas>
-      </TableContainer>
-      <Pagination 
-        cant={preguntas.length}
-        rows={8}
-        page={preguntasPage}
-        setPage={setPreguntasPage}
-      />
-    </PreguntaCreatorContainer>
-  )
-}
-
-export default PreguntaCreator;

@@ -8,7 +8,7 @@ const SecondSection = () => {
     <Container>
       <ColumnContainer>
         <PurpleDiv>
-          <YouDecide>Tú decides.</YouDecide>
+          <YouDecide>Conócete.</YouDecide>
           <img src={StatsPhone} />
         </PurpleDiv>
       </ColumnContainer>
@@ -22,7 +22,7 @@ const SecondSection = () => {
             </IndexContainer>
             <IndexContainer>
               <FeatureTitle>Mayor eficacia</FeatureTitle>
-              <FeatureDescription>Es muy sencillo, solamente ingresa tu celular y listo.</FeatureDescription>
+              <FeatureDescription>Es muy sencillo, solamente ingresa a tu cuenta y empieza.</FeatureDescription>
             </IndexContainer>
           </FeatureContainer>
           <FeatureContainer>
@@ -31,8 +31,8 @@ const SecondSection = () => {
               <FeatureLine></FeatureLine>
             </IndexContainer>
             <IndexContainer>
-              <FeatureTitle>Menor tiempo</FeatureTitle>
-              <FeatureDescription>Selecciona el color que más te guste para tu tarjeta, la enviaremos a tu domicilio.</FeatureDescription>
+              <FeatureTitle>Autoconócete</FeatureTitle>
+              <FeatureDescription>Selecciona un test que te asignaron. ¡Te sorprenderán tus respuestas!.</FeatureDescription>
             </IndexContainer>
           </FeatureContainer>
           <FeatureContainer>
@@ -41,8 +41,8 @@ const SecondSection = () => {
               <FeatureLine></FeatureLine>
             </IndexContainer>
             <IndexContainer>
-              <FeatureTitle>Mayor control</FeatureTitle>
-              <FeatureDescription>Inicia sesión en la app e ingresa el número de tarjeta.</FeatureDescription>
+              <FeatureTitle>Relaciónate</FeatureTitle>
+              <FeatureDescription>Conversa y obtén citas con tus psicólogos asignados.</FeatureDescription>
             </IndexContainer>
           </FeatureContainer>
         </InfoContainer>

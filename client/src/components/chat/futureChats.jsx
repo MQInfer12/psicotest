@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../context/userContext";
 import styled from "styled-components";
 import { db } from "../../firebase";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
 import { collection, query, where, getDocs, setDoc, doc, updateDoc, serverTimestamp, getDoc } from "firebase/firestore";
 import ProfilePic from "../globals/profilePic";
+import { getMisDocentes } from "../../services/respuesta";
 
 const Container = styled.div`
   .userChat {
@@ -39,11 +41,19 @@ const Container = styled.div`
 
 const FutureChats = () => {
   const [professor] = useState([]);
+  const { user } = useContext(UserContext);
   const { currentUser } = useContext(UserFirebaseContext);
   const [loading, setLoading] = useState(true);
 
-  const getAllProfessor = async () => {
-    const q = query(collection(db, "users"), where("rol", "==", "2"));
+  const getMyProfessors = async () => {
+    const res = await getMisDocentes(user.email);
+    const resJson = await res?.json();
+    const misDocentesIds = [];
+    resJson.forEach(docente => {
+      misDocentesIds.push(docente.id);
+    });
+
+    const q = query(collection(db, "users"), where("uid", "in", misDocentesIds));
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
@@ -56,7 +66,7 @@ const FutureChats = () => {
   };
 
   useEffect(() => {
-    getAllProfessor();
+    getMyProfessors();
   }, []);
 
   const handleSelect = async (userSelect) => {

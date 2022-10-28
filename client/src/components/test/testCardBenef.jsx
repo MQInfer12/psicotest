@@ -3,6 +3,40 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { WhiteIconButton } from "../../styles/formularios";
 
+const TestCardBenef = (props) => {
+  const navigate = useNavigate();
+
+  return (
+    <Container>
+      <H2>{props.nombre_test}</H2>
+      <P>{props.descripcion_test}</P>
+
+      <ContainerIcon>
+        <div><i className="fa-solid fa-user"></i></div>
+        <Span>{props.autor_test}</Span>
+      </ContainerIcon>
+
+      <ContainerIcon>
+        <div><i className="fa-solid fa-graduation-cap"></i></div>
+        <Span>{props.nombre_docente}</Span>
+      </ContainerIcon>
+
+      <ContainerIcon>
+        <div><i className="fa-solid fa-clock"></i></div>
+        <Span>{props.tiempo_test}</Span>
+      </ContainerIcon>
+
+      <ButtonContainer>
+        <WhiteIconButton onClick={() => navigate(`./testresolve/${props.id}`)}>
+          <i className="fa-solid fa-newspaper"></i>
+        </WhiteIconButton>
+      </ButtonContainer>
+    </Container>
+  );
+};
+
+export default TestCardBenef;
+
 const Container = styled.div`
   width: 322px;
   background-color: #fff;
@@ -58,47 +92,7 @@ const ContainerIcon = styled.div`
   }
 `;
 
-const ContainerImg = styled.div`
-  height: 43px;
-  display: flex;
-  align-items: center;
-`;
-
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-
-const TestCardBenef = (props) => {
-  const navigate = useNavigate();
-
-  return (
-    <Container>
-      <H2>{props.nombre_test}</H2>
-      <P>{props.descripcion_test}</P>
-
-      <ContainerIcon>
-        <div><i className="fa-solid fa-user"></i></div>
-        <Span>{props.autor_test}</Span>
-      </ContainerIcon>
-
-      <ContainerIcon>
-        <div><i className="fa-solid fa-graduation-cap"></i></div>
-        <Span>{props.nombre_docente}</Span>
-      </ContainerIcon>
-
-      <ContainerIcon>
-        <div><i className="fa-solid fa-clock"></i></div>
-        <Span>{props.tiempo_test}</Span>
-      </ContainerIcon>
-
-      <ButtonContainer>
-        <WhiteIconButton onClick={() => navigate(`./testresolve/${props.id}`)}>
-          <i className="fa-solid fa-newspaper"></i>
-        </WhiteIconButton>
-      </ButtonContainer>
-    </Container>
-  );
-};
-
-export default TestCardBenef;

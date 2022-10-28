@@ -11,16 +11,17 @@ const FourthSection = () => {
     <Container>
       <PurpleDiv>
         <InfoContainer>
-          <OpenYourAccount>Abre tu cuenta hoy</OpenYourAccount>
+          <OpenYourAccount>Registra tu cuenta hoy</OpenYourAccount>
           <OpenP>Es rápido y sencillo, te tomará menos de 2 minutos</OpenP>
           <InputDiv>
             <Input 
+              type="email"
               placeholder='Ingresa tu correo electrónico' 
               value={userEmail}  
               onChange={(e) => setUserEmail(e.target.value)}
             />
             <DivButtonInput>
-              <OpenAccountButton onClick={() => navigate('/register/' + userEmail)}>Abre tu cuenta</OpenAccountButton>
+              <OpenAccountButton onClick={() => navigate('/register/' + userEmail)}>¡Regístrate!</OpenAccountButton>
             </DivButtonInput>
           </InputDiv>
         </InfoContainer>

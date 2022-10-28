@@ -52,6 +52,18 @@ const Test = () => {
 
   return (
     <AllContainer load={loading}>
+      {showForm && (
+        <Modal cerrar={() => setShowForm(false)} titulo="Añadir test">
+          <ModalTest
+            call={addTest}
+            actualizar={() => {
+              llenarTests();
+              setShowForm(false);
+            }}
+            funcion="añadir"
+          />
+        </Modal>
+      )}
       {loading ? (
         <Cargando />
       ) : (
@@ -61,31 +73,48 @@ const Test = () => {
                 <PurpleButton onClick={() => setShowForm(true)}>Añadir</PurpleButton>
             </ButtonContainer>
           )}
-          <TestContainer>
-            {showForm && (
-              <Modal cerrar={() => setShowForm(false)} titulo="Añadir test">
-                <ModalTest
-                  call={addTest}
-                  actualizar={() => {
-                    llenarTests();
-                    setShowForm(false);
-                  }}
-                  funcion="añadir"
-                />
-              </Modal>
-            )}
-            
-            {idRole === 3 &&
-              tests.map((v, i) => (
-                <TestCard key={i} {...v} llenarTests={llenarTests} />
-              ))}
-
-            {idRole === 2 &&
-              tests.map((v, i) => <TestCardProfessor key={i} {...v} id={v.id} llenarTests={llenarTestsToProfessor} />)}
-
-            {idRole === 1 &&
-              tests.map((v, i) => <TestCardBenef key={i} {...v} llenarTests={llenarTests} />)}
-          </TestContainer>
+          {idRole === 1 && <TitleSeccion>Pendientes</TitleSeccion>}
+          {
+            tests.filter(v => idRole != 1 || v.estado === 0).length == 0 ? (
+              <DivNothing>
+                {
+                  idRole === 1 ? "No tienes tests pendientes." :
+                  idRole === 2 ? "No te asignaron tests aún." :
+                  "¡Crea un test!"
+                }
+              </DivNothing>
+            ) : (
+              <TestContainer>
+                {idRole === 3 &&
+                  tests.map((v, i) => <TestCard key={i} {...v} llenarTests={llenarTests} />
+                )}
+                {idRole === 2 &&
+                  tests.map((v, i) => <TestCardProfessor key={i} {...v} id={v.id} llenarTests={llenarTestsToProfessor} />
+                )}
+                {idRole === 1 &&
+                  tests.filter(v => v.estado === 0).map((v, i) => <TestCardBenef key={i} {...v}/>
+                )}
+              </TestContainer>
+            )
+          }
+          {idRole === 1 && (
+            <>
+              <TitleSeccion>Realizados</TitleSeccion>
+                {
+                  tests.filter(v => v.estado === 1).length === 0 ? (
+                    <DivNothing>No realizaste ningún test aún.</DivNothing>
+                  ) : (
+                    <TestContainer>
+                      {
+                        tests.filter(v => v.estado === 1).map((v, i) => (
+                          <TestCardBenef key={i} {...v}/>
+                        ))
+                      }
+                    </TestContainer>
+                  )
+                }
+            </>
+          )}
         </>
       )}
     </AllContainer>
@@ -98,11 +127,7 @@ const AllContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  height: 100%;
-
-  @media (max-width: 1135px) {
-    height: ${props => props.load && "calc(100vh - 197px)"};
-  }
+  height: ${props => props.load && "calc(100vh - 197px)"};
 `;
 
 const TestContainer = styled.div`
@@ -116,4 +141,22 @@ const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+`;
+
+const TitleSeccion = styled.span`
+  font-size: 24px;
+  font-weight: 600;
+  color: #3E435D;
+`;
+
+const DivNothing = styled.div`
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  color: #ADA7A7;
+  font-size: 16px;
+  font-weight: 300;
 `;

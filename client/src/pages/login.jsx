@@ -9,6 +9,7 @@ import { getProfile, signIn } from "../services/auth";
 import { ErrorCss } from "../styles/formularios";
 import ImagenLogin from "../images/imglogin.jpg";
 import Navbar from "../components/landing/navbar";
+import { useEffect } from "react";
 
 const Login = () => {
   const { setUser } = useContext(UserContext);
@@ -39,6 +40,10 @@ const Login = () => {
       error: errors.contrasenia,
     },
   ];      
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -146,6 +151,10 @@ const H1Title = styled.h1`
     transition: all 0.2s;
   }
 
+  &:hover::after {
+    width: 150px;
+  }
+
   @media ${device.tablet} {
     justify-content: center;
   }
@@ -249,6 +258,11 @@ const ButtonSubmit = styled.button`
   border-radius: 27px;
   background: #7613fd;
   box-shadow: 0px 0px 50px 0px rgb(0 0 0 / 10%);
+  transition: all 0.2s;
+
+  &:hover {
+    filter: grayscale(0.2);
+  }
 `;
 
 const GoToContainer = styled.div`

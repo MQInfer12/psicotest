@@ -2,6 +2,25 @@ import React from "react";
 import styled from "styled-components";
 import { WhiteIconButton } from "../../styles/formularios";
 
+const Modal = ({ cerrar, children, titulo }) => {
+  return (
+    <DivModalContainer>
+      <DivAtras onClick={cerrar}></DivAtras>
+      <DivChildContainer>
+        <DivCabecera>
+          <PTitulo>{titulo}</PTitulo>
+          <WhiteIconButton onClick={cerrar}>
+            <i className="fa-solid fa-xmark"></i>
+          </WhiteIconButton>
+        </DivCabecera>
+        <DivBody>{children}</DivBody>
+      </DivChildContainer>
+    </DivModalContainer>
+  );
+};
+
+export default Modal;
+
 const DivModalContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -73,22 +92,3 @@ const DivCabecera = styled.div`
 const DivBody = styled.div`
   padding: 26px;
 `;
-
-const Modal = ({ cerrar, children, titulo }) => {
-  return (
-    <DivModalContainer>
-      <DivAtras onClick={cerrar}></DivAtras>
-      <DivChildContainer>
-        <DivCabecera>
-          <PTitulo>{titulo}</PTitulo>
-          <WhiteIconButton onClick={cerrar}>
-            <i className="fa-solid fa-xmark"></i>
-          </WhiteIconButton>
-        </DivCabecera>
-        <DivBody>{children}</DivBody>
-      </DivChildContainer>
-    </DivModalContainer>
-  );
-};
-
-export default Modal;
