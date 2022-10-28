@@ -1,7 +1,5 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import Cam from "../../assets/msg/cam.png";
-import Add from "../../assets/msg/add.png";
 import More from "../../assets/msg/more.png";
 import Messages from "./messages";
 import Input from "./input";
