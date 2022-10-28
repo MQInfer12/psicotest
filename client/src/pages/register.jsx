@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { device } from "../styles/devices";
@@ -138,6 +138,12 @@ const Register = () => {
     });
     await setDoc(doc(db, "userChats", String(id)), {});
   }
+
+  useEffect(() => {
+    if(Object.keys(userEmail).length === 0) {
+      window.scrollTo(0, 0);
+    }
+  }, []);
 
   return (
     <>

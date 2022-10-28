@@ -9,6 +9,7 @@ import { getProfile, signIn } from "../services/auth";
 import { ErrorCss } from "../styles/formularios";
 import ImagenLogin from "../images/imglogin.jpg";
 import Navbar from "../components/landing/navbar";
+import { useEffect } from "react";
 
 const Login = () => {
   const { setUser } = useContext(UserContext);
@@ -39,6 +40,10 @@ const Login = () => {
       error: errors.contrasenia,
     },
   ];      
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
