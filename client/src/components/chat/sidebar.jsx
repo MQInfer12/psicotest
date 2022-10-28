@@ -9,12 +9,14 @@ const Container = styled.div`
   border-right: 1px solid #3d3c61;
   background-color: #3e3c61;
   overflow-x: hidden;
-  z-index: 999;
+  z-index: 1;
+  
   @media (max-width: 1214px) {
     min-width: 40%;
   }
   @media (max-width: 1060px) {
-    min-width: 60%;
+    min-width: 100%;
+    max-width: 100%;
     position: absolute;
     height: 100%;
     top: 0;

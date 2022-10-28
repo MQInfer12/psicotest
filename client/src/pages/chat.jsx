@@ -6,6 +6,7 @@ import Sidebar from "../components/chat/sidebar";
 const Home = styled.div`
   height: calc(100vh - 197px);
   .container {
+    z-index: 1;
     border: 1px solid white;
     border-radius: 10px;
     width: 100%;
