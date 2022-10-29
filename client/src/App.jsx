@@ -21,6 +21,7 @@ import Chat from "./pages/chat";
 import Answer from "./pages/answer";
 import None from "./pages/none";
 import Landing from "./pages/landing";
+import Developers from "./pages/developers";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -47,6 +48,7 @@ function App() {
       <Contexts>
         <Routes>
           <Route path="/" element={<Landing />} />
+          <Route path="/developers" element={<Developers />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/register/:userEmail" element={<Register />} />
@@ -103,8 +105,7 @@ function App() {
                     calendar={false}
                     links={
                       <>
-                        <StyledLink to="/dashboard/tests">Tests</StyledLink>
-                        /
+                        <StyledLink to="/dashboard/tests">Tests</StyledLink>/
                       </>
                     }
                   >
@@ -212,7 +213,10 @@ function App() {
                     calendar={false}
                     links={
                       <>
-                        <StyledLink to="/dashboard/answers">Respuestas</StyledLink>/
+                        <StyledLink to="/dashboard/answers">
+                          Respuestas
+                        </StyledLink>
+                        /
                       </>
                     }
                   >
