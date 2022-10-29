@@ -26,7 +26,7 @@ const Footer = () => {
             <ColumnTitle>Empresa</ColumnTitle>
             <OptionLink to="#">Acerca</OptionLink>
             <OptionLink to="#">Contacto</OptionLink>
-            <button onClick={() => handleClick()}>Desarrolladores</button>
+            <OptionLink to="/developers">Desarrolladores</OptionLink>
           </FooterLinks>
         </FooterColumn>
         <FooterColumn>

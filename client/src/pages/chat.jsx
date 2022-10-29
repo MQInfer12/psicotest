@@ -22,7 +22,7 @@ const Chat = () => {
   return (
     <Home>
       <Sidebar showSide={showSide} handleClick={() => setShowSide(false)} />
-      <ChatCom handleClick={() => setShowSide(!showSide)} />
+      <ChatCom showSide={showSide} handleClick={() => setShowSide(!showSide)} />
     </Home>
   );
 };
