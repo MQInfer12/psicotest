@@ -8,8 +8,8 @@ import Input from "./input";
 import { ChatContext } from "../../context/chatContext";
 
 const Container = styled.div`
-  width: 100%;
-  
+  width: ${props => props.showSide ? "calc(100% - 350px)" : "100%"};
+   
   .chatInfo {
     background-color: #5d5b8d;
     display: flex;
@@ -29,12 +29,16 @@ const Container = styled.div`
       z-index: 2;
     }
   }
+
+  @media (max-width: 1080px) {
+    width: 100%;
+  }
 `;
 
-const Message = ({ handleClick }) => {
+const ChatCom = ({ showSide, handleClick }) => {
   const { data } = useContext(ChatContext);
   return (
-    <Container>
+    <Container showSide={showSide}>
       <div className="chatInfo">
         <span>{data.user.email}</span>
         <div className="chatIcons">
@@ -49,4 +53,4 @@ const Message = ({ handleClick }) => {
   );
 };
 
-export default Message;
+export default ChatCom;

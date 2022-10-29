@@ -13,9 +13,9 @@ const Container = styled.div`
   background-color: #3e3c61;
   overflow-x: hidden;
   z-index: 1;
+  display: ${props => props.showSide ? "block" : "none"};
 
   @media (max-width: 1080px) {
-    display: ${props => props.showSide ? "block" : "none"};
     min-width: 100%;
     max-width: 100%;
     position: absolute;
