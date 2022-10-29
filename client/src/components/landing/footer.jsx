@@ -1,9 +1,15 @@
-import React from 'react';
-import styled from 'styled-components';
-import { device } from '../../styles/devices';
-import { Link } from 'react-router-dom';
-
+import React from "react";
+import styled from "styled-components";
+import { device } from "../../styles/devices";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Footer = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/developers");
+  };
+
   return (
     <Container>
       <FooterInfo>
@@ -20,7 +26,7 @@ const Footer = () => {
             <ColumnTitle>Empresa</ColumnTitle>
             <OptionLink to="#">Acerca</OptionLink>
             <OptionLink to="#">Contacto</OptionLink>
-            <OptionLink to="#">Desarrolladores</OptionLink>
+            <button onClick={() => handleClick()}>Desarrolladores</button>
           </FooterLinks>
         </FooterColumn>
         <FooterColumn>
@@ -33,12 +39,22 @@ const Footer = () => {
         <FooterColumn>
           <FooterLinks>
             <ColumnTitle>Unifranz</ColumnTitle>
-            <ColumnA href="https://goo.gl/maps/CW4T8kaLciFi9ErW6">Av. Gualberto Villarroel y Tomás Oconor</ColumnA>
+            <ColumnA href="https://goo.gl/maps/CW4T8kaLciFi9ErW6">
+              Av. Gualberto Villarroel y Tomás Oconor
+            </ColumnA>
             <IconsDiv>
-              <IconA href="https://www.facebook.com/unifranz.edu"><i className="fa-brands fa-facebook"></i></IconA>
-              <IconA href="https://www.instagram.com/unifranz/"><i className="fa-brands fa-instagram"></i></IconA>
-              <IconA href="https://www.tiktok.com/@unifranz.oficial"><i className="fa-brands fa-tiktok"></i></IconA>
-              <IconA href="https://twitter.com/UnifranzBolivia"><i className="fa-brands fa-twitter"></i></IconA>
+              <IconA href="https://www.facebook.com/unifranz.edu">
+                <i className="fa-brands fa-facebook"></i>
+              </IconA>
+              <IconA href="https://www.instagram.com/unifranz/">
+                <i className="fa-brands fa-instagram"></i>
+              </IconA>
+              <IconA href="https://www.tiktok.com/@unifranz.oficial">
+                <i className="fa-brands fa-tiktok"></i>
+              </IconA>
+              <IconA href="https://twitter.com/UnifranzBolivia">
+                <i className="fa-brands fa-twitter"></i>
+              </IconA>
             </IconsDiv>
           </FooterLinks>
         </FooterColumn>
@@ -47,10 +63,10 @@ const Footer = () => {
         <Rights>2022 PsicoTest y todos los derechos reservados</Rights>
       </FooterRights>
     </Container>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
 
 const Container = styled.div`
   padding: 20px;
@@ -164,7 +180,7 @@ const IconA = styled.a`
   transition: all 0.4s;
 
   &:hover {
-    color: #6209DB;
+    color: #6209db;
   }
 `;
 

@@ -121,7 +121,7 @@
             <tr>
                 <td>
                     <div class="DivDouble">
-                        <p class="PNombre">{{$v->nombre_user}}</p>
+         º               <p class="PNombre">{{$v->nombre_user}}</p>
                         <p class="plight">{{$v->email_user}}</p>
                     </div>
                 </td>
