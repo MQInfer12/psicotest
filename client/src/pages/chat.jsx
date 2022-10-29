@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import ChatCom from "../components/chat/chat";
+import ChatCom from "../components/chat/chatCom";
 import Sidebar from "../components/chat/sidebar";
 
 const Home = styled.div`

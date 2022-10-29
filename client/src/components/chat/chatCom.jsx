@@ -9,8 +9,13 @@ import { ChatContext } from "../../context/chatContext";
 
 const Container = styled.div`
   width: ${props => props.showSide ? "calc(100% - 350px)" : "100%"};
+<<<<<<< HEAD:client/src/components/chat/chat.jsx
   
   .chatInfo { 
+=======
+   
+  .chatInfo {
+>>>>>>> 1edf7ebd621a3d16d69d791c8342a12c52a4eeb2:client/src/components/chat/chatCom.jsx
     background-color: #5d5b8d;
     display: flex;
     align-items: center;
@@ -35,7 +40,11 @@ const Container = styled.div`
   }
 `;
 
+<<<<<<< HEAD:client/src/components/chat/chat.jsx
 const Message = ({ showSide, handleClick }) => {
+=======
+const ChatCom = ({ showSide, handleClick }) => {
+>>>>>>> 1edf7ebd621a3d16d69d791c8342a12c52a4eeb2:client/src/components/chat/chatCom.jsx
   const { data } = useContext(ChatContext);
   return (
     <Container showSide={showSide}>
@@ -53,4 +62,4 @@ const Message = ({ showSide, handleClick }) => {
   );
 };
 
-export default Message;
+export default ChatCom;
