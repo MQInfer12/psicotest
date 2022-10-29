@@ -2,6 +2,7 @@ import React from "react";
 import MauriPhoto from "../assets/developers/mauri.jpg";
 import JosePhoto from "../assets/developers/joseZambrana.jpg";
 import styled from "styled-components";
+import Navbar from "../components/landing/navbar";
 
 const Container = styled.div`
   display: grid;
@@ -62,34 +63,37 @@ const OpenAccountButton = styled.a`
 const Developers = () => {
   const apiWhatsap = "https://api.whatsapp.com/send?phone=";
   return (
-    <Container>
-      <Title>El proyecto no seria posible si no fuera gracias a:</Title>
-      <Cardontaner>
-        <Card>
-          <img src={MauriPhoto} alt="" />
-          <Name>Mauricio Molina</Name>
-          <Des>Desarrollador Fullstack</Des>
-          <OpenAccountButton
-            href={apiWhatsap + "59176407344"}
-            target={"_blank"}
-          >
-            Contactar
-          </OpenAccountButton>
-        </Card>
+    <>
+      <Navbar />
+      <Container>
+        <Title>El proyecto no seria posible si no fuera gracias a:</Title>
+        <Cardontaner>
+          <Card>
+            <img src={MauriPhoto} alt="" />
+            <Name>Mauricio Molina</Name>
+            <Des>Desarrollador Fullstack</Des>
+            <OpenAccountButton
+              href={apiWhatsap + "59176407344"}
+              target={"_blank"}
+            >
+              Contactar
+            </OpenAccountButton>
+          </Card>
 
-        <Card>
-          <img src={JosePhoto} alt="" />
-          <Name>José Zambrana</Name>
-          <Des>Desarrollador Fullstack</Des>
-          <OpenAccountButton
-            href={apiWhatsap + "59165722183"}
-            target={"_blank"}
-          >
-            Contactar
-          </OpenAccountButton>
-        </Card>
-      </Cardontaner>
-    </Container>
+          <Card>
+            <img src={JosePhoto} alt="" />
+            <Name>José Zambrana</Name>
+            <Des>Desarrollador Fullstack</Des>
+            <OpenAccountButton
+              href={apiWhatsap + "59165722183"}
+              target={"_blank"}
+            >
+              Contactar
+            </OpenAccountButton>
+          </Card>
+        </Cardontaner>
+      </Container>
+    </>
   );
 };
 
