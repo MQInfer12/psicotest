@@ -301,27 +301,51 @@ const CalendarBig = () => {
                       citas.filter(v => v.fecha == day.format("DD/MM/YYYY")).map((v, i) => {
                         const hora_inicio = convertToDate(day, v.hora_inicio);
                         const hora_final = convertToDate(day, v.hora_final);
-                        return (
-                          <DivAppointment 
-                            onClick={() => {
-                              setHorarioSelected({
-                                id: v.id,
-                                id_horario: v.id_horario,
-                                nombre: v.nombre,
-                                email: v.email,
-                                disponible: v.disponible,
-                                fecha: day.format("MM/DD/YYYY"),
-                                hora_final: v.hora_final,
-                                hora_inicio: v.hora_inicio
-                              });
-                              setShowCancel(true);
-                            }} 
-                            key={i}
-                          >
-                            {"Cita - "}
-                            {hora_inicio} a {hora_final}
-                          </DivAppointment>
-                        )
+                        if(v.aceptado) {
+                          return (
+                            <DivAppointment 
+                              onClick={() => {
+                                setHorarioSelected({
+                                  id: v.id,
+                                  id_horario: v.id_horario,
+                                  nombre: v.nombre,
+                                  email: v.email,
+                                  fecha: day.format("MM/DD/YYYY"),
+                                  hora_final: v.hora_final,
+                                  hora_inicio: v.hora_inicio,
+                                  aceptado: v.aceptado
+                                });
+                                setShowCancel(true);
+                              }} 
+                              key={i}
+                            >
+                              {"Cita - "}
+                              {hora_inicio} a {hora_final}
+                            </DivAppointment>
+                          )
+                        } else {
+                          return (
+                            <DivPending 
+                              onClick={() => {
+                                setHorarioSelected({
+                                  id: v.id,
+                                  id_horario: v.id_horario,
+                                  nombre: v.nombre,
+                                  email: v.email,
+                                  fecha: day.format("MM/DD/YYYY"),
+                                  hora_final: v.hora_final,
+                                  hora_inicio: v.hora_inicio,
+                                  aceptado: v.aceptado
+                                });
+                                setShowCancel(true);
+                              }} 
+                              key={i}
+                              >
+                                {"Pendiente - "}
+                                {hora_inicio} a {hora_final}
+                            </DivPending>
+                          )
+                        }
                       })
                     }
                   </DivTd>
@@ -451,6 +475,21 @@ const DivAppointment = styled.div`
   width: 100%;
   background-color: #E1FCEF;
   color: #14804A;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+const DivPending = styled.div`
+  width: 100%;
+  background-color: #faea8e;
+  color: #817633;
   padding: 2px 10px;
   font-size: 12px;
   font-weight: 400;

@@ -53,7 +53,6 @@ export const scheduleAppoinment = async (idHorario, idUsuario) => {
 
     if (response.ok) {
       const result = await response.json();
-      console.log(result);
       return result;
     }
   } catch (err) {
@@ -62,7 +61,6 @@ export const scheduleAppoinment = async (idHorario, idUsuario) => {
 };
 
 export const cancelAppoinment = async (idHorario, idCita) => {
-  console.log(idHorario + " " + idCita);
   try {
     const response = await fetch(
       `${http}cita/allschedule/${idHorario}/${idCita}`,

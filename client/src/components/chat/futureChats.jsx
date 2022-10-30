@@ -52,7 +52,7 @@ const FutureChats = () => {
     resJson.forEach(docente => {
       misDocentesIds.push(docente.id);
     });
-
+    console.log(misDocentesIds);
     const q = query(collection(db, "users"), where("uid", "in", misDocentesIds));
     try {
       const querySnapshot = await getDocs(q);
