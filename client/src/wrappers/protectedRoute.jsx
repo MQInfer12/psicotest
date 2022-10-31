@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import Cargando from "../components/globals/cargando";
 
@@ -9,6 +9,7 @@ const TodaLaPantalla = styled.div`
 `;
 
 const ProtectedRoute = ({ children }) => {
+  const location = useLocation();
   const navigate = useNavigate();
 
   const { user } = useContext(UserContext);
@@ -20,7 +21,7 @@ const ProtectedRoute = ({ children }) => {
       setAuthenticated(true);
       setLoading(false);
     } else if(user === undefined) {
-      navigate("/login");
+      navigate("/login/" + location.pathname.replaceAll("/", "_"));
     }
   }, [user]);
 

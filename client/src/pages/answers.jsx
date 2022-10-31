@@ -180,7 +180,6 @@ const Answers = () => {
   const llenarRespuestasPorDocente = async () => {
     const res = await getRespuestasByDocente(user.id);
     const resJson = await res?.json();
-    console.log(resJson);
     setRespuestas(resJson);
     setLoading(false);
   };

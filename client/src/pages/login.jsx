@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { UserContext } from "../context/userContext";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { initialForm, validationsForm } from "../validations/login";
 import styled from "styled-components";
 import { device } from "../styles/devices";
@@ -12,6 +12,7 @@ import Navbar from "../components/landing/navbar";
 import { useEffect } from "react";
 
 const Login = () => {
+  const { goTo } = useParams();
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -22,7 +23,7 @@ const Login = () => {
     async () => {
       const profile = await getProfile();
       setUser(profile);
-      navigate("/dashboard/tests");
+      navigate(goTo ? goTo.replaceAll("_", "/") : "/dashboard/tests");
     }
   );
 

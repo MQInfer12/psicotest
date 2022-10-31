@@ -21,7 +21,7 @@ const FourthSection = () => {
               onChange={(e) => setUserEmail(e.target.value)}
             />
             <DivButtonInput>
-              <OpenAccountButton onClick={() => navigate('/register/' + userEmail)}>¡Regístrate!</OpenAccountButton>
+              <OpenAccountButton onClick={() => navigate('/register/email/' + userEmail)}>¡Regístrate!</OpenAccountButton>
             </DivButtonInput>
           </InputDiv>
         </InfoContainer>

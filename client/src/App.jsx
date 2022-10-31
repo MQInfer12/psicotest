@@ -50,8 +50,9 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/developers" element={<Developers />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/login/:goTo" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/register/:userEmail" element={<Register />} />
+          <Route path="/register/email/:userEmail" element={<Register />} />
           <Route
             path="/dashboard"
             element={
