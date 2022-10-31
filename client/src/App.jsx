@@ -71,9 +71,11 @@ function App() {
             <Route
               path="chat"
               element={
-                <OutletContext titlePage="Chat">
-                  <Chat />
-                </OutletContext>
+                <ProtectedRole roles={[2, 1]}>
+                  <OutletContext titlePage="Chat">
+                    <Chat />
+                  </OutletContext>
+                </ProtectedRole>
               }
             />
             <Route
@@ -92,24 +94,6 @@ function App() {
                 <ProtectedRole roles={[3, 2, 1]}>
                   <OutletContext titlePage="Tests" calendar={false}>
                     <Test />
-                  </OutletContext>
-                </ProtectedRole>
-              }
-            />
-            <Route
-              path="tests/:idTest"
-              element={
-                <ProtectedRole roles={[3]}>
-                  <OutletContext
-                    titlePage="Creación de Test"
-                    calendar={false}
-                    links={
-                      <>
-                        <StyledLink to="/dashboard/tests">Tests</StyledLink>/
-                      </>
-                    }
-                  >
-                    <TestCreator />
                   </OutletContext>
                 </ProtectedRole>
               }
@@ -189,9 +173,11 @@ function App() {
             <Route
               path="calendar"
               element={
-                <OutletContext titlePage="Calendario" calendar={false}>
-                  <Calendar />
-                </OutletContext>
+                <ProtectedRole roles={[2, 1]}>
+                  <OutletContext titlePage="Calendario" calendar={false}>
+                    <Calendar />
+                  </OutletContext>
+                </ProtectedRole>
               }
             />
             <Route

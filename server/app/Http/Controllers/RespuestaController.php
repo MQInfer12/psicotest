@@ -49,7 +49,6 @@ class RespuestaController extends Controller
         return $respuestas;
     }
 
-
     public function indexPdf()
     {
         $respuestas = DB::select(
@@ -197,7 +196,18 @@ class RespuestaController extends Controller
 
     public function show($id)
     {
-        $respuesta = Respuesta::find($id);
+        //$respuesta = Respuesta::find($id);
+        $respuesta = DB::select(
+            "SELECT r.email_user, r.estado, r.id, r.id_docente_test, 
+            u.nombre as nombre_user, u.edad, u.genero,
+            t.nombre as nombre_test
+            FROM respuestas r, users u, docente_tests dt, tests t
+            WHERE r.id='$id' 
+            AND r.email_user=u.email AND r.id_docente_test=dt.id AND dt.id_test=t.id"
+        );
+
+        $respuesta = $respuesta[0];
+
         $id_respuesta = $respuesta->id;
         $resultados = DB::select("SELECT * FROM resultados WHERE id_respuesta='$id_respuesta'");
         foreach ($resultados as $resultado) {
@@ -206,6 +216,7 @@ class RespuestaController extends Controller
             $resultado->puntuacion = $puntuacion;
         }
         $respuesta->resultados = $resultados;
+
         return $respuesta;
     }
 
