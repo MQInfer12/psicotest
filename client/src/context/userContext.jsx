@@ -9,7 +9,11 @@ export const UserContextProvider = ({ children }) => {
 
   const getUser = async () => {
     const userPromise = await getProfile();
-    setUser(userPromise);
+    if(userPromise?.message == "you can't send the token empty") {
+      setUser(undefined);
+    } else {
+      setUser(userPromise);
+    }
   }
 
   useEffect(() => {
