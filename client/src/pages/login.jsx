@@ -76,7 +76,7 @@ const Login = () => {
             ))}
             <GoToContainer>
               <GoToDescription>¿No tienes una cuenta?</GoToDescription>
-              <GoToText to="/register">Regístrate</GoToText>
+              <GoToText to={goTo ? "/register/" + goTo : "/register"}>Regístrate</GoToText>
             </GoToContainer>
             <DivButton>
               <ButtonSubmit onClick={handleSubmit}>

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useContext, useState } from "react";
 import { UserContext } from "../context/userContext";
 import SideBar from "../components/dashboard/sideBar";
@@ -15,18 +14,9 @@ const Dashboard = () => {
   const [links, setLinks] = useState(<></>);
   const [openNav, setOpenNav] = useState(false);
 
-  const navigate = useNavigate();
-
-  //AL CAMBIAR LA VARIABLE USER//
-  const [effects, setEffects] = useState(false);
   useEffect(() => {
-    if(effects) {
-      if(user == undefined) navigate("/"); 
-    }
-
-    //DA PASO AL USE EFFECT//
-    setEffects(true);
-  }, [user]);
+    window.scroll(0, 0);
+  }, []);
 
   return(
     <DashboardContainer>

@@ -1,6 +1,37 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../context/userContext";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { getProfile, signIn } from "../../services/auth";
+
+const ModalRegister = ({ goTo, form }) => {
+  const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
+
+  const iniciarSesion = async () => {
+    const res = await signIn(form);
+    if(res.ok) {
+      const profile = await getProfile();
+      setUser(profile);
+      navigate(goTo ? goTo.replaceAll("_", "/") : "/dashboard/tests");
+    } 
+  }
+
+  return (
+    <DivAlerta>
+      <DivAlertaText>
+        <DivIcon className='fa-solid fa-check'></DivIcon>
+        <H2Title>¡Exito!</H2Title>
+        <PText>Se registró el usuario correctamente.</PText>
+      </DivAlertaText>
+      <DivButtons>
+        <ButtonModal onClick={iniciarSesion}>Iniciar sesión</ButtonModal>
+      </DivButtons>
+    </DivAlerta>
+  )
+}
+
+export default ModalRegister;
 
 const DivAlerta = styled.div`
   display: flex;
@@ -56,41 +87,3 @@ const ButtonModal = styled.button`
     background: linear-gradient(to right, #8e2de2, #4a00e0);
   }
 `;
-
-const ButtonClose = styled.button`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  height: 32px;
-  width: 32px;
-  border: none;
-  text-transform: uppercase;
-  cursor: pointer;
-  border-radius: 16px;
-  background: linear-gradient(to right, #ff512f, #dd2476);
-  box-shadow: 0px 0px 50px 0px rgb(0 0 0 / 10%);
-  color: #f8f9fa;
-
-  &:hover {
-    background: linear-gradient(to right, #8e2de2, #4a00e0);
-  }
-`;
-
-const ModalRegister = () => {
-  const navigate = useNavigate();
-
-  return (
-    <DivAlerta>
-      <DivAlertaText>
-        <DivIcon className='fa-solid fa-check'></DivIcon>
-        <H2Title>¡Exito!</H2Title>
-        <PText>Se registró el usuario correctamente.</PText>
-      </DivAlertaText>
-      <DivButtons>
-        <ButtonModal onClick={() => navigate("/") }>Iniciar sesión</ButtonModal>
-      </DivButtons>
-    </DivAlerta>
-  )
-}
-
-export default ModalRegister;

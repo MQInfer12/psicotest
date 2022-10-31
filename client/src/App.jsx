@@ -22,6 +22,7 @@ import Answer from "./pages/answer";
 import None from "./pages/none";
 import Landing from "./pages/landing";
 import Developers from "./pages/developers";
+import TestShare from "./pages/testShare";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -52,6 +53,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/login/:goTo" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/register/:goTo" element={<Register />} />
           <Route path="/register/email/:userEmail" element={<Register />} />
           <Route
             path="/dashboard"
@@ -131,6 +133,24 @@ function App() {
                     }
                   >
                     <TestView />
+                  </OutletContext>
+                </ProtectedRole>
+              }
+            />
+            <Route
+              path="tests/share/:idDocenteTest"
+              element={
+                <ProtectedRole roles={[1]}>
+                  <OutletContext
+                    titlePage="Compartir"
+                    calendar={false}
+                    links={
+                      <>
+                        <StyledLink to="/dashboard/tests">Tests</StyledLink>/
+                      </>
+                    }
+                  >
+                    <TestShare />
                   </OutletContext>
                 </ProtectedRole>
               }

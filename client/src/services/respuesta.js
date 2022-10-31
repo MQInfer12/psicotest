@@ -66,7 +66,10 @@ export const addRespuesta = async (form) => {
   try {
     const response = await fetch(`${http}respuesta`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
       body: JSON.stringify(form),
     });
     return response;

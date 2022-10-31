@@ -15,12 +15,13 @@ import ImagenLogin from "../images/imglogin.jpg";
 import Navbar from "../components/landing/navbar";
 
 const Register = () => {
-  const userEmail = useParams();
+  const { goTo, userEmail } = useParams();
   const [showModal, setShowModal] = useState(false);
+  const [login, setLogin] = useState({});
 
   const { form, errors, handleChange, handleSubmit, handleReset } = UseForm(
-    Object.keys(userEmail).length ? {
-      email: userEmail.userEmail,
+    userEmail ? {
+      email: userEmail,
       contrasenia: "",
       contraseniaRepeat: "",
       edad: "",
@@ -30,8 +31,9 @@ const Register = () => {
     } : initialForm,
     validationsForm,
     signUp,
-    (respuesta) => {
+    async (respuesta) => {
       createFirebaseUser(respuesta.user);
+      setLogin({email: form.email, contrasenia: form.contrasenia});
       setShowModal(true);
       handleReset();
     }
@@ -140,7 +142,7 @@ const Register = () => {
   }
 
   useEffect(() => {
-    if(Object.keys(userEmail).length === 0) {
+    if(userEmail) {
       window.scrollTo(0, 0);
     }
   }, []);
@@ -188,7 +190,7 @@ const Register = () => {
             ))}
             <GoToContainer>
               <GoToDescription>¿Ya tienes una cuenta?</GoToDescription>
-              <GoToText to="/login">Inicia sesión</GoToText>
+              <GoToText to={goTo ? "/login/" + goTo : "/login"}>Inicia sesión</GoToText>
             </GoToContainer>
   
             <DivButton>
@@ -201,7 +203,7 @@ const Register = () => {
       </DivPrincipal>
       {showModal && (
         <Modal cerrar={() => setShowModal(false)}>
-          <ModalRegister />
+          <ModalRegister goTo={goTo} form={login}/>
         </Modal>
       )}
     </>
