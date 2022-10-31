@@ -31,7 +31,7 @@ const TestCardBenef = (props) => {
       <ButtonContainer>
         <WhiteIconButton 
           onClick={() => {
-            navigate(`./testview/${props.id}`);
+            navigate(`./testresolve/${props.id}`);
             handleScrollTop();
           }}
         >

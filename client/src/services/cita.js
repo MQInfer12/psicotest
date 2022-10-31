@@ -84,3 +84,40 @@ export const cancelAppoinment = async (idHorario, idCita) => {
     console.error(err);
   }
 };
+
+export const getAppointByHorario = async (idHorario) => {
+  try {
+    const response = await fetch(`${http}cita/horario/${idHorario}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      return result;
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export const acceptAppointment = async (idHorario, idCita) => {
+  try {
+    const response = await fetch(
+      `${http}cita/accept/${idHorario}/${idCita}`,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        }
+      }
+    );
+    return response;
+  } catch (err) {
+    console.error(err);
+  }
+}

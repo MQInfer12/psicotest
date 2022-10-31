@@ -14,72 +14,6 @@ import ModalUnassign from "./modalUnassignProfessor";
 import SureModal from "../globals/sureModal";
 import { useOutletContext } from "react-router-dom";
 
-const Container = styled.div`
-  width: 322px;
-  background-color: #fff;
-  padding: 28px 32px 32px 32px;
-  border-radius: 10px;
-  border-top: 14px solid #670ce3;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
-
-const H2 = styled.h2`
-  height: 60px;
-  font-weight: 400;
-  font-size: 20px;
-  color: #000000;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical; 
-`;
-
-const P = styled.p`
-  height: 72px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
-  color: #000000;
-  opacity: 0.6;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;  
-`;
-
-const Span = styled.span`
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.4);
-  margin-left: 3px;
-`;
-
-const ContainerIcon = styled.div`
-  color: #D9D9D9;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  & > div {
-    width: 25px;
-    text-align: center;
-  }
-`;
-
-const ContainerImg = styled.div`
-  height: 43px;
-  display: flex;
-  align-items: center;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
 const TestCard = (props) => {
   const navigate = useNavigate();
   const { handleScrollTop } = useOutletContext();
@@ -221,3 +155,69 @@ const TestCard = (props) => {
 };
 
 export default TestCard;
+
+const Container = styled.div`
+  width: 322px;
+  background-color: #fff;
+  padding: 28px 32px 32px 32px;
+  border-radius: 10px;
+  border-top: 14px solid #670ce3;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+const H2 = styled.h2`
+  height: 60px;
+  font-weight: 400;
+  font-size: 20px;
+  color: #000000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; 
+`;
+
+const P = styled.p`
+  height: 72px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #000000;
+  opacity: 0.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;  
+`;
+
+const Span = styled.span`
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.4);
+  margin-left: 3px;
+`;
+
+const ContainerIcon = styled.div`
+  color: #D9D9D9;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  & > div {
+    width: 25px;
+    text-align: center;
+  }
+`;
+
+const ContainerImg = styled.div`
+  height: 43px;
+  display: flex;
+  align-items: center;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;

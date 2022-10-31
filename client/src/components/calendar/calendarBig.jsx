@@ -9,6 +9,7 @@ import ModalHorario from "./modalHorario";
 import { getAllApoinments, getAppointByUser } from "../../services/cita";
 import ModalAsignarCita from "./modalAsignarCita";
 import ModalCancelarCita from "./modalCancelarCita";
+import ModalAceptarCita from "./modalAceptarCita";
 
 const CalendarBig = () => {
   const { user } = useContext(UserContext);
@@ -16,6 +17,7 @@ const CalendarBig = () => {
   const [showForm, setShowForm] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [showCancel, setShowCancel] = useState(false);
+  const [showAccept, setShowAccept] = useState(false);
 
   const [fechaSelected, setFechaSelected] = useState("");
   const [horarioSelected, setHorarioSelected] = useState({});
@@ -212,6 +214,19 @@ const CalendarBig = () => {
           />
         </Modal>
       }
+      {
+        showAccept &&
+        <Modal titulo="Aceptar cita" cerrar={() => setShowAccept(false)} >
+          <ModalAceptarCita 
+            horario={horarioSelected}
+            actualizar={() => {
+              llenarCitasDocente();
+              llenarHorarios();
+              setShowAccept(false);
+            }}
+          />
+        </Modal>
+      }
       <DivControls>
         <PurpleButton width="180px" onClick={lastMonth}>
           <i className="fa-solid fa-arrow-left"></i> {meses.at((mesActual - 1) % 12)}
@@ -324,27 +339,44 @@ const CalendarBig = () => {
                             </DivAppointment>
                           )
                         } else {
-                          return (
-                            <DivPending 
-                              onClick={() => {
-                                setHorarioSelected({
-                                  id: v.id,
-                                  id_horario: v.id_horario,
-                                  nombre: v.nombre,
-                                  email: v.email,
-                                  fecha: day.format("MM/DD/YYYY"),
-                                  hora_final: v.hora_final,
-                                  hora_inicio: v.hora_inicio,
-                                  aceptado: v.aceptado
-                                });
-                                setShowCancel(true);
-                              }} 
-                              key={i}
+                          if(user.id_rol != 1) {
+                            return (
+                              <DivPending 
+                                onClick={() => {
+                                  setHorarioSelected({
+                                    id_horario: v.id_horario
+                                  });
+                                  setShowAccept(true);
+                                }} 
+                                key={i}
                               >
-                                {"Pendiente - "}
-                                {hora_inicio} a {hora_final}
-                            </DivPending>
-                          )
+                                  {"Pendientes - "}
+                                  {hora_inicio} a {hora_final}
+                              </DivPending>
+                            )
+                          } else {
+                            return (
+                              <DivPending 
+                                onClick={() => {
+                                  setHorarioSelected({
+                                    id: v.id,
+                                    id_horario: v.id_horario,
+                                    nombre: v.nombre,
+                                    email: v.email,
+                                    fecha: day.format("MM/DD/YYYY"),
+                                    hora_final: v.hora_final,
+                                    hora_inicio: v.hora_inicio,
+                                    aceptado: v.aceptado
+                                  });
+                                  setShowCancel(true);
+                                }} 
+                                key={i}
+                              >
+                                  {"Pendiente - "}
+                                  {hora_inicio} a {hora_final}
+                              </DivPending>
+                            )
+                          }
                         }
                       })
                     }
