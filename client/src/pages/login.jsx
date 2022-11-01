@@ -139,7 +139,7 @@ const DivFormlog = styled.div`
     padding: 40px;
     border-radius: 10px;
     background-color: rgb(255, 255, 255, 0.7);
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(5px);
     width: max-content;
     position: absolute;
     top: 50%;

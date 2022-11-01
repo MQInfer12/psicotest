@@ -9,6 +9,7 @@ import ModalUnassign from "./modalUnassignBenef";
 import { UserContext } from "../../context/userContext";
 import { useContext } from "react";
 import { useOutletContext } from "react-router-dom";
+import ModalLink from "./modalLink";
 
 const TestCard = (props) => {
   const { handleScrollTop } = useOutletContext();
@@ -16,6 +17,8 @@ const TestCard = (props) => {
 
   const [showAddBenef, setShowAddBenef] = useState(false);
   const [showUnassignBenef, setShowUnassignBenef] = useState(false);
+  const [showLink, setShowLink] = useState(false);
+
   const { user } = useContext(UserContext);
   const idRole = user.id_rol;
 
@@ -75,6 +78,10 @@ const TestCard = (props) => {
           <WhiteIconButton onClick={() => setShowUnassignBenef(true)}>
             <i className="fa-solid fa-user-minus"></i>
           </WhiteIconButton>
+
+          <WhiteIconButton onClick={() => setShowLink(true)}>
+            <i className="fa-solid fa-link"></i>
+          </WhiteIconButton>
         </ButtonContainer>
       )}
 
@@ -105,6 +112,15 @@ const TestCard = (props) => {
               setShowUnassignBenef(false);
             }}
           />
+        </Modal>
+      )} 
+
+      {showLink && (
+        <Modal
+          titulo="Compartir enlace"
+          cerrar={() => setShowLink(false)}
+        >
+          <ModalLink id={props.id}/>
         </Modal>
       )} 
     </Container>

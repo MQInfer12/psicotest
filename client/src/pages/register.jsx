@@ -266,7 +266,7 @@ const DivFormlog = styled.div`
     padding: 40px;
     border-radius: 10px;
     background-color: rgb(255, 255, 255, 0.7);
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(5px);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -426,6 +426,7 @@ const InputSelect = styled.select`
   height: 45px;
   background-color: #7613fd;
   border-radius: 10px;
+  border: none;
   outline: none;
 `;
 
