@@ -1,6 +1,5 @@
 import React, { useEffect, useContext } from 'react';
 import styled from 'styled-components';
-import { device } from '../styles/devices';
 import { UserContext } from '../context/userContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import Cargando from '../components/globals/cargando';
@@ -20,7 +19,7 @@ const TestShare = () => {
     const resJson = await res?.json();
     if (res.ok) {
       navigate('/dashboard/tests/testresolve/' + resJson.id);
-    } 
+    }
   }
 
   useEffect(() => {
