@@ -13,7 +13,7 @@ const Answer = () => {
   let replace = idCode.replaceAll("_", "/");
   const idRespuesta = Number(decipherId(replace));
 
-  const tableRef = useRef(null);
+  const [tableRef, setTableRef] = useState(null);
   const [loading, setLoading] = useState(true);
   const [respuesta, setRespuesta] = useState({});
   const [test, setTest] = useState({
@@ -71,11 +71,6 @@ const Answer = () => {
       <CargandoContainer>
         <Cargando />
       </CargandoContainer>
-      <AnswerReports 
-        seccion={test.secciones[0]} 
-        respuesta={respuesta} 
-        tableRef={tableRef} 
-      />
     </>
   ) : (
     <AnswerPage>
@@ -90,9 +85,9 @@ const Answer = () => {
       <DownloadTableExcel
         filename="respuestas Filtradas"
         sheet="respuestas"
-        currentTableRef={tableRef.current && tableRef.current}
+        currentTableRef={tableRef?.current}
       >
-        <button onClick={() => console.log(tableRef.current)}> Exportar a excel </button>
+        <button onClick={() => console.log(tableRef?.current)}> Exportar a excel </button>
       </DownloadTableExcel>
       {test.secciones.map((seccion, i) => (
         <SeccionContainer key={i}>
@@ -161,7 +156,7 @@ const Answer = () => {
       <AnswerReports 
         seccion={test.secciones[0]} 
         respuesta={respuesta} 
-        tableRef={tableRef} 
+        setTableRef={setTableRef} 
       />
     </AnswerPage>
   );

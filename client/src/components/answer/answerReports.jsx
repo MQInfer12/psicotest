@@ -1,8 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-const AnswerReports = ({ seccion, respuesta, tableRef }) => {
-  console.log(tableRef);
+const AnswerReports = ({ seccion, respuesta, setTableRef }) => {
+  const tableRef = useRef(null);
+
+  useEffect(() => {
+    setTableRef(tableRef);
+  }, [])
+
   return (
     <TableAnswers ref={tableRef}>
       <thead>
