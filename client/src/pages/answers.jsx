@@ -11,10 +11,11 @@ import codeId from "../utilities/code";
 import AnswersReports from "../components/answers/answersReports";
 
 const Answers = () => {
-  const { user } = useContext(UserContext);
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
   const [respuestas, setRespuestas] = useState([]);
+  const [tableRef, setTableRef] = useState(null);
   const [page, setPage] = useState(1);
 
   const llenarRespuestas = async () => {
@@ -76,8 +77,6 @@ const Answers = () => {
     }
   };
 
-  const tableRef = useRef(null);
-
   const handleClick = (id) => {
     let stringInd = id.toString();
     let idCode = codeId(stringInd);
@@ -96,9 +95,9 @@ const Answers = () => {
           <option value="state">Estado</option>
         </select>
         <DownloadTableExcel
-          filename="respuestas"
-          sheet="respuestas"
-          currentTableRef={tableRef.current}
+          filename="Respuestas"
+          sheet="Respuestas"
+          currentTableRef={tableRef?.current}
         >
           <button> Export excel </button>
         </DownloadTableExcel>
@@ -187,7 +186,7 @@ const Answers = () => {
           const res = search(v);
           return res;
         })}
-        tableRef={tableRef}
+        setTableRef={setTableRef}
       />
 
       <Pagination
