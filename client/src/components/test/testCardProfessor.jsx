@@ -10,6 +10,7 @@ import { UserContext } from "../../context/userContext";
 import { useContext } from "react";
 import { useOutletContext } from "react-router-dom";
 import ModalLink from "./modalLink";
+import codeId from "../../utilities/code";
 
 const TestCard = (props) => {
   const { handleScrollTop } = useOutletContext();
@@ -22,52 +23,57 @@ const TestCard = (props) => {
   const { user } = useContext(UserContext);
   const idRole = user.id_rol;
 
+  const handleClick = (id) => {
+    let stringInd = id.toString();
+    let idCode = codeId(stringInd);
+    idCode = idCode.replaceAll("/", "_");
+
+    navigate(`./testview/${idCode}`);
+    handleScrollTop();
+  };
+
   return (
     <Container>
       <H2>{props.nombre}</H2>
       <P>{props.descripcion}</P>
 
       <ContainerIcon>
-        <div><i className="fa-solid fa-user"></i></div>
+        <div>
+          <i className="fa-solid fa-user"></i>
+        </div>
         <Span>{props.autor}</Span>
       </ContainerIcon>
 
       <ContainerIcon>
-        <div><i className="fa-solid fa-clock"></i></div>
+        <div>
+          <i className="fa-solid fa-clock"></i>
+        </div>
         <Span>{props.tiempo}</Span>
       </ContainerIcon>
 
       <ContainerImg>
-        {
-          props.usuarios.length == 0 &&
+        {props.usuarios.length == 0 && (
           <Span>¡Asigna beneficiarios a este Test!</Span>
-        }
-        {
-          props.usuarios.map((v, i) => (
-            <div key={i}>
-              <ProfilePic
-                width="36px"
-                height="36px"
-                border={true}
-                translation={i}
-                id={v.id}
-                perfil={v.perfil}
-              />
-            </div>
-          ))
-        }
+        )}
+        {props.usuarios.map((v, i) => (
+          <div key={i}>
+            <ProfilePic
+              width="36px"
+              height="36px"
+              border={true}
+              translation={i}
+              id={v.id}
+              perfil={v.perfil}
+            />
+          </div>
+        ))}
       </ContainerImg>
-    
+
       {/*IF IS PROFESSOR */}
 
       {idRole === 2 && (
         <ButtonContainer>
-          <WhiteIconButton 
-            onClick={() => {
-              navigate(`./testview/${props.id_test}`);
-              handleScrollTop();
-            }}
-          >
+          <WhiteIconButton onClick={() => handleClick(props.id_test)}>
             <i className="fa-solid fa-newspaper"></i>
           </WhiteIconButton>
 
@@ -85,7 +91,7 @@ const TestCard = (props) => {
         </ButtonContainer>
       )}
 
-     {showAddBenef && (
+      {showAddBenef && (
         <Modal
           titulo="Asignar beneficiario"
           cerrar={() => setShowAddBenef(false)}
@@ -98,7 +104,7 @@ const TestCard = (props) => {
             }}
           />
         </Modal>
-      )} 
+      )}
 
       {showUnassignBenef && (
         <Modal
@@ -113,16 +119,13 @@ const TestCard = (props) => {
             }}
           />
         </Modal>
-      )} 
+      )}
 
       {showLink && (
-        <Modal
-          titulo="Compartir enlace"
-          cerrar={() => setShowLink(false)}
-        >
-          <ModalLink id={props.id}/>
+        <Modal titulo="Compartir enlace" cerrar={() => setShowLink(false)}>
+          <ModalLink id={props.id} />
         </Modal>
-      )} 
+      )}
     </Container>
   );
 };
@@ -149,7 +152,7 @@ const H2 = styled.h2`
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical; 
+  -webkit-box-orient: vertical;
 `;
 
 const P = styled.p`
@@ -163,7 +166,7 @@ const P = styled.p`
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;  
+  -webkit-box-orient: vertical;
 `;
 
 const Span = styled.span`
@@ -173,7 +176,7 @@ const Span = styled.span`
 `;
 
 const ContainerIcon = styled.div`
-  color: #D9D9D9;
+  color: #d9d9d9;
   display: flex;
   align-items: center;
   gap: 8px;

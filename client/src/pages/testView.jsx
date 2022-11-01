@@ -11,6 +11,7 @@ import {
   PurpleTextLoader,
   TextLoaderContainer,
 } from "../styles/loaders";
+import decipherId from "../utilities/decipher";
 
 const TestViewContainer = styled.div`
   min-height: 100%;
@@ -49,8 +50,11 @@ const TestTitle = styled.h2`
 `;
 
 const TestView = () => {
-  const { idTest } = useParams();
+  const { idTest: idTestCode } = useParams();
   const { idRespuesta } = useParams();
+
+  let replace = idTestCode.replaceAll("_", "/");
+  const idTest = Number(decipherId(replace));
 
   const [loading, setLoading] = useState(true);
   const [test, setTest] = useState([]);
@@ -93,11 +97,11 @@ const TestView = () => {
         </TestTitle>
         {loading ? (
           <TextLoaderContainer>
-            {
-              Array(5).fill('').map((v, i) => (
+            {Array(5)
+              .fill("")
+              .map((v, i) => (
                 <GrayTextLoader key={i} width="500px" fontSize="20px" />
-              ))
-            }
+              ))}
           </TextLoaderContainer>
         ) : (
           <Paragraph>{test.descripcion}</Paragraph>
