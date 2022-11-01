@@ -8,6 +8,7 @@ import { UserContext } from "../context/userContext";
 import Cargando from "../components/globals/cargando";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import codeId from "../utilities/code";
+import AnswersReports from "../components/answers/answersReports";
 const AnswersContainer = styled.div`
   height: 100%;
   box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
@@ -236,8 +237,16 @@ const Answers = () => {
   const handleClick = (id) => {
     let stringInd = id.toString();
     let idCode = codeId(stringInd);
-    idCode = idCode.replaceAll('/', '_')
+    idCode = idCode.replaceAll("/", "_");
     navigate("./" + idCode);
+  };
+
+  const [tableHidden, setTableHidden] = useState(true);
+  const handleHidden = () => {
+    setTableHidden(false);
+    setTimeout(() => {
+      setTableHidden(true);
+    }, 500);
   };
 
   return (
@@ -258,7 +267,7 @@ const Answers = () => {
           <button> Export excel </button>
         </DownloadTableExcel>
       </ControlsContainer>
-      <TableContainer ref={tableRef}>
+      <TableContainer>
         {loading ? (
           <Cargando />
         ) : (
@@ -336,6 +345,16 @@ const Answers = () => {
           </>
         )}
       </TableContainer>
+
+      <AnswersReports
+        respuestas={respuestas.filter((v) => {
+          const res = search(v);
+          return res;
+        })}
+        tableRef={tableRef}
+        tableHidden={tableHidden}
+      />
+
       <Pagination
         cant={respuestas.length}
         rows="9"
