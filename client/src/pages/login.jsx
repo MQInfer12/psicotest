@@ -100,6 +100,8 @@ const DivPrincipal = styled.div`
   min-height: 100vh;
   overflow: hidden;
 
+  position: relative;
+
   @media ${device.tablet} {
     flex-direction: column;
   }
@@ -109,7 +111,7 @@ const DivImagelog = styled.div`
   width: 145%;
   height: 100vh;
   @media ${device.tablet} {
-    height: 50vh;
+    height: 100vh;
     filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
   }
 `;
@@ -132,6 +134,18 @@ const DivFormlog = styled.div`
   justify-content: center;
   align-items: center;
   padding-bottom: 40px;
+
+  @media ${device.tablet} {
+    padding: 40px;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255, 0.7);
+    backdrop-filter: blur(3px);
+    width: max-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+  }
 `;
 
 const H1Title = styled.h1`
@@ -157,6 +171,8 @@ const H1Title = styled.h1`
   }
 
   @media ${device.tablet} {
+    height: max-content;
+    padding-bottom: 25px;
     justify-content: center;
   }
 `;

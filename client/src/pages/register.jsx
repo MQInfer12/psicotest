@@ -220,6 +220,7 @@ const DivPrincipal = styled.div`
   text-align: center;
   height: 100vh;
   overflow: hidden;
+  position: relative;
 
   @media ${device.tablet} {
     flex-direction: column;
@@ -231,7 +232,7 @@ const DivImagelog = styled.div`
   width: 145%;
   height: 100vh;
   @media ${device.tablet} {
-    height: 50vh;
+    height: 100vh;
     filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
   }
 `;
@@ -259,8 +260,17 @@ const DivFormlog = styled.div`
   padding-bottom: 2rem;
 
   @media ${device.tablet} {
+    width: max-content;
+    max-height: 70vh;
     margin-top: 0;
-    overflow: visible;
+    padding: 40px;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255, 0.7);
+    backdrop-filter: blur(3px);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
   }
 `;
 
@@ -294,6 +304,8 @@ const H1Title = styled.h1`
   }
 
   @media ${device.tablet} {
+    height: max-content;
+    padding-bottom: 25px;
     justify-content: center;
   }
 `;
