@@ -244,9 +244,8 @@ const Answers = () => {
   const [tableHidden, setTableHidden] = useState(true);
   const handleHidden = () => {
     setTableHidden(false);
-    setTimeout(() => {
-      setTableHidden(true);
-    }, 500);
+    setTableHidden(true);
+
   };
 
   return (

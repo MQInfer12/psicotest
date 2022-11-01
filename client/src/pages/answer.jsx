@@ -67,9 +67,7 @@ const Answer = () => {
 
   const handleHidden = () => {
     setTableHidden(false);
-    setTimeout(() => {
-      setTableHidden(true);
-    }, 500);
+    setTableHidden(true);
   };
 
   return loading ? (
