@@ -1,27 +1,35 @@
-import React, { useEffect, useContext } from 'react';
-import styled from 'styled-components';
-import { device } from '../styles/devices';
-import { UserContext } from '../context/userContext';
-import { useParams, useNavigate } from 'react-router-dom';
-import Cargando from '../components/globals/cargando';
-import { addRespuesta } from '../services/respuesta';
+import React, { useEffect, useContext } from "react";
+import styled from "styled-components";
+import { UserContext } from "../context/userContext";
+import { useParams, useNavigate } from "react-router-dom";
+import Cargando from "../components/globals/cargando";
+import { addRespuesta } from "../services/respuesta";
+import decipherId from "../utilities/decipher";
+import codeId from "../utilities/code";
 
 const TestShare = () => {
   const navigate = useNavigate();
-  const { idDocenteTest } = useParams();
-  const { user } = useContext(UserContext);
+  const { idDocenteTest: IdProfessorCode } = useParams();
+  let replace = IdProfessorCode.replaceAll("_", "/");
+  const idDocenteTest = Number(decipherId(replace));
 
+  const { user } = useContext(UserContext);
   const createRespuesta = async () => {
     const form = {
       email_user: user.email,
       id_docente_test: idDocenteTest,
-    }
+    };
     const res = await addRespuesta(form);
     const resJson = await res?.json();
+
+    let stringInd = resJson.id.toString();
+    let idCode = codeId(stringInd);
+    idCode = idCode.replaceAll("/", "_");
+
     if (res.ok) {
-      navigate('/dashboard/tests/testresolve/' + resJson.id);
-    } 
-  }
+      navigate("/dashboard/tests/testresolve/" + idCode);
+    }
+  };
 
   useEffect(() => {
     createRespuesta();
@@ -31,8 +39,8 @@ const TestShare = () => {
     <TestShareContainer>
       <Cargando />
     </TestShareContainer>
-  )
-}
+  );
+};
 
 export default TestShare;
 

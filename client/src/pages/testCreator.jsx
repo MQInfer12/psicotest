@@ -5,6 +5,7 @@ import { getSeccionesByTest } from "../services/seccion";
 import { getTest } from "../services/test";
 import Cargando from "../components/globals/cargando";
 import SeccionCreator from "../components/testCreator/seccionCreator/seccionCreator";
+import decipherId from "../utilities/decipher";
 
 //CONTROLES ARRIBA
 const TestCreatorContainer = styled.div`
@@ -16,7 +17,9 @@ const TestCreatorContainer = styled.div`
 `;
 
 const TestCreator = () => {
-  const { idTest } = useParams();
+  const { idTest: idCode } = useParams();
+  let replace = idCode.replaceAll("_", "/");
+  const idTest = Number(decipherId(replace));
 
   const [test, setTest] = useState([]);
   const [secciones, setSecciones] = useState([]);
