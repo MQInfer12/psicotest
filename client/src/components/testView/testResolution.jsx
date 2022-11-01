@@ -8,132 +8,6 @@ import Modal from "../globals/modal";
 import ConfirmModal from "../globals/confirmModal";
 import { BlackTextLoader } from "../../styles/loaders";
 
-const TestResolutionContainer = styled.div`
-  background-color: #FFFFFF;
-  display: flex;
-  flex-direction: column;
-  padding: 0px 65px 65px;
-`;
-
-const TitleContainer = styled.div`
-  height: 90px;
-  display: flex;
-  align-items: center;
-`;
-
-const ResolutionTitle = styled.h1`
-  font-size: 60px;
-  font-weight: 600;
-`;
-
-const StartText = styled.h4`
-  font-size: 20px;
-  font-weight: 400;
-`;
-
-const TestContainer = styled.div`
-  margin-top: 48px;
-  background: linear-gradient(180deg, #6209DB 0%, #7613FD 100%);
-  border-radius: 15px;
-  color: #FFFFFF;
-`;
-
-const PreguntasContainer = styled.div`
-  height: 471px;
-  display: flex;
-  overflow: hidden;
-`;
-
-const UnaPreguntaContainer = styled.div`
-  transform: translateX(${props => props.translate * -100}%);
-  min-width: 100%;
-  padding: 47px;
-  gap: 36px;
-  display: flex;
-  transition: all 1s;
-`;
-
-const PreguntaContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 30px;
-`;
-
-const PreguntaIndex = styled.h2`
-  font-weight: 600;
-  font-size: 32px;
-`;
-
-const Pregunta = styled.h3`
-  font-weight: 600;
-  font-size: 24px;
-`;
-
-const ReactivosContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  width: 70%;
-`;
-
-const ReactivoContainer = styled.div`
-  height: 75px;
-  width: 100%;
-  padding: 0px 40px;
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  border: 1px solid #D9D9D9;
-  border-radius: 10px;
-`;
-
-const ReactivoCheck = styled.input`
-  width: 36px;
-  height: 36px;
-  border-radius: 5px;
-  border: 2px solid #D9D9D9;
-  cursor: pointer;
-`;
-
-const ReactivoTest = styled.p`
-  font-weight: 500;
-  font-size: 24px;
-`;
-
-const SliderContainer = styled.div`
-  height: 104px;
-  display: flex;
-  align-items: center;
-  padding: 0px 40px;
-  justify-content: space-between;
-  border-top: 1px solid #D9D9D9;
-`;
-
-const ButtonTransparent = styled.div`
-  background-color: transparent;
-  border: 1px solid #D9D9D9;
-  border-radius: 10px;
-  width: 280px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 25px;
-  cursor: pointer;
-`;
-
-const IconButton = styled.div`
-  font-size: 18px;
-  color: #D9D9D9;
-`;
-
-const PButton = styled.div`
-  font-size: 20px;
-  font-weight: 600;
-  color: #D9D9D9;
-`;
-
 const TestResolution = ({ loading, idTest, nombreTest, activateSend, setActivateSend, infoSend }) => {
   const { idRespuesta } = useParams();
 
@@ -195,16 +69,16 @@ const TestResolution = ({ loading, idTest, nombreTest, activateSend, setActivate
           />
         </Modal>
       }
-        {
-          loading ?
-          <TitleContainer>
-            <BlackTextLoader width="300px" fontSize="60px" /> 
-          </TitleContainer> :
-          <ResolutionTitle>{nombreTest}</ResolutionTitle>
-        }
+      {
+        loading ?
+        <TitleContainer>
+          <BlackTextLoader width="300px" fontSize="60px" /> 
+        </TitleContainer> :
+        <ResolutionTitle>{nombreTest}</ResolutionTitle>
+      }
       <StartText>Comienza tu test</StartText>
-      <TestContainer>
 
+      <TestContainer>
         <PreguntasContainer>
           {
             secciones.map((seccion, i) => (
@@ -273,3 +147,175 @@ const TestResolution = ({ loading, idTest, nombreTest, activateSend, setActivate
 }
 
 export default TestResolution;
+
+const TestResolutionContainer = styled.div`
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  padding: 0px 40px 65px;
+
+  @media (max-width: 500px) {
+  padding: 0px 20px 65px;
+  }
+`;
+
+const TitleContainer = styled.div`
+  height: 90px;
+  display: flex;
+  align-items: center;
+`;
+
+const ResolutionTitle = styled.h1`
+  font-size: 60px;
+  font-weight: 600;
+`;
+
+const StartText = styled.h4`
+  font-size: 20px;
+  font-weight: 400;
+`;
+
+const TestContainer = styled.div`
+  margin-top: 40px;
+  background: #6209DB;
+  border-radius: 15px;
+  color: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+`;
+
+const PreguntasContainer = styled.div`
+  height: 471px;
+  display: flex;
+  overflow: hidden;
+
+  @media (max-width: 1260px) {
+    height: max-content;
+  }
+`;
+
+const UnaPreguntaContainer = styled.div`
+  transform: translateX(${props => props.translate * -100}%);
+  min-width: 100%;
+  padding: 40px;
+  gap: 36px;
+  display: flex;
+  transition: all 1s;
+  
+  @media (max-width: 1260px) {
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+  }
+`;
+
+const PreguntaContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 30px;
+`;
+
+const PreguntaIndex = styled.h2`
+  font-weight: 600;
+  font-size: 24px;
+`;
+
+const Pregunta = styled.h3`
+  font-weight: 600;
+  font-size: 24px;
+
+  @media (max-width: 1260px) {
+    font-size: 18px;
+  }
+`;
+
+const ReactivosContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 70%;
+
+  @media (max-width: 1260px) {
+    width: 100%;
+  }
+`;
+
+const ReactivoContainer = styled.div`
+  min-height: 62px;
+  width: 100%;
+  padding: 0px 40px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  border: 1px solid #D9D9D9;
+  border-radius: 10px;
+`;
+
+const ReactivoCheck = styled.input`
+  width: 36px;
+  height: 36px;
+  border-radius: 5px;
+  border: 2px solid #D9D9D9;
+  cursor: pointer;
+`;
+
+const ReactivoTest = styled.p`
+  width: 100%;
+  font-weight: 500;
+  font-size: 18px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; 
+  
+  @media (max-width: 1260px) {
+    font-size: 16px;
+  }
+`;
+
+const SliderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 17px 40px;
+  justify-content: space-between;
+  border-top: 1px solid #D9D9D9;
+  gap: 15px;
+
+  @media (max-width: 1260px) {
+    background-color: #6209DB;
+    padding: 17px 20px;
+    height: max-content;
+    border-top: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+`;
+
+const ButtonTransparent = styled.div`
+  background-color: transparent;
+  border: 1px solid #D9D9D9;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  gap: 25px;
+  cursor: pointer;
+`;
+
+const IconButton = styled.div`
+  font-size: 18px;
+  color: #D9D9D9;
+`;
+
+const PButton = styled.div`
+  font-size: 20px;
+  font-weight: 600;
+  color: #D9D9D9;
+  
+  @media (max-width: 1260px) {
+    display: none;
+  }
+`;

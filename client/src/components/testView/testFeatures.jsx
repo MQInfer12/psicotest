@@ -16,7 +16,6 @@ const TestInfoContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 30px;
-  min-width: 427px;
   padding: 40px 0px;
   background-color: #FFFFFF;
 `;
@@ -107,6 +106,7 @@ const FeatureTitleContainer = styled.div`
 `;
 
 const FeatureDescripcionContainer = styled.div`
+  width: 200px;
   height: 75px;
   display: flex;
   justify-content: center;
@@ -185,89 +185,55 @@ const TestFeatures = ({ idTest }) => {
         </Modal>
       }
 
-      <TestInfoTitle>Características del Test</TestInfoTitle>
+      <TestInfoTitle>Características</TestInfoTitle>
       {
         user.id_rol == 3 &&
         <WhiteButton onClick={() => setShowForm(true)}>Añadir</WhiteButton>
       }
       <Features>
         {
-          loading ?
-          <>
-          <FeatureContainer>
-            <IndexContainer>
-              <FeatureIndexContainer>
-                <PurpleTextLoader width="25px" />
-              </FeatureIndexContainer>
-              <FeatureLine></FeatureLine>
-            </IndexContainer>
-            <IndexContainer>
-              <FeatureTitleContainer>
-                <BlackTextLoader width="150px" fontSize="20px" />
-              </FeatureTitleContainer>
-              <FeatureDescripcionContainer>
-                <GrayTextLoader width="200px" fontSize="16px" />
-                <GrayTextLoader width="200px" fontSize="16px" />
-                <GrayTextLoader width="200px" fontSize="16px" />
-              </FeatureDescripcionContainer>
-            </IndexContainer>
-          </FeatureContainer>
-          <FeatureContainer>
-            <IndexContainer>
-              <FeatureIndexContainer>
-                <PurpleTextLoader width="25px" />
-              </FeatureIndexContainer>
-              <FeatureLine></FeatureLine>
-            </IndexContainer>
-            <IndexContainer>
-              <FeatureTitleContainer>
-                <BlackTextLoader width="150px" fontSize="20px" />
-              </FeatureTitleContainer>
-              <FeatureDescripcionContainer>
-                <GrayTextLoader width="200px" fontSize="16px" />
-                <GrayTextLoader width="200px" fontSize="16px" />
-                <GrayTextLoader width="200px" fontSize="16px" />
-              </FeatureDescripcionContainer>
-            </IndexContainer>
-          </FeatureContainer>
-          <FeatureContainer>
-            <IndexContainer>
-              <FeatureIndexContainer>
-                <PurpleTextLoader width="25px" />
-              </FeatureIndexContainer>
-              <FeatureLine></FeatureLine>
-            </IndexContainer>
-            <IndexContainer>
-              <FeatureTitleContainer>
-                <BlackTextLoader width="150px" fontSize="20px" />
-              </FeatureTitleContainer>
-              <FeatureDescripcionContainer>
-                <GrayTextLoader width="200px" fontSize="16px" />
-                <GrayTextLoader width="200px" fontSize="16px" />
-                <GrayTextLoader width="200px" fontSize="16px" />
-              </FeatureDescripcionContainer>
-            </IndexContainer>
-          </FeatureContainer>
-          </> :
-          features.map((v, i) => (
-            <FeatureContainer key={i}>
-              <IndexContainer>
-                <FeatureIndex>{i < 10 ? "0" + (i + 1) : i + 1}</FeatureIndex>
-                <FeatureLine></FeatureLine>
-                {
-                  user.id_rol == 3 &&
-                  <ButtonContainer className='botones'>
-                    <WhiteIconButton onClick={() => {setFeatureSelected(v); setShowUpdate(true);}}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
-                    <DangerIconButton onClick={() => {setFeatureSelected(v); setShowDelete(true);}}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
-                  </ButtonContainer>
-                }
-              </IndexContainer>
-              <IndexContainer>
-                <FeatureTitle>{v.titulo}</FeatureTitle>
-                <FeatureDescription>{v.descripcion}</FeatureDescription>
-              </IndexContainer>
-            </FeatureContainer>
-          ))
+          loading ? (
+            Array(3).fill('').map((v, i) => (
+              <FeatureContainer key={i}>
+                <IndexContainer>
+                  <FeatureIndexContainer>
+                    <PurpleTextLoader width="25px" />
+                  </FeatureIndexContainer>
+                  <FeatureLine></FeatureLine>
+                </IndexContainer>
+                <IndexContainer>
+                  <FeatureTitleContainer>
+                    <BlackTextLoader width="150px" fontSize="20px" />
+                  </FeatureTitleContainer>
+                  <FeatureDescripcionContainer>
+                    <GrayTextLoader fontSize="16px" />
+                    <GrayTextLoader fontSize="16px" />
+                    <GrayTextLoader fontSize="16px" />
+                  </FeatureDescripcionContainer>
+                </IndexContainer>
+              </FeatureContainer>
+            ))
+          ) : (
+            features.map((v, i) => (
+              <FeatureContainer key={i}>
+                <IndexContainer>
+                  <FeatureIndex>{i < 10 ? "0" + (i + 1) : i + 1}</FeatureIndex>
+                  <FeatureLine></FeatureLine>
+                  {
+                    user.id_rol == 3 &&
+                    <ButtonContainer className='botones'>
+                      <WhiteIconButton onClick={() => {setFeatureSelected(v); setShowUpdate(true);}}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
+                      <DangerIconButton onClick={() => {setFeatureSelected(v); setShowDelete(true);}}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
+                    </ButtonContainer>
+                  }
+                </IndexContainer>
+                <IndexContainer>
+                  <FeatureTitle>{v.titulo}</FeatureTitle>
+                  <FeatureDescription>{v.descripcion}</FeatureDescription>
+                </IndexContainer>
+              </FeatureContainer>
+            ))
+          )
         }
       </Features>
     </TestInfoContainer>

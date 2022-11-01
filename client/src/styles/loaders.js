@@ -31,17 +31,20 @@ export const PurpleTextLoader = styled.div`
 `;
 
 export const TextLoaderContainer = styled.div`
-  padding: 5px 0px;
+  width: 100%;
+  align-items: center;
+  padding: 10px 20px;
   display: flex;
   flex-direction: column;
-  gap: 7.2px;
+  gap: 14px;
 `;
 
 export const GrayTextLoader = styled.div`
   position: relative;
   border-radius: 2px;
   height: ${props => props.fontSize};
-  width: ${props => props.width};
+  max-width: ${props => props.width};
+  width: 100%;
   background-color: #e9e9e9;
   overflow: hidden;
   display: flex;

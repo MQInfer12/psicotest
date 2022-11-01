@@ -21,10 +21,11 @@ const TestViewContainer = styled.div`
 `;
 
 const Paragraph = styled.p`
-  width: 500px;
+  max-width: 500px;
   font-size: 20px;
   font-weight: 300;
-  line-height: 138.4%;
+  line-height: 175%;
+  padding: 0 20px;
 `;
 
 const TestTextContainer = styled.div`
@@ -92,11 +93,11 @@ const TestView = () => {
         </TestTitle>
         {loading ? (
           <TextLoaderContainer>
-            <GrayTextLoader width="500px" fontSize="20px" />
-            <GrayTextLoader width="500px" fontSize="20px" />
-            <GrayTextLoader width="500px" fontSize="20px" />
-            <GrayTextLoader width="500px" fontSize="20px" />
-            <GrayTextLoader width="500px" fontSize="20px" />
+            {
+              Array(5).fill('').map((v, i) => (
+                <GrayTextLoader key={i} width="500px" fontSize="20px" />
+              ))
+            }
           </TextLoaderContainer>
         ) : (
           <Paragraph>{test.descripcion}</Paragraph>
