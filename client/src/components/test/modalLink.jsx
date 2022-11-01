@@ -5,8 +5,9 @@ import { FormContainer, DivInput, DivText, PText, InputText, WhiteIconButton } f
 const ModalLink = ({ id }) => {
   const link = window.location.href + "/share/" + id;
 
-  const handleCopy = (e) => {
-    e.preventDefault();
+  const handleCopy = () => {
+    navigator.clipboard.writeText(link);
+    alert("Se copió al portapapeles.");
   }
 
   return (
