@@ -5,9 +5,14 @@ import { getIdTest, getRespuesta } from "../services/respuesta";
 import { getFullTest } from "../services/test";
 import Cargando from "../components/globals/cargando";
 import { DownloadTableExcel } from "react-export-table-to-excel";
-
+import decipherId from "../utilities/decipher";
 const Answer = () => {
-  const { idRespuesta } = useParams();
+  const { idRespuesta: idCode } = useParams();
+  let replace = idCode.replaceAll("_", "/");
+  const idRespuesta = Number(decipherId(replace));
+
+  const tableRef = useRef(null);
+  const [tableHidden, setTableHidden] = useState(true);
   const [loading, setLoading] = useState(true);
   const [respuesta, setRespuesta] = useState({});
   const [test, setTest] = useState({
@@ -59,8 +64,14 @@ const Answer = () => {
         respuesta.genero?.charAt(0).toUpperCase() + respuesta.genero?.slice(1),
     },
   ];
-  const tableRef = useRef(null);
-  console.log(test.secciones);
+
+  const handleHidden = () => {
+    setTableHidden(false);
+    setTimeout(() => {
+      setTableHidden(true);
+    }, 500);
+  };
+
   return loading ? (
     <CargandoContainer>
       <Cargando />
@@ -80,13 +91,13 @@ const Answer = () => {
         sheet="respuestas"
         currentTableRef={tableRef.current}
       >
-        <button> Exportar a excel </button>
+        <button onClick={handleHidden}> Exportar a excel </button>
       </DownloadTableExcel>
       {test.secciones.map((seccion, i) => (
         <SeccionContainer key={i}>
           <TitleSeccion>Sección {i + 1}</TitleSeccion>
           <AnswersContainer>
-            <TableContainer ref={tableRef}>
+            <TableContainer>
               <TableAnswers>
                 <thead>
                   <tr>
@@ -142,6 +153,60 @@ const Answer = () => {
                 </tbody>
               </TableAnswers>
             </TableContainer>
+            {/* ================ */}
+
+            <TableHidden ref={tableRef} tableHidden={tableHidden}>
+              <TableAnswers>
+                <thead>
+                  <tr>
+                    <ThNumberal>#</ThNumberal>
+                    <ThAnswer>Pregunta</ThAnswer>
+                    <ThReactivo width="90px">Puntaje</ThReactivo>
+                    {seccion.reactivos.map((reactivo, j) => (
+                      <ThReactivo width="90px" key={j}>
+                        {reactivo.descripcion}
+                      </ThReactivo>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {seccion.preguntas.map((pregunta, j) => (
+                    <tr key={j}>
+                      <ThNumber>{j + 1}</ThNumber>
+                      <td>
+                        <DivDouble>
+                          <PLightDouble>{pregunta.descripcion}</PLightDouble>
+                        </DivDouble>
+                      </td>
+                      <td>
+                        {respuesta.resultados
+                          .filter(
+                            (resultado) =>
+                              resultado.puntuacion[0].id_pregunta == pregunta.id
+                          )
+                          .map((puntaje, k) => (
+                            <PLight key={k}>
+                              {puntaje.puntuacion[0].asignado}
+                            </PLight>
+                          ))}
+                      </td>
+                      {pregunta.puntuaciones.map((puntuacion, k) => (
+                        <td key={k}>
+                          <PLight>
+                            {respuesta.resultados.filter(
+                              (resultado) =>
+                                puntuacion.id == resultado.id_puntuacion
+                            ).length === 0
+                              ? ""
+                              : 1}
+                          </PLight>
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </TableAnswers>
+            </TableHidden>
           </AnswersContainer>
         </SeccionContainer>
       ))}
@@ -309,4 +374,9 @@ const TitleSeccion = styled.span`
   color: #3e435d;
   width: 100%;
   text-align: start;
+`;
+
+const TableHidden = styled.div`
+  display: ${(props) => (props.tableHidden ? "none" : "block")};
+  overflow: hidden;
 `;

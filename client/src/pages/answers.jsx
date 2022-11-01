@@ -7,6 +7,7 @@ import { getRespuestas, getRespuestasByDocente } from "../services/respuesta";
 import { UserContext } from "../context/userContext";
 import Cargando from "../components/globals/cargando";
 import { DownloadTableExcel } from "react-export-table-to-excel";
+import codeId from "../utilities/code";
 const AnswersContainer = styled.div`
   height: 100%;
   box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
@@ -232,6 +233,13 @@ const Answers = () => {
 
   const tableRef = useRef(null);
 
+  const handleClick = (id) => {
+    let stringInd = id.toString();
+    let idCode = codeId(stringInd);
+    idCode = idCode.replaceAll('/', '_')
+    navigate("./" + idCode);
+  };
+
   return (
     <AnswersContainer>
       <ControlsContainer>
@@ -316,9 +324,7 @@ const Answers = () => {
                       </td>
                       <td>
                         <DivCenter>
-                          <WhiteIconButton
-                            onClick={() => navigate("./" + v.id)}
-                          >
+                          <WhiteIconButton onClick={() => handleClick(v.id)}>
                             <i className="fa-solid fa-eye"></i>
                           </WhiteIconButton>
                         </DivCenter>
