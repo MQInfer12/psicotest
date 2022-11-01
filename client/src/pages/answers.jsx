@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import styled from "styled-components";
 import Pagination from "../components/answers/pagination";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +6,7 @@ import { WhiteIconButton } from "../styles/formularios";
 import { getRespuestas, getRespuestasByDocente } from "../services/respuesta";
 import { UserContext } from "../context/userContext";
 import Cargando from "../components/globals/cargando";
-
+import { DownloadTableExcel } from "react-export-table-to-excel";
 const AnswersContainer = styled.div`
   height: 100%;
   box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
@@ -230,6 +230,8 @@ const Answers = () => {
     }
   };
 
+  const tableRef = useRef(null);
+
   return (
     <AnswersContainer>
       <ControlsContainer>
@@ -240,8 +242,15 @@ const Answers = () => {
           <option value="professor">Docente</option>
           <option value="state">Estado</option>
         </select>
+        <DownloadTableExcel
+          filename="respuestas"
+          sheet="respuestas"
+          currentTableRef={tableRef.current}
+        >
+          <button> Export excel </button>
+        </DownloadTableExcel>
       </ControlsContainer>
-      <TableContainer>
+      <TableContainer ref={tableRef}>
         {loading ? (
           <Cargando />
         ) : (
