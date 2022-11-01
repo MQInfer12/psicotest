@@ -50,7 +50,7 @@ const UpbarContainer = styled.div`
   align-items: center;
 
   @media (max-width: 1135px) {
-    z-index: 1;
+    z-index: 4;
     width: 100%;
     position: fixed;
     top: 0;

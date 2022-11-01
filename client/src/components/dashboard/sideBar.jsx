@@ -93,7 +93,7 @@ const SideBar = ({ rol, setUser, openNav, setOpenNav }) => {
 export default SideBar;
 
 const SideBarContainer = styled.nav`
-  z-index: 3;
+  z-index: 5;
   background-color: #FFFFFF;
   height: 100vh;
   display: flex;

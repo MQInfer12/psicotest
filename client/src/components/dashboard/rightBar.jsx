@@ -58,7 +58,7 @@ const UpbarSquares = styled.div`
   justify-content: end;
 
   @media (max-width: 1135px) {
-    z-index: 1;
+    z-index: 4;
     position: fixed;
     top: 0;
     right: 0;

@@ -52,7 +52,6 @@ const FutureChats = () => {
     resJson.forEach(docente => {
       misDocentesIds.push(docente.id);
     });
-    console.log(misDocentesIds);
     const q = query(collection(db, "users"), where("uid", "in", misDocentesIds));
     try {
       const querySnapshot = await getDocs(q);
@@ -72,7 +71,7 @@ const FutureChats = () => {
   const handleSelect = async (userSelect) => {
     //check wheter the group(chat in firestore) exits
     const combinedId =
-      currentUser?.uid > userSelect
+      Number(currentUser?.uid) > Number(userSelect)
         ? currentUser?.uid + userSelect
         : userSelect + currentUser?.uid;
     

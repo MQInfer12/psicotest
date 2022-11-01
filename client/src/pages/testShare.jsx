@@ -1,4 +1,6 @@
 import React, { useEffect, useContext } from 'react';
+import styled from 'styled-components';
+import { device } from '../styles/devices';
 import { UserContext } from '../context/userContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import Cargando from '../components/globals/cargando';
@@ -15,9 +17,7 @@ const TestShare = () => {
       id_docente_test: idDocenteTest,
     }
     const res = await addRespuesta(form);
-    console.log(res);
     const resJson = await res?.json();
-    console.log(resJson);
     if (res.ok) {
       navigate('/dashboard/tests/testresolve/' + resJson.id);
     } 
@@ -28,8 +28,18 @@ const TestShare = () => {
   }, []);
 
   return (
-    <Cargando />
+    <TestShareContainer>
+      <Cargando />
+    </TestShareContainer>
   )
 }
 
-export default TestShare
+export default TestShare;
+
+const TestShareContainer = styled.div`
+  height: 100%;
+
+  @media (max-width: 1135px) {
+    height: calc(100vh - 197px);
+  }
+`;
