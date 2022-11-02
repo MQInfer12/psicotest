@@ -1,10 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 
-//PAGINACION ABAJO
+const Pagination = ({ cant, rows, page, setPage }) => {
+  const pagination = cant != 0? page : 0;
+  const [from, setFrom] = useState(((page - 1) * rows) + 1);
+  const [to, setTo] = useState(page * rows);
+  const [pages, setPages] = useState(Math.ceil(cant / rows));
+
+  useEffect(() => {
+    console.log("effect");
+    setFrom(((page - 1) * rows) + 1);
+    setTo(page * rows);
+    setPages(Math.ceil(cant / rows));
+  }, [cant, rows]);
+
+  return (
+    <PaginationContainer>
+      <PaginationCounter>
+        {cant != 0? from : 0}-{to > cant? cant : to} de {cant}
+      </PaginationCounter>
+      <ChangePageContainer>
+        <RowsPage>Filas por pagina: {rows}</RowsPage>
+        <ButtonPagContainer>
+          <ButtonChange onClick={() => pagination != 0 && pagination != 1 && setPage(page - 1)}>
+            <i className="fa-solid fa-arrow-left"></i>
+          </ButtonChange>
+          <RowsPage>{pagination}/{pages}</RowsPage>
+          <ButtonChange 
+            onClick={() => pagination != pages && setPage(page + 1)}>
+            <i className="fa-solid fa-arrow-right"></i>
+          </ButtonChange>
+        </ButtonPagContainer>
+      </ChangePageContainer>
+    </PaginationContainer>
+  )
+}
+
+export default Pagination;
+
 const PaginationContainer = styled.div`
-  padding: 35px 20px 0px;
-  height: 80px;
+  padding: 0px 20px 0px;
+  min-height: 68px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -46,33 +83,3 @@ const ButtonChange = styled.button`
   border-radius: 6px;
   cursor: pointer;
 `;
-
-const Pagination = ({ cant, rows, page, setPage }) => {
-  const pagination = cant != 0? page : 0;
-  const from = ((page - 1) * rows) + 1;
-  const to = page * rows;
-  const pages = Math.ceil(cant / 8);
-
-  return (
-    <PaginationContainer>
-      <PaginationCounter>
-        {cant != 0? from : 0}-{to > cant? cant : to} de {cant}
-      </PaginationCounter>
-      <ChangePageContainer>
-        <RowsPage>Filas por pagina: {rows}</RowsPage>
-        <ButtonPagContainer>
-          <ButtonChange onClick={() => pagination != 0 && pagination != 1 && setPage(page - 1)}>
-            <i className="fa-solid fa-arrow-left"></i>
-          </ButtonChange>
-          <RowsPage>{pagination}/{pages}</RowsPage>
-          <ButtonChange 
-            onClick={() => pagination != pages && setPage(page + 1)}>
-            <i className="fa-solid fa-arrow-right"></i>
-          </ButtonChange>
-        </ButtonPagContainer>
-      </ChangePageContainer>
-    </PaginationContainer>
-  )
-}
-
-export default Pagination;

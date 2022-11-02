@@ -18,7 +18,7 @@ const UserFilter = ({handleSaveInput, handleOptionSelect}) => {
           placeholder="Ingresa filtro"
           onChange={handleChange}
         />
-        <ISearch></ISearch>
+        <ISearch className="fa-solid fa-magnifying-glass"></ISearch>
       </SearchDiv>
       
       <SearchSelect

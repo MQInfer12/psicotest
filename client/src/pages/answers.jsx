@@ -17,6 +17,9 @@ const Answers = () => {
   const [respuestas, setRespuestas] = useState([]);
   const [tableRef, setTableRef] = useState(null);
   const [page, setPage] = useState(1);
+  const tableHeightRef = useRef(null);
+  const [tableRows, setTableRows] = useState(0);
+  const [rowHeight, setRowHeight] = useState("56px");
 
   const llenarRespuestas = async () => {
     const res = await getRespuestas();
@@ -39,6 +42,17 @@ const Answers = () => {
   });
 
   useEffect(() => {
+    const handleResize = () => {
+      let tableBodyHeight = tableHeightRef.current?.offsetHeight - 40;
+      //56px es el minimo de cada fila de la tabla
+      let newRows = Math.floor(tableBodyHeight / 56);
+      setTableRows(newRows);
+      setRowHeight((tableBodyHeight / newRows) + "px");
+    }
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
     if (user.id_rol === 3) {
       llenarRespuestas();
     } else if (user.id_rol === 2) {
@@ -113,7 +127,7 @@ const Answers = () => {
           setTableRef={setTableRef}
         />
       </ControlsContainer>
-      <TableContainer>
+      <TableContainer ref={tableHeightRef}>
         {loading ? (
           <Cargando />
         ) : (
@@ -132,14 +146,14 @@ const Answers = () => {
               </thead>
               <tbody>
                 {respuestas
-                  .filter((v, i) => i >= (page - 1) * 9 && i < page * 9)
+                  .filter((v, i) => i >= (page - 1) * tableRows && i < page * tableRows)
                   .filter((v) => {
                     const res = search(v);
                     return res;
                   })
                   .map((v, i) => (
-                    <tr key={i}>
-                      <ThNumber>{(page - 1) * 9 + (i + 1)}</ThNumber>
+                    <ResponsiveTr rowHeight={rowHeight} key={i}>
+                      <ThNumber>{(page - 1) * tableRows + (i + 1)}</ThNumber>
                       <td>
                         <DivDouble>
                           <PNombre>{v.nombre_user}</PNombre>
@@ -184,7 +198,7 @@ const Answers = () => {
                           </WhiteIconButton>
                         </DivCenter>
                       </td>
-                    </tr>
+                    </ResponsiveTr>
                   ))}
               </tbody>
             </TableAnswers>
@@ -194,7 +208,7 @@ const Answers = () => {
 
       <Pagination
         cant={respuestas.length}
-        rows="9"
+        rows={tableRows}
         page={page}
         setPage={setPage}
       />
@@ -216,7 +230,7 @@ const AnswersContainer = styled.div`
 const ControlsContainer = styled.div`
   display: flex;
   align-items: center;
-  height: 68px;
+  min-height: 68px;
   padding: 0px 20px;
   gap: 16px;
 `;
@@ -276,16 +290,19 @@ const TableAnswers = styled.table`
   & > thead {
     height: 40px;
   }
+`;
 
-  & > tbody > tr {
-    max-width: 622px;
-    height: 64px;
-    background-color: #ffffff;
-    position: relative;
-    text-align: center;
+const ResponsiveTr = styled.tr.attrs(props => ({
+  style: {
+    height: props.rowHeight
   }
+}))`
+  max-width: 622px;
+  background-color: #ffffff;
+  position: relative;
+  text-align: center;
 
-  & > tbody > tr:nth-child(2n) {
+  &:nth-child(2n) {
     background-color: #ebf0fa;
   }
 `;
@@ -312,6 +329,7 @@ const DivDouble = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   gap: 2px;
   padding-right: 20px;
