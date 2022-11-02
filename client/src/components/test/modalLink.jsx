@@ -13,7 +13,6 @@ import codeId from "../../utilities/code";
 const ModalLink = ({ id }) => {
   let stringInd = id.toString();
   let idCode = codeId(stringInd);
-  idCode = idCode.replaceAll("/", "_");
   const link = window.location.href + "/share/" + idCode;
 
   const handleCopy = () => {

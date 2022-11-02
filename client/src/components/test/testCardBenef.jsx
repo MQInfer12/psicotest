@@ -2,17 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { WhiteIconButton } from "../../styles/formularios";
-import { useOutletContext } from "react-router-dom";
 import codeId from "../../utilities/code";
 
 const TestCardBenef = (props) => {
   const navigate = useNavigate();
-  const { handleScrollTop } = useOutletContext();
 
   const handleClick = (id) => {
     let stringInd = id.toString();
     let idCode = codeId(stringInd);
-    idCode = idCode.replaceAll("/", "_");
     navigate(`./testresolve/${idCode}`);
   };
 

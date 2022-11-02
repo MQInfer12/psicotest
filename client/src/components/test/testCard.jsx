@@ -30,14 +30,12 @@ const TestCard = (props) => {
   const handleClick = () => {
     let stringInd = props.id.toString();
     let idCode = codeId(stringInd);
-    idCode = idCode.replaceAll("/", "_");
     navigate(`./${idCode}`);
   };
 
   const handleTextView = () => {
     let stringInd = props.id.toString();
     let idCode = codeId(stringInd);
-    idCode = idCode.replaceAll("/", "_");
     navigate(`./testview/${idCode}`);
     handleScrollTop();
   };

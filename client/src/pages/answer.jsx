@@ -10,8 +10,7 @@ import AnswerReports from "../components/answer/answerReports";
 
 const Answer = () => {
   const { idRespuesta: idCode } = useParams();
-  let replace = idCode.replaceAll("_", "/");
-  const idRespuesta = Number(decipherId(replace));
+  const idRespuesta = Number(decipherId(idCode));
 
   const [tableRef, setTableRef] = useState(null);
   const [loading, setLoading] = useState(true);

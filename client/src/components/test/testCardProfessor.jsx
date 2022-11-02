@@ -25,8 +25,7 @@ const TestCard = (props) => {
 
   const handleClick = (id) => {
     let stringInd = id.toString();
-    let idCode = codeId(stringInd);
-    idCode = idCode.replaceAll("/", "_");
+    let idCode = codeId(stringInd); 
 
     navigate(`./testview/${idCode}`);
     handleScrollTop();

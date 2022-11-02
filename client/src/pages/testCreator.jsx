@@ -18,8 +18,7 @@ const TestCreatorContainer = styled.div`
 
 const TestCreator = () => {
   const { idTest: idCode } = useParams();
-  let replace = idCode.replaceAll("_", "/");
-  const idTest = Number(decipherId(replace));
+  const idTest = Number(decipherId(idCode));
 
   const [test, setTest] = useState([]);
   const [secciones, setSecciones] = useState([]);

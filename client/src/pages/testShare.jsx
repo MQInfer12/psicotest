@@ -10,8 +10,7 @@ import codeId from "../utilities/code";
 const TestShare = () => {
   const navigate = useNavigate();
   const { idDocenteTest: IdProfessorCode } = useParams();
-  let replace = IdProfessorCode.replaceAll("_", "/");
-  const idDocenteTest = Number(decipherId(replace));
+  const idDocenteTest = Number(decipherId(IdProfessorCode));
 
   const { user } = useContext(UserContext);
   const createRespuesta = async () => {
@@ -24,7 +23,6 @@ const TestShare = () => {
 
     let stringInd = resJson.id.toString();
     let idCode = codeId(stringInd);
-    idCode = idCode.replaceAll("/", "_");
 
     if (res.ok) {
       navigate("/dashboard/tests/testresolve/" + idCode);

@@ -86,7 +86,6 @@ const Answers = () => {
   const handleClick = (id) => {
     let stringInd = id.toString();
     let idCode = codeId(stringInd);
-    idCode = idCode.replaceAll("/", "_");
     navigate("./" + idCode);
   };
 

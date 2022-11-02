@@ -52,16 +52,14 @@ const TestTitle = styled.h2`
 const TestView = () => {
   const { idTest: idTestCode } = useParams();
   const { idRespuesta: idRespCode } = useParams();
-
   let idTest;
-  if (idTestCode) {
-    let replace = idTestCode.replaceAll("_", "/");
-    idTest = Number(decipherId(replace));
-  }
   let idRespuesta;
+
+  if (idTestCode) {
+    idTest = Number(decipherId(idTestCode));
+  }
   if (idRespCode) {
-    let replaceResp = idRespCode.replaceAll("_", "/");
-    idRespuesta = Number(decipherId(replaceResp));
+    idRespuesta = Number(decipherId(idRespCode));
   }
 
   const [loading, setLoading] = useState(true);
