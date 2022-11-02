@@ -1,14 +1,25 @@
-import React from 'react';
-import styled from 'styled-components';
-import { FormContainer, DivInput, DivText, PText, InputText, WhiteIconButton } from '../../styles/formularios';
+import React from "react";
+import styled from "styled-components";
+import {
+  FormContainer,
+  DivInput,
+  DivText,
+  PText,
+  InputText,
+  WhiteIconButton,
+} from "../../styles/formularios";
+import codeId from "../../utilities/code";
 
 const ModalLink = ({ id }) => {
-  const link = window.location.href + "/share/" + id;
+  let stringInd = id.toString();
+  let idCode = codeId(stringInd);
+  idCode = idCode.replaceAll("/", "_");
+  const link = window.location.href + "/share/" + idCode;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(link);
     alert("Se copió al portapapeles.");
-  }
+  };
 
   return (
     <FormContainer>
@@ -24,8 +35,8 @@ const ModalLink = ({ id }) => {
         </WhiteIconButton>
       </DivButtons>
     </FormContainer>
-  )
-}
+  );
+};
 
 export default ModalLink;
 

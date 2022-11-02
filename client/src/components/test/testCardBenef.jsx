@@ -3,10 +3,18 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { WhiteIconButton } from "../../styles/formularios";
 import { useOutletContext } from "react-router-dom";
+import codeId from "../../utilities/code";
 
 const TestCardBenef = (props) => {
   const navigate = useNavigate();
   const { handleScrollTop } = useOutletContext();
+
+  const handleClick = (id) => {
+    let stringInd = id.toString();
+    let idCode = codeId(stringInd);
+    idCode = idCode.replaceAll("/", "_");
+    navigate(`./testresolve/${idCode}`);
+  };
 
   return (
     <Container>
@@ -14,27 +22,28 @@ const TestCardBenef = (props) => {
       <P>{props.descripcion_test}</P>
 
       <ContainerIcon>
-        <div><i className="fa-solid fa-user"></i></div>
+        <div>
+          <i className="fa-solid fa-user"></i>
+        </div>
         <Span>{props.autor_test}</Span>
       </ContainerIcon>
 
       <ContainerIcon>
-        <div><i className="fa-solid fa-graduation-cap"></i></div>
+        <div>
+          <i className="fa-solid fa-graduation-cap"></i>
+        </div>
         <Span>{props.nombre_docente}</Span>
       </ContainerIcon>
 
       <ContainerIcon>
-        <div><i className="fa-solid fa-clock"></i></div>
+        <div>
+          <i className="fa-solid fa-clock"></i>
+        </div>
         <Span>{props.tiempo_test}</Span>
       </ContainerIcon>
 
       <ButtonContainer>
-        <WhiteIconButton 
-          onClick={() => {
-            navigate(`./testresolve/${props.id}`);
-            handleScrollTop();
-          }}
-        >
+        <WhiteIconButton onClick={() => handleClick(props.id)}>
           <i className="fa-solid fa-newspaper"></i>
         </WhiteIconButton>
       </ButtonContainer>
@@ -64,7 +73,7 @@ const H2 = styled.h2`
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical; 
+  -webkit-box-orient: vertical;
 `;
 
 const P = styled.p`
@@ -78,7 +87,7 @@ const P = styled.p`
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;  
+  -webkit-box-orient: vertical;
 `;
 
 const Span = styled.span`
@@ -88,7 +97,7 @@ const Span = styled.span`
 `;
 
 const ContainerIcon = styled.div`
-  color: #D9D9D9;
+  color: #d9d9d9;
   display: flex;
   align-items: center;
   gap: 8px;
