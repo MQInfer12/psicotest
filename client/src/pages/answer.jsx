@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { getIdTest, getRespuesta } from "../services/respuesta";
@@ -7,6 +7,7 @@ import Cargando from "../components/globals/cargando";
 import { useDownloadExcel } from "react-export-table-to-excel";
 import decipherId from "../utilities/decipher";
 import AnswerReports from "../components/answer/answerReports";
+import { WhiteButton } from "../styles/formularios";
 
 const Answer = () => {
   const { idRespuesta: idCode } = useParams();
@@ -77,6 +78,7 @@ const Answer = () => {
     </CargandoContainer>
   ) : (
     <AnswerPage>
+      <WhiteButton onClick={onDownload}><i className="fa-regular fa-file-excel"></i> Exportar a excel</WhiteButton>
       <DataContainer>
         {data.map((v, i) => (
           <DataRow key={i}>
@@ -85,7 +87,6 @@ const Answer = () => {
           </DataRow>
         ))}
       </DataContainer>
-      <button onClick={onDownload}>Exportar a excel</button>
       <AnswerReports 
         secciones={test.secciones} 
         respuesta={respuesta} 

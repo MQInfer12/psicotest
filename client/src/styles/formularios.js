@@ -87,6 +87,9 @@ export const PurpleButton = styled.button`
 `;
 
 export const WhiteButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 10px;
   min-height: 42px;
   border: 1px solid #D9D9D9;
   padding: 8px 20px 8px 20px;

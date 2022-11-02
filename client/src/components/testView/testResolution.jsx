@@ -314,6 +314,7 @@ const ButtonTransparent = styled.div`
   padding: 15px;
   gap: 25px;
   cursor: pointer;
+  user-select: none;
 `;
 
 const IconButton = styled.div`
