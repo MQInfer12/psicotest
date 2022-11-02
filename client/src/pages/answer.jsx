@@ -67,11 +67,9 @@ const Answer = () => {
   ];
 
   return loading ? (
-    <>
-      <CargandoContainer>
-        <Cargando />
-      </CargandoContainer>
-    </>
+    <CargandoContainer>
+      <Cargando />
+    </CargandoContainer>
   ) : (
     <AnswerPage>
       <DataContainer>
@@ -83,12 +81,17 @@ const Answer = () => {
         ))}
       </DataContainer>
       <DownloadTableExcel
-        filename="respuestas Filtradas"
-        sheet="respuestas"
+        filename={"Respuesta" + respuesta.nombre_user.trim() + respuesta.nombre_test.trim()}
+        sheet="Respuesta"
         currentTableRef={tableRef?.current}
       >
         <button onClick={() => console.log(tableRef?.current)}> Exportar a excel </button>
       </DownloadTableExcel>
+      <AnswerReports 
+        secciones={test.secciones} 
+        respuesta={respuesta} 
+        setTableRef={setTableRef} 
+      />
       {test.secciones.map((seccion, i) => (
         <SeccionContainer key={i}>
           <TitleSeccion>Sección {i + 1}</TitleSeccion>
@@ -153,11 +156,6 @@ const Answer = () => {
           </AnswersContainer>
         </SeccionContainer>
       ))}
-      <AnswerReports 
-        seccion={test.secciones[0]} 
-        respuesta={respuesta} 
-        setTableRef={setTableRef} 
-      />
     </AnswerPage>
   );
 };

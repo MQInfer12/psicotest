@@ -32,7 +32,7 @@ const AnswersReports = ({ setTableRef, respuestas }) => {
       <tbody>
         {respuestas.map((v, i) => (
           <tr key={i}>
-            <th style={ThStyle}>{i + 1}</th>
+            <th>{i + 1}</th>
             <td>
               <p>{v.nombre_user}</p>
             </td>

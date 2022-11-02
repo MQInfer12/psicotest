@@ -101,6 +101,13 @@ const Answers = () => {
         >
           <button> Export excel </button>
         </DownloadTableExcel>
+        <AnswersReports
+          respuestas={respuestas.filter((v) => {
+            const res = search(v);
+            return res;
+          })}
+          setTableRef={setTableRef}
+        />
       </ControlsContainer>
       <TableContainer>
         {loading ? (
@@ -180,14 +187,6 @@ const Answers = () => {
           </>
         )}
       </TableContainer>
-
-      <AnswersReports
-        respuestas={respuestas.filter((v) => {
-          const res = search(v);
-          return res;
-        })}
-        setTableRef={setTableRef}
-      />
 
       <Pagination
         cant={respuestas.length}
