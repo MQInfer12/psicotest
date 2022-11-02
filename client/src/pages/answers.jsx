@@ -219,7 +219,7 @@ const Answers = () => {
 export default Answers;
 
 const AnswersContainer = styled.div`
-  height: 100%;
+  height: calc(100vh - 197px);
   box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
   background-color: #ebf0fa;
   border-radius: 10px;

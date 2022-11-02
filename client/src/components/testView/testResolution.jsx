@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { getFullTest } from "../../services/test";
@@ -7,7 +7,7 @@ import { updateRespuesta } from "../../services/respuesta";
 import Modal from "../globals/modal";
 import ConfirmModal from "../globals/confirmModal";
 import { BlackTextLoader } from "../../styles/loaders";
-import decipherId from "..//../utilities/decipher";
+import RadioButton from "./radioButton";
 
 const TestResolution = ({
   loading,
@@ -27,15 +27,6 @@ const TestResolution = ({
   const [resultados, setResultados] = useState({});
 
   let cont = 0;
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setResultados({
-      ...resultados,
-      [name]: value,
-    });
-  };
 
   const handleSubmit = async () => {
     const form = {
@@ -101,20 +92,12 @@ const TestResolution = ({
                   </PreguntaContainer>
                   <ReactivosContainer>
                     {seccion.reactivos.map((reactivo, k) => (
-                      <ReactivoContainer key={k}>
-                        <ReactivoCheck
-                          type="radio"
-                          name={pregunta.id}
-                          onChange={handleChange}
-                          value={pregunta.puntuaciones
-                            .filter(
-                              (puntuacion) =>
-                                puntuacion.id_reactivo == reactivo.id
-                            )
-                            .map((puntuacion) => puntuacion.id)}
-                        />
-                        <ReactivoTest>{reactivo.descripcion}</ReactivoTest>
-                      </ReactivoContainer>
+                      <RadioButton 
+                        key={k} 
+                        setResultados={setResultados}
+                        pregunta={pregunta}
+                        reactivo={reactivo}
+                      />
                     ))}
                   </ReactivosContainer>
                 </UnaPreguntaContainer>
@@ -252,38 +235,15 @@ const ReactivosContainer = styled.div`
   }
 `;
 
-const ReactivoContainer = styled.div`
-  min-height: 62px;
+/* const ReactivoTest = styled.p`
   width: 100%;
-  padding: 0px 40px;
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  border: 1px solid #d9d9d9;
-  border-radius: 10px;
-`;
-
-const ReactivoCheck = styled.input`
-  width: 36px;
-  height: 36px;
-  border-radius: 5px;
-  border: 2px solid #d9d9d9;
-  cursor: pointer;
-`;
-
-const ReactivoTest = styled.p`
-  width: 100%;
-  font-weight: 500;
-  font-size: 18px;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 
-  @media (max-width: 1260px) {
-    font-size: 16px;
-  }
-`;
+  
+`; */
 
 const SliderContainer = styled.div`
   display: flex;

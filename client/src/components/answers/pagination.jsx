@@ -4,16 +4,15 @@ import styled from "styled-components";
 
 const Pagination = ({ cant, rows, page, setPage }) => {
   const pagination = cant != 0? page : 0;
-  const [from, setFrom] = useState(((page - 1) * rows) + 1);
-  const [to, setTo] = useState(page * rows);
-  const [pages, setPages] = useState(Math.ceil(cant / rows));
+  const [from, setFrom] = useState(0);
+  const [to, setTo] = useState(0);
+  const [pages, setPages] = useState(0);
 
   useEffect(() => {
-    console.log("effect");
     setFrom(((page - 1) * rows) + 1);
     setTo(page * rows);
     setPages(Math.ceil(cant / rows));
-  }, [cant, rows]);
+  }, [cant, rows, page]);
 
   return (
     <PaginationContainer>
