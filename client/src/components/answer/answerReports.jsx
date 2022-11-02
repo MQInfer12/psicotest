@@ -14,6 +14,14 @@ const AnswerReports = ({ secciones, respuesta, setTableRef }) => {
 
   return (
     <div style={{display: "none"}} ref={tableRef}>
+      <div>
+        Test:<br/> {respuesta.nombre_test}<br/>
+        Nombre:<br/> {respuesta.nombre_user}<br/>
+        Email:<br/> {respuesta.email_user}<br/>
+        Edad:<br/> {respuesta.edad}<br/>
+        Genero:<br/> {respuesta.genero?.charAt(0).toUpperCase() + respuesta.genero?.slice(1)}<br/>
+      </div>
+      <br/>
       {secciones.map((seccion, i) => (
         <div key={i}>
           Sección {i + 1}
@@ -49,10 +57,14 @@ const AnswerReports = ({ secciones, respuesta, setTableRef }) => {
                   </td>
                   {pregunta.puntuaciones.map((puntuacion, k) => (
                     <td key={k}>
-                      <p>
+                      <p style={{
+                        backgroundColor: respuesta.resultados.filter(resultado =>
+                          puntuacion.id == resultado.id_puntuacion
+                        ).length === 0 ? "" : "#d7dbfd"
+                      }}>
                         {respuesta.resultados.filter(resultado =>
                             puntuacion.id == resultado.id_puntuacion
-                        ).length === 0 ? "" : 1}
+                        ).length === 0 ? 0 : 1}
                       </p>
                     </td>
                   ))}
@@ -60,6 +72,7 @@ const AnswerReports = ({ secciones, respuesta, setTableRef }) => {
               ))}
             </tbody>
           </table>
+          <br/>
         </div>
       ))}
     </div>

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getIdTest, getRespuesta } from "../services/respuesta";
 import { getFullTest } from "../services/test";
 import Cargando from "../components/globals/cargando";
-import { DownloadTableExcel } from "react-export-table-to-excel";
+import { useDownloadExcel } from "react-export-table-to-excel";
 import decipherId from "../utilities/decipher";
 import AnswerReports from "../components/answer/answerReports";
 
@@ -36,6 +36,12 @@ const Answer = () => {
     setTest(resTestJson);
     setLoading(false);
   };
+
+  const { onDownload } = useDownloadExcel({
+    filename: "Respuesta" + respuesta.nombre_user?.replaceAll(' ', '') + respuesta.nombre_test?.replaceAll(' ', ''),
+    sheet:"Respuesta",
+    currentTableRef: tableRef?.current
+  });
 
   useEffect(() => {
     llenarRespuesta();
@@ -80,13 +86,7 @@ const Answer = () => {
           </DataRow>
         ))}
       </DataContainer>
-      <DownloadTableExcel
-        filename={"Respuesta" + respuesta.nombre_user.trim() + respuesta.nombre_test.trim()}
-        sheet="Respuesta"
-        currentTableRef={tableRef?.current}
-      >
-        <button onClick={() => console.log(tableRef?.current)}> Exportar a excel </button>
-      </DownloadTableExcel>
+      <button onClick={onDownload}>Exportar a excel</button>
       <AnswerReports 
         secciones={test.secciones} 
         respuesta={respuesta} 
