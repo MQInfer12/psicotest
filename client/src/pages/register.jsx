@@ -13,8 +13,11 @@ import { db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import ImagenLogin from "../images/imglogin.jpg";
 import Navbar from "../components/landing/navbar";
+import { useWindowHeight } from "../hooks/useOutletHeight";
 
 const Register = () => {
+  const windowHeight = useWindowHeight();
+  console.log(windowHeight);
   const { goTo, userEmail } = useParams();
   const [showModal, setShowModal] = useState(false);
   const [login, setLogin] = useState({});
@@ -150,7 +153,7 @@ const Register = () => {
   return (
     <>
       <Navbar />
-      <DivPrincipal>
+      <DivPrincipal height={windowHeight}>
         <DivImagelog>
           <DivItemlog></DivItemlog>
         </DivImagelog>
@@ -218,7 +221,7 @@ export default Register;
 const DivPrincipal = styled.div`
   display: flex;
   text-align: center;
-  height: 100vh;
+  height: ${props => props.height};
   overflow: hidden;
   position: relative;
 
@@ -230,9 +233,8 @@ const DivPrincipal = styled.div`
 
 const DivImagelog = styled.div`
   width: 145%;
-  height: 100vh;
+  height: 100%;
   @media ${device.tablet} {
-    height: 100vh;
     filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
   }
 `;
@@ -262,7 +264,7 @@ const DivFormlog = styled.div`
   @media ${device.tablet} {
     width: max-content;
     max-height: 70vh;
-    margin-top: 0;
+    margin-top: 45px;
     padding: 40px;
     border-radius: 10px;
     background-color: rgb(255, 255, 255, 0.7);

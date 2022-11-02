@@ -10,8 +10,10 @@ import { ErrorCss } from "../styles/formularios";
 import ImagenLogin from "../images/imglogin.jpg";
 import Navbar from "../components/landing/navbar";
 import { useEffect } from "react";
+import { useWindowHeight } from "../hooks/useOutletHeight";
 
 const Login = () => {
+  const windowHeight = useWindowHeight();
   const { goTo } = useParams();
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
@@ -49,7 +51,7 @@ const Login = () => {
   return (
     <>
       <Navbar />
-      <DivPrincipal>
+      <DivPrincipal height={windowHeight}>
         <DivImagelog>
           <DivItemlog></DivItemlog>
         </DivImagelog>
@@ -97,7 +99,7 @@ export default Login;
 const DivPrincipal = styled.div`
   display: flex;
   text-align: center;
-  min-height: 100vh;
+  height: ${props => props.height};
   overflow: hidden;
 
   position: relative;
@@ -109,9 +111,9 @@ const DivPrincipal = styled.div`
 
 const DivImagelog = styled.div`
   width: 145%;
-  height: 100vh;
+  height: 100%;
+
   @media ${device.tablet} {
-    height: 100vh;
     filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
   }
 `;
@@ -137,6 +139,7 @@ const DivFormlog = styled.div`
 
   @media ${device.tablet} {
     padding: 40px;
+    margin-top: 45px;
     border-radius: 10px;
     background-color: rgb(255, 255, 255, 0.7);
     backdrop-filter: blur(5px);

@@ -162,6 +162,12 @@ const TitleContainer = styled.div`
 const ResolutionTitle = styled.h1`
   font-size: 60px;
   font-weight: 600;
+  text-align: center;
+  width: fit-content;
+  &::after {
+    content: ".";
+    color: #6209db;
+  }
 `;
 
 const StartText = styled.h4`
@@ -235,16 +241,6 @@ const ReactivosContainer = styled.div`
   }
 `;
 
-/* const ReactivoTest = styled.p`
-  width: 100%;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-
-  
-`; */
-
 const SliderContainer = styled.div`
   display: flex;
   align-items: center;
@@ -261,6 +257,7 @@ const SliderContainer = styled.div`
     position: absolute;
     top: 0;
     right: 0;
+    border-radius: 15px;
   }
 `;
 
@@ -275,6 +272,11 @@ const ButtonTransparent = styled.div`
   gap: 25px;
   cursor: pointer;
   user-select: none;
+  transition: all 0.2s;
+  
+  &:hover {
+    background-color: #5a08cc;
+  }
 `;
 
 const IconButton = styled.div`
