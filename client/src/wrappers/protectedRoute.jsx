@@ -21,7 +21,7 @@ const ProtectedRoute = ({ children }) => {
       setAuthenticated(true);
       setLoading(false);
     } else if(user === undefined) {
-      navigate("/login/" + location.pathname.replaceAll("/", "_"));
+      navigate("/login/" + location.pathname.replaceAll("/", "_47slash_"));
     }
   }, [user]);
 

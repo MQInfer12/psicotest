@@ -13,7 +13,7 @@ const ModalRegister = ({ goTo, form }) => {
     if(res.ok) {
       const profile = await getProfile();
       setUser(profile);
-      navigate(goTo ? goTo.replaceAll("_", "/") : "/dashboard/tests");
+      navigate(goTo ? goTo.replaceAll("_47slash_", "/") : "/dashboard/tests");
     } 
   }
 

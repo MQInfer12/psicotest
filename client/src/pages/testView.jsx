@@ -55,13 +55,6 @@ const TestView = () => {
   let idTest;
   let idRespuesta;
 
-  if (idTestCode) {
-    idTest = Number(decipherId(idTestCode));
-  }
-  if (idRespCode) {
-    idRespuesta = Number(decipherId(idRespCode));
-  }
-
   const [loading, setLoading] = useState(true);
   const [test, setTest] = useState([]);
   const [activateSend, setActivateSend] = useState(idRespuesta ? true : false);
@@ -87,10 +80,13 @@ const TestView = () => {
 
   useEffect(() => {
     window.scroll(0, 0);
-    if (idTest) {
+
+    if (idTestCode) {
+      idTest = Number(decipherId(idTestCode));
       llenarTest();
     }
-    if (idRespuesta) {
+    if (idRespCode) {
+      idRespuesta = Number(decipherId(idRespCode));
       getTestId();
     }
   }, []);
