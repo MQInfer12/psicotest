@@ -9,8 +9,10 @@ import Cargando from "../components/globals/cargando";
 import { useDownloadExcel } from "react-export-table-to-excel";
 import codeId from "../utilities/code";
 import AnswersReports from "../components/answers/answersReports";
+import { useWindowHeight } from "../hooks/useWindowHeight";
 
 const Answers = () => {
+  const windowHeight = useWindowHeight(true, true);
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
@@ -104,7 +106,7 @@ const Answers = () => {
   };
 
   return (
-    <AnswersContainer>
+    <AnswersContainer height={windowHeight}>
       <ControlsContainer>
         <SearchSelect onChange={handleSelect}>
           <option value="name">Nombre</option>
@@ -219,7 +221,7 @@ const Answers = () => {
 export default Answers;
 
 const AnswersContainer = styled.div`
-  height: calc(100vh - 197px);
+  height: ${props => props.height};
   box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
   background-color: #ebf0fa;
   border-radius: 10px;

@@ -20,8 +20,10 @@ import { ProfilePicContext } from "../context/profilePicContext";
 import { doc, updateDoc } from "firebase/firestore";
 import { useEffect } from "react";
 import ProfilePic from "../components/globals/profilePic";
+import { useWindowHeight } from "../hooks/useWindowHeight";
 
 const Profile = () => {
+  const windowHeight = useWindowHeight(true, true);
   const { profilePics, setProfilePics } = useContext(ProfilePicContext);
   const { setCurrentUser } = useContext(UserFirebaseContext);
   const { user, setUser } = useContext(UserContext);
@@ -174,7 +176,7 @@ const Profile = () => {
   }, [profilePics]);
 
   return (
-    <ProfileContainer>
+    <ProfileContainer height={windowHeight}>
       <UpContainer>
         <PDetalles>Detalles Perfil</PDetalles>
         <DivPhoto>
@@ -278,7 +280,7 @@ const Profile = () => {
 export default Profile;
 
 const ProfileContainer = styled.div`
-  min-height: 100%;
+  min-height: ${props => props.height};
   background-color: #ffffff;
   border-radius: 10px;
   position: relative;

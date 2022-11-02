@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
 import { device } from '../../styles/devices';
+import { useWindowHeight } from '../../hooks/useWindowHeight';
 
 const OutletContainer = ({setTitlePage, setCalendar, setLinks}) => {
+  const windowHeight = useWindowHeight(true);
   let contenedor = useRef(null);
 
   const handleScrollTop = () => {
@@ -11,7 +13,7 @@ const OutletContainer = ({setTitlePage, setCalendar, setLinks}) => {
   }
 
   return (
-    <OutletContainerStyled ref={contenedor}>
+    <OutletContainerStyled height={windowHeight} ref={contenedor}>
       <Outlet context={{setTitlePage, setCalendar, setLinks, handleScrollTop}} />
     </OutletContainerStyled>
   )
@@ -20,7 +22,7 @@ const OutletContainer = ({setTitlePage, setCalendar, setLinks}) => {
 export default OutletContainer
 
 const OutletContainerStyled = styled.div`
-  height: calc(100vh - 157px);
+  height: ${props => props.height};
   overflow-y: auto;
   padding: 0px 40px 40px;
 
@@ -42,7 +44,7 @@ const OutletContainerStyled = styled.div`
 
   @media (max-width: 1135px) {
     height: max-content;
-    min-height: calc(100vh - 157px);
+    min-height: ${props => props.height};
     overflow: visible;
     margin-top: 157px;
   }

@@ -6,13 +6,15 @@ import Cargando from "../components/globals/cargando";
 import { addRespuesta } from "../services/respuesta";
 import decipherId from "../utilities/decipher";
 import codeId from "../utilities/code";
+import { useWindowHeight } from "../hooks/useWindowHeight";
 
 const TestShare = () => {
+  const windowHeight = useWindowHeight(true, true);
   const navigate = useNavigate();
   const { idDocenteTest: IdProfessorCode } = useParams();
   const idDocenteTest = Number(decipherId(IdProfessorCode));
-
   const { user } = useContext(UserContext);
+
   const createRespuesta = async () => {
     const form = {
       email_user: user.email,
@@ -34,7 +36,7 @@ const TestShare = () => {
   }, []);
 
   return (
-    <TestShareContainer>
+    <TestShareContainer height={windowHeight}>
       <Cargando />
     </TestShareContainer>
   );
@@ -43,9 +45,5 @@ const TestShare = () => {
 export default TestShare;
 
 const TestShareContainer = styled.div`
-  height: 100%;
-
-  @media (max-width: 1135px) {
-    height: calc(100vh - 197px);
-  }
+  height: ${props => props.height};
 `;

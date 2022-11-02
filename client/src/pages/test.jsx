@@ -9,8 +9,10 @@ import { addTest, getTests, getTestsToBenef, getTestsToProfessor } from "../serv
 import TestCardProfessor from "../components/test/testCardProfessor";
 import TestCardBenef from "../components/test/testCardBenef";
 import { PurpleButton } from "../styles/formularios";
+import { useWindowHeight } from "../hooks/useWindowHeight";
 
 const Test = () => {
+  const windowHeight = useWindowHeight(true, true);
   const [tests, setTests] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -51,7 +53,7 @@ const Test = () => {
   }, []);
 
   return (
-    <AllContainer load={loading}>
+    <AllContainer height={windowHeight} load={loading}>
       {showForm && (
         <Modal cerrar={() => setShowForm(false)} titulo="Añadir test">
           <ModalTest
@@ -65,7 +67,9 @@ const Test = () => {
         </Modal>
       )}
       {loading ? (
-        <Cargando />
+        <CargandoContainer height={windowHeight}>
+          <Cargando />
+        </CargandoContainer>
       ) : (
         <>
           {idRole === 3 && (
@@ -127,7 +131,14 @@ const AllContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  height: ${props => props.load && "calc(100vh - 197px)"};
+  min-height: ${props => props.height};
+`;
+
+const CargandoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: ${props => props.height};
 `;
 
 const TestContainer = styled.div`

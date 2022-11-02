@@ -6,17 +6,10 @@ import { getTest } from "../services/test";
 import Cargando from "../components/globals/cargando";
 import SeccionCreator from "../components/testCreator/seccionCreator/seccionCreator";
 import decipherId from "../utilities/decipher";
-
-//CONTROLES ARRIBA
-const TestCreatorContainer = styled.div`
-  height: 100%;
-  border-radius: 10px;
-  background-color: #FFFFFF;
-  display: flex;
-  overflow: hidden;
-`;
+import { useWindowHeight } from "../hooks/useWindowHeight";
 
 const TestCreator = () => {
+  const windowHeight = useWindowHeight(true, true);
   const { idTest: idCode } = useParams();
   const idTest = Number(decipherId(idCode));
 
@@ -41,7 +34,7 @@ const TestCreator = () => {
   }, [])
 
   return (
-    <TestCreatorContainer>
+    <TestCreatorContainer height={windowHeight}>
       {
         loading? (
           <Cargando />
@@ -76,3 +69,12 @@ const TestCreator = () => {
 }
 
 export default TestCreator;
+
+//CONTROLES ARRIBA
+const TestCreatorContainer = styled.div`
+  height: ${props => props.height};
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  display: flex;
+  overflow: hidden;
+`;

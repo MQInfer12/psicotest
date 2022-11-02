@@ -7,8 +7,10 @@ import UserResponse from "../components/user/filter/userReponse";
 import UserFilter from "../components/user/filter/userFilter";
 import Modal from "../components/globals/modal";
 import ModalUser from "../components/user/modalUser";
+import { useWindowHeight } from "../hooks/useWindowHeight";
 
 const User = () => {
+  const windowHeight = useWindowHeight(true, true);
   const [usuarios, setUsuarios] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -43,40 +45,42 @@ const User = () => {
   };
 
   return (
-    <DivUsersPage>
-
-      {/* FILTRAR */}
-      <DivControls>
-        <UserFilter
-          handleSaveInput={handleSaveInput}
-          handleOptionSelect={handleOptionSelect}
-        />
-        <WhiteButton onClick={() => setShowForm(true)}>Añadir</WhiteButton>
-      </DivControls>
-      {showForm && 
-        <Modal cerrar={() => setShowForm(false)} titulo="Añadir usuario">
-          <ModalUser
-            call={addUser}
-            actualizar={() =>{
-              llenarUsuarios();
-              setShowForm(false);
-            }}
-            funcion="añadir"
-          />
-        </Modal>
-      }
+    <DivUsersPage height={windowHeight}>
       {
         loadingUsers ? (
-          <Cargando />
+          <CargandoContainer height={windowHeight}>
+            <Cargando />
+          </CargandoContainer>
         ) : (
-          <DivUsersContainer>
+          <>
+            <DivControls>
+            <UserFilter
+              handleSaveInput={handleSaveInput}
+              handleOptionSelect={handleOptionSelect}
+            />
+            <WhiteButton onClick={() => setShowForm(true)}>Añadir</WhiteButton>
+            </DivControls>
+            {showForm && 
+            <Modal cerrar={() => setShowForm(false)} titulo="Añadir usuario">
+              <ModalUser
+                call={addUser}
+                actualizar={() =>{
+                  llenarUsuarios();
+                  setShowForm(false);
+                }}
+                funcion="añadir"
+              />
+            </Modal>
+            }
+            <DivUsersContainer>
             <UserResponse
               usuarios={usuarios}
               filter={filter}
               optionFilter={optionFilter}
               handleChange={handleChange}
             />
-          </DivUsersContainer>
+            </DivUsersContainer>
+          </>
         )
       }
     </DivUsersPage>
@@ -88,13 +92,15 @@ export default User;
 const DivUsersPage = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
   align-items: center;
-  height: 100%;
+  min-height: ${props => props.height};
+`;
 
-  @media (max-width: 1135px) {
-    min-height: calc(100vh - 157px);
-  }
+const CargandoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: ${props => props.height};
 `;
 
 const DivUsersContainer = styled.div`

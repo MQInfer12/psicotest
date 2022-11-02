@@ -13,42 +13,6 @@ import {
 } from "../styles/loaders";
 import decipherId from "../utilities/decipher";
 
-const TestViewContainer = styled.div`
-  min-height: 100%;
-  border-radius: 10px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Paragraph = styled.p`
-  max-width: 500px;
-  font-size: 20px;
-  font-weight: 300;
-  line-height: 175%;
-  padding: 0 20px;
-`;
-
-const TestTextContainer = styled.div`
-  width: 100%;
-  text-align: justify;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  padding-bottom: 50px;
-`;
-
-const TestTitle = styled.h2`
-  height: 30px;
-  gap: 4px;
-  display: flex;
-  align-items: center;
-  font-size: 20px;
-  font-weight: 600;
-  color: #660be1;
-`;
-
 const TestView = () => {
   const { idTest: idTestCode } = useParams();
   const { idRespuesta: idRespCode } = useParams();
@@ -127,3 +91,39 @@ const TestView = () => {
 };
 
 export default TestView;
+
+const TestViewContainer = styled.div`
+  min-height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Paragraph = styled.p`
+  max-width: 500px;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 175%;
+  padding: 0 20px;
+`;
+
+const TestTextContainer = styled.div`
+  width: 100%;
+  text-align: justify;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 50px;
+`;
+
+const TestTitle = styled.h2`
+  height: 30px;
+  gap: 4px;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 600;
+  color: #660be1;
+`;

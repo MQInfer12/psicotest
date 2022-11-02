@@ -5,8 +5,10 @@ import { UserContext } from "../context/userContext";
 import SideBar from "../components/dashboard/sideBar";
 import CenterScreen from "../components/dashboard/centerScreen";
 import RightBar from "../components/dashboard/rightBar";
+import { useWindowHeight } from "../hooks/useWindowHeight";
 
 const Dashboard = () => {
+  const windowHeight = useWindowHeight();
   const {user, setUser} = useContext(UserContext);
 
   const [titlePage, setTitlePage] = useState("");
@@ -19,7 +21,7 @@ const Dashboard = () => {
   }, []);
 
   return(
-    <DashboardContainer>
+    <DashboardContainer height={windowHeight}>
       <SideBar 
         rol={user?.id_rol}
         setUser={setUser}
@@ -49,7 +51,7 @@ const Dashboard = () => {
 export default Dashboard;
 
 const DashboardContainer = styled.div`
-  min-height: 100vh;
+  min-height: ${props => props.height};
   display: flex;
 
   @media (max-width: 1135px) {

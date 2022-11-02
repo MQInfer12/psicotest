@@ -1,10 +1,11 @@
 import React from 'react'
 import { useEffect } from 'react';
 import styled from 'styled-components';
+import { useWindowHeight } from '../hooks/useWindowHeight';
 import Secret from '../images/home.mp3';
 
 const DivEntero = styled.div`
-  height: 100%;
+  height: ${props => props.height};
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -16,13 +17,15 @@ const DivEntero = styled.div`
 `;
 
 const Home = () => {
+  const windowHeight = useWindowHeight(true, true);
+
   useEffect(() => {
     const sound = new Audio(Secret);
     setTimeout(() => sound.play(), 200);
   }, []);
 
   return (
-    <DivEntero>
+    <DivEntero height={windowHeight}>
       <p>¡Es peligroso ir solo, toma esto!</p>
       <i className="fa-solid fa-mug-hot"></i>
       <p>Mauricio Molina</p>

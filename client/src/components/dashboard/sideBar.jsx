@@ -4,8 +4,10 @@ import Logo from "../../images/logopsico.png";
 import { NavLink } from "react-router-dom";
 import LogoutButton from "./logoutButton";
 import { device } from "../../styles/devices";
+import { useWindowHeight } from "../../hooks/useWindowHeight";
 
 const SideBar = ({ rol, setUser, openNav, setOpenNav }) => {
+  const windowHeight = useWindowHeight();
 
   const linksData = [
     /*{
@@ -67,7 +69,7 @@ const SideBar = ({ rol, setUser, openNav, setOpenNav }) => {
   ]
 
   return (
-    <SideBarContainer openNav={openNav}>
+    <SideBarContainer height={windowHeight} openNav={openNav}>
       <SideBarLogo src={Logo} />
       <SideBarList>
         {

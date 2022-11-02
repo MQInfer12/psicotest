@@ -3,10 +3,13 @@ import styled from "styled-components";
 import ProfilePic from "../globals/profilePic";
 import CalendarMini from "../calendar/calendarMini";
 import { device } from "../../styles/devices";
+import { useWindowHeight } from "../../hooks/useWindowHeight";
 
 const RightBar = ({ user, calendar }) => {
+  const windowHeight = useWindowHeight();
+
   return (
-    <RightContainer calendar={calendar}>
+    <RightContainer height={windowHeight} calendar={calendar}>
       <UpbarSquares>
         <UpbarName>{user?.nombre}{user?.id}</UpbarName>
         <UpbarNot></UpbarNot>
@@ -30,7 +33,7 @@ export default RightBar;
 const RightContainer = styled.aside`
   background-color: ${props => props.calendar? "#FFFFFF" : "transparent"};
   position: ${props => props.calendar? "fixed" : "absolute"};
-  height: ${props => props.calendar && "100vh"};
+  height: ${props => props.calendar && props.height};
   right: 0;
   width: 433px;
   display: flex;

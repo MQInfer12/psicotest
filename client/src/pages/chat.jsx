@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ChatCom from "../components/chat/chatCom";
 import Sidebar from "../components/chat/sidebar";
+import { useWindowHeight } from "../hooks/useWindowHeight";
 
 const Home = styled.div`
-  height: calc(100vh - 197px);
+  height: ${props => props.height};
   z-index: 3;
   border: 1px solid white;
   border-radius: 10px;
@@ -17,10 +18,11 @@ const Home = styled.div`
 `;
 
 const Chat = () => {
+  const windowHeight = useWindowHeight(true, true);
   const [showSide, setShowSide] = useState(true);
 
   return (
-    <Home>
+    <Home height={windowHeight}>
       <Sidebar showSide={showSide} handleClick={() => setShowSide(false)} />
       <ChatCom showSide={showSide} handleClick={() => setShowSide(!showSide)} />
     </Home>

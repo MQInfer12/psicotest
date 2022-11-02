@@ -10,8 +10,10 @@ import { getAllApoinments, getAppointByUser } from "../../services/cita";
 import ModalAsignarCita from "./modalAsignarCita";
 import ModalCancelarCita from "./modalCancelarCita";
 import ModalAceptarCita from "./modalAceptarCita";
+import { useWindowHeight } from "../../hooks/useWindowHeight";
 
 const CalendarBig = () => {
+  const windowHeight = useWindowHeight(true, true);
   const { user } = useContext(UserContext);
 
   const [showForm, setShowForm] = useState(false);
@@ -154,7 +156,7 @@ const CalendarBig = () => {
   }, []);
 
   return (
-    <DivCalendarBig>
+    <DivCalendarBig height={windowHeight}>
       {
         showForm &&
         <Modal titulo="Añadir horario" cerrar={() => setShowForm(false)} >
@@ -394,7 +396,7 @@ const CalendarBig = () => {
 export default CalendarBig;
 
 const DivCalendarBig = styled.div`
-  height: calc(100vh - 197px);
+  height: ${props => props.height};
   display: flex;
   flex-direction: column;
   gap: 20px;

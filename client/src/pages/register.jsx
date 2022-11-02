@@ -13,11 +13,10 @@ import { db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import ImagenLogin from "../images/imglogin.jpg";
 import Navbar from "../components/landing/navbar";
-import { useWindowHeight } from "../hooks/useOutletHeight";
+import { useWindowHeight } from "../hooks/useWindowHeight";
 
 const Register = () => {
   const windowHeight = useWindowHeight();
-  console.log(windowHeight);
   const { goTo, userEmail } = useParams();
   const [showModal, setShowModal] = useState(false);
   const [login, setLogin] = useState({});
