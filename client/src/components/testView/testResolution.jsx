@@ -16,8 +16,8 @@ const TestResolution = ({
   activateSend,
   setActivateSend,
   infoSend,
+  idRespuesta
 }) => {
-  const { idRespuesta } = useParams();
   const [showAlert, setShowAlert] = useState(false);
   const [secciones, setSecciones] = useState([]);
   const [preguntasTotales, setPreguntasTotales] = useState(0);
@@ -27,6 +27,7 @@ const TestResolution = ({
   let cont = 0;
 
   const handleSubmit = async () => {
+    console.log(idRespuesta);
     const form = {
       puntuaciones: resultados,
     };

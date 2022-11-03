@@ -16,22 +16,23 @@ import decipherId from "../utilities/decipher";
 const TestView = () => {
   const { idTest: idTestCode } = useParams();
   const { idRespuesta: idRespCode } = useParams();
-  let idTest;
-  let idRespuesta;
+
+  const [idTest, setIdTest] = useState(undefined);
+  const [idRespuesta, setIdRespuesta] = useState(undefined);
 
   const [loading, setLoading] = useState(true);
   const [test, setTest] = useState([]);
   const [activateSend, setActivateSend] = useState(false);
 
-  const llenarTest = async () => {
-    const res = await getTest(idTest);
+  const llenarTest = async (id) => {
+    const res = await getTest(id);
     const resJson = await res?.json();
     setTest(resJson[0]);
     setLoading(false);
   };
 
-  const getTestId = async () => {
-    const res = await getIdTest(idRespuesta);
+  const getTestId = async (id) => {
+    const res = await getIdTest(id);
     const resJson = await res?.json();
     if (resJson.estado != 0) {
       setActivateSend(false);
@@ -46,13 +47,13 @@ const TestView = () => {
     window.scroll(0, 0);
 
     if (idTestCode) {
-      idTest = Number(decipherId(idTestCode));
-      llenarTest();
+      setIdTest(Number(decipherId(idTestCode)));
+      llenarTest(Number(decipherId(idTestCode)));
     }
     if (idRespCode) {
-      idRespuesta = Number(decipherId(idRespCode));
+      setIdRespuesta(Number(decipherId(idRespCode)));
+      getTestId(Number(decipherId(idRespCode)));
       setActivateSend(true);
-      getTestId();
     }
   }, []);
 
@@ -81,6 +82,7 @@ const TestView = () => {
         nombreTest={test.nombre}
         activateSend={activateSend}
         setActivateSend={setActivateSend}
+        idRespuesta={idRespuesta}
         infoSend={
           idTest
             ? "Solo los beneficiarios pueden enviar respuestas."
