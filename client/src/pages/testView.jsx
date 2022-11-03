@@ -21,7 +21,7 @@ const TestView = () => {
 
   const [loading, setLoading] = useState(true);
   const [test, setTest] = useState([]);
-  const [activateSend, setActivateSend] = useState(idRespuesta ? true : false);
+  const [activateSend, setActivateSend] = useState(false);
 
   const llenarTest = async () => {
     const res = await getTest(idTest);
@@ -51,6 +51,7 @@ const TestView = () => {
     }
     if (idRespCode) {
       idRespuesta = Number(decipherId(idRespCode));
+      setActivateSend(true);
       getTestId();
     }
   }, []);

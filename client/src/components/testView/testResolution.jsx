@@ -18,8 +18,6 @@ const TestResolution = ({
   infoSend,
 }) => {
   const { idRespuesta } = useParams();
-
-  
   const [showAlert, setShowAlert] = useState(false);
   const [secciones, setSecciones] = useState([]);
   const [preguntasTotales, setPreguntasTotales] = useState(0);
