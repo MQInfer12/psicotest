@@ -14,7 +14,7 @@ const RadioButton = ({ setResultados, pregunta, reactivo }) => {
   
   return (
     <ReactivoContainer onClick={(e) => handleChange(e.target.children[0].children[0])}>
-      <CheckContainer class="cbx">
+      <CheckContainer className="cbx">
         <Checkbox 
           type="radio"
           name={pregunta.id} 
@@ -28,7 +28,7 @@ const RadioButton = ({ setResultados, pregunta, reactivo }) => {
           }
         />
         <label></label>
-        <svg width="15" height="14" viewbox="0 0 15 14" fill="none">
+        <svg width="15" height="14" viewBox="0 0 15 14" fill="none">
           <path d="M2 8.36364L6.23077 12L13 2"></path>
         </svg>
       </CheckContainer>

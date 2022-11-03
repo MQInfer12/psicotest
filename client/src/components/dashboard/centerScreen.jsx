@@ -43,7 +43,7 @@ const CenterContainer = styled.div`
 
 const UpbarContainer = styled.div`
   display: flex;
-  padding: 47px 40px 31px 40px;
+  padding: 0px 40px;
   gap: 20px;
   height: 157px;
   background-color: #F4F4F4;
@@ -84,11 +84,12 @@ const UpbarText = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  //height: 100%;
+  gap: 18px;
 `;
 
 const ActualPage = styled.span`
-  margin-top: 7px;
+  //margin-top: 7px;
   font-weight: 300;
   font-size: 16px;
   color: #ADA7A7;
