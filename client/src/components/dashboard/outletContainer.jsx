@@ -47,6 +47,10 @@ const OutletContainerStyled = styled.div`
     min-height: ${props => props.height};
     overflow: visible;
     margin-top: 157px;
+    
+    @media (max-height: 750px) {
+      margin-top: 110px;
+    }
   }
 
   @media ${device.tablet} {

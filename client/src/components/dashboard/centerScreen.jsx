@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Outlet, Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { device } from "../../styles/devices";
 import OutletContainer from "./outletContainer";
 
@@ -49,6 +49,10 @@ const UpbarContainer = styled.div`
   background-color: #F4F4F4;
   align-items: center;
 
+  @media (max-height: 750px) {
+    height: 110px;
+  }
+
   @media (max-width: 1135px) {
     z-index: 4;
     width: 100%;
@@ -85,7 +89,7 @@ const UpbarText = styled.div`
   flex-direction: column;
   justify-content: space-between;
   //height: 100%;
-  gap: 18px;
+  gap: 11px;
 `;
 
 const ActualPage = styled.span`

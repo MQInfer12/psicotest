@@ -5,7 +5,11 @@ export const useWindowHeight = (upbar = false, paddingbot = false) => {
   const getWH = () => {
     let wh = window.innerHeight;
     if(upbar) {
-      wh -= 157;
+      if(wh > 750) {
+        wh -= 157;
+      } else {
+        wh -= 110;
+      }
     }
     if(paddingbot) {
       wh -= 40;

@@ -11,7 +11,7 @@ const RightBar = ({ user, calendar }) => {
   return (
     <RightContainer height={windowHeight} calendar={calendar}>
       <UpbarSquares>
-        <UpbarName>{user?.nombre}{user?.id}</UpbarName>
+        <UpbarName>{user?.nombre}{/* {user?.id} */}</UpbarName>
         <UpbarNot></UpbarNot>
         <ProfilePic 
           width="52px"
@@ -60,6 +60,11 @@ const UpbarSquares = styled.div`
   gap: 30px;
   justify-content: end;
 
+  
+  @media (max-height: 750px) {
+    height: 110px;
+  }
+
   @media (max-width: 1135px) {
     z-index: 4;
     position: fixed;
@@ -73,6 +78,7 @@ const UpbarSquares = styled.div`
 `;
 
 const UpbarName = styled.p`
+  max-width: 200px;
   text-align: center;
   font-weight: 300;
   font-size: 16px;
@@ -81,7 +87,7 @@ const UpbarName = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
 
-  @media (max-width: 520px) {
+  @media (max-width: 1000px) {
     display: none;
   }
 `;
