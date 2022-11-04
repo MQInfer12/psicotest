@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const PageSlider = ({ indexPregunta, setIndexPregunta, preguntasTotales, activateSend, setShowAlert }) => {
+const PageSlider = ({ indexPregunta, setIndexPregunta, preguntasTotales, activateSend, infoSend, setShowAlert }) => {
   return (
     <SliderContainer>
       <ButtonTransparent

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { getFullTest } from "../../services/test";
-import { useParams } from "react-router-dom";
 import { updateRespuesta } from "../../services/respuesta";
 import Modal from "../globals/modal";
 import ConfirmModal from "../globals/confirmModal";
@@ -10,15 +9,21 @@ import { BlackTextLoader } from "../../styles/loaders";
 import RadioButton from "./radioButton";
 import PageSlider from "./pageSlider";
 
+import { useContext } from 'react';
+import { ThanksContext } from '../../context/thanksContext';
+import { useNavigate } from "react-router-dom";
+
 const TestResolution = ({
   loading,
   idTest,
   nombreTest,
   activateSend,
-  setActivateSend,
   infoSend,
   idRespuesta
 }) => {
+  const navigate = useNavigate();
+  const { setActivateThanks } = useContext(ThanksContext);
+
   const [showAlert, setShowAlert] = useState(false);
   const [secciones, setSecciones] = useState([]);
   const [preguntasTotales, setPreguntasTotales] = useState(0);
@@ -28,14 +33,14 @@ const TestResolution = ({
   let cont = 0;
 
   const handleSubmit = async () => {
-    console.log(idRespuesta);
     const form = {
       puntuaciones: resultados,
     };
     const res = await updateRespuesta(form, idRespuesta);
     const resJson = await res?.json();
     if (resJson.mensaje == "se guardo correctamente") {
-      setActivateSend(false);
+      setActivateThanks(true);
+      navigate('/dashboard/tests/thanks');
     }
   };
 
@@ -75,7 +80,13 @@ const TestResolution = ({
       ) : (
         <ResolutionTitle>{nombreTest}</ResolutionTitle>
       )}
-      <StartText>Comienza tu test</StartText>
+      {
+        activateSend ? (
+          <StartText>Comienza tu test</StartText>
+        ) : (
+          <StartTextPurple>¡{infoSend}!</StartTextPurple>
+        )
+      }
 
       <TestContainer>
         <PreguntasContainer>
@@ -111,6 +122,7 @@ const TestResolution = ({
           setIndexPregunta={setIndexPregunta}
           preguntasTotales={preguntasTotales}
           activateSend={activateSend}
+          infoSend={infoSend}
           setShowAlert={setShowAlert}
         />
       </TestContainer>
@@ -151,6 +163,12 @@ const ResolutionTitle = styled.h1`
 const StartText = styled.h4`
   font-size: 20px;
   font-weight: 400;
+`;
+
+const StartTextPurple = styled.h4`
+  font-size: 20px;
+  font-weight: 400;
+  color: #6209db;
 `;
 
 const TestContainer = styled.div`

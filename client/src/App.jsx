@@ -23,6 +23,8 @@ import None from "./pages/none";
 import Landing from "./pages/landing";
 import Developers from "./pages/developers";
 import TestShare from "./pages/testShare";
+import Thanks from "./pages/thanks";
+import ProtectedThanks from "./wrappers/protectedThanks";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -171,6 +173,24 @@ function App() {
                     <TestView />
                   </OutletContext>
                 </ProtectedRole>
+              }
+            />
+            <Route
+              path="tests/thanks"
+              element={
+                <ProtectedThanks>
+                  <OutletContext
+                    titlePage="Resuelto"
+                    calendar={false}
+                    links={
+                      <>
+                        <StyledLink to="/dashboard/tests">Tests</StyledLink>/
+                      </>
+                    }
+                  >
+                    <Thanks />
+                  </OutletContext>
+                </ProtectedThanks>
               }
             />
             {/* <Route
