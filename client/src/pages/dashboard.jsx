@@ -43,6 +43,8 @@ const Dashboard = () => {
       <RightBar 
         user={user}
         calendar={calendar}
+        openNav={openNav}
+        setOpenNav={setOpenNav}
       />
     </DashboardContainer>
   );

@@ -9,6 +9,11 @@ import { useWindowHeight } from "../../hooks/useWindowHeight";
 const SideBar = ({ rol, setUser, openNav, setOpenNav }) => {
   const windowHeight = useWindowHeight();
 
+  const handleChangePage = () => {
+    window.scroll(0, 0);
+    openNav && setOpenNav(false);
+  }
+
   const linksData = [
     /*{
       roles: [1, 2, 3], 
@@ -78,7 +83,7 @@ const SideBar = ({ rol, setUser, openNav, setOpenNav }) => {
             <li key={i}>
               <SideBarLink
                 to={v.goTo}
-                onClick={() => openNav && setOpenNav(false)}
+                onClick={handleChangePage}
               >
                 <SideBarIcon className={v.icon}></SideBarIcon>
                 <SideBarOptionText>{v.title}</SideBarOptionText>

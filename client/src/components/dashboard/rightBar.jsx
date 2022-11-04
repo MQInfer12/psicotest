@@ -4,21 +4,28 @@ import ProfilePic from "../globals/profilePic";
 import CalendarMini from "../calendar/calendarMini";
 import { device } from "../../styles/devices";
 import { useWindowHeight } from "../../hooks/useWindowHeight";
+import { useNavigate } from "react-router-dom";
 
-const RightBar = ({ user, calendar }) => {
+const RightBar = ({ user, calendar, openNav, setOpenNav }) => {
+  const navigate = useNavigate();
   const windowHeight = useWindowHeight();
 
   return (
-    <RightContainer height={windowHeight} calendar={calendar}>
+    <RightContainer onClick={() => openNav && setOpenNav(!openNav)} height={windowHeight} calendar={calendar}>
       <UpbarSquares>
         <UpbarName>{user?.nombre}{/* {user?.id} */}</UpbarName>
         <UpbarNot></UpbarNot>
-        <ProfilePic 
-          width="52px"
-          height="52px"
-          id={user?.id}
-          perfil={user?.perfil}
-        />
+        <PhotoContainer onClick={() => {navigate('/dashboard/profile'); window.scroll(0, 0);}}>
+          <ProfilePic 
+            width="52px"
+            height="52px"
+            id={user?.id}
+            perfil={user?.perfil}
+          />
+          <ProfilePencil className="pencil">
+            <i className="fa-solid fa-square-pen"></i>
+          </ProfilePencil>
+        </PhotoContainer>
       </UpbarSquares>
       {
         calendar &&
@@ -97,4 +104,31 @@ const UpbarNot = styled.div`
   height: 52px;
   border-radius: 10px;
   background-color: #D9D9D9;
+`;
+
+const PhotoContainer = styled.div`
+  position: relative;
+
+  &:hover {
+    .pencil {
+      opacity: 1;
+    }
+  }
+`;
+
+const ProfilePencil = styled.div`
+  opacity: 0;
+  background-color: rgb(0, 0, 0, 0.4);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 10px;
+  transition: all 0.3s;
+  display: grid;
+  place-content: center;
+  font-size: 32px;
+  color: #FFFFFF;
+  cursor: pointer;
 `;
