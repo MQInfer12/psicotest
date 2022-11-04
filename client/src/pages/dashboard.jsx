@@ -55,6 +55,7 @@ export default Dashboard;
 const DashboardContainer = styled.div`
   min-height: ${props => props.height};
   display: flex;
+  overflow: hidden;
 
   @media (max-width: 1135px) {
     flex-direction: column;
