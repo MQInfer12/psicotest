@@ -226,7 +226,6 @@ const DivPrincipal = styled.div`
 
   @media ${device.tablet} {
     flex-direction: column;
-    height: max-content;
   }
 `;
 

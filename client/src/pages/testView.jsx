@@ -12,10 +12,12 @@ import {
   TextLoaderContainer,
 } from "../styles/loaders";
 import decipherId from "../utilities/decipher";
+import { useOutletContext } from "react-router-dom";
 
 const TestView = () => {
   const { idTest: idTestCode } = useParams();
   const { idRespuesta: idRespCode } = useParams();
+  const { handleScrollTop } = useOutletContext();
 
   const [idTest, setIdTest] = useState(undefined);
   const [idRespuesta, setIdRespuesta] = useState(undefined);
@@ -45,6 +47,7 @@ const TestView = () => {
 
   useEffect(() => {
     window.scroll(0, 0);
+    handleScrollTop();
 
     if (idTestCode) {
       setIdTest(Number(decipherId(idTestCode)));
@@ -81,7 +84,6 @@ const TestView = () => {
         idTest={test.id}
         nombreTest={test.nombre}
         activateSend={activateSend}
-        setActivateSend={setActivateSend}
         idRespuesta={idRespuesta}
         infoSend={
           idTest

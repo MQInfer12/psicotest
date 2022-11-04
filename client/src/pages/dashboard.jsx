@@ -43,6 +43,8 @@ const Dashboard = () => {
       <RightBar 
         user={user}
         calendar={calendar}
+        openNav={openNav}
+        setOpenNav={setOpenNav}
       />
     </DashboardContainer>
   );
@@ -53,6 +55,7 @@ export default Dashboard;
 const DashboardContainer = styled.div`
   min-height: ${props => props.height};
   display: flex;
+  overflow: hidden;
 
   @media (max-width: 1135px) {
     flex-direction: column;

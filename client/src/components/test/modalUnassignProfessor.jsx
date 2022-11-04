@@ -7,7 +7,7 @@ import ProfilePic from "../globals/profilePic";
 
 const DivModal = styled.div`
   background-color: #F4F4F4;
-  width: 400px;
+  max-width: 400px;
   height: 150px;
   max-height: 250px;
   padding: 10px;

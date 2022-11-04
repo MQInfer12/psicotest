@@ -18,7 +18,7 @@ const Answers = () => {
   const [loading, setLoading] = useState(true);
   const [respuestas, setRespuestas] = useState([]);
   const [tableRef, setTableRef] = useState(null);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const tableHeightRef = useRef(null);
   const [tableRows, setTableRows] = useState(0);
   const [rowHeight, setRowHeight] = useState("56px");
@@ -73,31 +73,35 @@ const Answers = () => {
     setSelect(e.target.value);
   };
 
-  const search = (v) => {
-    if (filter === "") return v;
-    if (select === "name") {
-      if (v.nombre_user.toLocaleLowerCase().includes(filter.toLowerCase())) {
-        return v;
-      }
-    }
-    if (select === "test") {
-      if (v.nombre_test.toLocaleLowerCase().includes(filter.toLowerCase())) {
-        return v;
-      }
-    }
-    if (select === "professor") {
-      if (v.nombre_docente.toLocaleLowerCase().includes(filter.toLowerCase())) {
-        return v;
-      }
-    }
-    if (select === "state") {
-      if (v.case) {
-        if (v.case.toLocaleLowerCase().includes(filter.toLowerCase())) {
-          return v;
+  const searchRespuestas = () => {
+    const newRespuestas = [];
+    respuestas.forEach(respuesta => {
+      if(filter === "") return newRespuestas.push(respuesta);
+      if (select === "name") {
+        if (respuesta.nombre_user.toLocaleLowerCase().includes(filter.toLowerCase())) {
+          return newRespuestas.push(respuesta);
         }
       }
-    }
-  };
+      if (select === "test") {
+        if (respuesta.nombre_test.toLocaleLowerCase().includes(filter.toLowerCase())) {
+          return newRespuestas.push(respuesta);
+        }
+      }
+      if (select === "professor") {
+        if (respuesta.nombre_docente.toLocaleLowerCase().includes(filter.toLowerCase())) {
+          return newRespuestas.push(respuesta);
+        }
+      }
+      if (select === "state") {
+        if (respuesta.case) {
+          if (respuesta.case.toLocaleLowerCase().includes(filter.toLowerCase())) {
+            return newRespuestas.push(respuesta);
+          }
+        }
+      }
+    });
+    return newRespuestas;
+  }
 
   const handleClick = (id) => {
     let stringInd = id.toString();
@@ -122,10 +126,7 @@ const Answers = () => {
           <i className="fa-regular fa-file-excel"></i>
         </WhiteIconButton>
         <AnswersReports
-          respuestas={respuestas.filter((v) => {
-            const res = search(v);
-            return res;
-          })}
+          respuestas={searchRespuestas()}
           setTableRef={setTableRef}
         />
       </ControlsContainer>
@@ -147,12 +148,9 @@ const Answers = () => {
                 </tr>
               </thead>
               <tbody>
-                {respuestas
+                {searchRespuestas()
                   .filter((v, i) => i >= (page - 1) * tableRows && i < page * tableRows)
-                  .filter((v) => {
-                    const res = search(v);
-                    return res;
-                  })
+                  /*.filter((v) => search(v))*/
                   .map((v, i) => (
                     <ResponsiveTr rowHeight={rowHeight} key={i}>
                       <ThNumber>{(page - 1) * tableRows + (i + 1)}</ThNumber>
@@ -209,7 +207,7 @@ const Answers = () => {
       </TableContainer>
 
       <Pagination
-        cant={respuestas.length}
+        cant={searchRespuestas().length}
         rows={tableRows}
         page={page}
         setPage={setPage}

@@ -9,10 +9,18 @@ const Pagination = ({ cant, rows, page, setPage }) => {
   const [pages, setPages] = useState(0);
 
   useEffect(() => {
+    //RECALCULAR PAGINA
+    const newPages = Math.ceil(cant / rows);
+    setPages(newPages);
+    if(page > newPages) setPage(newPages);
+    if(page < 1 && cant != 0) setPage(1);
+  }, [cant, rows]);
+
+  useEffect(() => {
+    //RECALCULAR VARIABLES
     setFrom(((page - 1) * rows) + 1);
     setTo(page * rows);
-    setPages(Math.ceil(cant / rows));
-  }, [cant, rows, page]);
+  }, [page])
 
   return (
     <PaginationContainer>
