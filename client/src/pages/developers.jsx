@@ -10,6 +10,12 @@ const AllContainer = styled.div`
   display: flex;
   justify-content: center;
   overflow: hidden;
+
+  @media (max-width: 800px) {
+    padding-top: 90px;
+    min-height: auto;
+    height: max-content;
+  }
 `;
 
 const ContainerPage = styled.div`
@@ -18,6 +24,11 @@ const ContainerPage = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 800px) {
+    min-width: 100%;
+    display: block;
+  }
 `;
 
 const Column = styled.div`
@@ -28,6 +39,7 @@ const Column = styled.div`
   background-color: #f5f5f5;
   display: grid;
   place-content: center;
+  padding: 40px;
 
   &:hover {
     width: calc(100% + 30px);
@@ -41,6 +53,18 @@ const Column = styled.div`
   & > div {
     transform: skewX(5deg);
   }
+
+  @media (max-width: 800px) {
+    transform: skewX(0);
+
+    & > div {
+      transform: skewX(0);
+    }
+
+    &:hover {
+      width: calc(100%);
+    }
+  }
 `;
 
 const DivInfo = styled.div`
@@ -52,6 +76,7 @@ const DivInfo = styled.div`
 `;
 
 const NombreDevs = styled.h2`
+  text-align: center;
   font-size: 40px;
   font-weight: 700;
   transition: all 0.5s;
