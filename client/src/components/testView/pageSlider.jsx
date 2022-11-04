@@ -1,22 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const PageSlider = ({ indexPregunta, setIndexPregunta, preguntasTotales, activateSend, infoSend, setShowAlert }) => {
+const PageSlider = ({ resultados, indexPregunta, setIndexPregunta, preguntasTotales, activateSend, infoSend, setShowAlert }) => {
   return (
     <SliderContainer>
       <ButtonTransparent
-        onClick={() => {
-          if (indexPregunta != 0) {
-            setIndexPregunta(indexPregunta - 1);
-          }
-        }}
+        onClick={() => indexPregunta != 0 && setIndexPregunta(indexPregunta - 1)}
+        disabled={indexPregunta === 0}
       >
         <IconButton className="fa-solid fa-arrow-left"></IconButton>
         <PButton>Pregunta anterior</PButton>
       </ButtonTransparent>
-      {indexPregunta == preguntasTotales - 1 ? (
+      {indexPregunta === preguntasTotales - 1 ? (
         activateSend ? (
-          <ButtonTransparent onClick={() => setShowAlert(true)}>
+          <ButtonTransparent 
+            onClick={() => setShowAlert(true)}
+            disabled={!Object.keys(resultados).includes(String(indexPregunta + 1))}
+          >
             <PButton>Enviar Test</PButton>
             <IconButton className="fa-solid fa-share-from-square"></IconButton>
           </ButtonTransparent>
@@ -26,6 +26,7 @@ const PageSlider = ({ indexPregunta, setIndexPregunta, preguntasTotales, activat
       ) : (
         <ButtonTransparent
           onClick={() => setIndexPregunta(indexPregunta + 1)}
+          disabled={!Object.keys(resultados).includes(String(indexPregunta + 1)) && activateSend}
         >
           <PButton>Pregunta siguiente</PButton>
           <IconButton className="fa-solid fa-arrow-right"></IconButton>
@@ -57,8 +58,8 @@ const SliderContainer = styled.div`
   }
 `;
 
-const ButtonTransparent = styled.div`
-  background-color: transparent;
+const ButtonTransparent = styled.button`
+  background-color: #6209db;
   border: 1px solid #d9d9d9;
   border-radius: 10px;
   display: flex;
@@ -72,6 +73,11 @@ const ButtonTransparent = styled.div`
   
   &:hover {
     background-color: #5a08cc;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
   }
 `;
 

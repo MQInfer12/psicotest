@@ -105,6 +105,7 @@ const TestResolution = ({
                     {seccion.reactivos.map((reactivo, k) => (
                       <RadioButton 
                         key={k} 
+                        indexPregunta={indexPregunta}
                         setResultados={setResultados}
                         pregunta={pregunta}
                         reactivo={reactivo}
@@ -118,6 +119,7 @@ const TestResolution = ({
         </PreguntasContainer>
 
         <PageSlider
+          resultados={resultados}
           indexPregunta={indexPregunta}
           setIndexPregunta={setIndexPregunta}
           preguntasTotales={preguntasTotales}

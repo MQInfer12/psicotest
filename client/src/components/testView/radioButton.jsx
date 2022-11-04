@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const RadioButton = ({ setResultados, pregunta, reactivo }) => {
+const RadioButton = ({ indexPregunta, setResultados, pregunta, reactivo }) => {
   const handleChange = (target) => {
     const { name, value } = target;
 
     setResultados(res => ({
       ...res,
-      [name]: value,
+      [indexPregunta + 1]: value,
     }));
     target.checked = true;
   };
