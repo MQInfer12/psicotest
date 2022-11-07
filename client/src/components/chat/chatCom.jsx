@@ -8,8 +8,8 @@ import Input from "./input";
 import { ChatContext } from "../../context/chatContext";
 
 const Container = styled.div`
-  width: ${props => props.showSide ? "calc(100% - 350px)" : "100%"};
-   
+  width: ${(props) => (props.showSide ? "calc(100% - 350px)" : "100%")};
+
   .chatInfo {
     background-color: #5d5b8d;
     display: flex;
@@ -17,6 +17,7 @@ const Container = styled.div`
     justify-content: space-between;
     padding: 10px;
     color: lightgray;
+    height: 45px;
   }
 
   .chatIcons {
@@ -35,15 +36,17 @@ const Container = styled.div`
   }
 `;
 
-const ChatCom = ({ showSide, handleClick }) => {
+const ChatCom = ({ showSide, handleClick, isInTestView }) => {
   const { data } = useContext(ChatContext);
   return (
     <Container showSide={showSide}>
       <div className="chatInfo">
         <span>{data.user.email}</span>
-        <div className="chatIcons">
-          <img src={More} onClick={handleClick} alt="" />
-        </div>
+        {!isInTestView && (
+          <div className="chatIcons">
+            <img src={More} onClick={handleClick} alt="" />
+          </div>
+        )}
       </div>
       <Messages />
       <Input />

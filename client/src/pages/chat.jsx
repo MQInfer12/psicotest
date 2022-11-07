@@ -6,7 +6,7 @@ import Sidebar from "../components/chat/sidebar";
 import { useWindowHeight } from "../hooks/useWindowHeight";
 
 const Home = styled.div`
-  height: ${props => props.height};
+  height: ${(props) => props.height};
   z-index: 3;
   border: 1px solid white;
   border-radius: 10px;
@@ -18,15 +18,23 @@ const Home = styled.div`
   }
 `;
 
-const Chat = () => {
+const Chat = ({ isInTestView = false, email_docente }) => {
   const { email } = useParams();
   const windowHeight = useWindowHeight(true, true);
-  const [showSide, setShowSide] = useState(true);
+  const [showSide, setShowSide] = useState(isInTestView ? false : true);
 
   return (
-    <Home height={windowHeight}>
-      <Sidebar email={email} showSide={showSide} handleClick={() => setShowSide(false)} />
-      <ChatCom showSide={showSide} handleClick={() => setShowSide(!showSide)} />
+    <Home height={isInTestView ? "500px" : windowHeight}>
+      <Sidebar
+        email={email_docente ? email_docente : email}
+        showSide={showSide}
+        handleClick={() => setShowSide(false)}
+      />
+      <ChatCom
+        isInTestView={isInTestView}
+        showSide={showSide}
+        handleClick={() => setShowSide(!showSide)}
+      />
     </Home>
   );
 };

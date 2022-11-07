@@ -13,7 +13,7 @@ import {
 } from "../styles/loaders";
 import decipherId from "../utilities/decipher";
 import { useOutletContext } from "react-router-dom";
-
+import TestChat from "../components/testView/testViewChat";
 const TestView = () => {
   const { idTest: idTestCode } = useParams();
   const { idRespuesta: idRespCode } = useParams();
@@ -21,7 +21,7 @@ const TestView = () => {
 
   const [idTest, setIdTest] = useState(undefined);
   const [idRespuesta, setIdRespuesta] = useState(undefined);
-
+  const [email_docente, setEmail_docente] = useState("");
   const [loading, setLoading] = useState(true);
   const [test, setTest] = useState([]);
   const [activateSend, setActivateSend] = useState(false);
@@ -36,6 +36,7 @@ const TestView = () => {
   const getTestId = async (id) => {
     const res = await getIdTest(id);
     const resJson = await res?.json();
+    setEmail_docente(resJson.email_docente);
     if (resJson.estado != 0) {
       setActivateSend(false);
     }
@@ -91,6 +92,7 @@ const TestView = () => {
             : "Ya enviaste este test."
         }
       />
+      <TestChat email_docente={email_docente} />
     </TestViewContainer>
   );
 };
