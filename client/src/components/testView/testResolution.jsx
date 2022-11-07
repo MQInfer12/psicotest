@@ -138,10 +138,10 @@ const TestResolutionContainer = styled.div`
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
-  padding: 0px 40px 65px;
+  padding: 0px 40px 40px;
 
   @media (max-width: 500px) {
-    padding: 0px 20px 65px;
+    padding: 0px 20px 40px;
   }
 `;
 

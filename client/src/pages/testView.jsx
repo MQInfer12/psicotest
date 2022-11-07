@@ -14,6 +14,7 @@ import {
 import decipherId from "../utilities/decipher";
 import { useOutletContext } from "react-router-dom";
 import TestChat from "../components/testView/testViewChat";
+
 const TestView = () => {
   const { idTest: idTestCode } = useParams();
   const { idRespuesta: idRespCode } = useParams();
@@ -92,7 +93,10 @@ const TestView = () => {
             : "Ya enviaste este test."
         }
       />
-      <TestChat email_docente={email_docente} />
+      {
+        email_docente &&
+        <TestChat email_docente={email_docente} />
+      }
     </TestViewContainer>
   );
 };

@@ -6,8 +6,10 @@ import { db } from "../../firebase";
 import { onSnapshot } from "firebase/firestore";
 import { doc } from "firebase/firestore";
 import Cargando from "../globals/cargando";
+import { useRef } from "react";
 
 const Messages = () => {
+  const MessageContainerRef = useRef(null);
   const [messagesEstate, setMessagesEstate] = useState([]);
   const { data } = useContext(ChatContext);
   const [loading, setLoading] = useState(false);
@@ -28,8 +30,12 @@ const Messages = () => {
     }
   }, [data.chatId]);
 
+  useEffect(() => {
+    MessageContainerRef.current.scrollTo(0, MessageContainerRef.current.scrollHeight);
+  }, [messagesEstate]);
+
   return (
-    <Container>
+    <Container ref={MessageContainerRef}>
       {
         loading ? (
           <CargandoContainer>
@@ -56,6 +62,6 @@ const CargandoContainer = styled.div`
 const Container = styled.div`
   background-color: #ddddf7;
   padding: 10px;
-  height: calc(100% - 100px);
+  height: calc(100% - 95px);
   overflow-y: scroll;
 `;

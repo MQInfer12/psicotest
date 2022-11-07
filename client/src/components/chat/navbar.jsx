@@ -2,7 +2,6 @@ import React from "react";
 import { useContext } from "react";
 import styled from "styled-components";
 import { UserContext } from "../../context/userContext";
-import { UserFirebaseContext } from "../../context/userFirebaseContext";
 import ProfilePic from "../globals/profilePic";
 
 const Container = styled.div`
@@ -47,7 +46,6 @@ const Container = styled.div`
 `;
 
 const Navbar = ({ handleChange }) => {
-  const { currentUser } = useContext(UserFirebaseContext);
   const { user } = useContext(UserContext);
 
   return (
@@ -63,7 +61,7 @@ const Navbar = ({ handleChange }) => {
        {/*  <span className="username">{user.nombre}</span> */}
         <select onChange={(e) => handleChange(e.target.value)}>
           <option value={1}>Chatear</option>
-          <option value={2}>Contactos</option>
+          {/* <option value={2}>Contactos</option> */}
         </select>
       </div>
     </Container>

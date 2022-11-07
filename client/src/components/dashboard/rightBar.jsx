@@ -67,7 +67,7 @@ const UpbarSquares = styled.div`
   align-items: center;
   gap: 30px;
   justify-content: end;
-
+  z-index: 4;
   
   @media (max-height: 750px) {
     height: 110px;

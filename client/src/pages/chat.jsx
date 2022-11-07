@@ -5,26 +5,13 @@ import ChatCom from "../components/chat/chatCom";
 import Sidebar from "../components/chat/sidebar";
 import { useWindowHeight } from "../hooks/useWindowHeight";
 
-const Home = styled.div`
-  height: ${(props) => props.height};
-  z-index: 3;
-  border: 1px solid white;
-  border-radius: 10px;
-  display: flex;
-  overflow: hidden;
-  position: relative;
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-
 const Chat = ({ isInTestView = false, email_docente }) => {
   const { email } = useParams();
   const windowHeight = useWindowHeight(true, true);
   const [showSide, setShowSide] = useState(isInTestView ? false : true);
 
   return (
-    <Home height={isInTestView ? "500px" : windowHeight}>
+    <Home isInTestView={isInTestView} height={isInTestView ? "400px" : windowHeight}>
       <Sidebar
         email={email_docente ? email_docente : email}
         showSide={showSide}
@@ -40,3 +27,18 @@ const Chat = ({ isInTestView = false, email_docente }) => {
 };
 
 export default Chat;
+
+const Home = styled.div`
+  width: ${props => props.isInTestView && "80%"};
+  box-shadow: ${props => props.isInTestView && "4px 1px 16px -7px rgba(0,0,0,0.6)"};
+  height: ${(props) => props.height};
+  z-index: 3;
+  border-radius: 10px;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+
+  @media (max-width: 950px) {
+    width: ${props => props.isInTestView && "100%"};
+  }
+`;

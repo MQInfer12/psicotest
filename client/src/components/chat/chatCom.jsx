@@ -7,6 +7,26 @@ import Messages from "./messages";
 import Input from "./input";
 import { ChatContext } from "../../context/chatContext";
 
+const ChatCom = ({ showSide, handleClick, isInTestView }) => {
+  const { data } = useContext(ChatContext);
+  return (
+    <Container showSide={showSide}>
+      <div className="chatInfo">
+        <span>{data.user.email}</span>
+        {!isInTestView && (
+          <div className="chatIcons">
+            <img src={More} onClick={handleClick} alt="" />
+          </div>
+        )}
+      </div>
+      <Messages />
+      <Input />
+    </Container>
+  );
+};
+
+export default ChatCom;
+
 const Container = styled.div`
   width: ${(props) => (props.showSide ? "calc(100% - 350px)" : "100%")};
 
@@ -35,23 +55,3 @@ const Container = styled.div`
     width: 100%;
   }
 `;
-
-const ChatCom = ({ showSide, handleClick, isInTestView }) => {
-  const { data } = useContext(ChatContext);
-  return (
-    <Container showSide={showSide}>
-      <div className="chatInfo">
-        <span>{data.user.email}</span>
-        {!isInTestView && (
-          <div className="chatIcons">
-            <img src={More} onClick={handleClick} alt="" />
-          </div>
-        )}
-      </div>
-      <Messages />
-      <Input />
-    </Container>
-  );
-};
-
-export default ChatCom;

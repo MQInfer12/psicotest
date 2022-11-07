@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { useRef } from "react";
+//import { useRef } from "react";
 import styled from "styled-components";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
 import { ChatContext } from "../../context/chatContext";
@@ -58,12 +58,10 @@ const Message = ({ message }) => {
   const { data } = useContext(ChatContext);
   const otherUser = data.user;
 
-  const ref = useRef();
+  //const ref = useRef();
 
   useEffect(() => {
-    ref.current?.scrollIntoView({
-      behavior: "smooth",
-    });
+    /* ref.current?.scrollIntoView(); */
   }, [message]);
 
   const convertSecondosToDate = (seconds) => {
@@ -79,7 +77,7 @@ const Message = ({ message }) => {
 
   return (
     <Container
-      ref={ref}
+      //ref={ref}
       className={`${message.senderId === currentUser.uid && "owner"}`}
     >
       <div className="messageInfo">

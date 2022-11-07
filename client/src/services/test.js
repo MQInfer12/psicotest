@@ -200,6 +200,20 @@ export const deleteProfessorAssigned = async (vec, id) => {
   }
 };
 
+/* ======================= DOCENTETESTS ============= */
+
+export const getDocenteTest = async (id) => {
+  try {
+    const response = await fetch(`${http}test/ids/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 /* ======================= BENEFICIARY ============== */
 
 export const getBeneficiaryAssign = async (id) => {

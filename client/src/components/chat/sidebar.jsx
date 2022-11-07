@@ -36,7 +36,7 @@ const Sidebar = ({ showSide, handleClick, email }) => {
       <Navbar handleChange={handleChange} />
       {/*<Search />*/}
       {value == 1 && <Chats email={email} handleClick={handleClick} />}
-      {value == 2 && <FutureChats />}
+      {/* value == 2 && <FutureChats /> */}
       {/* <Chats /> */}
     </Container>
   );
