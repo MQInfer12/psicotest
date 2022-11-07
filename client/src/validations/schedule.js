@@ -8,7 +8,7 @@ export const initialForm = {
 export const validationsForm = (form) => {
   var regexDate = /^((0?[1-9]|1[012])[/.](0?[1-9]|[12][0-9]|3[01])[/.](19|20)?[0-9]{2})*$/;
 
-  var regexTime = /^(2[0-3]|[0-1]?[\d]):[0-5][\d]:[0-5][\d]$/;
+  var regexTime = /^(2[0-3]|[0-1]?[\d]):[0-5][\d]$/;
 
   let errors = {};
   if (!form.fecha.trim()) {

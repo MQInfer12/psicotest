@@ -50,7 +50,7 @@ const ModalHorario = ({ funcion, call, actualizar, horario, fecha, id_docente })
     },
     {
       name: "hora_inicio",
-      tipo: "text",
+      tipo: "time",
       value: form.hora_inicio,
       error: errors.hora_inicio,
       placeholder:"Hora inicio",
@@ -58,7 +58,7 @@ const ModalHorario = ({ funcion, call, actualizar, horario, fecha, id_docente })
     },
     {
       name: "hora_final",
-      tipo: "text",
+      tipo: "time",
       value: form.hora_final,
       error: errors.hora_final,
       placeholder:"Hora final",
