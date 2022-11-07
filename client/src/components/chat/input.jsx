@@ -10,6 +10,7 @@ import {
   Timestamp,
   updateDoc,
   serverTimestamp,
+  getDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { v4 as uuid } from "uuid";
@@ -77,6 +78,7 @@ const Input = () => {
       }),
     });
 
+    //VISUALIZAR ULTIMO MENSAJE
     await updateDoc(doc(db, "userChats", currentUser?.uid), {
       [data.chatId + ".lastMessage"]: {
         text,
@@ -89,6 +91,32 @@ const Input = () => {
         text,
       },
       [data.chatId + ".date"]: serverTimestamp(),
+    });
+
+    //LLENAR NOTIFICACIONES
+    let flag = false;
+    let newArray = [];
+    const docSnap = await getDoc(doc(db, "notifications", String(data.user.uid)));
+    docSnap.data().notification.forEach(doc => {
+      if(doc.uidSender == currentUser?.uid) {
+        doc.cant = doc.cant + 1;
+        doc.date = Timestamp.now();
+        newArray.push(doc)
+        flag = true;
+      } else {
+        newArray.push(doc);
+      }
+    });
+    if(!flag) {
+      newArray.push({
+        uidSender: Number(currentUser?.uid),
+        date: Timestamp.now(),
+        cant: 1,
+        email: currentUser?.email
+      })
+    }
+    await updateDoc(doc(db, "notifications", String(data.user.uid)), {
+      notification: newArray,
     });
   };
 

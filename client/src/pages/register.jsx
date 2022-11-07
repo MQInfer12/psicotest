@@ -141,6 +141,9 @@ const Register = () => {
       perfil: null,
     });
     await setDoc(doc(db, "userChats", String(id)), {});
+    await setDoc(doc(db, "notifications", String(id)), {
+      notification: [],
+    });
   }
 
   useEffect(() => {

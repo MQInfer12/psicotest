@@ -42,8 +42,6 @@ const ChatCom = ({ showSide, handleClick }) => {
       <div className="chatInfo">
         <span>{data.user.email}</span>
         <div className="chatIcons">
- {/*          <img src={Cam} alt="" />
-          <img src={Add} alt="" /> */}
           <img src={More} onClick={handleClick} alt="" />
         </div>
       </div>

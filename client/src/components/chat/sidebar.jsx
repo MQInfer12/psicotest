@@ -24,7 +24,7 @@ const Container = styled.div`
   }
 `;
 
-const Sidebar = ({ showSide, handleClick }) => {
+const Sidebar = ({ showSide, handleClick, email }) => {
   const [value, setValue] = useState(1);
 
   const handleChange = (val) => {
@@ -35,7 +35,7 @@ const Sidebar = ({ showSide, handleClick }) => {
     <Container showSide={showSide}>
       <Navbar handleChange={handleChange} />
       {/*<Search />*/}
-      {value == 1 && <Chats handleClick={handleClick} />}
+      {value == 1 && <Chats email={email} handleClick={handleClick} />}
       {value == 2 && <FutureChats />}
       {/* <Chats /> */}
     </Container>

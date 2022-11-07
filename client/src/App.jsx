@@ -84,6 +84,16 @@ function App() {
               }
             />
             <Route
+              path="chat/:email"
+              element={
+                <ProtectedRole roles={[2, 1]}>
+                  <OutletContext titlePage="Chat">
+                    <Chat />
+                  </OutletContext>
+                </ProtectedRole>
+              }
+            />
+            <Route
               path="users"
               element={
                 <ProtectedRole roles={[3]}>

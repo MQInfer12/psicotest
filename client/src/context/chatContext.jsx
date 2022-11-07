@@ -7,7 +7,7 @@ export const ChatContextProvider = ({ children }) => {
   const { currentUser } = useContext(UserFirebaseContext);
 
   const INITIAL_STATE = {
-    chatId: "null",
+    chatId: null,
     user: {},
   };
 

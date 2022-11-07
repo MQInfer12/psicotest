@@ -5,6 +5,7 @@ import CalendarMini from "../calendar/calendarMini";
 import { device } from "../../styles/devices";
 import { useWindowHeight } from "../../hooks/useWindowHeight";
 import { useNavigate } from "react-router-dom";
+import Notifications from "./notifications/notifications";
 
 const RightBar = ({ user, calendar, openNav, setOpenNav }) => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const RightBar = ({ user, calendar, openNav, setOpenNav }) => {
     <RightContainer onClick={() => openNav && setOpenNav(!openNav)} height={windowHeight} calendar={calendar}>
       <UpbarSquares>
         <UpbarName>{user?.nombre}{/* {user?.id} */}</UpbarName>
-        <UpbarNot></UpbarNot>
+        <Notifications />
         <PhotoContainer onClick={() => {navigate('/dashboard/profile'); window.scroll(0, 0);}}>
           <ProfilePic 
             width="52px"
@@ -97,13 +98,6 @@ const UpbarName = styled.p`
   @media (max-width: 1000px) {
     display: none;
   }
-`;
-
-const UpbarNot = styled.div`
-  min-width: 52px;
-  height: 52px;
-  border-radius: 10px;
-  background-color: #D9D9D9;
 `;
 
 const PhotoContainer = styled.div`

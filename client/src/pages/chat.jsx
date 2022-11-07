@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import ChatCom from "../components/chat/chatCom";
 import Sidebar from "../components/chat/sidebar";
@@ -18,12 +19,13 @@ const Home = styled.div`
 `;
 
 const Chat = () => {
+  const { email } = useParams();
   const windowHeight = useWindowHeight(true, true);
   const [showSide, setShowSide] = useState(true);
 
   return (
     <Home height={windowHeight}>
-      <Sidebar showSide={showSide} handleClick={() => setShowSide(false)} />
+      <Sidebar email={email} showSide={showSide} handleClick={() => setShowSide(false)} />
       <ChatCom showSide={showSide} handleClick={() => setShowSide(!showSide)} />
     </Home>
   );

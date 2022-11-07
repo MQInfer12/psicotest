@@ -5,6 +5,38 @@ import { useWindowHeight } from '../hooks/useWindowHeight';
 import MauriPhoto from "../assets/developers/mauri.jpg";
 import JosePhoto from "../assets/developers/joseZambrana.jpg";
 
+const Developers = () => {
+  const windowHeight = useWindowHeight();
+
+  return (
+    <>
+      <Navbar />
+      <AllContainer height={windowHeight}>
+        <ContainerPage>
+          <Column>
+            <DivInfo>
+              <NombreDevs className='nombres'>Mauricio Molina</NombreDevs>
+              <DescripcionDevs className='nombres'>Full Stack Developer</DescripcionDevs>
+              <PhotoDevs src={MauriPhoto} />
+              <ButtonContact href='https://wa.me/59176407344'>Contactar</ButtonContact>
+            </DivInfo>
+          </Column>
+          <Column>
+            <DivInfo>
+              <NombreDevs className='nombres'>Jose Zambrana</NombreDevs>
+              <DescripcionDevs className='nombres'>Full Stack Developer</DescripcionDevs>
+              <PhotoDevs src={JosePhoto} />
+              <ButtonContact href='https://wa.me/59165722183'>Contactar</ButtonContact>
+            </DivInfo>
+          </Column>
+        </ContainerPage>
+      </AllContainer>
+    </>
+  )
+}
+
+export default Developers
+
 const AllContainer = styled.div`
   height: ${props => props.height};
   display: flex;
@@ -95,7 +127,8 @@ const DescripcionDevs = styled.h3`
   transition: all 0.5s;
 `;
 
-const ButtonContact = styled.button`
+const ButtonContact = styled.a`
+  text-decoration: none;
   padding: 10px 20px;
   background-color: #FFFFFF;
   color: #6209db;
@@ -109,35 +142,3 @@ const ButtonContact = styled.button`
     opacity: 0.8;
   }
 `;
-
-const Developers = () => {
-  const windowHeight = useWindowHeight();
-
-  return (
-    <>
-      <Navbar />
-      <AllContainer height={windowHeight}>
-        <ContainerPage>
-          <Column>
-            <DivInfo>
-              <NombreDevs className='nombres'>Mauricio Molina</NombreDevs>
-              <DescripcionDevs className='nombres'>Full Stack Developer</DescripcionDevs>
-              <PhotoDevs src={MauriPhoto} />
-              <ButtonContact>Contactar</ButtonContact>
-            </DivInfo>
-          </Column>
-          <Column>
-            <DivInfo>
-              <NombreDevs className='nombres'>Jose Zambrana</NombreDevs>
-              <DescripcionDevs className='nombres'>Full Stack Developer</DescripcionDevs>
-              <PhotoDevs src={JosePhoto} />
-              <ButtonContact>Contactar</ButtonContact>
-            </DivInfo>
-          </Column>
-        </ContainerPage>
-      </AllContainer>
-    </>
-  )
-}
-
-export default Developers
