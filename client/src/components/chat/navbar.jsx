@@ -8,7 +8,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   background-color: #2f2d52;
-  height: 50px;
+  height: 45px;
   padding: 10px;
   justify-content: space-between;
   color: #ddddf7;
@@ -58,11 +58,11 @@ const Navbar = ({ handleChange }) => {
           id={user.id}
           perfil={user.perfil}
         />
-       {/*  <span className="username">{user.nombre}</span> */}
-        <select onChange={(e) => handleChange(e.target.value)}>
+        {/*  <span className="username">{user.nombre}</span> */}
+        {/* <select onChange={(e) => handleChange(e.target.value)}>
           <option value={1}>Chatear</option>
-          {/* <option value={2}>Contactos</option> */}
-        </select>
+          <option value={2}>Contactos</option>
+        </select> */}
       </div>
     </Container>
   );

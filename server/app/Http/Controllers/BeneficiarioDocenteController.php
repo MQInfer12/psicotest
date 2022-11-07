@@ -108,13 +108,17 @@ class BeneficiarioDocenteController extends Controller
             "objeto" => "required",
             "id_docente_test" => "required"
         ]);
-
         $objeto = $request->objeto;
 
-        foreach ($objeto as $valor) {
+        $newObj = [];
+        foreach ($objeto as $index => $valor) {
             DB::delete("DELETE from respuestas where email_user='$valor' AND id_docente_test='$request->id_docente_test'");
+            $exists = DB::select("SELECT id FROM respuestas WHERE email_user='$valor' AND id_docente_test='$request->id_docente_test'");
+            $newObj[$index] = (object)[];
+            $newObj[$index]->from = $valor;
+            $newObj[$index]->exists = count($exists);
         }
-        return response()->json(["msg" => "se ha eliminado"], 200);
+        return response()->json(["msg" => "se ha eliminado", "result" => $newObj], 200);
     }
     
     public function showTestToBenef($id)

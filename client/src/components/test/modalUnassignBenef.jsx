@@ -71,11 +71,8 @@ const ModalUnAssignProfessor = ({ id, actualizar }) => {
   };
   
   const saveData = async () => {
-    const vecAux = [];
-    for (let val of checSelected) {
-      vecAux.push(val);
-    }
-    const obj = Object.assign({}, vecAux);
+    const obj = Object.assign({}, checSelected);
+    console.log(id);
     const resp = await deleteBenefAssigned(obj, id);
     if(resp.msg === "se ha eliminado"){
         actualizar();

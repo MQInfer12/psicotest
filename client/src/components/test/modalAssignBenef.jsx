@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   addBenefToTest,
   getBeneficiaryNoAssign,
@@ -7,6 +7,9 @@ import styled from "styled-components";
 import ProfilePic from "../globals/profilePic";
 import { FormContainer, PurpleButton } from "../../styles/formularios";
 import Cargando from "../globals/cargando";
+import { UserContext } from "../../context/userContext";
+import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const DivModal = styled.div`
   background-color: #F4F4F4;
@@ -42,6 +45,7 @@ const DivPersona = styled.div`
 const ModalAssignProfessor = ({ id, actualizar }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useContext(UserContext);
 
   const handleGetData = async () => {
     const res = await getBeneficiaryNoAssign(id);
@@ -53,33 +57,65 @@ const ModalAssignProfessor = ({ id, actualizar }) => {
     handleGetData();
   }, []);
 
+  const [idsSelected, setIdsSelected] = useState([]);
   const [checSelected, setChecSelected] = useState([]);
-  const [btnActive, setBtnActive] = useState(false);
 
   const handleChangeCheck = (e) => {
     var aux = null;
+    var auxIds = null;
+
     if (checSelected.includes(e.target.value)) {
       //If the value is there we remove it.
       aux = checSelected.filter((ele) => ele !== e.target.value);
     } else {
       aux = checSelected.concat(e.target.value);
     }
-    setChecSelected(aux);
-    if (aux.length > 0) {
-      setBtnActive(true);
+
+    if(idsSelected.includes(e.target.name)) {
+      auxIds = idsSelected.filter((ele) => ele !== e.target.name);
     } else {
-      setBtnActive(false);
+      auxIds = idsSelected.concat(e.target.name);
     }
+
+    setChecSelected(aux);
+    setIdsSelected(auxIds);
   };
 
   const saveData = async () => {
-    const vecAux = [];
-    for (let val of checSelected) {
-      vecAux.push(val);
-    }
-    const obj = Object.assign({}, vecAux);
+    const obj = Object.assign({}, checSelected);
     const resp = await addBenefToTest(obj, id);
-     if (resp.mensaje === "se guardo correctamente") {
+
+    idsSelected.forEach(async (val) => {
+      const combinedId =
+        Number(val) > Number(user.id)
+          ? String(val) + String(user.id)
+          : String(user.id) + String(val);
+
+      try {
+        const resChat = await getDoc(doc(db, "chats", combinedId));
+        if (!resChat.exists()) {
+          await setDoc(doc(db, "chats", combinedId), { messages: [] });
+
+          await updateDoc(doc(db, "userChats", String(val)), {
+            [combinedId + ".userInfo"]: {
+              uid: String(user.id)
+            },
+            [combinedId + ".date"]: serverTimestamp(),
+          });
+
+          await updateDoc(doc(db, "userChats", String(user.id)), {
+            [combinedId + ".userInfo"]: {
+              uid: String(val)
+            },
+            [combinedId + ".date"]: serverTimestamp(),
+          });
+        } 
+      } catch (error) {
+        console.log(error);
+      }
+    })
+
+    if (resp.mensaje === "se guardo correctamente") {
       actualizar();
     } 
   };
@@ -101,14 +137,19 @@ const ModalAssignProfessor = ({ id, actualizar }) => {
                   perfil={v.perfil} 
                 />
                 {v.nombre_usuario}
-                <input type="checkbox" value={v.email} onChange={handleChangeCheck}/>
+                <input 
+                  type="checkbox" 
+                  name={v.id}
+                  value={v.email} 
+                  onChange={handleChangeCheck}
+                />
               </DivPersona>
             ))}
             </DivPersonas>
           )
         }
       </DivModal>
-      <PurpleButton disabled={!btnActive ? true : false} onClick={saveData}>
+      <PurpleButton disabled={checSelected.length ? false : true} onClick={saveData}>
         Guardar
       </PurpleButton>
     </FormContainer>

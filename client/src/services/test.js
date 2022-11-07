@@ -274,9 +274,9 @@ export const deleteBenefAssigned = async (obj, id) => {
         id_docente_test: id,
       }),
     });
-
     if (response.ok) {
       const result = await response.json();
+      console.log(result);
       return result;
     }
   } catch (err) {
