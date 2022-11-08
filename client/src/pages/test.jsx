@@ -17,7 +17,7 @@ const Test = () => {
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
-  const idRole = user.id_rol;
+  const idRole = user?.id_rol;
 
   const llenarTests = async () => {
     const res = await getTests();

@@ -10,6 +10,12 @@ import { useDownloadExcel } from "react-export-table-to-excel";
 import codeId from "../utilities/code";
 import AnswersReports from "../components/answers/answersReports";
 import { useWindowHeight } from "../hooks/useWindowHeight";
+import { 
+  AnswersContainer, ControlsContainer, TableContainer, TableAnswers, 
+  ThNumberal, ThAnswer, ThNumber, ResponsiveTr,
+  DivDouble, DivCenter,
+  PNombre, PLight, PPuntaje, PSobre
+} from "../styles/table";
 
 const Answers = () => {
   const windowHeight = useWindowHeight(true, true);
@@ -139,12 +145,12 @@ const Answers = () => {
               <thead>
                 <tr>
                   <ThNumberal>#</ThNumberal>
-                  <ThAnswer width="180px">Nombre</ThAnswer>
-                  <ThAnswer>Test</ThAnswer>
-                  <ThAnswer width="180px">Docente</ThAnswer>
+                  <ThAnswer width="200px">Nombre</ThAnswer>
+                  <ThAnswer width="240px">Test</ThAnswer>
+                  <ThAnswer width="200px">Docente</ThAnswer>
                   <ThAnswer width="100px">Estado</ThAnswer>
                   <ThAnswer width="100px">Puntuación</ThAnswer>
-                  <ThAnswer width="120px">Controles</ThAnswer>
+                  <ThAnswer width="100px">Controles</ThAnswer>
                 </tr>
               </thead>
               <tbody>
@@ -218,23 +224,6 @@ const Answers = () => {
 
 export default Answers;
 
-const AnswersContainer = styled.div`
-  height: ${props => props.height};
-  box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
-  background-color: #ebf0fa;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const ControlsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  min-height: 68px;
-  padding: 0px 20px;
-  gap: 16px;
-`;
-
 const SearchDiv = styled.div`
   position: relative;
 `;
@@ -252,6 +241,10 @@ const SearchInput = styled.input`
 
   &::placeholder {
     color: #A1A9B8;
+  }
+
+  @media (max-width: 900px) {
+    width: 140px;
   }
 `;
 
@@ -277,82 +270,6 @@ const SearchSelect = styled.select`
 `;
 
 //TABLA
-const TableContainer = styled.div`
-  height: 100%;
-  overflow: hidden;
-`;
-
-const TableAnswers = styled.table`
-  table-layout: fixed;
-  border-collapse: collapse;
-  width: 100%;
-
-  & > thead {
-    height: 40px;
-  }
-`;
-
-const ResponsiveTr = styled.tr.attrs(props => ({
-  style: {
-    height: props.rowHeight
-  }
-}))`
-  max-width: 622px;
-  background-color: #ffffff;
-  position: relative;
-  text-align: center;
-
-  &:nth-child(2n) {
-    background-color: #ebf0fa;
-  }
-`;
-
-const ThNumberal = styled.th`
-  font-size: 11px;
-  color: #171c26;
-  padding-left: 11px;
-  width: 47px;
-  text-align: start;
-  font-weight: 600;
-`;
-
-const ThAnswer = styled.th`
-  width: ${(props) => props.width};
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  text-align: start;
-  color: #464f60;
-`;
-
-const DivDouble = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: 2px;
-  padding-right: 20px;
-  text-align: start;
-`;
-
-const PNombre = styled.p`
-  font-size: 14px;
-  color: #171c26;
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const PLight = styled.p`
-  color: #687182;
-  font-size: 12px;
-  font-weight: 400;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
 
 const StatusContainer = styled.div`
   width: fit-content;
@@ -376,36 +293,4 @@ const StatusContainer = styled.div`
       : props.estado == 2
       ? "#14804A"
       : props.estado == 3 && "#D12953"};
-`;
-
-const PPuntaje = styled.p`
-  font-size: 14px;
-  font-weight: 400;
-  color: #464f60;
-  width: 100%;
-  text-align: end;
-`;
-
-const PSobre = styled.p`
-  font-size: 12px;
-  font-weight: 400;
-  color: #687182;
-  width: 100%;
-  text-align: end;
-`;
-
-const DivCenter = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ThNumber = styled.th`
-  font-size: 14px;
-  font-weight: 500;
-  color: #171c26;
-  padding-left: 11px;
-  width: 47px;
-  text-align: start;
 `;

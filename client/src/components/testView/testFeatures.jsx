@@ -16,7 +16,7 @@ const TestInfoContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 30px;
-  padding: 40px 0px;
+  padding: 40px;
   background-color: #FFFFFF;
 `;
 

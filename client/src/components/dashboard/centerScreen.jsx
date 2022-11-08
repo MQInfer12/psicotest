@@ -43,7 +43,7 @@ const CenterContainer = styled.div`
 
 const UpbarContainer = styled.div`
   display: flex;
-  padding: 0px 40px;
+  padding: 0 40px;
   gap: 20px;
   height: 157px;
   background-color: #F4F4F4;
@@ -61,7 +61,7 @@ const UpbarContainer = styled.div`
   }
 
   @media ${device.tablet} {
-    padding: 47px 10px 31px;
+    padding: 0 154px 0 10px;
   }
 `;
 
@@ -85,26 +85,31 @@ const OpenButton = styled.button`
 `;
 
 const UpbarText = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   //height: 100%;
   gap: 11px;
+  overflow: auto;
 `;
 
 const ActualPage = styled.span`
+  width: 100%;
   //margin-top: 7px;
   font-weight: 300;
   font-size: 16px;
   color: #ADA7A7;
   display: flex;
   gap: 5px;
+  white-space: nowrap;
 `;
 
 const TitlePage = styled.span`
   font-size: 24px;
   font-weight: 600;
   color: #3E435D;
+  white-space: nowrap;
 `;
 
 const StyledLink = styled(Link)`

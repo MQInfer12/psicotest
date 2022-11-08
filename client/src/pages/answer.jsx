@@ -8,6 +8,12 @@ import { useDownloadExcel } from "react-export-table-to-excel";
 import decipherId from "../utilities/decipher";
 import AnswerReports from "../components/answer/answerReports";
 import { WhiteButton } from "../styles/formularios";
+import { 
+  AnswersContainer, TableContainer, TableAnswers, 
+  ThNumberal, ThAnswer
+} from "../styles/table";
+import BigRow from "../components/answer/bigRow";
+import MiniRow from "../components/answer/miniRow";
 
 const Answer = () => {
   const { idRespuesta: idCode } = useParams();
@@ -16,6 +22,8 @@ const Answer = () => {
   const [tableRef, setTableRef] = useState(null);
   const [loading, setLoading] = useState(true);
   const [respuesta, setRespuesta] = useState({});
+  const [screen, setScreen] = useState(window.innerWidth);
+
   const [test, setTest] = useState({
     secciones: [{ reactivos: [], preguntas: [{ puntuaciones: [] }] }],
   });
@@ -44,6 +52,10 @@ const Answer = () => {
   });
 
   useEffect(() => {
+    window.addEventListener("resize", () => {
+      setScreen(window.innerWidth);
+    })
+
     llenarRespuesta();
     llenarTest();
   }, []);
@@ -95,59 +107,44 @@ const Answer = () => {
       {test.secciones.map((seccion, i) => (
         <SeccionContainer key={i}>
           <TitleSeccion>Sección {i + 1}</TitleSeccion>
-          <AnswersContainer>
+          <AnswersContainer maxw="1200px">
             <TableContainer>
               <TableAnswers>
                 <thead>
                   <tr>
                     <ThNumberal>#</ThNumberal>
-                    <ThAnswer>Pregunta</ThAnswer>
-                    <ThReactivo width="90px">Puntaje</ThReactivo>
+                    {
+                      screen >= 1000 &&
+                      <>
+                        <ThAnswer>Pregunta</ThAnswer>
+                        <ThAnswer center width="90px">Puntaje</ThAnswer>
+                      </>
+                    }
                     {seccion.reactivos.map((reactivo, j) => (
-                      <ThReactivo width="90px" key={j}>
+                      <ThAnswer center width={screen >= 1000 ? "90px" : undefined} key={j}>
                         {reactivo.descripcion}
-                      </ThReactivo>
+                      </ThAnswer>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {seccion.preguntas.map((pregunta, j) => (
-                    <tr key={j}>
-                      <ThNumber>{j + 1}</ThNumber>
-                      <td>
-                        <DivDouble>
-                          <PLightDouble>{pregunta.descripcion}</PLightDouble>
-                        </DivDouble>
-                      </td>
-                      <td>
-                        {respuesta.resultados
-                          .filter(
-                            (resultado) =>
-                              resultado.puntuacion[0].id_pregunta == pregunta.id
-                          )
-                          .map((puntaje, k) => (
-                            <PLight key={k}>
-                              {puntaje.puntuacion[0].asignado}
-                            </PLight>
-                          ))}
-                      </td>
-                      {pregunta.puntuaciones.map((puntuacion, k) => (
-                        <td key={k}>
-                          <input
-                            type="radio"
-                            name={pregunta.id}
-                            value={puntuacion.id}
-                            disabled
-                            defaultChecked={
-                              respuesta.resultados.filter(
-                                (resultado) =>
-                                  puntuacion.id == resultado.id_puntuacion
-                              )[0]
-                            }
-                          />
-                        </td>
-                      ))}
-                    </tr>
+                    screen >= 1000 ? (
+                      <BigRow 
+                        key={j}
+                        index={j}
+                        pregunta={pregunta}
+                        respuesta={respuesta}
+                      />
+                    ) : (
+                      <MiniRow 
+                        key={j}
+                        index={j}
+                        pregunta={pregunta}
+                        respuesta={respuesta}
+                        cantReactivos={seccion.reactivos.length}
+                      />
+                    )
                   ))}
                 </tbody>
               </TableAnswers>
@@ -188,7 +185,7 @@ const DataRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 350px;
+  width: 300px;
 `;
 
 const DataKey = styled.strong`
@@ -201,6 +198,7 @@ const DataValue = styled.p`
   color: #ada7a7;
   font-weight: 300;
   font-size: 14px;
+  white-space: nowrap;
 `;
 
 const SeccionContainer = styled.div`
@@ -210,109 +208,7 @@ const SeccionContainer = styled.div`
   gap: 16px;
 `;
 
-const AnswersContainer = styled.div`
-  max-width: 1200px;
-  height: 100%;
-  box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
-  background-color: #ebf0fa;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-`;
-
 //TABLA
-
-const TableContainer = styled.div`
-  overflow: hidden;
-`;
-
-const TableAnswers = styled.table`
-  table-layout: fixed;
-  border-collapse: collapse;
-  width: 100%;
-
-  & > thead {
-    height: 40px;
-  }
-
-  & > tbody > tr {
-    max-width: 622px;
-    height: 64px;
-    background-color: #ffffff;
-    position: relative;
-    text-align: center;
-  }
-
-  & > tbody > tr:nth-child(2n) {
-    background-color: #ebf0fa;
-  }
-`;
-
-const ThNumberal = styled.th`
-  font-size: 11px;
-  color: #171c26;
-  padding-left: 11px;
-  width: 47px;
-  text-align: start;
-  font-weight: 600;
-`;
-
-const ThAnswer = styled.th`
-  width: ${(props) => props.width};
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  text-align: start;
-  color: #464f60;
-`;
-
-const ThReactivo = styled.th`
-  width: ${(props) => props.width};
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  text-align: center;
-  color: #464f60;
-`;
-
-const DivDouble = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  text-align: start;
-`;
-
-const PLight = styled.p`
-  color: #687182;
-  font-size: 12px;
-  font-weight: 400;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const PLightDouble = styled.p`
-  padding-right: 10px;
-  color: #687182;
-  font-size: 12px;
-  font-weight: 400;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-`;
-
-const ThNumber = styled.th`
-  font-size: 14px;
-  font-weight: 500;
-  color: #171c26;
-  padding-left: 11px;
-  width: 47px;
-  text-align: start;
-`;
 
 const TitleSeccion = styled.span`
   font-size: 24px;
@@ -320,9 +216,4 @@ const TitleSeccion = styled.span`
   color: #3e435d;
   width: 100%;
   text-align: start;
-`;
-
-const TableHidden = styled.div`
-  display: ${(props) => (props.tableHidden ? "none" : "block")};
-  overflow: hidden;
 `;

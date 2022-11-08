@@ -58,13 +58,13 @@ const AnswerReports = ({ secciones, respuesta, setTableRef }) => {
                   {pregunta.puntuaciones.map((puntuacion, k) => (
                     <td key={k}>
                       <p style={{
-                        backgroundColor: respuesta.resultados.filter(resultado =>
+                        backgroundColor: respuesta.resultados.find(resultado =>
                           puntuacion.id == resultado.id_puntuacion
-                        ).length === 0 ? "" : "#d7dbfd"
+                        ) ? "#d7dbfd" : "" 
                       }}>
-                        {respuesta.resultados.filter(resultado =>
+                        {respuesta.resultados.find(resultado =>
                             puntuacion.id == resultado.id_puntuacion
-                        ).length === 0 ? 0 : 1}
+                        ) ? 1 : 0}
                       </p>
                     </td>
                   ))}

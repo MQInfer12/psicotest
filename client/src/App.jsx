@@ -246,7 +246,7 @@ function App() {
               element={
                 <ProtectedRole roles={[3, 2]}>
                   <OutletContext
-                    titlePage="Detalles de Respuesta"
+                    titlePage="Detalles"
                     calendar={false}
                     links={
                       <>

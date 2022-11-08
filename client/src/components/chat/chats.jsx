@@ -53,15 +53,9 @@ const Chats = ({ handleClick, email: emailURL }) => {
           chatsData.sort((a, b) => b.date - a.date);
           setChats(chatsData);
           setLoading(false);
-          if(emailURL) {
-            chatsData.forEach(chat => {
-              if(chat.userInfo.email == emailURL) {
-                handleShowChat(chat);
-              }
-            });
-          }
         }
       );
+      
       return () => {
         unsub();
       };
@@ -69,6 +63,16 @@ const Chats = ({ handleClick, email: emailURL }) => {
 
     currentUser?.uid && getChats();
   }, [currentUser?.uid]);
+
+  useEffect(() => {
+    if(emailURL) {
+      chats.forEach(chat => {
+        if(chat.userInfo.email == emailURL) {
+          handleShowChat(chat);
+        }
+      });
+    }
+  }, [chats]);
 
   const handleSelect = (u) => {
     dispatch({ type: "CHANGE_USER", payload: u });
