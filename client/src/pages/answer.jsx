@@ -185,7 +185,7 @@ const DataRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 300px;
+  width: 370px;
 `;
 
 const DataKey = styled.strong`

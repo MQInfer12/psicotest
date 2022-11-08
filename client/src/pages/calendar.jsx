@@ -5,8 +5,8 @@ import CalendarMini from "../components/calendar/calendarMini";
 const Calendar = () => {
   return (
     <>
-      <CalendarBig />
-      {/* <CalendarMini /> */}
+      {/* <CalendarBig /> */}
+      <CalendarMini />
     </>
   );
 };
