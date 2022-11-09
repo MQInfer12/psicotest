@@ -46,7 +46,7 @@ const ModalHorario = ({ funcion, call, actualizar, horario, fecha, id_docente })
       value: form.fecha,
       error: errors.fecha,
       placeholder:"fecha - mm/dd/yyyy",
-      disabled: false
+      disabled: false,
     },
     {
       name: "hora_inicio",
@@ -54,7 +54,8 @@ const ModalHorario = ({ funcion, call, actualizar, horario, fecha, id_docente })
       value: form.hora_inicio,
       error: errors.hora_inicio,
       placeholder:"Hora inicio",
-      disabled: false
+      disabled: false,
+      center: true
     },
     {
       name: "hora_final",
@@ -62,7 +63,8 @@ const ModalHorario = ({ funcion, call, actualizar, horario, fecha, id_docente })
       value: form.hora_final,
       error: errors.hora_final,
       placeholder:"Hora final",
-      disabled: false
+      disabled: false,
+      center: true
     },
   ];
 

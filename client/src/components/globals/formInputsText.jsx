@@ -11,7 +11,7 @@ const FormInputsText = ({ data, handleChange }) => {
             <PText>{v.placeholder}</PText>
             {v.error && <ErrorCss>{v.error}</ErrorCss>}
           </DivText>
-          <InputText 
+          <InputText center={v.center}
             name={v.name}
             type={v.tipo}
             value={v.value}

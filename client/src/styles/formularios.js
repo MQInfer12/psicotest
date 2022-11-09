@@ -27,6 +27,7 @@ export const PText = styled.p`
 `;
 
 export const InputText = styled.input`
+  text-align: ${props => props.center ? "center" : "start"};
   font-size: 13px;
   border-radius: 5px;
   border: 1px solid #D9D9D9;
