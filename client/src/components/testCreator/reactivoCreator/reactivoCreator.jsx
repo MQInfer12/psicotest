@@ -9,124 +9,19 @@ import Modal from "../../globals/modal";
 import Pagination from "../pagination";
 import ModalReactivo from "./modalReactivo";
 import ReactivoCard from "./reactivoCard";
-
-const PreguntaCreatorContainer = styled.div`
-  width: 622px;
-  box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
-  background-color: #EBF0FA;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const ControlsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 68px;
-  padding: 0px 11px;
-`;
-
-const HeadContainer = styled.div`
-  width: fit-content;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-`;
-
-const PSelected = styled.p`
-  height: max-content;
-  font-size: 12px;
-  color: #464F60;
-`;
-
-//TABLA
-const TableContainer = styled.div`
-  height: 552px;
-`;
-
-const TablePreguntas = styled.table`
-  border-collapse: collapse;
-  width: 100%;
-
-  & > thead {
-    height: 40px;
-    width: 100%;
-  }
-
-  & > thead > tr > th {
-    display: flex;
-    align-items: center;
-    height: 40px;
-  }
-
-  & > tbody > tr {
-    max-width: 622px;
-    height: 64px;
-    background-color: #FFFFFF;
-    position: relative;
-  }
-
-  & > tbody > tr:nth-child(2n) {
-    background-color: #EBF0FA;
-  }
-`;
-
-const TrHead = styled.tr`
-  text-align: center;
-  display: grid;
-  grid-template-columns: 47px repeat(${props => props.cant}, 1fr);
-  align-items: center;
-  width: 622px;
-  height: 40px;
-`;
-
-const ThNumberal = styled.th`
-  font-size: 11px;
-  color: #171C26;
-  padding-left: 11px;
-  width: 47px;
-  text-align: start;
-  font-weight: 600;
-`;
-
-const TrCargando = styled.tr`
-  display: flex;
-  width: 622px;
-  height: 512px;
-`;
-
-const TdCargando = styled.td`
-  background-color: #FFFFFF;
-  display: flex;
-  width: 100%;
-  height: 512px;
-`;
-
-const TdPuntuacion = styled.td`
-  max-width: 575px;
-  color: #464F60;
-  font-weight: 400;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-`;
-
-const InputNumber = styled.input`
-  border: none;
-  background-color: transparent;
-  text-align: center;
-  width: 40%;
-  outline: none;
-`;
+import { 
+  ControlsContainer, TableContainer, TableAnswers,
+  ThNumberal, ThNumber, ResponsiveTr
+} from "../../../styles/table";
+import { useTableHeight } from "../../../hooks/useTableHeight";
 
 const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, setPuntuaciones, preguntas }) => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [reactivosPage, setReactivosPage] = useState(1);
   const [save, setSave] = useState(false);
+
+  const { tableHeightRef, tableRows, rowHeight, resizing } = useTableHeight();
 
   const llenarReactivos = async () => {
     const res = await getReactivosBySeccion(idSeccion);
@@ -173,7 +68,7 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
 
   return (
     <PreguntaCreatorContainer>
-      <ControlsContainer>
+      <ControlsContainer spaceBetween>
         <HeadContainer>
           <WhiteIconButton onClick={() => setShowForm(true)} disabled={reactivos.length == 5}><i className="fa-solid fa-plus"></i></WhiteIconButton>
           <PSelected>{reactivos.length} / 5</PSelected>
@@ -200,22 +95,21 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
           </HeadContainer>
         }
       </ControlsContainer>
-      <TableContainer>
-        <TablePreguntas>
+      <TableContainer resizing={resizing} noHide ref={tableHeightRef}>
+        <TableAnswers inReactivoCreator>
           <thead>
-            <TrHead cant={reactivos.length}>
+            <tr>
               <ThNumberal>#</ThNumberal>
               {
                 reactivos.map((v, i) => (
                   <ReactivoCard 
                     key={i} 
-                    {...v} 
-                    index={((reactivosPage - 1) * 8) + (i + 1)} 
+                    {...v}
                     llenarReactivos={llenarReactivos}
                   />
                 ))
               }
-            </TrHead>
+            </tr>
           </thead>
           <tbody>
             {
@@ -226,31 +120,31 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
                   </TdCargando>
                 </TrCargando>
               ) : (
-                preguntas.filter((v, i) => i >= (reactivosPage - 1) * 8 && i < reactivosPage * 8).map((v, i) => (
-                  <TrHead cant={reactivos.length} key={i}>
-                    <ThNumberal>{((reactivosPage - 1) * 8) + (i + 1)}</ThNumberal>
+                preguntas.filter((v, i) => i >= (reactivosPage - 1) * tableRows && i < reactivosPage * tableRows).map((v, i) => (
+                  <ResponsiveTr rowHeight={rowHeight} key={i}>
+                    <ThNumber>{((reactivosPage - 1) * tableRows) + (i + 1)}</ThNumber>
                     {
                       puntuaciones.filter(va => va.id_pregunta == v.id).map((va, j) => (
-                        <TdPuntuacion key={j}>
+                        <td key={j}>
                           <InputNumber 
                             name={va.id}
                             type="number"
                             value={va.asignado}
                             onChange={handleChange}
                           />
-                        </TdPuntuacion>
+                        </td>
                       )) 
                     }
-                  </TrHead>
+                  </ResponsiveTr>
                 ))
               )
             }
           </tbody>
-        </TablePreguntas>
+        </TableAnswers>
       </TableContainer>
       <Pagination 
         cant={preguntas.length}
-        rows={8}
+        rows={tableRows}
         page={reactivosPage}
         setPage={setReactivosPage}
       />
@@ -259,3 +153,48 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
 }
 
 export default ReactivoCreator;
+
+const PreguntaCreatorContainer = styled.div`
+  height: calc(100% - 40px);
+  width: 622px;
+  box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
+  background-color: #EBF0FA;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const HeadContainer = styled.div`
+  width: max-content;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+`;
+
+const PSelected = styled.p`
+  height: max-content;
+  font-size: 12px;
+  color: #464F60;
+`;
+
+//TABLA
+
+const TrCargando = styled.tr`
+  display: flex;
+  height: calc(100vh - 400px);
+  width: 622px;
+`;
+
+const TdCargando = styled.td`
+  background-color: #FFFFFF;
+  display: flex;
+  width: 100%;
+`;
+
+const InputNumber = styled.input`
+  border: none;
+  background-color: transparent;
+  text-align: center;
+  width: 40%;
+  outline: none;
+`;

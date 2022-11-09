@@ -1,17 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Pagination = ({ cant, rows, page, setPage }) => {
   const pagination = cant != 0? page : 0;
-  const from = ((page - 1) * rows) + 1;
-  const to = page * rows;
-  const pages = Math.ceil(cant / rows);
+  const [from, setFrom] = useState(0);
+  const [to, setTo] = useState(0);
+  const [pages, setPages] = useState(0);
 
   useEffect(() => {
-    if(page > pages && pages != 0) {
-      setPage(pages);
-    }
-  }, [cant]);
+    //RECALCULAR PAGINA
+    const newPages = Math.ceil(cant / rows);
+    setPages(newPages);
+    if(page > newPages) setPage(newPages);
+    if(page < 1 && cant != 0) setPage(1);
+  }, [cant, rows]);
+
+  useEffect(() => {
+    //RECALCULAR VARIABLES
+    setFrom(((page - 1) * rows) + 1);
+    setTo(page * rows);
+  }, [page])
 
   return (
     <PaginationContainer>

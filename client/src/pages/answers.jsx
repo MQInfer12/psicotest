@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Pagination from "../components/answers/pagination";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +16,7 @@ import {
   DivDouble, DivCenter,
   PNombre, PLight, PPuntaje, PSobre
 } from "../styles/table";
+import { useTableHeight } from "../hooks/useTableHeight";
 
 const Answers = () => {
   const windowHeight = useWindowHeight(true, true);
@@ -25,9 +26,8 @@ const Answers = () => {
   const [respuestas, setRespuestas] = useState([]);
   const [tableRef, setTableRef] = useState(null);
   const [page, setPage] = useState(0);
-  const tableHeightRef = useRef(null);
-  const [tableRows, setTableRows] = useState(0);
-  const [rowHeight, setRowHeight] = useState("56px");
+
+  const { tableHeightRef, tableRows, rowHeight } = useTableHeight();
 
   const llenarRespuestas = async () => {
     const res = await getRespuestas();
@@ -50,17 +50,6 @@ const Answers = () => {
   });
 
   useEffect(() => {
-    const handleResize = () => {
-      let tableBodyHeight = tableHeightRef.current?.offsetHeight - 40;
-      //56px es el minimo de cada fila de la tabla
-      let newRows = Math.floor(tableBodyHeight / 56);
-      setTableRows(newRows);
-      setRowHeight((tableBodyHeight / newRows) + "px");
-    }
-    
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
     if (user.id_rol === 3) {
       llenarRespuestas();
     } else if (user.id_rol === 2) {

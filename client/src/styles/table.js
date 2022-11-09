@@ -14,6 +14,7 @@ export const AnswersContainer = styled.div`
 export const ControlsContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: ${props => props.spaceBetween && "space-between"};
   min-height: 68px;
   padding: 0px 20px;
   gap: 16px;
@@ -22,7 +23,10 @@ export const ControlsContainer = styled.div`
 export const TableContainer = styled.div`
   height: 100%;
   overflow-y: hidden;
-  overflow-x: auto;
+  overflow-x: ${props => props.hideX ? "hidden" : "auto"};
+  overflow: ${props => props.noHide && "visible"};
+  overflow-y: ${props => props.resizing && "hidden"};
+  overflow-x: ${props => props.resizing && "hidden"};
 `;
 
 export const TableAnswers = styled.table`
@@ -32,6 +36,10 @@ export const TableAnswers = styled.table`
 
   & > thead {
     height: 40px;
+  }
+
+  & > thead > tr > th {
+    height: ${props => props.inReactivoCreator && "40px"};
   }
 `;
 
@@ -142,5 +150,15 @@ export const ResponsiveTr = styled.tr.attrs(props => ({
 
   &:nth-child(2n) {
     background-color: #ebf0fa;
+  }
+
+  filter: ${props => props.selectedPregunta && "opacity(0.5)"};
+  &:hover > td {
+    transition: ${props => props.inTestCreator && "padding-right 0.3s"};
+    padding-right: ${props => props.inTestCreator && "90px"};
+
+    & > div {
+      transform: ${props => props.inTestCreator && "translateX(0)"};
+    }
   }
 `;

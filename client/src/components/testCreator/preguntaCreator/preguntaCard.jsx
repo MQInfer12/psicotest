@@ -4,58 +4,9 @@ import { WhiteIconButton } from "../../../styles/formularios";
 import { updatePregunta } from "../../../services/pregunta";
 import Modal from "../../globals/modal";
 import ModalPregunta from "./modalPregunta";
-
-const PreguntaRow = styled.tr`
-  filter: ${props => props.selected && "opacity(0.5)"};
-  transition: all 0.2s;
-
-  &:hover > td {
-    padding-right: 120px;
-
-    & > div {
-      transform: translateX(0);
-    }
-  }
-`;
-
-const ThNumber = styled.th`
-  font-size: 14px;
-  font-weight: 500;
-  color: #171C26;
-  padding-left: 11px;
-  width: 47px;
-  text-align: start;
-`;
-
-const TdPregunta = styled.td`
-  max-width: 575px;
-  color: #464F60;
-  font-weight: 400;
-  font-size: 14px;
-  text-align: start;
-  white-space: nowrap;
-  padding-right: 20px;
-  transition: all 0.3s;
-  position: relative;
-`;
-
-const PPregunta = styled.p`
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const DivButtonsTd = styled.div`
-  height: 100%;
-  padding-right: 10px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translateX(100px);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: all 0.3s;
-`;
+import { 
+  ResponsiveTr, ThNumber, DivDouble, PLight
+} from "../../../styles/table";
 
 const PreguntaCard = (props) => {
   const [showForm, setShowForm] = useState(false);
@@ -66,12 +17,16 @@ const PreguntaCard = (props) => {
   })
 
   return (
-    <PreguntaRow 
-      selected={selected}
+    <ResponsiveTr 
+      inTestCreator
+      selectedPregunta={selected}
+      rowHeight={props.rowHeight}
     >
       <ThNumber>{props.index}</ThNumber>
-      <TdPregunta>
-        <PPregunta>{props.descripcion}</PPregunta>
+      <td>
+        <DivDouble>
+          <PLight>{props.descripcion}</PLight>
+        </DivDouble>
         <DivButtonsTd>
           <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
           { /* BOTON PARA IR MARCANDO LAS PREGUNTAS */}
@@ -110,9 +65,22 @@ const PreguntaCard = (props) => {
             />
           </Modal>
         }
-      </TdPregunta>
-    </PreguntaRow>
+      </td>
+    </ResponsiveTr>
   )
 }
 
 export default PreguntaCard;
+
+const DivButtonsTd = styled.div`
+  height: 100%;
+  padding-right: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateX(100px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s;
+`;

@@ -72,7 +72,7 @@ const Chats = ({ handleClick, email: emailURL }) => {
         }
       });
     }
-  }, [chats]);
+  }, [chats, emailURL]);
 
   const handleSelect = (u) => {
     dispatch({ type: "CHANGE_USER", payload: u });

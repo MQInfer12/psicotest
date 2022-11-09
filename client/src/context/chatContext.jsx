@@ -9,12 +9,14 @@ export const ChatContextProvider = ({ children }) => {
   const INITIAL_STATE = {
     chatId: null,
     user: {},
+    email: '',
   };
 
   const chatReducer = (state, action) => {
     switch (action.type) {
       case "CHANGE_USER":
         return {
+          email: action.payload.email,
           user: action.payload,
           chatId:
             Number(currentUser?.uid) > Number(action.payload.uid)
@@ -23,6 +25,12 @@ export const ChatContextProvider = ({ children }) => {
         };
       case "RESET_USER":
         return INITIAL_STATE;
+      case "SET_USER":
+        return {
+          email: action.payload.email,
+          user: {},
+          chatId: null,
+        }
       default:
         return state;
     }

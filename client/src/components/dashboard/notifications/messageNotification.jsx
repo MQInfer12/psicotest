@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { ChatContext } from '../../../context/chatContext';
 
 const MessageNotification = ({ setShowNots, not }) => {
+  const navigate = useNavigate();
+  const { dispatch } = useContext(ChatContext);
+
+  const handleClick = () => {
+    setShowNots(false);
+    dispatch({type: "SET_USER", payload: { email: not.email }});
+    navigate("/dashboard/chat");
+  }
+
   return (
     <NotContainer>
       <LeftDiv>
@@ -13,7 +23,7 @@ const MessageNotification = ({ setShowNots, not }) => {
       <RightDiv>
         <TitleNot>{not.cant} mensaje de {not.email}</TitleNot>
         <DescripNot>
-          <LinkSpan onClick={() => setShowNots(false)} to={"/dashboard/chat/" + not.email}>Ver mensaje</LinkSpan>
+          <LinkSpan onClick={handleClick}>Ver mensaje</LinkSpan>
         </DescripNot>
       </RightDiv>
     </NotContainer>
@@ -72,11 +82,13 @@ const DescripNot = styled.p`
   user-select: none;
 `;
 
-const LinkSpan = styled(Link)`
+const LinkSpan = styled.button`
   position: relative;
   color: #670ce3;
   cursor: pointer;
   text-decoration: none;
+  background-color: transparent;
+  border: none;
 
   &::after {
     content: "";

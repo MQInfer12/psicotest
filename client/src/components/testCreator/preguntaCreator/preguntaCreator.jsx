@@ -9,6 +9,11 @@ import ModalPregunta from "./modalPregunta";
 import PreguntaCard from "./preguntaCard";
 import Pagination from "../pagination";
 import SureModal from "../../globals/sureModal";
+import { 
+  ControlsContainer, TableContainer, TableAnswers,
+  ThNumberal, ThAnswer
+} from "../../../styles/table";
+import { useTableHeight } from "../../../hooks/useTableHeight";
 
 const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPuntuaciones }) => {
   const [loading, setLoading] = useState(true);
@@ -16,6 +21,8 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
   const [showSure, setShowSure] = useState(false);
   const [preguntasPage, setPreguntasPage] = useState(1);
   const [selecteds, setSelecteds] = useState([]);
+
+  const { tableHeightRef, tableRows, rowHeight } = useTableHeight();
 
   const llenarPreguntas = async () => {
     const res = await getPreguntasBySeccion(idSeccion);
@@ -33,7 +40,7 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
     setPuntuaciones(resPuntJson);
 
     //DEJAR DE CARGAR
-    setLoading(false);
+    //setLoading(false);
   }
 
   const borrarPreguntas = async () => {
@@ -52,7 +59,7 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
 
   return (
     <PreguntaCreatorContainer>
-      <ControlsContainer>
+      <ControlsContainer spaceBetween>
         <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-plus"></i></WhiteIconButton>
         <DeleteContainer>
           <PSelected>{selecteds.length} seleccionadas</PSelected>
@@ -86,12 +93,12 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
           </Modal>
         }
       </ControlsContainer>
-      <TableContainer>
-        <TablePreguntas>
+      <TableContainer hideX ref={tableHeightRef}>
+        <TableAnswers>
           <thead>
             <tr>
               <ThNumberal>#</ThNumberal>
-              <ThPregunta>PREGUNTA</ThPregunta>
+              <ThAnswer>PREGUNTA</ThAnswer>
             </tr>
           </thead>
           <tbody>
@@ -105,14 +112,15 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
               ) : (
                 <>
                   {
-                    preguntas.filter((v, i) => i >= (preguntasPage - 1) * 8 && i < preguntasPage * 8).map((v, i) => (
+                    preguntas.filter((v, i) => i >= (preguntasPage - 1) * tableRows && i < preguntasPage * tableRows).map((v, i) => (
                       <PreguntaCard 
                         key={i} 
                         {...v} 
-                        index={((preguntasPage - 1) * 8) + (i + 1)} 
+                        index={((preguntasPage - 1) * tableRows) + (i + 1)} 
                         llenarPreguntas={llenarPreguntas}
                         selecteds={selecteds}
                         setSelecteds={setSelecteds}
+                        rowHeight={rowHeight}
                       />
                     ))
                   }
@@ -120,11 +128,11 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
               )
             }
           </tbody>
-        </TablePreguntas>
+        </TableAnswers>
       </TableContainer>
       <Pagination 
         cant={preguntas.length}
-        rows={8}
+        rows={tableRows}
         page={preguntasPage}
         setPage={setPreguntasPage}
       />
@@ -135,20 +143,13 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
 export default PreguntaCreator;
 
 const PreguntaCreatorContainer = styled.div`
+  height: calc(100% - 40px);
   width: 622px;
   box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
   background-color: #EBF0FA;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-`;
-
-const ControlsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 68px;
-  padding: 0px 11px;
 `;
 
 const DeleteContainer = styled.div`
@@ -164,57 +165,15 @@ const PSelected = styled.p`
 `;
 
 //TABLA
-const TableContainer = styled.div`
-  height: 552px;
-  overflow: hidden;
-`;
-
-const TablePreguntas = styled.table`
-  border-collapse: collapse;
-  width: 100%;
-
-  & > thead {
-    height: 40px;
-  }
-
-  & > tbody > tr {
-    max-width: 622px;
-    height: 64px;
-    background-color: #FFFFFF;
-    position: relative;
-  }
-
-  & > tbody > tr:nth-child(2n) {
-    background-color: #EBF0FA;
-  }
-`;
-
-const ThNumberal = styled.th`
-  font-size: 11px;
-  color: #171C26;
-  padding-left: 11px;
-  width: 47px;
-  text-align: start;
-  font-weight: 600;
-`;
-
-const ThPregunta = styled.th`
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  text-align: start;
-  color: #464F60;
-`;
 
 const TrCargando = styled.tr`
   display: flex;
   width: 622px;
-  height: 512px;
+  height: calc(100vh - 400px);
 `;
 
 const TdCargando = styled.td`
   background-color: #FFFFFF;
   display: flex;
   width: 622px;
-  height: 512px;
 `;

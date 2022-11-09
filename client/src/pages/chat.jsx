@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import ChatCom from "../components/chat/chatCom";
 import Sidebar from "../components/chat/sidebar";
+import { ChatContext } from "../context/chatContext";
 import { useWindowHeight } from "../hooks/useWindowHeight";
 
 const Chat = ({ isInTestView = false, email_docente }) => {
-  const { email } = useParams();
   const windowHeight = useWindowHeight(true, true);
   const [showSide, setShowSide] = useState(isInTestView ? false : true);
+  const { data } = useContext(ChatContext);
 
   return (
     <Home isInTestView={isInTestView} height={isInTestView ? "400px" : windowHeight}>
       <Sidebar
-        email={email_docente ? email_docente : email}
+        email={data.email ? data.email : email_docente}
         showSide={showSide}
         handleClick={() => setShowSide(false)}
       />
