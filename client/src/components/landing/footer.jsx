@@ -18,8 +18,8 @@ const Footer = () => {
         <FooterColumn>
           <FooterLinks>
             <ColumnTitle>Empresa</ColumnTitle>
-            <OptionLink to="#">Acerca</OptionLink>
-            <OptionLink to="#">Contacto</OptionLink>
+            {/* <OptionLink to="#">Acerca</OptionLink>
+            <OptionLink to="#">Contacto</OptionLink> */}
             <OptionLink to="/developers">Desarrolladores</OptionLink>
           </FooterLinks>
         </FooterColumn>
@@ -27,7 +27,7 @@ const Footer = () => {
           <FooterLinks>
             <ColumnTitle>Productos</ColumnTitle>
             <OptionLink to="#">PsicoTest</OptionLink>
-            <OptionLink to="#">CIDTEC</OptionLink>
+            {/* <OptionLink to="#">CIDTEC</OptionLink> */}
           </FooterLinks>
         </FooterColumn>
         <FooterColumn>
@@ -54,7 +54,7 @@ const Footer = () => {
         </FooterColumn>
       </FooterInfo>
       <FooterRights>
-        <Rights>2022 PsicoTest y todos los derechos reservados</Rights>
+        <Rights>© 2022 PsicoTest / CIDTEC y todos los derechos reservados</Rights>
       </FooterRights>
     </Container>
   );

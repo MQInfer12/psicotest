@@ -24,6 +24,10 @@ const ModalUserContainer = styled.div`
 const Columnas = styled.div`
   display: flex;
   gap: 16px;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+  }
 `;
 
 const FotoContainer = styled.div`

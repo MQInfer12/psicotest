@@ -40,7 +40,7 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
     setPuntuaciones(resPuntJson);
 
     //DEJAR DE CARGAR
-    //setLoading(false);
+    setLoading(false);
   }
 
   const borrarPreguntas = async () => {
