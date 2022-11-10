@@ -73,8 +73,8 @@ const ReactivoCard = (props) => {
         {props.descripcion}
       </PText>
       <DivButtonsTd>
-        <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
-        <DangerIconButton onClick={() => setShowSure(true)}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
+        <WhiteIconButton title="Editar reactivo" onClick={() => setShowForm(true)}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
+        <DangerIconButton title="Eliminar reactivo" onClick={() => setShowSure(true)}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
       </DivButtonsTd>
       {
         showForm &&

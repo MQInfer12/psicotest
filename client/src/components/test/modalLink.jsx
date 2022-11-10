@@ -29,7 +29,7 @@ const ModalLink = ({ id }) => {
         <InputText type="text" value={link} readOnly />
       </DivInput>
       <DivButtons>
-        <WhiteIconButton onClick={handleCopy}>
+        <WhiteIconButton title="Copiar al portapapeles" onClick={handleCopy}>
           <i className="fa-regular fa-copy"></i>
         </WhiteIconButton>
       </DivButtons>

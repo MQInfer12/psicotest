@@ -70,7 +70,7 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
     <PreguntaCreatorContainer>
       <ControlsContainer spaceBetween>
         <HeadContainer>
-          <WhiteIconButton onClick={() => setShowForm(true)} disabled={reactivos.length == 5}><i className="fa-solid fa-plus"></i></WhiteIconButton>
+          <WhiteIconButton title="Añadir reactivo" onClick={() => setShowForm(true)} disabled={reactivos.length == 5}><i className="fa-solid fa-plus"></i></WhiteIconButton>
           <PSelected>{reactivos.length} / 5</PSelected>
         </HeadContainer>
         {
@@ -91,7 +91,7 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
           save &&
           <HeadContainer>
             <ErrorCss>¡Guarda tus cambios!</ErrorCss>
-            <WhiteIconButton onClick={handleSave}><i className="fa-solid fa-plus"></i></WhiteIconButton>
+            <WhiteIconButton title="Guardar puntuaciones" onClick={handleSave}><i className="fa-solid fa-plus"></i></WhiteIconButton>
           </HeadContainer>
         }
       </ControlsContainer>

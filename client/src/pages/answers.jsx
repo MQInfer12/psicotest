@@ -117,7 +117,7 @@ const Answers = () => {
           <SearchInput type="text" placeholder="Buscar..." onChange={handleChooseFilter} />
           <ISearch className="fa-solid fa-magnifying-glass"></ISearch>
         </SearchDiv>
-        <WhiteIconButton disabled={loading} onClick={onDownload}>
+        <WhiteIconButton title="Exportar excel" disabled={loading} onClick={onDownload}>
           <i className="fa-regular fa-file-excel"></i>
         </WhiteIconButton>
         <AnswersReports
@@ -188,7 +188,7 @@ const Answers = () => {
                       </td>
                       <td>
                         <DivCenter>
-                          <WhiteIconButton onClick={() => handleClick(v.id)}>
+                          <WhiteIconButton title="Ver respuesta" onClick={() => handleClick(v.id)}>
                             <i className="fa-solid fa-eye"></i>
                           </WhiteIconButton>
                         </DivCenter>

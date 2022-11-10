@@ -276,10 +276,13 @@ const CalendarBig = () => {
                       <PDay>{day.format("DD")}</PDay>
                       {
                         user.id_rol != 1 && 
-                        <WhiteIconButton onClick={() => {
-                          setFechaSelected(day.format("MM/DD/YYYY"));
-                          setShowForm(true);
-                        }}>
+                        <WhiteIconButton 
+                          title="Añadir horario"
+                          onClick={() => {
+                            setFechaSelected(day.format("MM/DD/YYYY"));
+                            setShowForm(true);
+                          }}
+                        >
                           <i className="fa-solid fa-plus"></i>
                         </WhiteIconButton>
                       }

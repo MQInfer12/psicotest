@@ -28,9 +28,10 @@ const PreguntaCard = (props) => {
           <PLight>{props.descripcion}</PLight>
         </DivDouble>
         <DivButtonsTd>
-          <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
+          <WhiteIconButton title="Editar pregunta" onClick={() => setShowForm(true)}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
           { /* BOTON PARA IR MARCANDO LAS PREGUNTAS */}
           <WhiteIconButton 
+            title="Seleccionar pregunta"
             onClick={() => {
               if(!props.selecteds.includes(props.id)) {
                 props.setSelecteds(old => [...old, props.id]);

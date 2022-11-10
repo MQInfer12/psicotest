@@ -40,7 +40,7 @@ const TestCardBenef = (props) => {
       </ContainerIcon>
 
       <ButtonContainer>
-        <WhiteIconButton onClick={() => handleClick(props.id)}>
+        <WhiteIconButton title="Resolver test" onClick={() => handleClick(props.id)}>
           <i className="fa-solid fa-newspaper"></i>
         </WhiteIconButton>
       </ButtonContainer>

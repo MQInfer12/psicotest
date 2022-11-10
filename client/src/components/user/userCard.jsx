@@ -174,18 +174,21 @@ const UserCard = (props) => {
       </DivCardText>
       <DivCardButtons>
         <WhiteIconButton
+          title="Editar usuario"
           disabled={props.id_rol == 3}
           onClick={() => setShowForm(true)}
         >
           <i className="fa-solid fa-pencil"></i>
         </WhiteIconButton>
         <WhiteIconButton
+          title={props.estado ? "Deshabilitar usuario" : "Habilitar usuario"}
           disabled={props.id_rol == 3}
           onClick={() => cambiarHabilitado(props.id)}
         >
           {props.estado ? <i className="fa-solid fa-user"></i> : <i className="fa-solid fa-user-slash"></i>}
         </WhiteIconButton>
         <DangerIconButton 
+          title="Eliminar usuario"
           disabled={props.id_rol == 3}
           onClick={() => setShowDelete(true)}
         ><i className="fa-solid fa-trash-can"></i></DangerIconButton>

@@ -78,26 +78,26 @@ const TestCard = (props) => {
       </ContainerImg>
 
       <ButtonContainer>
-        <WhiteIconButton onClick={handleTextView}>
+        <WhiteIconButton title="Ver test" onClick={handleTextView}>
           <i className="fa-solid fa-newspaper"></i>
         </WhiteIconButton>
-        <WhiteIconButton onClick={handleClick}>
+        <WhiteIconButton title="Modificar test" onClick={handleClick}>
           <i className="fa-solid fa-pen-to-square"></i>
         </WhiteIconButton>
 
-        <WhiteIconButton onClick={() => setShowForm(true)}>
+        <WhiteIconButton title="Editar información del test" onClick={() => setShowForm(true)}>
           <i className="fa-solid fa-pencil"></i>
         </WhiteIconButton>
 
-        <WhiteIconButton onClick={() => setShowAddProfessor(true)}>
+        <WhiteIconButton title="Asignar docente" onClick={() => setShowAddProfessor(true)}>
           <i className="fa-sharp fa-solid fa-user-plus"></i>
         </WhiteIconButton>
 
-        <WhiteIconButton onClick={() => setShowUnassignProfessor(true)}>
+        <WhiteIconButton title="Desasignar docente" onClick={() => setShowUnassignProfessor(true)}>
           <i className="fa-solid fa-user-minus"></i>
         </WhiteIconButton>
 
-        <DangerIconButton onClick={() => setShowSure(true)}>
+        <DangerIconButton title="Eliminar test" onClick={() => setShowSure(true)}>
           <i className="fa-solid fa-trash-can"></i>
         </DangerIconButton>
       </ButtonContainer>

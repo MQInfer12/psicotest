@@ -72,19 +72,19 @@ const TestCard = (props) => {
 
       {idRole === 2 && (
         <ButtonContainer>
-          <WhiteIconButton onClick={() => handleClick(props.id_test)}>
+          <WhiteIconButton title="Ver test" onClick={() => handleClick(props.id_test)}>
             <i className="fa-solid fa-newspaper"></i>
           </WhiteIconButton>
 
-          <WhiteIconButton onClick={() => setShowAddBenef(true)}>
+          <WhiteIconButton title="Asignar beneficiario" onClick={() => setShowAddBenef(true)}>
             <i className="fa-sharp fa-solid fa-user-plus"></i>
           </WhiteIconButton>
 
-          <WhiteIconButton onClick={() => setShowUnassignBenef(true)}>
+          <WhiteIconButton title="Desasignar beneficiario" onClick={() => setShowUnassignBenef(true)}>
             <i className="fa-solid fa-user-minus"></i>
           </WhiteIconButton>
 
-          <WhiteIconButton onClick={() => setShowLink(true)}>
+          <WhiteIconButton title="Compartir enlace" onClick={() => setShowLink(true)}>
             <i className="fa-solid fa-link"></i>
           </WhiteIconButton>
         </ButtonContainer>

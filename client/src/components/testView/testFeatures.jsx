@@ -222,8 +222,9 @@ const TestFeatures = ({ idTest }) => {
                   {
                     user.id_rol == 3 &&
                     <ButtonContainer className='botones'>
-                      <WhiteIconButton onClick={() => {setFeatureSelected(v); setShowUpdate(true);}}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
-                      <DangerIconButton onClick={() => {setFeatureSelected(v); setShowDelete(true);}}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
+                      <WhiteIconButton 
+                      title="Editar característica" onClick={() => {setFeatureSelected(v); setShowUpdate(true);}}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
+                      <DangerIconButton title="Eliminar característica" onClick={() => {setFeatureSelected(v); setShowDelete(true);}}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
                     </ButtonContainer>
                   }
                 </IndexContainer>

@@ -60,10 +60,11 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
   return (
     <PreguntaCreatorContainer>
       <ControlsContainer spaceBetween>
-        <WhiteIconButton onClick={() => setShowForm(true)}><i className="fa-solid fa-plus"></i></WhiteIconButton>
+        <WhiteIconButton title="Añadir pregunta" onClick={() => setShowForm(true)}><i className="fa-solid fa-plus"></i></WhiteIconButton>
         <DeleteContainer>
           <PSelected>{selecteds.length} seleccionadas</PSelected>
-          <DangerIconButton  
+          <DangerIconButton 
+            title="Eliminar preguntas seleccionadas" 
             disabled={selecteds.length == 0} 
             onClick={() => setShowSure(true)}
           ><i className="fa-solid fa-trash-can"></i></DangerIconButton>

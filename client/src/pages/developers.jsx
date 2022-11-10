@@ -4,9 +4,14 @@ import Navbar from '../components/landing/navbar'
 import { useWindowHeight } from '../hooks/useWindowHeight';
 import MauriPhoto from "../assets/developers/mauri.jpg";
 import JosePhoto from "../assets/developers/joseZambrana.jpg";
+import { useEffect } from 'react';
 
 const Developers = () => {
   const windowHeight = useWindowHeight();
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
 
   return (
     <>
