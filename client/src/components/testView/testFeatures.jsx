@@ -2,11 +2,11 @@ import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../context/userContext";
 import styled from "styled-components";
 import { addCaracteristica, getCaracteristicasByTest, updateCaracteristica, deleteCaracteristica } from "../../services/caracteristica";
-import { DangerIconButton, WhiteButton, WhiteIconButton } from "../../styles/formularios";
+import { DangerIconButton, WhiteButton, WhiteIconButton } from "../../styles/globals/formularios";
 import Modal from "../globals/modal";
 import SureModal from "../globals/sureModal";
 import ModalFeature from "./modalFeature";
-import { BlackTextLoader, GrayTextLoader, PurpleTextLoader } from "../../styles/loaders";
+import { BlackTextLoader, GrayTextLoader, PurpleTextLoader } from "../../styles/globals/loaders";
 
 const TestInfoContainer = styled.div`
   border-radius: 10px;

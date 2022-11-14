@@ -1,5 +1,5 @@
 import React from 'react';
-import { DivDouble, PLight, PLightDouble, ResponsiveTr, ThNumber } from '../../styles/table';
+import { DivDouble, PLight, PLightDouble, ResponsiveTr, ThNumber } from '../../styles/globals/table';
 
 const MiniRow = ({index, pregunta, respuesta, cantReactivos}) => {
   return (

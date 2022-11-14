@@ -1,4 +1,4 @@
-import { Authorization } from "../env/github";
+import { Authorization } from "../github";
 
 export const getCommits = async () => {
   try {

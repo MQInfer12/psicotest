@@ -10,7 +10,7 @@ import {
   GrayTextLoader,
   PurpleTextLoader,
   TextLoaderContainer,
-} from "../styles/loaders";
+} from "../styles/globals/loaders";
 import decipherId from "../utilities/decipher";
 import { useOutletContext } from "react-router-dom";
 import TestChat from "../components/testView/testViewChat";

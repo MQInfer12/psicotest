@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { WhiteIconButton } from "../../styles/formularios";
+import { WhiteIconButton } from "../../styles/globals/formularios";
 import codeId from "../../utilities/code";
 
 const TestCardBenef = (props) => {

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { DangerButton ,WhiteButton } from "../../styles/formularios";
+import { DangerButton ,WhiteButton } from "../../styles/globals/formularios";
 
 const SureModal = ({ cerrar, sure, text }) => {
   return (

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { scheduleAppoinment } from "../../services/cita";
-import { FormContainer, PurpleButton } from "../../styles/formularios";
+import { FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import { UserContext } from "../../context/userContext";
 
 const ModalAsignarCita = ({ actualizar, horario }) => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { DangerIconButton, WhiteIconButton } from "../../../styles/formularios";
+import { DangerIconButton, WhiteIconButton } from "../../../styles/globals/formularios";
 import Modal from "../../globals/modal";
 import ModalReactivo from "./modalReactivo";
 import { deleteReactivo, updateReactivo } from "../../../services/reactivo";

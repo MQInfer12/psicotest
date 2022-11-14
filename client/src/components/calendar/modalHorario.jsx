@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { DangerButton, FormContainer, PurpleButton } from "../../styles/formularios";
+import { DangerButton, FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import FormInputsText from "../globals/formInputsText";
 import { UseForm } from "../../hooks/useForm";
 import { validationsForm } from "../../validations/schedule";

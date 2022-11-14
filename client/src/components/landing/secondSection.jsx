@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { device } from '../../styles/devices';
-import StatsPhone from '../../images/landing/statsPhone.png';
+import { device } from '../../styles/globals/devices';
+import StatsPhone from '../../assets/landing/statsPhone.png';
 
 const SecondSection = () => {
   return (

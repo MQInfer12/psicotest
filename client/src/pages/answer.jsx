@@ -7,11 +7,11 @@ import Cargando from "../components/globals/cargando";
 import { useDownloadExcel } from "react-export-table-to-excel";
 import decipherId from "../utilities/decipher";
 import AnswerReports from "../components/answer/answerReports";
-import { WhiteButton } from "../styles/formularios";
+import { WhiteButton } from "../styles/globals/formularios";
 import { 
   AnswersContainer, TableContainer, TableAnswers, 
   ThNumberal, ThAnswer
-} from "../styles/table";
+} from "../styles/globals/table";
 import BigRow from "../components/answer/bigRow";
 import MiniRow from "../components/answer/miniRow";
 

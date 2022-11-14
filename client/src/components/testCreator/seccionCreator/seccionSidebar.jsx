@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { PurpleButton, WhiteButton, DangerButton, WhiteIconButton } from "../../../styles/formularios";
+import { PurpleButton, WhiteButton, DangerButton, WhiteIconButton } from "../../../styles/globals/formularios";
 import { addSeccion, deleteSeccion } from "../../../services/seccion";
 import Modal from "../../globals/modal";
 import SureModal from "../../globals/sureModal";

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { device } from '../../styles/devices';
+import { device } from '../../styles/globals/devices';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {

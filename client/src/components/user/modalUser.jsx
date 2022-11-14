@@ -7,7 +7,7 @@ import {
   FormContainer,
   PurpleButton,
   WhiteButton,
-} from "../../styles/formularios";
+} from "../../styles/globals/formularios";
 import FormInputsText from "../globals/formInputsText";
 import FormInputsSelect from "../globals/formInputsSelect";
 import { db } from "../../firebase";

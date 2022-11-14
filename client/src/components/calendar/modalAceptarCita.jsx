@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { acceptAppointment, getAppointByHorario } from '../../services/cita';
-import { WhiteButton } from '../../styles/formularios';
+import { WhiteButton } from '../../styles/globals/formularios';
 import Cargando from '../globals/cargando';
 
 const ModalAceptarCita = ({horario, actualizar}) => {
@@ -18,7 +18,6 @@ const ModalAceptarCita = ({horario, actualizar}) => {
 
   const AceptarCita = async (id) => {
     const res = await acceptAppointment(horario.id_horario, id);
-    console.log(res.ok);
     if(res.ok) {
       actualizar();
     }

@@ -12,7 +12,8 @@ const ModalRegister = ({ goTo, form }) => {
     const res = await signIn(form);
     if(res.ok) {
       const profile = await getProfile();
-      setUser(profile);
+      const resJson = await profile?.json();
+      setUser(resJson);
       navigate(goTo ? goTo.replaceAll("_47slash_", "/") : "/dashboard/tests");
     } 
   }

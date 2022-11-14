@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
-import DefaultPhoto from "../../images/defaultPhoto.jpg";
+import DefaultPhoto from "../../assets/profilePic/defaultPhoto.jpg";
 import { db } from "../../firebase";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
 import {

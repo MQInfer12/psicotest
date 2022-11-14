@@ -1,6 +1,6 @@
 import React from "react";
 import { cancelAppoinment } from "../../services/cita";
-import { DangerButton, FormContainer } from "../../styles/formularios";
+import { DangerButton, FormContainer } from "../../styles/globals/formularios";
 
 const ModalCancelarCita = ({ actualizar, cita }) => {
   const handleAppointment = async () => {

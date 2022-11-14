@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import Logo from "../../images/logopsico.png";
+import Logo from "../../assets/dashboard/logopsico.png";
 import { NavLink } from "react-router-dom";
 import LogoutButton from "./logoutButton";
-import { device } from "../../styles/devices";
+import { device } from "../../styles/globals/devices";
 import { useWindowHeight } from "../../hooks/useWindowHeight";
 
 const SideBar = ({ rol, setUser, openNav, setOpenNav }) => {

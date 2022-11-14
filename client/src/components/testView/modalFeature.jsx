@@ -1,5 +1,5 @@
 import React from "react";
-import { FormContainer, PurpleButton } from "../../styles/formularios";
+import { FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import { UseForm } from "../../hooks/useForm";
 import { initialForm, validationsForm } from "../../validations/feature";
 import FormInputsText from "../globals/formInputsText";

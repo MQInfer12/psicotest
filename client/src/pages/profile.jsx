@@ -11,7 +11,7 @@ import {
   InputSelect,
   PurpleButton,
   WhiteButton,
-} from "../styles/formularios";
+} from "../styles/globals/formularios";
 import FormInputsText from "../components/globals/formInputsText";
 import { updateUser } from "../services/usuario";
 import { db } from "../firebase";
@@ -32,7 +32,8 @@ const Profile = () => {
 
   const actualizar = async () => {
     const newUser = await getProfile();
-    setUser(newUser);
+    const resJson = await newUser?.json();
+    setUser(resJson);
     setProfilePics(old => ({
       ...old,
       [user.id]: form.perfil 

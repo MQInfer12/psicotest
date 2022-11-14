@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { UserContext } from "../../context/userContext";
 import { getAllApoinments, getAppointByUser } from "../../services/cita";
 import { addHorario, getTime, getTimeWithWhoHaveDate, updateHorario } from "../../services/horario";
-import { PurpleButton } from "../../styles/formularios";
+import { PurpleButton } from "../../styles/globals/formularios";
 import Modal from "../globals/modal";
 import ModalHorario from "./modalHorario";
 import ModalAsignarCita from "./modalAsignarCita";

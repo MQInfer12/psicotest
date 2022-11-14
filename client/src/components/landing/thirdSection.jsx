@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { device } from '../../styles/devices';
+import { device } from '../../styles/globals/devices';
 import { Link } from 'react-router-dom';
-import StatsPhone2 from '../../images/landing/statsPhone2.png'
+import StatsPhone2 from '../../assets/landing/statsPhone2.png'
 
 const ThirdSection = () => {
   return (

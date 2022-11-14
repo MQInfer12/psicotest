@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { deleteProfessorAssigned, getProfessorAssigned } from "../../services/test";
-import { FormContainer, PurpleButton } from "../../styles/formularios";
+import { FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import Cargando from "../globals/cargando";
 import ProfilePic from "../globals/profilePic";
 

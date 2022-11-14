@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { deleteBenefAssigned, getBeneficiaryAssign } from "../../services/test";
 import styled from "styled-components";
 import ProfilePic from "../globals/profilePic";
-import { FormContainer, PurpleButton } from "../../styles/formularios";
+import { FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import Cargando from "../globals/cargando";
 
 const DivModal = styled.div`

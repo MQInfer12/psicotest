@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { WhiteIconButton } from "../../../styles/formularios";
+import { WhiteIconButton } from "../../../styles/globals/formularios";
 import Cargando from "../../globals/cargando";
 import { addReactivo, getReactivosBySeccion } from "../../../services/reactivo";
 import { getPuntuacionesByReactivos, massUpdatePuntuaciones } from "../../../services/puntuacion";
-import { ErrorCss } from "../../../styles/formularios";
+import { ErrorCss } from "../../../styles/globals/formularios";
 import Modal from "../../globals/modal";
 import Pagination from "../pagination";
 import ModalReactivo from "./modalReactivo";
@@ -12,7 +12,7 @@ import ReactivoCard from "./reactivoCard";
 import { 
   ControlsContainer, TableContainer, TableAnswers,
   ThNumberal, ThNumber, ResponsiveTr
-} from "../../../styles/table";
+} from "../../../styles/globals/table";
 import { useTableHeight } from "../../../hooks/useTableHeight";
 
 const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, setPuntuaciones, preguntas }) => {

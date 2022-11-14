@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Pagination from "../components/answers/pagination";
 import { useNavigate } from "react-router-dom";
-import { WhiteIconButton } from "../styles/formularios";
+import { WhiteIconButton } from "../styles/globals/formularios";
 import { getRespuestas, getRespuestasByDocente } from "../services/respuesta";
 import { UserContext } from "../context/userContext";
 import Cargando from "../components/globals/cargando";
@@ -15,7 +15,7 @@ import {
   ThNumberal, ThAnswer, ThNumber, ResponsiveTr,
   DivDouble, DivCenter,
   PNombre, PLight, PPuntaje, PSobre
-} from "../styles/table";
+} from "../styles/globals/table";
 import { useTableHeight } from "../hooks/useTableHeight";
 
 const Answers = () => {

@@ -5,7 +5,7 @@ import Modal from "../globals/modal";
 import ModalTest from "./modalTest";
 import { deleteTest, updateTest } from "../../services/test";
 import { useNavigate } from "react-router-dom";
-import { WhiteIconButton, DangerIconButton } from "../../styles/formularios";
+import { WhiteIconButton, DangerIconButton } from "../../styles/globals/formularios";
 import ModalAssignProfessor from "./modalAssignProfessor";
 import ModalUnassign from "./modalUnassignProfessor";
 import SureModal from "../globals/sureModal";

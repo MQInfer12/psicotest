@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
-import { PurpleButton, WhiteIconButton } from "../../styles/formularios";
+import { PurpleButton, WhiteIconButton } from "../../styles/globals/formularios";
 import { addHorario, getTime, getTimeWithWhoHaveDate, updateHorario } from "../../services/horario";
 import { UserContext } from "../../context/userContext";
 import Modal from "../globals/modal";

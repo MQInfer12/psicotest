@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
-import { device } from '../../styles/devices';
+import { device } from '../../styles/globals/devices';
 import { useWindowHeight } from '../../hooks/useWindowHeight';
 
 const OutletContainer = ({setTitlePage, setCalendar, setLinks}) => {

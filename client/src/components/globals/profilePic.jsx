@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
-import DefaultPhoto from "../../images/defaultPhoto.jpg";
+import DefaultPhoto from "../../assets/profilePic/defaultPhoto.jpg";
 import { ProfilePicContext } from "../../context/profilePicContext";
 import { getPic } from "../../services/usuario";
 import Cargando from "./cargando";

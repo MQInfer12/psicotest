@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { PurpleButton, WhiteButton } from "../../styles/formularios";
+import { PurpleButton, WhiteButton } from "../../styles/globals/formularios";
 
 const DivAlerta = styled.div`
   display: flex;

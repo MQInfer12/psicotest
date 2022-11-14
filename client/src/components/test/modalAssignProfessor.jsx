@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { addProfessorToTest, getProfessorNotAssigned } from "../../services/test";
 import ProfilePic from "../globals/profilePic";
-import { FormContainer, PurpleButton } from "../../styles/formularios";
+import { FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import Cargando from "../globals/cargando";
 
 const DivModal = styled.div`
@@ -76,8 +76,9 @@ const ModalAssignProfessor = ({ id, actualizar }) => {
       vecAux.push(value);
     }
     const obj = Object.assign({}, vecAux);
-    const resp = await addProfessorToTest(obj, id);
-    if(resp.mensaje === "se guardo correctamente"){
+    const res = await addProfessorToTest(obj, id);
+    const resJson = await res?.json();
+    if(resJson.mensaje === "se guardo correctamente"){
         actualizar();
     };
   };

@@ -7,7 +7,7 @@ import {
   PText,
   InputText,
   WhiteIconButton,
-} from "../../styles/formularios";
+} from "../../styles/globals/formularios";
 import codeId from "../../utilities/code";
 
 const ModalLink = ({ id }) => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { DangerIconButton, WhiteIconButton } from "../../styles/formularios";
+import { DangerIconButton, WhiteIconButton } from "../../styles/globals/formularios";
 import { ableUser, updateUser, deleteUser as serviceDeleteUser } from "../../services/usuario";
 import Modal from "../globals/modal";
 import ModalUser from "./modalUser";

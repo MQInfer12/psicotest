@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { device } from "../../styles/devices";
-import FirstSectionImg from "../../images/landing/womanPhone.png";
+import { device } from "../../styles/globals/devices";
+import FirstSectionImg from "../../assets/landing/womanPhone.png";
 import { getCommits } from "../../services/github";
 
 const FirstSection = () => {

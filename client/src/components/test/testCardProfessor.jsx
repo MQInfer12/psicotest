@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ProfilePic from "../globals/profilePic";
 import Modal from "../globals/modal";
 import { useNavigate } from "react-router-dom";
-import { WhiteIconButton } from "../../styles/formularios";
+import { WhiteIconButton } from "../../styles/globals/formularios";
 import ModalAssignBenef from "./modalAssignBenef";
 import ModalUnassign from "./modalUnassignBenef";
 import { UserContext } from "../../context/userContext";

@@ -1,5 +1,5 @@
 import React from "react";
-import { DivInput, DivText, PText, InputText, ErrorCss } from "../../styles/formularios";
+import { DivInput, DivText, PText, InputText, ErrorCss } from "../../styles/globals/formularios";
 
 const FormInputsText = ({ data, handleChange }) => {
   return (

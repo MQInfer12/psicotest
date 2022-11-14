@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import patronGrupo from '../../images/patrongrupo.jpg';
+import patronGrupo from '../../assets/grupo/patrongrupo.jpg';
 import Modal from "../globals/modal";
 import ModalGroup from "./modalGroup";
 import { ableGrupo, updateGrupo } from '../../services/grupo';

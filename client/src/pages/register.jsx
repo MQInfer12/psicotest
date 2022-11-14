@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { device } from "../styles/devices";
+import { device } from "../styles/globals/devices";
 import { Link } from "react-router-dom";
 import { UseForm } from "../hooks/useForm";
 import { signUp } from "../services/auth";
 import { initialForm, validationsForm } from "../validations/register";
-import { ErrorCss } from "../styles/formularios";
+import { ErrorCss } from "../styles/globals/formularios";
 import Modal from "../components/globals/modal";
 import ModalRegister from "../components/register/modalRegister";
 import { db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
-import ImagenLogin from "../images/imglogin.jpg";
+import ImagenLogin from "../assets/login/imglogin.jpg";
 import Navbar from "../components/landing/navbar";
 import { useWindowHeight } from "../hooks/useWindowHeight";
 

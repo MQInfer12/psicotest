@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { WhiteIconButton } from "../../../styles/formularios";
+import { WhiteIconButton } from "../../../styles/globals/formularios";
 import { updatePregunta } from "../../../services/pregunta";
 import Modal from "../../globals/modal";
 import ModalPregunta from "./modalPregunta";
 import { 
   ResponsiveTr, ThNumber, DivDouble, PLight
-} from "../../../styles/table";
+} from "../../../styles/globals/table";
 
 const PreguntaCard = (props) => {
   const [showForm, setShowForm] = useState(false);

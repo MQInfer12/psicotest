@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { WhiteIconButton } from "../../styles/formularios";
+import { WhiteIconButton } from "../../styles/globals/formularios";
 
 const Modal = ({ cerrar, children, titulo }) => {
   return (

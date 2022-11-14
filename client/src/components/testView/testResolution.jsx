@@ -5,7 +5,7 @@ import { getFullTest } from "../../services/test";
 import { updateRespuesta } from "../../services/respuesta";
 import Modal from "../globals/modal";
 import ConfirmModal from "../globals/confirmModal";
-import { BlackTextLoader } from "../../styles/loaders";
+import { BlackTextLoader } from "../../styles/globals/loaders";
 import RadioButton from "./radioButton";
 import PageSlider from "./pageSlider";
 

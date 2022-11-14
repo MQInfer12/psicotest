@@ -5,7 +5,7 @@ import {
 } from "../../services/test";
 import styled from "styled-components";
 import ProfilePic from "../globals/profilePic";
-import { FormContainer, PurpleButton } from "../../styles/formularios";
+import { FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import Cargando from "../globals/cargando";
 import { UserContext } from "../../context/userContext";
 import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
@@ -83,7 +83,8 @@ const ModalAssignProfessor = ({ id, actualizar }) => {
 
   const saveData = async () => {
     const obj = Object.assign({}, checSelected);
-    const resp = await addBenefToTest(obj, id);
+    const res = await addBenefToTest(obj, id);
+    const resJson = await res?.json();
 
     idsSelected.forEach(async (val) => {
       const combinedId =
@@ -115,7 +116,7 @@ const ModalAssignProfessor = ({ id, actualizar }) => {
       }
     })
 
-    if (resp.mensaje === "se guardo correctamente") {
+    if (resJson.mensaje === "se guardo correctamente") {
       actualizar();
     } 
   };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { initialForm, validationsForm } from '../../validations/group';
 import { UseForm } from '../../hooks/useForm';
-import { FormContainer, PurpleButton } from "../../styles/formularios";
+import { FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import FormInputsText from '../globals/formInputsText';
 
 const ModalGroup = ({ call, actualizar, id_docente, funcion, group }) => {

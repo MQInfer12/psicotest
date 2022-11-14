@@ -33,8 +33,7 @@ export const getProfessorTests = async (id) => {
         accept: "application/json",
       },
     });
-    const resJson = await response.json();
-    return resJson;
+    return response;
   } catch (error) {
     console.log(error);
   }
@@ -73,8 +72,7 @@ export const addProfessorToTest = async (obj, id_test) => {
         id_test: id_test,
       }),
     });
-    const resJson = await response.json();
-    return resJson;
+    return response;
   } catch (error) {
     console.log(error);
   }
@@ -254,8 +252,7 @@ export const addBenefToTest = async (obj, id_docente_test) => {
         id_docente_test: id_docente_test,
       }),
     });
-    const resJson = await response.json();
-    return resJson;
+    return response;
   } catch (error) {
     console.log(error);
   }

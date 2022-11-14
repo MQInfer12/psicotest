@@ -8,7 +8,7 @@ import { UserContext } from "../context/userContext";
 import { addTest, getTests, getTestsToBenef, getTestsToProfessor } from "../services/test";
 import TestCardProfessor from "../components/test/testCardProfessor";
 import TestCardBenef from "../components/test/testCardBenef";
-import { PurpleButton } from "../styles/formularios";
+import { PurpleButton } from "../styles/globals/formularios";
 import { useWindowHeight } from "../hooks/useWindowHeight";
 
 const Test = () => {

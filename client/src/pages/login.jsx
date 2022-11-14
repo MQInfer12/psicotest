@@ -3,11 +3,11 @@ import { UserContext } from "../context/userContext";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { initialForm, validationsForm } from "../validations/login";
 import styled from "styled-components";
-import { device } from "../styles/devices";
+import { device } from "../styles/globals/devices";
 import { UseForm } from "../hooks/useForm";
 import { getProfile, signIn } from "../services/auth";
-import { ErrorCss } from "../styles/formularios";
-import ImagenLogin from "../images/imglogin.jpg";
+import { ErrorCss } from "../styles/globals/formularios";
+import ImagenLogin from "../assets/login/imglogin.jpg";
 import Navbar from "../components/landing/navbar";
 import { useEffect } from "react";
 import { useWindowHeight } from "../hooks/useWindowHeight"; 
@@ -24,7 +24,8 @@ const Login = () => {
     signIn,
     async () => {
       const profile = await getProfile();
-      setUser(profile);
+      const resJson = await profile?.json();
+      setUser(resJson);
       navigate(goTo ? goTo.replaceAll("_47slash_", "/") : "/dashboard/tests");
     }
   );

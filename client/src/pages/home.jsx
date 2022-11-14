@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { useWindowHeight } from '../hooks/useWindowHeight';
-import Secret from '../images/home.mp3';
+import Secret from '../assets/home/home.mp3';
 
 const DivEntero = styled.div`
   height: ${props => props.height};

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ProfilePic from "../globals/profilePic";
 import CalendarMini from "../calendar/calendarMini";
-import { device } from "../../styles/devices";
+import { device } from "../../styles/globals/devices";
 import { useWindowHeight } from "../../hooks/useWindowHeight";
 import { useNavigate } from "react-router-dom";
 import Notifications from "./notifications/notifications";
@@ -16,8 +16,8 @@ const RightBar = ({ user, calendar, openNav, setOpenNav }) => {
       <UpbarSquares>
         <UpbarName>{user?.nombre}{/* {user?.id} */}</UpbarName>
         <Notifications />
-        <PhotoContainer onClick={() => {navigate('/dashboard/profile'); window.scroll(0, 0);}}>
-          <ProfilePic 
+        <PhotoContainer onClick={() => { navigate('/dashboard/profile'); window.scroll(0, 0); }}>
+          <ProfilePic
             width="52px"
             height="52px"
             id={user?.id}
@@ -39,8 +39,8 @@ const RightBar = ({ user, calendar, openNav, setOpenNav }) => {
 export default RightBar;
 
 const RightContainer = styled.aside`
-  background-color: ${props => props.calendar? "#FFFFFF" : "transparent"};
-  position: ${props => props.calendar? "fixed" : "absolute"};
+  background-color: ${props => props.calendar ? "#FFFFFF" : "transparent"};
+  position: ${props => props.calendar ? "fixed" : "absolute"};
   height: ${props => props.calendar && props.height};
   right: 0;
   width: 433px;
@@ -59,7 +59,7 @@ const RightContainer = styled.aside`
     width: 100%;
   }
 `;
- 
+
 const UpbarSquares = styled.div`
   height: 157px;
   padding: 47px 40px 31px 20px;

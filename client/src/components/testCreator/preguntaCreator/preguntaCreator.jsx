@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { DangerIconButton, WhiteIconButton } from "../../../styles/formularios";
+import { DangerIconButton, WhiteIconButton } from "../../../styles/globals/formularios";
 import Cargando from "../../globals/cargando";
 import { addPregunta,getPreguntasBySeccion, massDestroy } from "../../../services/pregunta";
 import { getPuntuacionesByReactivos } from "../../../services/puntuacion";
@@ -12,7 +12,7 @@ import SureModal from "../../globals/sureModal";
 import { 
   ControlsContainer, TableContainer, TableAnswers,
   ThNumberal, ThAnswer
-} from "../../../styles/table";
+} from "../../../styles/globals/table";
 import { useTableHeight } from "../../../hooks/useTableHeight";
 
 const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPuntuaciones }) => {

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
-import { device } from "../../styles/devices";
+import { device } from "../../styles/globals/devices";
 import OutletContainer from "./outletContainer";
 
 const CenterScreen = ({ titlePage, setTitlePage, calendar, setCalendar, links, setLinks, openNav, setOpenNav }) => {

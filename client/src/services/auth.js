@@ -63,8 +63,7 @@ export const getProfile = async () => {
       headers: { "Content-Type": "application/json", "token": token },
       credentials: "include",
     });
-    const resJson = await response?.json();
-    return resJson;
+    return response;
   } catch (error) {
     return;
   }
