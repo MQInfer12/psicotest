@@ -7,14 +7,28 @@ import ModalPregunta from "./modalPregunta";
 import { 
   ResponsiveTr, ThNumber, DivDouble, PLight
 } from "../../../styles/globals/table";
+import { useModal } from "../../../hooks/useModal";
 
 const PreguntaCard = (props) => {
-  const [showForm, setShowForm] = useState(false);
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
     props.selecteds.includes(props.id)? setSelected(true) : setSelected(false);
   })
+
+  const {openModal, closeModal} = useModal(
+    "Editar pregunta",
+    <ModalPregunta 
+      call={updatePregunta}
+      actualizar={() => {
+        props.llenarPreguntas();
+        closeModal();
+      }}
+      funcion="editar"
+      pregunta={props}
+      idSeccion={props.id_seccion}
+    />
+  )
 
   return (
     <ResponsiveTr 
@@ -28,7 +42,7 @@ const PreguntaCard = (props) => {
           <PLight>{props.descripcion}</PLight>
         </DivDouble>
         <DivButtonsTd>
-          <WhiteIconButton title="Editar pregunta" onClick={() => setShowForm(true)}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
+          <WhiteIconButton title="Editar pregunta" onClick={openModal}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
           { /* BOTON PARA IR MARCANDO LAS PREGUNTAS */}
           <WhiteIconButton 
             title="Seleccionar pregunta"
@@ -51,21 +65,6 @@ const PreguntaCard = (props) => {
             }
           </WhiteIconButton>
         </DivButtonsTd>
-        {
-          showForm &&
-          <Modal titulo="Editar pregunta" cerrar={() => setShowForm(false)} >
-            <ModalPregunta 
-              call={updatePregunta}
-              actualizar={() => {
-                props.llenarPreguntas();
-                setShowForm(false);
-              }}
-              funcion="editar"
-              pregunta={props}
-              idSeccion={props.id_seccion}
-            />
-          </Modal>
-        }
       </td>
     </ResponsiveTr>
   )

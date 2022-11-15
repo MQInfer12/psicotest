@@ -38,9 +38,7 @@ const Messages = () => {
     <Container ref={MessageContainerRef}>
       {
         loading ? (
-          <CargandoContainer>
-            <Cargando />
-          </CargandoContainer>
+          <Cargando container />
         ) : (
           <div className="messages">
             {messagesEstate.map((v, i) => (
@@ -54,10 +52,6 @@ const Messages = () => {
 };
 
 export default Messages;
-
-const CargandoContainer = styled.div`
-  height: 100%;
-`;
 
 const Container = styled.div`
   background-color: #ddddf7;

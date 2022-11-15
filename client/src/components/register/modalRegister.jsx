@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { getProfile, signIn } from "../../services/auth";
 
-const ModalRegister = ({ goTo, form }) => {
+const ModalRegister = ({ goTo, form, cerrar }) => {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
 
@@ -15,6 +15,7 @@ const ModalRegister = ({ goTo, form }) => {
       const resJson = await profile?.json();
       setUser(resJson);
       navigate(goTo ? goTo.replaceAll("_47slash_", "/") : "/dashboard/tests");
+      cerrar();
     } 
   }
 

@@ -4,7 +4,6 @@ import { DangerIconButton, WhiteIconButton } from "../../../styles/globals/formu
 import Cargando from "../../globals/cargando";
 import { addPregunta,getPreguntasBySeccion, massDestroy } from "../../../services/pregunta";
 import { getPuntuacionesByReactivos } from "../../../services/puntuacion";
-import Modal from "../../globals/modal";
 import ModalPregunta from "./modalPregunta";
 import PreguntaCard from "./preguntaCard";
 import Pagination from "../pagination";
@@ -14,11 +13,10 @@ import {
   ThNumberal, ThAnswer
 } from "../../../styles/globals/table";
 import { useTableHeight } from "../../../hooks/useTableHeight";
+import { useModal } from "../../../hooks/useModal";
 
 const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPuntuaciones }) => {
   const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const [showSure, setShowSure] = useState(false);
   const [preguntasPage, setPreguntasPage] = useState(1);
   const [selecteds, setSelecteds] = useState([]);
 
@@ -57,42 +55,39 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
     llenarPreguntas();
   }, []);
 
+  const { openModal: openAdd, closeModal: closeAdd } = useModal(
+    "Añadir pregunta",
+    <ModalPregunta
+      call={addPregunta}
+      actualizar={() => {
+        llenarPreguntas();
+        closeAdd();
+      }}
+      funcion="añadir"
+      idSeccion={idSeccion}
+    />
+  )
+  const { openModal: openDelete, closeModal: closeDelete } = useModal(
+    "Eliminar preguntas",
+    <SureModal
+      cerrar={() => closeDelete()}
+      sure={borrarPreguntas}
+      text={"Se eliminarán " + selecteds.length + " preguntas permanentemente"}
+    />
+  )
+
   return (
     <PreguntaCreatorContainer>
       <ControlsContainer spaceBetween>
-        <WhiteIconButton title="Añadir pregunta" onClick={() => setShowForm(true)}><i className="fa-solid fa-plus"></i></WhiteIconButton>
+        <WhiteIconButton title="Añadir pregunta" onClick={openAdd}><i className="fa-solid fa-plus"></i></WhiteIconButton>
         <DeleteContainer>
           <PSelected>{selecteds.length} seleccionadas</PSelected>
           <DangerIconButton 
             title="Eliminar preguntas seleccionadas" 
             disabled={selecteds.length == 0} 
-            onClick={() => setShowSure(true)}
+            onClick={openDelete}
           ><i className="fa-solid fa-trash-can"></i></DangerIconButton>
         </DeleteContainer>
-        {
-          showForm &&
-          <Modal titulo="Añadir pregunta" cerrar={() => setShowForm(false)}>
-            <ModalPregunta
-              call={addPregunta}
-              actualizar={() => {
-                llenarPreguntas();
-                setShowForm(false);
-              }}
-              funcion="añadir"
-              idSeccion={idSeccion}
-            />
-          </Modal>
-        }
-        {
-          showSure &&
-          <Modal titulo="Eliminar preguntas" cerrar={() => setShowSure(false)}>
-            <SureModal
-              cerrar={() => setShowSure(false)}
-              sure={borrarPreguntas}
-              text={"Se eliminarán " + selecteds.length + " preguntas permanentemente"}
-            />
-          </Modal>
-        }
       </ControlsContainer>
       <TableContainer hideX ref={tableHeightRef}>
         <TableAnswers>

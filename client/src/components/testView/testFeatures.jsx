@@ -1,12 +1,86 @@
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../context/userContext";
 import styled from "styled-components";
-import { addCaracteristica, getCaracteristicasByTest, updateCaracteristica, deleteCaracteristica } from "../../services/caracteristica";
-import { DangerIconButton, WhiteButton, WhiteIconButton } from "../../styles/globals/formularios";
-import Modal from "../globals/modal";
-import SureModal from "../globals/sureModal";
+import { addCaracteristica, getCaracteristicasByTest } from "../../services/caracteristica";
+import { WhiteButton } from "../../styles/globals/formularios";
 import ModalFeature from "./modalFeature";
 import { BlackTextLoader, GrayTextLoader, PurpleTextLoader } from "../../styles/globals/loaders";
+import { useModal } from "../../hooks/useModal";
+import FeatureCard from "./featureCard";
+
+const TestFeatures = ({ idTest }) => {
+  const { user } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
+  const [features, setFeatures] = useState([]);
+
+  const llenarCaracteristicas = async () => {
+    const res = await getCaracteristicasByTest(idTest);
+    const resJson = await res?.json();
+    setFeatures(resJson);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    if(idTest) {
+      llenarCaracteristicas();
+    }
+  }, [idTest]);
+
+  const { openModal: openAdd, closeModal: closeAdd } = useModal(
+    "Añadir característica",
+    <ModalFeature
+      funcion="añadir"
+      call={addCaracteristica}
+      actualizar={() => {
+        llenarCaracteristicas();
+        closeAdd();
+      }}
+      idTest={idTest}
+    />
+  );
+
+  return (
+    <TestInfoContainer>
+      <TestInfoTitle>Características</TestInfoTitle>
+      {
+        user.id_rol == 3 &&
+        <WhiteButton onClick={openAdd}>Añadir</WhiteButton>
+      }
+      <Features>
+        {
+          loading ? (
+            Array(3).fill('').map((v, i) => (
+              <FeatureContainer key={i}>
+                <IndexContainer>
+                  <FeatureIndexContainer>
+                    <PurpleTextLoader width="25px" />
+                  </FeatureIndexContainer>
+                  <FeatureLine></FeatureLine>
+                </IndexContainer>
+                <IndexContainer>
+                  <FeatureTitleContainer>
+                    <BlackTextLoader width="150px" fontSize="20px" />
+                  </FeatureTitleContainer>
+                  <FeatureDescripcionContainer>
+                    <GrayTextLoader fontSize="16px" />
+                    <GrayTextLoader fontSize="16px" />
+                    <GrayTextLoader fontSize="16px" />
+                  </FeatureDescripcionContainer>
+                </IndexContainer>
+              </FeatureContainer>
+            ))
+          ) : (
+            features.map((v, i) => (
+              <FeatureCard key={i} index={i} v={v} llenarCaracteristicas={llenarCaracteristicas} user={user} />
+            ))
+          )
+        }
+      </Features>
+    </TestInfoContainer>
+  )
+}
+
+export default TestFeatures;
 
 const TestInfoContainer = styled.div`
   border-radius: 10px;
@@ -53,41 +127,9 @@ const IndexContainer = styled.div`
   position: relative;
 `;
 
-const FeatureIndex = styled.h3`
-  width: 100%;
-  text-align: center;
-  font-size: 20px;
-  font-weight: 600;
-  color: #660BE1;
-  background-color: #FFFFFF;
-  z-index: 1;
-`;
-
 const FeatureLine = styled.span`
   height: 60px;
   border-left: 1px solid #D9D9D9;
-`;
-
-const FeatureTitle = styled.h2`
-  width: 100%;
-  font-size: 20px;
-  font-weight: 600;
-`;
-
-const FeatureDescription = styled.p`
-  font-size: 16px;
-  font-weight: 400;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  position: absolute;
-  top: 0;
-  transition: all 0.5s;
-  transform: translateY(-45px);
 `;
 
 const FeatureIndexContainer = styled.div`
@@ -113,132 +155,3 @@ const FeatureDescripcionContainer = styled.div`
   flex-direction: column;
   gap: 7.2px;
 `;
-
-const TestFeatures = ({ idTest }) => {
-  const { user } = useContext(UserContext);
-  const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const [showUpdate, setShowUpdate] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
-  const [featureSelected, setFeatureSelected] = useState(false);
-  const [features, setFeatures] = useState([]);
-
-  const llenarCaracteristicas = async () => {
-    const res = await getCaracteristicasByTest(idTest);
-    const resJson = await res?.json();
-    setFeatures(resJson);
-    setLoading(false);
-  }
-
-  const borrarCaracteristica = async () => {
-    const res = await deleteCaracteristica(featureSelected.id);
-    const resJson = await res?.json();
-    if(resJson) {
-      llenarCaracteristicas();
-    }
-  }
-
-  useEffect(() => {
-    if(idTest) {
-      llenarCaracteristicas();
-    }
-  }, [idTest]);
-
-  return (
-    <TestInfoContainer>
-      {
-        showForm &&
-        <Modal titulo="Añadir característica" cerrar={() => setShowForm(false)}>
-          <ModalFeature
-            funcion="añadir"
-            call={addCaracteristica}
-            actualizar={() => {
-              llenarCaracteristicas();
-              setShowForm(false);
-            }}
-            idTest={idTest}
-          />
-        </Modal>
-      }
-      {
-        showUpdate &&
-        <Modal titulo="Editar característica" cerrar={() => setShowUpdate(false)}>
-          <ModalFeature
-            funcion="editar"
-            call={updateCaracteristica}
-            actualizar={() => {
-              llenarCaracteristicas();
-              setShowUpdate(false);
-            }}
-            feature={featureSelected}
-          />
-        </Modal>
-      }
-      {
-        showDelete &&
-        <Modal titulo="Eliminar característica" cerrar={() => setShowDelete(false)}>
-          <SureModal
-            cerrar={() => setShowDelete(false)}
-            sure={borrarCaracteristica}
-            text="Se eliminará la característica permanentemente"
-          />
-        </Modal>
-      }
-
-      <TestInfoTitle>Características</TestInfoTitle>
-      {
-        user.id_rol == 3 &&
-        <WhiteButton onClick={() => setShowForm(true)}>Añadir</WhiteButton>
-      }
-      <Features>
-        {
-          loading ? (
-            Array(3).fill('').map((v, i) => (
-              <FeatureContainer key={i}>
-                <IndexContainer>
-                  <FeatureIndexContainer>
-                    <PurpleTextLoader width="25px" />
-                  </FeatureIndexContainer>
-                  <FeatureLine></FeatureLine>
-                </IndexContainer>
-                <IndexContainer>
-                  <FeatureTitleContainer>
-                    <BlackTextLoader width="150px" fontSize="20px" />
-                  </FeatureTitleContainer>
-                  <FeatureDescripcionContainer>
-                    <GrayTextLoader fontSize="16px" />
-                    <GrayTextLoader fontSize="16px" />
-                    <GrayTextLoader fontSize="16px" />
-                  </FeatureDescripcionContainer>
-                </IndexContainer>
-              </FeatureContainer>
-            ))
-          ) : (
-            features.map((v, i) => (
-              <FeatureContainer key={i}>
-                <IndexContainer>
-                  <FeatureIndex>{i < 10 ? "0" + (i + 1) : i + 1}</FeatureIndex>
-                  <FeatureLine></FeatureLine>
-                  {
-                    user.id_rol == 3 &&
-                    <ButtonContainer className='botones'>
-                      <WhiteIconButton 
-                      title="Editar característica" onClick={() => {setFeatureSelected(v); setShowUpdate(true);}}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
-                      <DangerIconButton title="Eliminar característica" onClick={() => {setFeatureSelected(v); setShowDelete(true);}}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
-                    </ButtonContainer>
-                  }
-                </IndexContainer>
-                <IndexContainer>
-                  <FeatureTitle>{v.titulo}</FeatureTitle>
-                  <FeatureDescription>{v.descripcion}</FeatureDescription>
-                </IndexContainer>
-              </FeatureContainer>
-            ))
-          )
-        }
-      </Features>
-    </TestInfoContainer>
-  )
-}
-
-export default TestFeatures;

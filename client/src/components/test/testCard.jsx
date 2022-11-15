@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import ProfilePic from "../globals/profilePic";
-import Modal from "../globals/modal";
 import ModalTest from "./modalTest";
 import { deleteTest, updateTest } from "../../services/test";
 import { useNavigate } from "react-router-dom";
@@ -11,15 +10,11 @@ import ModalUnassign from "./modalUnassignProfessor";
 import SureModal from "../globals/sureModal";
 import { useOutletContext } from "react-router-dom";
 import codeId from "../../utilities/code";
+import { useModal } from "../../hooks/useModal";
 
 const TestCard = (props) => {
   const navigate = useNavigate();
   const { handleScrollTop } = useOutletContext();
-
-  const [showForm, setShowForm] = useState(false);
-  const [showSure, setShowSure] = useState(false);
-  const [showAddProfessor, setShowAddProfessor] = useState(false);
-  const [showUnassignProfessor, setShowUnassignProfessor] = useState(false);
 
   const borrarTest = async () => {
     const res = await deleteTest(props.id);
@@ -39,6 +34,48 @@ const TestCard = (props) => {
     navigate(`./testview/${idCode}`);
     handleScrollTop();
   };
+
+  /* MODALES NUEVOS CON REFACTOR, YA NO ESTÁN EN EL JSX DEL COMPONENTE */
+  const {openModal: openEdit, closeModal: closeEdit} = useModal(
+    "Editar test",
+    <ModalTest
+      test={props}
+      funcion="editar"
+      call={updateTest}
+      actualizar={() => {
+        props.llenarTests();
+        closeEdit();
+      }}
+    />
+  );
+  const {openModal: openAddDocente, closeModal: closeAddDocente} = useModal(
+    "Editar test",
+    <ModalAssignProfessor
+      id={props.id}
+      actualizar={() => {
+        props.llenarTests();
+        closeAddDocente();
+      }}
+    />
+  );
+  const {openModal: openDeleteDocente, closeModal: closeDeleteDocente} = useModal(
+    "Editar test",
+    <ModalUnassign
+      id={props.id}
+      actualizar={() => {
+        props.llenarTests();
+        closeDeleteDocente();
+      }}
+    />
+  );
+  const {openModal: openDelete, closeModal: closeDelete} = useModal(
+    "Editar test",
+    <SureModal
+      cerrar={() => closeDelete()}
+      sure={borrarTest}
+      text={"Se eliminará el test '" + props.nombre + "' permanentemente"}
+    />
+  );
 
   return (
     <Container>
@@ -85,76 +122,22 @@ const TestCard = (props) => {
           <i className="fa-solid fa-pen-to-square"></i>
         </WhiteIconButton>
 
-        <WhiteIconButton title="Editar información del test" onClick={() => setShowForm(true)}>
+        <WhiteIconButton title="Editar información del test" onClick={openEdit}>
           <i className="fa-solid fa-pencil"></i>
         </WhiteIconButton>
 
-        <WhiteIconButton title="Asignar docente" onClick={() => setShowAddProfessor(true)}>
+        <WhiteIconButton title="Asignar docente" onClick={openAddDocente}>
           <i className="fa-sharp fa-solid fa-user-plus"></i>
         </WhiteIconButton>
 
-        <WhiteIconButton title="Desasignar docente" onClick={() => setShowUnassignProfessor(true)}>
+        <WhiteIconButton title="Desasignar docente" onClick={openDeleteDocente}>
           <i className="fa-solid fa-user-minus"></i>
         </WhiteIconButton>
 
-        <DangerIconButton title="Eliminar test" onClick={() => setShowSure(true)}>
+        <DangerIconButton title="Eliminar test" onClick={openDelete}>
           <i className="fa-solid fa-trash-can"></i>
         </DangerIconButton>
       </ButtonContainer>
-
-      {showForm && (
-        <Modal titulo="Editar test" cerrar={() => setShowForm(false)}>
-          <ModalTest
-            test={props}
-            funcion="editar"
-            call={updateTest}
-            actualizar={() => {
-              props.llenarTests();
-              setShowForm(false);
-            }}
-          />
-        </Modal>
-      )}
-
-      {showSure && (
-        <Modal titulo="Eliminar test" cerrar={() => setShowSure(false)}>
-          <SureModal
-            cerrar={() => setShowSure(false)}
-            sure={borrarTest}
-            text={"Se eliminará el test '" + props.nombre + "' permanentemente"}
-          />
-        </Modal>
-      )}
-
-      {showAddProfessor && (
-        <Modal
-          titulo="Asignar docente"
-          cerrar={() => setShowAddProfessor(false)}
-        >
-          <ModalAssignProfessor
-            id={props.id}
-            actualizar={() => {
-              props.llenarTests();
-              setShowAddProfessor(false);
-            }}
-          />
-        </Modal>
-      )}
-
-      {showUnassignProfessor && (
-        <Modal
-          titulo="Desasignar docente"
-          cerrar={() => setShowUnassignProfessor(false)}
-        >
-          <ModalUnassign
-            id={props.id}
-            actualizar={() => {
-              props.llenarTests();
-              setShowUnassignProfessor(false);
-            }}
-          />
-        </Modal>
-      )}
     </Container>
   );
 };

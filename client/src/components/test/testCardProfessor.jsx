@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import ProfilePic from "../globals/profilePic";
-import Modal from "../globals/modal";
 import { useNavigate } from "react-router-dom";
 import { WhiteIconButton } from "../../styles/globals/formularios";
 import ModalAssignBenef from "./modalAssignBenef";
@@ -11,14 +10,11 @@ import { useContext } from "react";
 import { useOutletContext } from "react-router-dom";
 import ModalLink from "./modalLink";
 import codeId from "../../utilities/code";
+import { useModal } from "../../hooks/useModal";
 
 const TestCard = (props) => {
   const { handleScrollTop } = useOutletContext();
   const navigate = useNavigate();
-
-  const [showAddBenef, setShowAddBenef] = useState(false);
-  const [showUnassignBenef, setShowUnassignBenef] = useState(false);
-  const [showLink, setShowLink] = useState(false);
 
   const { user } = useContext(UserContext);
   const idRole = user.id_rol;
@@ -30,6 +26,31 @@ const TestCard = (props) => {
     navigate(`./testview/${idCode}`);
     handleScrollTop();
   };
+
+  const {openModal: openLink} = useModal(
+    "Compartir enlace",
+    <ModalLink id={props.id} />
+  )
+  const {openModal: openAddBenef, closeModal: closeAddBenef} = useModal(
+    "Asignar beneficiario",
+    <ModalAssignBenef
+      id={props.id}
+      actualizar={() => {
+        props.llenarTests();
+        closeAddBenef();
+      }}
+    />
+  )
+  const {openModal: openDeleteBenef, closeModal: closeDeleteBenef} = useModal(
+    "Asignar beneficiario",
+    <ModalUnassign
+      id={props.id}
+      actualizar={() => {
+        props.llenarTests();
+        closeDeleteBenef();
+      }}
+    />
+  )
 
   return (
     <Container>
@@ -76,54 +97,18 @@ const TestCard = (props) => {
             <i className="fa-solid fa-newspaper"></i>
           </WhiteIconButton>
 
-          <WhiteIconButton title="Asignar beneficiario" onClick={() => setShowAddBenef(true)}>
+          <WhiteIconButton title="Asignar beneficiario" onClick={openAddBenef}>
             <i className="fa-sharp fa-solid fa-user-plus"></i>
           </WhiteIconButton>
 
-          <WhiteIconButton title="Desasignar beneficiario" onClick={() => setShowUnassignBenef(true)}>
+          <WhiteIconButton title="Desasignar beneficiario" onClick={openDeleteBenef}>
             <i className="fa-solid fa-user-minus"></i>
           </WhiteIconButton>
 
-          <WhiteIconButton title="Compartir enlace" onClick={() => setShowLink(true)}>
+          <WhiteIconButton title="Compartir enlace" onClick={openLink}>
             <i className="fa-solid fa-link"></i>
           </WhiteIconButton>
         </ButtonContainer>
-      )}
-
-      {showAddBenef && (
-        <Modal
-          titulo="Asignar beneficiario"
-          cerrar={() => setShowAddBenef(false)}
-        >
-          <ModalAssignBenef
-            id={props.id}
-            actualizar={() => {
-              props.llenarTests();
-              setShowAddBenef(false);
-            }}
-          />
-        </Modal>
-      )}
-
-      {showUnassignBenef && (
-        <Modal
-          titulo="Desasignar beneficiario"
-          cerrar={() => setShowUnassignBenef(false)}
-        >
-          <ModalUnassign
-            id={props.id}
-            actualizar={() => {
-              props.llenarTests();
-              setShowUnassignBenef(false);
-            }}
-          />
-        </Modal>
-      )}
-
-      {showLink && (
-        <Modal titulo="Compartir enlace" cerrar={() => setShowLink(false)}>
-          <ModalLink id={props.id} />
-        </Modal>
       )}
     </Container>
   );

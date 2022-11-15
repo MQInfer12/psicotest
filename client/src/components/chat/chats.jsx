@@ -101,9 +101,7 @@ const Chats = ({ handleClick, email: emailURL }) => {
     <Container>
       {
         loading ? (
-          <CargandoContainer>
-            <Cargando />
-          </CargandoContainer>
+          <Cargando container text={false} />
         ) : (
           chats &&
             chats.map((v, i) => (
@@ -134,10 +132,6 @@ const Chats = ({ handleClick, email: emailURL }) => {
 };
 
 export default Chats;
-
-const CargandoContainer = styled.div`
-  height: 100%;
-`;
 
 const Container = styled.div`
   height: calc(100% - 50px);

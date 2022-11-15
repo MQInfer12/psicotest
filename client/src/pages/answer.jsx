@@ -14,8 +14,10 @@ import {
 } from "../styles/globals/table";
 import BigRow from "../components/answer/bigRow";
 import MiniRow from "../components/answer/miniRow";
+import { useWindowHeight } from "../hooks/useWindowHeight";
 
 const Answer = () => {
+  const windowHeight = useWindowHeight(true, true);
   const { idRespuesta: idCode } = useParams();
   const idRespuesta = Number(decipherId(idCode));
 
@@ -84,11 +86,9 @@ const Answer = () => {
     },
   ];
 
-  return loading ? (
-    <CargandoContainer>
-      <Cargando />
-    </CargandoContainer>
-  ) : (
+  if(loading) return (<Cargando container windowHeight={windowHeight} />);
+
+  return (
     <AnswerPage>
       <WhiteButton onClick={onDownload}><i className="fa-regular fa-file-excel"></i> Exportar a excel</WhiteButton>
       <DataContainer>
@@ -158,10 +158,6 @@ const Answer = () => {
 };
 
 export default Answer;
-
-const CargandoContainer = styled.div`
-  height: 100%;
-`;
 
 const AnswerPage = styled.div`
   display: flex;

@@ -1,9 +1,10 @@
 import React from "react";
+import styled from "styled-components";
 import UserCard from "../userCard";
 
 const UserResponse = ({ usuarios, filter, optionFilter, handleChange }) => {
   return (
-    <>
+    <DivUsersContainer>
       {usuarios
         .filter((v) => {
           if (filter === "") {
@@ -31,8 +32,17 @@ const UserResponse = ({ usuarios, filter, optionFilter, handleChange }) => {
           );
         })
       }
-    </>
+    </DivUsersContainer>
   );
 };
 
 export default UserResponse;
+
+const DivUsersContainer = styled.div`
+  border-radius: 20px;
+  padding: 30px 0px;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`;

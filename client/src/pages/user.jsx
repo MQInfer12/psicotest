@@ -1,88 +1,52 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { WhiteButton } from "../styles/globals/formularios";
 import { addUser, getUsers } from "../services/usuario";
 import Cargando from "../components/globals/cargando";
 import UserResponse from "../components/user/filter/userReponse";
 import UserFilter from "../components/user/filter/userFilter";
-import Modal from "../components/globals/modal";
 import ModalUser from "../components/user/modalUser";
 import { useWindowHeight } from "../hooks/useWindowHeight";
+import useAPI from "../hooks/useAPI";
+import { useModal } from "../hooks/useModal";
 
 const User = () => {
   const windowHeight = useWindowHeight(true, true);
-  const [usuarios, setUsuarios] = useState([]);
-  const [loadingUsers, setLoadingUsers] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-
-  const llenarUsuarios = async () => {
-    const res = await getUsers();
-    const resJson = await res?.json();
-    setUsuarios(resJson);
-    setLoadingUsers(false);
-  };
-
-  useEffect(() => {
-    //LLENADO DE USUARIOS
-    llenarUsuarios();
-  }, []);
+  const { callAPI, resJson: usuarios, loading } = useAPI(getUsers);
+  const {openModal, closeModal} = useModal(
+    "Añadir usuario", 
+    <ModalUser
+      call={addUser}
+      actualizar={() =>{
+        callAPI();
+        closeModal();
+      }}
+      funcion="añadir"
+    />
+  );
 
   /* ====== FILTER ====== */
 
   const [filter, setFilter] = useState("");
   const [optionFilter, setOptionFilter] = useState("email");
-  
-  const handleChange = () => {
-    llenarUsuarios();
-  };
 
-  const handleSaveInput = (value) => {
-    setFilter(value);
-  };
-
-  const handleOptionSelect = (option) => {
-    setOptionFilter(option);
-  };
+  if(loading) return (<Cargando container windowHeight={windowHeight} />);
 
   return (
     <DivUsersPage height={windowHeight}>
-      {
-        loadingUsers ? (
-          <CargandoContainer height={windowHeight}>
-            <Cargando />
-          </CargandoContainer>
-        ) : (
-          <>
-            <DivControls>
-            <UserFilter
-              handleSaveInput={handleSaveInput}
-              handleOptionSelect={handleOptionSelect}
-            />
-            <WhiteButton onClick={() => setShowForm(true)}>Añadir</WhiteButton>
-            </DivControls>
-            {showForm && 
-            <Modal cerrar={() => setShowForm(false)} titulo="Añadir usuario">
-              <ModalUser
-                call={addUser}
-                actualizar={() =>{
-                  llenarUsuarios();
-                  setShowForm(false);
-                }}
-                funcion="añadir"
-              />
-            </Modal>
-            }
-            <DivUsersContainer>
-            <UserResponse
-              usuarios={usuarios}
-              filter={filter}
-              optionFilter={optionFilter}
-              handleChange={handleChange}
-            />
-            </DivUsersContainer>
-          </>
-        )
-      }
+      <DivControls>
+        <UserFilter
+          setFilter={setFilter}
+          setOptionFilter={setOptionFilter}
+        />
+        <WhiteButton onClick={openModal}>Añadir</WhiteButton>
+      </DivControls>
+      <UserResponse
+        usuarios={usuarios}
+        filter={filter}
+        optionFilter={optionFilter}
+        handleChange={callAPI}
+      />
     </DivUsersPage>
   );
 };
@@ -94,22 +58,6 @@ const DivUsersPage = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: ${props => props.height};
-`;
-
-const CargandoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: ${props => props.height};
-`;
-
-const DivUsersContainer = styled.div`
-  border-radius: 20px;
-  padding: 30px 0px;
-  display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
-  justify-content: space-around;
 `;
 
 const DivControls = styled.div`

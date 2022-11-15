@@ -25,25 +25,7 @@ import Developers from "./pages/developers";
 import TestShare from "./pages/testShare";
 import Thanks from "./pages/thanks";
 import ProtectedThanks from "./wrappers/protectedThanks";
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  font-size: 16px;
-  color: #ada7a7;
-  display: flex;
-  flex-direction: column;
-
-  &::after {
-    content: "";
-    width: 0%;
-    border-top: 1px solid #ada7a7;
-    transition: all 0.2s;
-  }
-
-  &:hover::after {
-    width: 100%;
-  }
-`;
+import Modal from "./components/globals/modal";
 
 function App() {
   return (
@@ -256,9 +238,29 @@ function App() {
           </Route>
           <Route path="*" element={<None redirect="/login" />} />
         </Routes>
+        <Modal />
       </Contexts>
     </HashRouter>
   );
 }
 
 export default App;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  font-size: 16px;
+  color: #ada7a7;
+  display: flex;
+  flex-direction: column;
+
+  &::after {
+    content: "";
+    width: 0%;
+    border-top: 1px solid #ada7a7;
+    transition: all 0.2s;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+`;

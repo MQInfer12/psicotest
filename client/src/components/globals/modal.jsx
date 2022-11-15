@@ -1,19 +1,22 @@
 import React from "react";
 import styled from "styled-components";
+import { useModalContext } from "../../context/modalContext";
 import { WhiteIconButton } from "../../styles/globals/formularios";
 
-const Modal = ({ cerrar, children, titulo }) => {
-  return (
+const Modal = () => {
+  const { openModal, setOpenModal, titulo, contenido } = useModalContext();
+
+  if(openModal) return (
     <DivModalContainer>
-      <DivAtras onClick={cerrar}></DivAtras>
+      <DivAtras onClick={() => setOpenModal(false)}></DivAtras>
       <DivChildContainer>
         <DivCabecera>
           <PTitulo>{titulo}</PTitulo>
-          <WhiteIconButton onClick={cerrar}>
+          <WhiteIconButton onClick={() => setOpenModal(false)}>
             <i className="fa-solid fa-xmark"></i>
           </WhiteIconButton>
         </DivCabecera>
-        <DivBody>{children}</DivBody>
+        <DivBody>{contenido}</DivBody>
       </DivChildContainer>
     </DivModalContainer>
   );

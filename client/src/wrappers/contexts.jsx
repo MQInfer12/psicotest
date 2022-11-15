@@ -1,5 +1,6 @@
 import React from 'react'
 import { ChatContextProvider } from '../context/chatContext';
+import { ModalContextProvider } from '../context/modalContext';
 import { ProfilePicContextProvider } from '../context/profilePicContext';
 import { ThanksContextProvider } from '../context/thanksContext';
 import { UserContextProvider } from '../context/userContext';
@@ -12,7 +13,9 @@ const Contexts = ({ children }) => {
         <UserFirebaseContextProvider>
           <ChatContextProvider>
             <ThanksContextProvider>
-              { children }
+              <ModalContextProvider>
+                { children }
+              </ModalContextProvider>
             </ThanksContextProvider>
           </ChatContextProvider>
         </UserFirebaseContextProvider>

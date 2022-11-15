@@ -1,9 +1,50 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import patronGrupo from '../../assets/grupo/patrongrupo.jpg';
-import Modal from "../globals/modal";
 import ModalGroup from "./modalGroup";
 import { ableGrupo, updateGrupo } from '../../services/grupo';
+import { useModal } from "../../hooks/useModal";
+
+const GroupCard = (props) => {
+  const cambiarHabilitado = async (id) => {
+    const res = await ableGrupo(id);
+    const resJson = await res?.json();
+    if ((resJson.mensaje = "se actualizo correctamente")) {
+      console.log("Se eliminó el grupo correctamente");
+      props.llenarGrupos();
+    }
+  }
+
+  const { openModal, closeModal } = useModal(
+    "Editar grupo",
+    <ModalGroup 
+      call={updateGrupo}
+      actualizar={() => {
+        props.llenarGrupos();
+        closeModal();
+      }}
+      id_docente={props.id_docente}
+      funcion="editar"
+      group={props}
+    />
+  )
+
+  return (
+    <DivGroupCard>
+      <ImgGroup src={patronGrupo}/>
+      <DivInfo>
+        <PText>{props.titulo}</PText>
+        <PDesc>{props.descripcion}</PDesc>
+        <div>
+          <ButtonGroup onClick={openModal}>Editar</ButtonGroup>
+          <ButtonGroup onClick={() => cambiarHabilitado(props.id)}>Eliminar</ButtonGroup>
+        </div>
+      </DivInfo>
+    </DivGroupCard>
+  )
+}
+
+export default GroupCard;
 
 const DivGroupCard = styled.div`
   border-radius: 20px;
@@ -50,46 +91,3 @@ const ButtonGroup = styled.button`
   height: 30px;
   cursor: pointer;
 `;
-
-const GroupCard = (props) => {
-  const [ showForm, setShowForm ] = useState(false);
-
-  const cambiarHabilitado = async (id) => {
-    const res = await ableGrupo(id);
-    const resJson = await res?.json();
-    if ((resJson.mensaje = "se actualizo correctamente")) {
-      console.log("Se eliminó el grupo correctamente");
-      props.llenarGrupos();
-    }
-  }
-
-  return (
-    <DivGroupCard>
-      <ImgGroup src={patronGrupo}/>
-      <DivInfo>
-        <PText>{props.titulo}</PText>
-        <PDesc>{props.descripcion}</PDesc>
-        <div>
-          <ButtonGroup onClick={() => setShowForm(true)}>Editar</ButtonGroup>
-          <ButtonGroup onClick={() => cambiarHabilitado(props.id)}>Eliminar</ButtonGroup>
-        </div>
-      </DivInfo>
-      {showForm && 
-        <Modal cerrar={() => setShowForm(false)} titulo="Editar grupo">
-          <ModalGroup 
-            call={updateGrupo}
-            actualizar={() => {
-              props.llenarGrupos();
-              setShowForm(false);
-            }}
-            id_docente={props.id_docente}
-            funcion="editar"
-            group={props}
-          />
-        </Modal>
-      }
-    </DivGroupCard>
-  )
-}
-
-export default GroupCard;

@@ -10,11 +10,11 @@ import TestCardProfessor from "../components/test/testCardProfessor";
 import TestCardBenef from "../components/test/testCardBenef";
 import { PurpleButton } from "../styles/globals/formularios";
 import { useWindowHeight } from "../hooks/useWindowHeight";
+import { useModal } from "../hooks/useModal";
 
 const Test = () => {
   const windowHeight = useWindowHeight(true, true);
   const [tests, setTests] = useState([]);
-  const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
   const idRole = user?.id_rol;
@@ -52,73 +52,67 @@ const Test = () => {
     }
   }, []);
 
+  const { openModal, closeModal } = useModal(
+    "Añadir test",
+    <ModalTest
+      call={addTest}
+      actualizar={() => {
+        llenarTests();
+        closeModal();
+      }}
+      funcion="añadir"
+    />
+  )
+  
+  if(loading) return (<Cargando container windowHeight={windowHeight} />);
+
   return (
     <AllContainer height={windowHeight} load={loading}>
-      {showForm && (
-        <Modal cerrar={() => setShowForm(false)} titulo="Añadir test">
-          <ModalTest
-            call={addTest}
-            actualizar={() => {
-              llenarTests();
-              setShowForm(false);
-            }}
-            funcion="añadir"
-          />
-        </Modal>
+      {idRole === 3 && (
+        <ButtonContainer>
+            <PurpleButton onClick={openModal}>Añadir</PurpleButton>
+        </ButtonContainer>
       )}
-      {loading ? (
-        <CargandoContainer height={windowHeight}>
-          <Cargando />
-        </CargandoContainer>
-      ) : (
+      {idRole === 1 && <TitleSeccion>Pendientes</TitleSeccion>}
+      {
+        tests.filter(v => idRole != 1 || v.estado === 0).length == 0 ? (
+          <DivNothing>
+            {
+              idRole === 1 ? "No tienes tests pendientes." :
+              idRole === 2 ? "No te asignaron tests aún." :
+              "¡Crea un test!"
+            }
+          </DivNothing>
+        ) : (
+          <TestContainer>
+            {idRole === 3 &&
+              tests.map((v, i) => <TestCard key={i} {...v} llenarTests={llenarTests} />
+            )}
+            {idRole === 2 &&
+              tests.map((v, i) => <TestCardProfessor key={i} {...v} id={v.id} llenarTests={llenarTestsToProfessor} />
+            )}
+            {idRole === 1 &&
+              tests.filter(v => v.estado === 0).map((v, i) => <TestCardBenef key={i} {...v}/>
+            )}
+          </TestContainer>
+        )
+      }
+      {idRole === 1 && (
         <>
-          {idRole === 3 && (
-            <ButtonContainer>
-                <PurpleButton onClick={() => setShowForm(true)}>Añadir</PurpleButton>
-            </ButtonContainer>
-          )}
-          {idRole === 1 && <TitleSeccion>Pendientes</TitleSeccion>}
-          {
-            tests.filter(v => idRole != 1 || v.estado === 0).length == 0 ? (
-              <DivNothing>
-                {
-                  idRole === 1 ? "No tienes tests pendientes." :
-                  idRole === 2 ? "No te asignaron tests aún." :
-                  "¡Crea un test!"
-                }
-              </DivNothing>
-            ) : (
-              <TestContainer>
-                {idRole === 3 &&
-                  tests.map((v, i) => <TestCard key={i} {...v} llenarTests={llenarTests} />
-                )}
-                {idRole === 2 &&
-                  tests.map((v, i) => <TestCardProfessor key={i} {...v} id={v.id} llenarTests={llenarTestsToProfessor} />
-                )}
-                {idRole === 1 &&
-                  tests.filter(v => v.estado === 0).map((v, i) => <TestCardBenef key={i} {...v}/>
-                )}
-              </TestContainer>
-            )
-          }
-          {idRole === 1 && (
-            <>
-              <TitleSeccion>Realizados</TitleSeccion>
-                {
-                  tests.filter(v => v.estado === 1).length === 0 ? (
-                    <DivNothing>No realizaste ningún test aún.</DivNothing>
-                  ) : (
-                    <TestContainer>
-                      {
-                        tests.filter(v => v.estado === 1).map((v, i) => (
-                          <TestCardBenef key={i} {...v}/>
-                        ))
-                      }
-                    </TestContainer>
-                  )
-                }
-            </>
-          )}
+          <TitleSeccion>Realizados</TitleSeccion>
+            {
+              tests.filter(v => v.estado === 1).length === 0 ? (
+                <DivNothing>No realizaste ningún test aún.</DivNothing>
+              ) : (
+                <TestContainer>
+                  {
+                    tests.filter(v => v.estado === 1).map((v, i) => (
+                      <TestCardBenef key={i} {...v}/>
+                    ))
+                  }
+                </TestContainer>
+              )
+            }
         </>
       )}
     </AllContainer>
@@ -132,13 +126,6 @@ const AllContainer = styled.div`
   flex-direction: column;
   gap: 20px;
   min-height: ${props => props.height};
-`;
-
-const CargandoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: ${props => props.height};
 `;
 
 const TestContainer = styled.div`

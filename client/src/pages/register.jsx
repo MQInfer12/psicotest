@@ -14,12 +14,11 @@ import { doc, setDoc } from "firebase/firestore";
 import ImagenLogin from "../assets/login/imglogin.jpg";
 import Navbar from "../components/landing/navbar";
 import { useWindowHeight } from "../hooks/useWindowHeight";
+import { useModal } from "../hooks/useModal";
 
 const Register = () => {
   const windowHeight = useWindowHeight();
   const { goTo, userEmail } = useParams();
-  const [showModal, setShowModal] = useState(false);
-  const [login, setLogin] = useState({});
 
   const { form, errors, handleChange, handleSubmit, handleReset } = UseForm(
     userEmail ? {
@@ -35,8 +34,7 @@ const Register = () => {
     signUp,
     async (respuesta) => {
       createFirebaseUser(respuesta.user);
-      setLogin({email: form.email, contrasenia: form.contrasenia});
-      setShowModal(true);
+      openModal();
       handleReset();
     }
   );
@@ -152,6 +150,11 @@ const Register = () => {
     }
   }, []);
 
+  const { openModal, closeModal } = useModal(
+    "",
+    <ModalRegister goTo={goTo} form={{email: form.email, contrasenia: form.contrasenia}} cerrar={() => closeModal()}/>
+  );
+
   return (
     <>
       <Navbar />
@@ -206,11 +209,6 @@ const Register = () => {
           </Form>
         </DivFormlog>
       </DivPrincipal>
-      {showModal && (
-        <Modal cerrar={() => setShowModal(false)}>
-          <ModalRegister goTo={goTo} form={login}/>
-        </Modal>
-      )}
     </>
   );
 };

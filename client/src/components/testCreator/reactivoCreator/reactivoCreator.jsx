@@ -5,7 +5,6 @@ import Cargando from "../../globals/cargando";
 import { addReactivo, getReactivosBySeccion } from "../../../services/reactivo";
 import { getPuntuacionesByReactivos, massUpdatePuntuaciones } from "../../../services/puntuacion";
 import { ErrorCss } from "../../../styles/globals/formularios";
-import Modal from "../../globals/modal";
 import Pagination from "../pagination";
 import ModalReactivo from "./modalReactivo";
 import ReactivoCard from "./reactivoCard";
@@ -14,10 +13,10 @@ import {
   ThNumberal, ThNumber, ResponsiveTr
 } from "../../../styles/globals/table";
 import { useTableHeight } from "../../../hooks/useTableHeight";
+import { useModal } from "../../../hooks/useModal";
 
 const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, setPuntuaciones, preguntas }) => {
   const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
   const [reactivosPage, setReactivosPage] = useState(1);
   const [save, setSave] = useState(false);
 
@@ -66,27 +65,26 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
     llenarReactivos();
   }, []);
 
+  const { openModal, closeModal } = useModal(
+    "Añadir reactivo",
+    <ModalReactivo
+      call={addReactivo}
+      actualizar={() => {
+        llenarReactivos();
+        closeModal();
+      }}
+      funcion="añadir"
+      idSeccion={idSeccion}
+    />
+  );
+
   return (
     <PreguntaCreatorContainer>
       <ControlsContainer spaceBetween>
         <HeadContainer>
-          <WhiteIconButton title="Añadir reactivo" onClick={() => setShowForm(true)} disabled={reactivos.length == 5}><i className="fa-solid fa-plus"></i></WhiteIconButton>
+          <WhiteIconButton title="Añadir reactivo" onClick={openModal} disabled={reactivos.length == 5}><i className="fa-solid fa-plus"></i></WhiteIconButton>
           <PSelected>{reactivos.length} / 5</PSelected>
         </HeadContainer>
-        {
-          showForm &&
-          <Modal titulo="Añadir reactivo" cerrar={() => setShowForm(false)}>
-            <ModalReactivo
-              call={addReactivo}
-              actualizar={() => {
-                llenarReactivos();
-                setShowForm(false);
-              }}
-              funcion="añadir"
-              idSeccion={idSeccion}
-            />
-          </Modal>
-        }
         {
           save &&
           <HeadContainer>

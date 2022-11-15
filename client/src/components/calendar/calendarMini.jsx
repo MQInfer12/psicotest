@@ -1,96 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import dayjs from "dayjs";
-import { UserContext } from "../../context/userContext";
-import { getAllApoinments, getAppointByUser } from "../../services/cita";
-import { addHorario, getTime, getTimeWithWhoHaveDate, updateHorario } from "../../services/horario";
+import { addHorario } from "../../services/horario";
 import { PurpleButton } from "../../styles/globals/formularios";
-import Modal from "../globals/modal";
 import ModalHorario from "./modalHorario";
-import ModalAsignarCita from "./modalAsignarCita";
-import ModalCancelarCita from "./modalCancelarCita";
-import ModalAceptarCita from "./modalAceptarCita";
+import { useModal } from "../../hooks/useModal";
+import EventCard from "./calendarMini/eventCard";
 
-const CalendarMini = () => {
-  const { user } = useContext(UserContext);
-
-  const [mesActual, setMesActual] = useState(dayjs().month());
-  const [yearActual, setYearActual] = useState(dayjs().year());
-
-  const [showForm, setShowForm] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
-  const [showCancel, setShowCancel] = useState(false);
-  const [showAccept, setShowAccept] = useState(false);
-
-  const [fechaSelected, setFechaSelected] = useState(() => {
-    const mes = dayjs().month() + 1 < 10 ? "0" + (dayjs().month() + 1) : dayjs().month() + 1;
-    const dia = dayjs().date() < 10 ? "0" + dayjs().date() : dayjs().date();
-    const year = dayjs().year();
-    return {
-      MDY: (mes + "/" + dia + "/" + year),
-      DMY: (dia + "/" + mes + "/" + year)
-    };
-  });
-
-  const [horarioSelected, setHorarioSelected] = useState({});
-
-  const [horarios, setHorarios] = useState([]);
-  const [citas, setCitas] = useState([]);
-
-  const meses = [
-    "Ene",
-    "Feb",
-    "Mar",
-    "Abr",
-    "May",
-    "Jun",
-    "Jul",
-    "Ago",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dic",
-  ];
-
-  const getMes = (mes) => { //OBTENER EL ARRAY DE DÍAS DEL MES ACTUAL
-    const year = dayjs().year();
-    const primerDiaDelMes = dayjs(new Date(year, mes, 1)).day();
-    let diaActual = 0 - primerDiaDelMes;
-    const dias = new Array(6).fill([]).map(() => {
-      return new Array(7).fill(null).map(() => {
-        diaActual++;
-        return dayjs(new Date(year, mes, diaActual));
-      });
-    });
-    let cont = 0;
-    dias[5].forEach((day) => {
-      if (day.format("DD") <= 14) {
-        cont++;
-      }
-    });
-    if (cont == 7) dias.pop();
-
-    return dias;
-  };
-
-  const comprobarDiaActual = (day) => { //COMPROBAR EL DÍA DE HOY
-    if (day.format("MM/DD/YYYY") == fechaSelected.MDY) {
-      return true;
-    }
-    return false;
-  };
-
-  const comprobarMesActual = (mes) => { //COMPROBAR EL MES EN EL QUE ESTAMOS
-    if (mesActual % 12 < 0) {
-      if (mes - 1 == (mesActual % 12) + 12) {
-        return false;
-      }
-    } else if (mes - 1 == mesActual % 12) {
-      return false;
-    }
-    return true;
-  };
-
+const CalendarMini = ({
+  horarios, citas, user,
+  mesActual, yearActual,
+  fechaSelected, setFechaSelected,
+  llenarHorarios, llenarCitasDisponibles, llenarCitasDocente, llenarCitasPorUsuario,
+  meses, getMes,
+  comprobarDiaActual, comprobarMesActual,
+  nextMonth, lastMonth
+}) => {
   const comprobarHorariosEseDia = (day) => {
     let flag = false;
     horarios.forEach(horario => {
@@ -117,145 +41,28 @@ const CalendarMini = () => {
     return false;
   }
 
-  const nextMonth = () => { //IR CAMBIANDO LA VARIABLE DE MES Y AÑO HACIA ADELANTE
-    setMesActual(mesActual + 1);
-    if ((mesActual + 1) % 12 == 0) {
-      setYearActual(yearActual + 1);
-    }
-  };
-
-  const lastMonth = () => { //IR CAMBIANDO LA VARIABLE DE MES Y AÑO HACIA ATRAS
-    setMesActual(mesActual - 1);
-    if (mesActual % 12 == 0) {
-      setYearActual(yearActual - 1);
-    }
-  };
-
-  const convertToDate = (time) => { //MOSTRAR LA HORA SIN LOS SEGUNDOS
-    const hour = time.slice(0, time.search(":"));
-    const minutes = time.slice(time.search(":") + 1, time.length).slice(0, time.search(":"));
-    const mostrarCeros = (minutos) => {
-      if(minutos == 0) {
-        return "00";
-      } else {
-        return minutos;
-      }
-    }
-    const mostrar = hora.getHours() + ":" + mostrarCeros(hora.getMinutes());
-
-    return mostrar;
-  }
-
-  const llenarHorarios = async () => { //API PARA OBTENER LOS HORARIOS DE ADMINISTRADORES Y DOCENTES
-    const res = await getTime(user.id);
-    setHorarios(res);
-  }
-
-  const llenarCitasDocente = async () => {
-    const res = await getTimeWithWhoHaveDate(user.id);
-    setCitas(res);
-  }
-
-  const llenarCitasDisponibles = async () => { //API PARA OBTENER LOS HORARIOS PARA QUE ELIJA EL USUARIO
-    const res = await getAllApoinments(user.email);
-    setHorarios(res);
-  }
-
-  const llenarCitasPorUsuario = async () => {
-    const resJson = await getAppointByUser(user.id);
-    setCitas(resJson);
-  }
-
-  useEffect(() => {
-    if(user.id_rol != 1) {
-      llenarHorarios();
-      llenarCitasDocente();
-    } else {
-      llenarCitasDisponibles();
-      llenarCitasPorUsuario();
-    }
-  }, []);
+  const { openModal, closeModal } = useModal(
+    "Añadir horario",
+    <ModalHorario 
+      funcion="añadir"
+      call={addHorario}
+      id_docente={user.id}
+      fecha={fechaSelected.MDY}
+      actualizar={() => {
+        llenarHorarios();
+        closeModal();
+      }}
+    />
+  )
 
   return (
     <CalendarContainer>
-      {
-        showForm &&
-        <Modal titulo="Añadir horario" cerrar={() => setShowForm(false)} >
-          <ModalHorario 
-            funcion="añadir"
-            call={addHorario}
-            id_docente={user.id}
-            fecha={fechaSelected.MDY}
-            actualizar={() => {
-              llenarHorarios();
-              setShowForm(false);
-            }}
-          />
-        </Modal>
-      }
-      {
-        showEdit &&
-        <Modal titulo={user.id_rol != 1 ? "Editar horario" : "Asignar cita" } cerrar={() => setShowEdit(false)} >
-          { user.id_rol != 1 ? (
-              <ModalHorario 
-                funcion="editar"
-                call={updateHorario}
-                horario={horarioSelected}
-                actualizar={() => {
-                  llenarHorarios();
-                  setShowEdit(false);
-                }}
-              />
-            ) : (
-              <ModalAsignarCita 
-                actualizar={() => {
-                  llenarCitasDisponibles();
-                  llenarCitasPorUsuario();
-                  setShowEdit(false);
-                }}
-                horario={horarioSelected}
-              />
-            )
-          }
-        </Modal>
-      }
-      {
-        showCancel &&
-        <Modal titulo="Cancelar cita" cerrar={() => setShowCancel(false)} >
-          <ModalCancelarCita 
-            cita={horarioSelected}
-            actualizar={() => {
-              if(user.id_rol != 1) {
-                llenarCitasDocente();
-                llenarHorarios();
-              } else {
-                llenarCitasPorUsuario();
-                llenarCitasDisponibles();
-              }
-              setShowCancel(false);
-            }}
-          />
-        </Modal>
-      }
-      {
-        showAccept &&
-        <Modal titulo="Aceptar cita" cerrar={() => setShowAccept(false)} >
-          <ModalAceptarCita 
-            horario={horarioSelected}
-            actualizar={() => {
-              llenarCitasDocente();
-              llenarHorarios();
-              setShowAccept(false);
-            }}
-          />
-        </Modal>
-      }
       <MonthContainer>
         <MonthButton onClick={lastMonth}>
           <i className="fa-solid fa-arrow-left"></i>
         </MonthButton>
         <CalendarMonth>
-          {meses.at(mesActual % 12)}, {yearActual}
+          {meses.at(mesActual % 12).substring(0, 3)}, {yearActual}
         </CalendarMonth>
         <MonthButton onClick={nextMonth}>
           <i className="fa-solid fa-arrow-right"></i>
@@ -293,101 +100,65 @@ const CalendarMini = () => {
       </CalendarTable>
       {
         user.id_rol === 2 && 
-        <PurpleButton onClick={() => setShowForm(true)}>Añadir horario</PurpleButton>
+        <PurpleButton onClick={openModal}>Añadir horario</PurpleButton>
       }
       <EventsDiv>
         <EventsTitle>Eventos</EventsTitle>
           {
             horarios.filter(horario => horario.fecha === fechaSelected.DMY).map((v, i) => (
-              <EventCard onClick={() => {
-                  setHorarioSelected({
-                    id: v.id,
-                    nombre: v.nombre,
-                    email: v.email,
-                    disponible: v.disponible,
-                    fecha: fechaSelected.MDY,
-                    hora_final: v.hora_final,
-                    hora_inicio: v.hora_inicio
-                  });
-                  setShowEdit(true);
-                }}
-                key={i}
-              >
-                <EventPoint bgcolor="#660be1"></EventPoint>
-                <EventText>
-                  <EventH4>Libre {v.hora_inicio} a {v.hora_final}</EventH4>
-                  <EventDesc>{v.nombre}</EventDesc>
-                </EventText>
-              </EventCard>
+              <EventCard key={i}
+                v={{...v, fecha: fechaSelected.MDY}}
+                color={"#660be1"}
+                event={"Libre"}
+                rol={user.id_rol}
+                llenarHorarios={llenarHorarios} 
+                llenarCitasDisponibles={llenarCitasDisponibles}
+                llenarCitasDocente={llenarCitasDocente} 
+                llenarCitasPorUsuario={llenarCitasPorUsuario}
+              />
             ))
           }
           {
             citas.filter(cita => cita.fecha === fechaSelected.DMY).map((v, i) => {
               if(v.aceptado) {
                 return (
-                  <EventCard onClick={() => {
-                    setHorarioSelected({
-                      id: v.id,
-                      id_horario: v.id_horario,
-                      nombre: v.nombre,
-                      email: v.email,
-                      fecha: fechaSelected.MDY,
-                      hora_final: v.hora_final,
-                      hora_inicio: v.hora_inicio,
-                      aceptado: v.aceptado
-                    });
-                    setShowCancel(true);
-                  }}
-                  key={i}
-                  >
-                    <EventPoint bgcolor="#14804A"></EventPoint>
-                    <EventText>
-                      <EventH4>Cita - {v.hora_inicio} a {v.hora_final}</EventH4>
-                      <EventDesc>{v.nombre}</EventDesc>
-                    </EventText>
-                  </EventCard>
+                  <EventCard key={i}
+                    v={{...v, fecha: fechaSelected.MDY}}
+                    color={"#14804A"}
+                    event={"Cita"}
+                    rol={user.id_rol}
+                    llenarHorarios={llenarHorarios} 
+                    llenarCitasDisponibles={llenarCitasDisponibles}
+                    llenarCitasDocente={llenarCitasDocente} 
+                    llenarCitasPorUsuario={llenarCitasPorUsuario}
+                  />
                 )
               } else {
                 if(user.id_rol != 1) {
                   return (
-                    <EventCard onClick={() => {
-                      setHorarioSelected({
-                        id_horario: v.id_horario
-                      });
-                      setShowAccept(true);
-                    }} 
-                    key={i}
-                    >
-                      <EventPoint bgcolor="#817633"></EventPoint>
-                      <EventText>
-                        <EventH4>Pendientes - {v.hora_inicio} a {v.hora_final}</EventH4>
-                        <EventDesc>{v.nombre}</EventDesc>
-                      </EventText>
-                    </EventCard>
+                    <EventCard key={i}
+                      v={{...v, fecha: fechaSelected.MDY}}
+                      color={"#817633"}
+                      event={"Pendientes"}
+                      rol={user.id_rol}
+                      llenarHorarios={llenarHorarios} 
+                      llenarCitasDisponibles={llenarCitasDisponibles}
+                      llenarCitasDocente={llenarCitasDocente} 
+                      llenarCitasPorUsuario={llenarCitasPorUsuario}
+                    />
                   )
                 } else {
                   return (
-                    <EventCard onClick={() => {
-                      setHorarioSelected({
-                        id: v.id,
-                        id_horario: v.id_horario,
-                        nombre: v.nombre,
-                        email: v.email,
-                        fecha: fechaSelected.MDY,
-                        hora_final: v.hora_final,
-                        hora_inicio: v.hora_inicio,
-                        aceptado: v.aceptado
-                      });
-                      setShowCancel(true);
-                    }} 
-                    key={i}
-                    >
-                      <EventPoint bgcolor="#817633"></EventPoint>
-                      <EventText>
-                        <EventH4>Pendiente - {v.hora_inicio} a {v.hora_final}</EventH4>
-                        <EventDesc>{v.nombre}</EventDesc>
-                      </EventText>
-                    </EventCard>
+                    <EventCard key={i}
+                      v={{...v, fecha: fechaSelected.MDY}}
+                      color={"#817633"}
+                      event={"Pendiente"}
+                      rol={user.id_rol}
+                      llenarHorarios={llenarHorarios} 
+                      llenarCitasDisponibles={llenarCitasDisponibles}
+                      llenarCitasDocente={llenarCitasDocente} 
+                      llenarCitasPorUsuario={llenarCitasPorUsuario}
+                    />
                   )
                 }
               }
@@ -502,45 +273,4 @@ const EventsDiv = styled.div`
 const EventsTitle = styled.h3`
   font-weight: 600;
   font-size: 20px;
-`;
-
-const EventCard = styled.div`
-  height: 70px;
-  border-radius: 14px;
-  background-color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  padding: 8px 30px;
-  gap: 30px;
-  transition: all 0.4s;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.6;
-  }
-`;
-
-const EventPoint = styled.div`
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: ${props => props.bgcolor};
-`;
-
-const EventText = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 5px;
-`;
-
-const EventH4 = styled.h4`
-  font-weight: 500;
-  font-size: 16px;
-`;
-
-const EventDesc = styled.p`
-  font-weight: 400;
-  font-size: 12px;
-  opacity: 0.4;
 `;

@@ -1,10 +1,57 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { DangerIconButton, WhiteIconButton } from "../../../styles/globals/formularios";
-import Modal from "../../globals/modal";
 import ModalReactivo from "./modalReactivo";
 import { deleteReactivo, updateReactivo } from "../../../services/reactivo";
 import SureModal from "../../globals/sureModal";
+import { useModal } from "../../../hooks/useModal";
+
+const ReactivoCard = (props) => {
+  const borrarReactivo = async () => {
+    const res = await deleteReactivo(props.id);
+    const resJson = await res?.json();
+    if(resJson) {
+      console.log("Se borro correctamente");
+      props.llenarReactivos();
+    }
+  }
+
+  const { openModal: openEdit, closeModal: closeEdit } = useModal(
+    "Editar reactivo",
+    <ModalReactivo 
+      call={updateReactivo}
+      actualizar={() => {
+        props.llenarReactivos();
+        closeEdit();
+      }}
+      funcion="editar"
+      reactivo={props}
+      idSeccion={props.id_seccion}
+    />
+  )
+  const { openModal: openDelete, closeModal: closeDelete } = useModal(
+    "Eliminar reactivo",
+    <SureModal
+      cerrar={() => closeDelete()}
+      sure={borrarReactivo}
+      text="Se eliminará el reactivo permanentemente"
+    />
+  )
+
+  return (
+    <ThReactivo>
+      <PText>
+        {props.descripcion}
+      </PText>
+      <DivButtonsTd>
+        <WhiteIconButton title="Editar reactivo" onClick={openEdit}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
+        <DangerIconButton title="Eliminar reactivo" onClick={openDelete}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
+      </DivButtonsTd>
+    </ThReactivo>
+  )
+}
+
+export default ReactivoCard;
 
 const ThReactivo = styled.th`
   position: relative;
@@ -53,56 +100,3 @@ const DivButtonsTd = styled.div`
   z-index: -1;
   opacity: 0;
 `;
-
-const ReactivoCard = (props) => {
-  const [showForm, setShowForm] = useState(false);
-  const [showSure, setShowSure] = useState(false);
-
-  const borrarReactivo = async () => {
-    const res = await deleteReactivo(props.id);
-    const resJson = await res?.json();
-    if(resJson) {
-      console.log("Se borro correctamente");
-      props.llenarReactivos();
-    }
-  }
-
-  return (
-    <ThReactivo>
-      <PText>
-        {props.descripcion}
-      </PText>
-      <DivButtonsTd>
-        <WhiteIconButton title="Editar reactivo" onClick={() => setShowForm(true)}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
-        <DangerIconButton title="Eliminar reactivo" onClick={() => setShowSure(true)}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
-      </DivButtonsTd>
-      {
-        showForm &&
-        <Modal titulo="Editar reactivo" cerrar={() => setShowForm(false)} >
-          <ModalReactivo 
-            call={updateReactivo}
-            actualizar={() => {
-              props.llenarReactivos();
-              setShowForm(false);
-            }}
-            funcion="editar"
-            reactivo={props}
-            idSeccion={props.id_seccion}
-          />
-        </Modal>
-      }
-      {
-        showSure &&
-        <Modal titulo="Eliminar reactivo" cerrar={() => setShowSure(false)}>
-          <SureModal
-            cerrar={() => setShowSure(false)}
-            sure={borrarReactivo}
-            text="Se eliminará el reactivo permanentemente"
-          />
-        </Modal>
-      }
-    </ThReactivo>
-  )
-}
-
-export default ReactivoCard;
