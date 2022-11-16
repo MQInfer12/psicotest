@@ -90,6 +90,7 @@ const DivPersonas = styled.div`
   flex-wrap: wrap;
   gap: 20px;
 `;
+
 const DivPersona = styled.div`
   font-size: 14px;
   font-weight: 400;

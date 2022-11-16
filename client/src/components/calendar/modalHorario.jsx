@@ -6,16 +6,6 @@ import { UseForm } from "../../hooks/useForm";
 import { validationsForm } from "../../validations/schedule";
 import { deleteHorario } from "../../services/horario";
 
-const DoubleButton = styled.div`
-  width: 100%;
-  display: flex;
-  gap: 10px;
-
-  & > button {
-    width: 100%;
-  }
-`;
-
 const ModalHorario = ({ funcion, call, actualizar, horario, fecha, id_docente }) => {
   const {
     form,
@@ -94,3 +84,13 @@ const ModalHorario = ({ funcion, call, actualizar, horario, fecha, id_docente })
 }
 
 export default ModalHorario;
+
+const DoubleButton = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 10px;
+
+  & > button {
+    width: 100%;
+  }
+`;

@@ -3,6 +3,31 @@ import styled from "styled-components";
 import { useUserContext } from "../../context/userContext";
 import ProfilePic from "../globals/profilePic";
 
+const Navbar = ({ handleChange }) => {
+  const { user } = useUserContext();
+
+  return (
+    <Container>
+      <span className="logo">UNIFRANZ</span>
+      <div className="user">
+        <ProfilePic
+          width="24px"
+          height="24px"
+          id={user.id}
+          perfil={user.perfil}
+        />
+        {/*  <span className="username">{user.nombre}</span> */}
+        {/* <select onChange={(e) => handleChange(e.target.value)}>
+          <option value={1}>Chatear</option>
+          <option value={2}>Contactos</option>
+        </select> */}
+      </div>
+    </Container>
+  );
+};
+
+export default Navbar;
+
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -43,28 +68,3 @@ const Container = styled.div`
     }
   }
 `;
-
-const Navbar = ({ handleChange }) => {
-  const { user } = useUserContext();
-
-  return (
-    <Container>
-      <span className="logo">UNIFRANZ</span>
-      <div className="user">
-        <ProfilePic
-          width="24px"
-          height="24px"
-          id={user.id}
-          perfil={user.perfil}
-        />
-        {/*  <span className="username">{user.nombre}</span> */}
-        {/* <select onChange={(e) => handleChange(e.target.value)}>
-          <option value={1}>Chatear</option>
-          <option value={2}>Contactos</option>
-        </select> */}
-      </div>
-    </Container>
-  );
-};
-
-export default Navbar;

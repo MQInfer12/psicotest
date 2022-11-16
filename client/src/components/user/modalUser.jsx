@@ -15,27 +15,6 @@ import { collection, doc, getDocs, query, setDoc, updateDoc, where } from "fireb
 import ProfilePic from "../globals/profilePic";
 import { useState } from "react";
 
-const ModalUserContainer = styled.div`
-  display: flex;
-  gap: 16px;
-  flex-direction: column;
-`;
-
-const Columnas = styled.div`
-  display: flex;
-  gap: 16px;
-
-  @media (max-width: 700px) {
-    flex-direction: column;
-  }
-`;
-
-const FotoContainer = styled.div`
-  display: flex;
-  gap: 16px;
-  align-items: center;
-`;
-
 const ModalUser = ({ call, actualizar, funcion, user }) => {
   const { profilePics, setProfilePics } = useContext(ProfilePicContext);
   const [loadingEditable, setLoadingEditable] = useState(true);
@@ -323,3 +302,24 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
 };
 
 export default ModalUser;
+
+const ModalUserContainer = styled.div`
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+`;
+
+const Columnas = styled.div`
+  display: flex;
+  gap: 16px;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+  }
+`;
+
+const FotoContainer = styled.div`
+  display: flex;
+  gap: 16px;
+  align-items: center;
+`;

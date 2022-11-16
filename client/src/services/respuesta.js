@@ -31,7 +31,7 @@ export const getRespuesta = async (id) => {
   }
 }
 
-export const getRespuestasByDocente = async(id) => {
+export const getRespuestasByDocente = async({ id }) => {
   try {
     const response = await fetch(`${http}respuesta/docente/${id}`, {
       method: "GET",

@@ -2,6 +2,7 @@ import { createContext, useContext, useReducer } from "react";
 import { UserFirebaseContext } from "./userFirebaseContext";
 
 export const ChatContext = createContext();
+
 export const ChatContextProvider = ({ children }) => {
 
   const { currentUser } = useContext(UserFirebaseContext);

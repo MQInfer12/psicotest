@@ -7,38 +7,6 @@ import { collection, query, where, getDocs, setDoc, doc, updateDoc, serverTimest
 import ProfilePic from "../globals/profilePic";
 import { getMisDocentes } from "../../services/respuesta";
 
-const Container = styled.div`
-  .userChat {
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: white;
-    cursor: pointer;
-    &>div:first-child{
-      min-width: 50px;
-    }
-    &:hover {
-      background-color: #2f2d52;
-    }
-
-    .userChatInfo {
-      span {
-        font-size: 18px;
-        font-weight: 500;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        width: 100%;
-      }
-      p {
-        font-size: 14px;
-        color: lightgray;
-      }
-    }
-  }
-`;
-
 const FutureChats = () => {
   const [professor] = useState([]);
   const { user } = useUserContext();
@@ -121,3 +89,35 @@ const FutureChats = () => {
 };
 
 export default FutureChats;
+
+const Container = styled.div`
+  .userChat {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    cursor: pointer;
+    &>div:first-child{
+      min-width: 50px;
+    }
+    &:hover {
+      background-color: #2f2d52;
+    }
+
+    .userChatInfo {
+      span {
+        font-size: 18px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+      }
+      p {
+        font-size: 14px;
+        color: lightgray;
+      }
+    }
+  }
+`;

@@ -2,6 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import { PurpleButton, WhiteButton } from "../../styles/globals/formularios";
 
+const ConfirmModal = ({ cerrar, sure, text }) => {
+  return (
+    <DivAlerta>
+      <DivAlertaText>
+        <DivIcon className='fa-solid fa-circle-exclamation'></DivIcon>
+        <H2Title>¿Estás seguro?</H2Title>
+        <PText>{text}.</PText>
+      </DivAlertaText>
+      <DivButtons>
+        <WhiteButton onClick={cerrar}>Cerrar</WhiteButton>
+        <PurpleButton onClick={() => {sure(); cerrar();}}>Enviar</PurpleButton>
+      </DivButtons>
+    </DivAlerta>
+  )
+}
+
+export default ConfirmModal;
+
 const DivAlerta = styled.div`
   display: flex;
   flex-direction: column;
@@ -38,21 +56,3 @@ const DivButtons = styled.div`
   justify-content: center;
   gap: 20px;
 `;
-
-const ConfirmModal = ({ cerrar, sure, text }) => {
-  return (
-    <DivAlerta>
-      <DivAlertaText>
-        <DivIcon className='fa-solid fa-circle-exclamation'></DivIcon>
-        <H2Title>¿Estás seguro?</H2Title>
-        <PText>{text}.</PText>
-      </DivAlertaText>
-      <DivButtons>
-        <WhiteButton onClick={cerrar}>Cerrar</WhiteButton>
-        <PurpleButton onClick={() => {sure(); cerrar();}}>Enviar</PurpleButton>
-      </DivButtons>
-    </DivAlerta>
-  )
-}
-
-export default ConfirmModal;

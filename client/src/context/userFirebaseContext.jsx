@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { useUserContext } from "./userContext";
 import { db } from "../firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
+
 export const UserFirebaseContext = createContext();
 
 export const UserFirebaseContextProvider = ({ children }) => {

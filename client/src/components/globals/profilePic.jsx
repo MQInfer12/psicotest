@@ -5,43 +5,6 @@ import { ProfilePicContext } from "../../context/profilePicContext";
 import { getPic } from "../../services/usuario";
 import Cargando from "./cargando";
 
-const DivPic = styled.div`
-  border-radius: ${props => props.border ? "100%" : "10px"};
-  border: ${props => props.border && "2px solid #FFFFFF"};
-  transform: ${props => `translateX(${-15 * props.translation}px)`};
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  overflow: hidden;
-
-`;
-
-const DivLoading = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-
-  & > div {
-    position: absolute;
-    top: 0;
-  }
-`;
-
-const Pic = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-`;
-
 const ProfilePic = ({ width, height, border, translation, id, perfil, editable, prev }) => {
   const { profilePics, setProfilePics } = useContext(ProfilePicContext);
 
@@ -109,3 +72,40 @@ ProfilePic.defaultProps = {
 };
 
 export default ProfilePic;
+
+const DivPic = styled.div`
+  border-radius: ${props => props.border ? "100%" : "10px"};
+  border: ${props => props.border && "2px solid #FFFFFF"};
+  transform: ${props => `translateX(${-15 * props.translation}px)`};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  overflow: hidden;
+
+`;
+
+const DivLoading = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  & > div {
+    position: absolute;
+    top: 0;
+  }
+`;
+
+const Pic = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+`;

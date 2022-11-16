@@ -4,10 +4,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useUserContext } from "../context/userContext";
 import Cargando from "../components/globals/cargando";
 
-const TodaLaPantalla = styled.div`
-  height: 100vh;
-`;
-
 const ProtectedRoute = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -38,3 +34,7 @@ const ProtectedRoute = ({ children }) => {
 }
 
 export default ProtectedRoute;
+
+const TodaLaPantalla = styled.div`
+  height: 100vh;
+`;

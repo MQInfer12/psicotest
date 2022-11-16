@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Pagination from "../components/answers/pagination";
 import { useNavigate } from "react-router-dom";
@@ -17,45 +17,24 @@ import {
   PNombre, PLight, PPuntaje, PSobre
 } from "../styles/globals/table";
 import { useTableHeight } from "../hooks/useTableHeight";
+import useGet from "../hooks/useGet";
 
 const Answers = () => {
   const windowHeight = useWindowHeight(true, true);
   const navigate = useNavigate();
   const { user } = useUserContext();
-  const [loading, setLoading] = useState(true);
-  const [respuestas, setRespuestas] = useState([]);
   const [tableRef, setTableRef] = useState(null);
   const [page, setPage] = useState(0);
 
   const { tableHeightRef, tableRows, rowHeight } = useTableHeight();
 
-  const llenarRespuestas = async () => {
-    const res = await getRespuestas();
-    const resJson = await res?.json();
-    setRespuestas(resJson);
-    setLoading(false);
-  };
-
-  const llenarRespuestasPorDocente = async () => {
-    const res = await getRespuestasByDocente(user.id);
-    const resJson = await res?.json();
-    setRespuestas(resJson);
-    setLoading(false);
-  };
+  const { resJson: respuestas, loading } = useGet(user.id_rol === 3 ? getRespuestas : getRespuestasByDocente, { id: user.id });
 
   const { onDownload } = useDownloadExcel({
     filename:"Respuestas",
     sheet:"Respuestas",
     currentTableRef: tableRef?.current
   });
-
-  useEffect(() => {
-    if (user.id_rol === 3) {
-      llenarRespuestas();
-    } else if (user.id_rol === 2) {
-      llenarRespuestasPorDocente();
-    }
-  }, []);
 
   const [select, setSelect] = useState("name");
   const [filter, setFilter] = useState("");
