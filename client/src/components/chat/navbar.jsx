@@ -1,7 +1,6 @@
 import React from "react";
-import { useContext } from "react";
 import styled from "styled-components";
-import { UserContext } from "../../context/userContext";
+import { useUserContext } from "../../context/userContext";
 import ProfilePic from "../globals/profilePic";
 
 const Container = styled.div`
@@ -46,7 +45,7 @@ const Container = styled.div`
 `;
 
 const Navbar = ({ handleChange }) => {
-  const { user } = useContext(UserContext);
+  const { user } = useUserContext();
 
   return (
     <Container>

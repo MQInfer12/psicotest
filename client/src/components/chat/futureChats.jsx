@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../context/userContext";
+import { useUserContext } from "../../context/userContext";
 import styled from "styled-components";
 import { db } from "../../firebase";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
@@ -41,7 +41,7 @@ const Container = styled.div`
 
 const FutureChats = () => {
   const [professor] = useState([]);
-  const { user } = useContext(UserContext);
+  const { user } = useUserContext();
   const { currentUser } = useContext(UserFirebaseContext);
   const [loading, setLoading] = useState(true);
 

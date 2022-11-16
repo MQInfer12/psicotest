@@ -1,6 +1,6 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { UserContext } from "../context/userContext";
+import { useUserContext } from "../context/userContext";
 import { useParams, useNavigate } from "react-router-dom";
 import Cargando from "../components/globals/cargando";
 import { addRespuesta } from "../services/respuesta";
@@ -16,7 +16,7 @@ const TestShare = () => {
   const navigate = useNavigate();
   const { idDocenteTest: IdProfessorCode } = useParams();
   const idDocenteTest = Number(decipherId(IdProfessorCode));
-  const { user } = useContext(UserContext);
+  const { user } = useUserContext();
 
   const createRespuesta = async () => {
     //AÑADIR UNA NUEVA RESPUESTA AL LARAVEL

@@ -4,7 +4,7 @@ import Pagination from "../components/answers/pagination";
 import { useNavigate } from "react-router-dom";
 import { WhiteIconButton } from "../styles/globals/formularios";
 import { getRespuestas, getRespuestasByDocente } from "../services/respuesta";
-import { UserContext } from "../context/userContext";
+import { useUserContext } from "../context/userContext";
 import Cargando from "../components/globals/cargando";
 import { useDownloadExcel } from "react-export-table-to-excel";
 import codeId from "../utilities/code";
@@ -21,7 +21,7 @@ import { useTableHeight } from "../hooks/useTableHeight";
 const Answers = () => {
   const windowHeight = useWindowHeight(true, true);
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const { user } = useUserContext();
   const [loading, setLoading] = useState(true);
   const [respuestas, setRespuestas] = useState([]);
   const [tableRef, setTableRef] = useState(null);

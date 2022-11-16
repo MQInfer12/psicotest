@@ -1,20 +1,12 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
 import styled from 'styled-components';
+import useGet from '../../hooks/useGet';
 import { acceptAppointment, getAppointByHorario } from '../../services/cita';
 import { WhiteButton } from '../../styles/globals/formularios';
 import Cargando from '../globals/cargando';
 
 const ModalAceptarCita = ({horario, actualizar}) => {
-  const [citas, setCitas] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const llenarCitas = async () => {
-    const res = await getAppointByHorario(horario.id_horario);
-    setCitas(res);
-    setLoading(false);
-  }
+  const { resJson: citas, loading } = useGet(getAppointByHorario, { idHorario: horario.id_horario });
 
   const AceptarCita = async (id) => {
     const res = await acceptAppointment(horario.id_horario, id);
@@ -22,10 +14,6 @@ const ModalAceptarCita = ({horario, actualizar}) => {
       actualizar();
     }
   }
-
-  useEffect(() => {
-    llenarCitas();
-  }, []);
 
   return (
     <DivContainer>

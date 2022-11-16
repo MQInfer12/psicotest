@@ -85,7 +85,7 @@ export const cancelAppoinment = async (idHorario, idCita) => {
   }
 };
 
-export const getAppointByHorario = async (idHorario) => {
+export const getAppointByHorario = async ({ idHorario }) => {
   try {
     const response = await fetch(`${http}cita/horario/${idHorario}`, {
       method: "GET",
@@ -94,11 +94,7 @@ export const getAppointByHorario = async (idHorario) => {
         "Content-Type": "application/json",
       },
     });
-
-    if (response.ok) {
-      const result = await response.json();
-      return result;
-    }
+    return response;
   } catch (err) {
     console.error(err);
   }

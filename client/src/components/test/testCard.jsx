@@ -1,143 +1,62 @@
 import React from "react";
 import styled from "styled-components";
 import ProfilePic from "../globals/profilePic";
-import ModalTest from "./modalTest";
-import { deleteTest, updateTest } from "../../services/test";
-import { useNavigate } from "react-router-dom";
-import { WhiteIconButton, DangerIconButton } from "../../styles/globals/formularios";
-import ModalAssignProfessor from "./modalAssignProfessor";
-import ModalUnassign from "./modalUnassignProfessor";
-import SureModal from "../globals/sureModal";
-import { useOutletContext } from "react-router-dom";
-import codeId from "../../utilities/code";
-import { useModal } from "../../hooks/useModal";
+import CardButtons from "./cardButtons";
 
 const TestCard = (props) => {
-  const navigate = useNavigate();
-  const { handleScrollTop } = useOutletContext();
-
-  const borrarTest = async () => {
-    const res = await deleteTest(props.id);
-    const resJson = await res?.json();
-    if (resJson) props.llenarTests();
-  };
-
-  const handleClick = () => {
-    let stringInd = props.id.toString();
-    let idCode = codeId(stringInd);
-    navigate(`./${idCode}`);
-  };
-
-  const handleTextView = () => {
-    let stringInd = props.id.toString();
-    let idCode = codeId(stringInd);
-    navigate(`./testview/${idCode}`);
-    handleScrollTop();
-  };
-
-  /* MODALES NUEVOS CON REFACTOR, YA NO ESTÁN EN EL JSX DEL COMPONENTE */
-  const {openModal: openEdit, closeModal: closeEdit} = useModal(
-    "Editar test",
-    <ModalTest
-      test={props}
-      funcion="editar"
-      call={updateTest}
-      actualizar={() => {
-        props.llenarTests();
-        closeEdit();
-      }}
-    />
-  );
-  const {openModal: openAddDocente, closeModal: closeAddDocente} = useModal(
-    "Editar test",
-    <ModalAssignProfessor
-      id={props.id}
-      actualizar={() => {
-        props.llenarTests();
-        closeAddDocente();
-      }}
-    />
-  );
-  const {openModal: openDeleteDocente, closeModal: closeDeleteDocente} = useModal(
-    "Editar test",
-    <ModalUnassign
-      id={props.id}
-      actualizar={() => {
-        props.llenarTests();
-        closeDeleteDocente();
-      }}
-    />
-  );
-  const {openModal: openDelete, closeModal: closeDelete} = useModal(
-    "Editar test",
-    <SureModal
-      cerrar={() => closeDelete()}
-      sure={borrarTest}
-      text={"Se eliminará el test '" + props.nombre + "' permanentemente"}
-    />
-  );
-
   return (
     <Container>
-      <H2>{props.nombre}</H2>
-      <P>{props.descripcion}</P>
+      <H2>{props.idRole === 1 ? props.nombre_test : props.nombre}</H2>
+      <P>{props.idRole === 1 ? props.descripcion_test : props.descripcion}</P>
 
       <ContainerIcon>
         <div>
           <i className="fa-solid fa-user"></i>
         </div>
-        <Span>{props.autor}</Span>
+        <Span>{props.idRole === 1 ? props.autor_test : props.autor}</Span>
       </ContainerIcon>
+
+      {
+        props.idRole === 1 &&
+        <ContainerIcon>
+          <div>
+            <i className="fa-solid fa-graduation-cap"></i>
+          </div>
+          <Span>{props.nombre_docente}</Span>
+        </ContainerIcon>
+      }
 
       <ContainerIcon>
         <div>
           <i className="fa-solid fa-clock"></i>
         </div>
-        <Span>{props.tiempo}</Span>
+        <Span>{props.idRole === 1 ? props.tiempo_test : props.tiempo}</Span>
       </ContainerIcon>
 
-      <ContainerImg>
-        {props.usuarios.length == 0 && (
-          <Span>¡Asigna docentes a este Test!</Span>
-        )}
-        {props.usuarios.map((v, i) => (
-          <div key={i}>
-            <ProfilePic
-              width="36px"
-              height="36px"
-              border={true}
-              translation={i}
-              id={v.id}
-              perfil={v.perfil}
-            />
-          </div>
-        ))}
-      </ContainerImg>
-
-      <ButtonContainer>
-        <WhiteIconButton title="Ver test" onClick={handleTextView}>
-          <i className="fa-solid fa-newspaper"></i>
-        </WhiteIconButton>
-        <WhiteIconButton title="Modificar test" onClick={handleClick}>
-          <i className="fa-solid fa-pen-to-square"></i>
-        </WhiteIconButton>
-
-        <WhiteIconButton title="Editar información del test" onClick={openEdit}>
-          <i className="fa-solid fa-pencil"></i>
-        </WhiteIconButton>
-
-        <WhiteIconButton title="Asignar docente" onClick={openAddDocente}>
-          <i className="fa-sharp fa-solid fa-user-plus"></i>
-        </WhiteIconButton>
-
-        <WhiteIconButton title="Desasignar docente" onClick={openDeleteDocente}>
-          <i className="fa-solid fa-user-minus"></i>
-        </WhiteIconButton>
-
-        <DangerIconButton title="Eliminar test" onClick={openDelete}>
-          <i className="fa-solid fa-trash-can"></i>
-        </DangerIconButton>
-      </ButtonContainer>
+      {
+        props.idRole != 1 &&
+        <ContainerImg>
+          {props.usuarios.length == 0 && (
+            <Span>{props.idRole === 1 ? "¡Asigna docentes a este Test!" : "¡Asigna beneficiarios a este Test!"}</Span>
+          )}
+          {props.usuarios.map((v, i) => (
+            <div key={i}>
+              <ProfilePic
+                width="36px"
+                height="36px"
+                border={true}
+                translation={i}
+                id={v.id}
+                perfil={v.perfil}
+              />
+            </div>
+          ))}
+        </ContainerImg>
+      }
+      
+      <CardButtons 
+        props={props}
+      />
     </Container>
   );
 };
@@ -203,9 +122,4 @@ const ContainerImg = styled.div`
   height: 43px;
   display: flex;
   align-items: center;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
 `;

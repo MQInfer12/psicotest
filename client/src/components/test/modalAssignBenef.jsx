@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   addBenefToTest,
   getBeneficiaryNoAssign,
@@ -7,55 +7,14 @@ import styled from "styled-components";
 import ProfilePic from "../globals/profilePic";
 import { FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import Cargando from "../globals/cargando";
-import { UserContext } from "../../context/userContext";
+import { useUserContext } from "../../context/userContext";
 import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import useGet from "../../hooks/useGet";
 
-const DivModal = styled.div`
-  background-color: #F4F4F4;
-  max-width: 400px;
-  height: 150px;
-  max-height: 250px;
-  padding: 10px;
-  border-radius: 10px;
-  overflow: scroll;
-  overflow-x: hidden;
-`;
-
-const DivPersonas = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-`;
-
-const DivPersona = styled.div`
-  font-size: 14px;
-  font-weight: 400;
-  color: #ADA7A7;
-  height: 30px;
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  padding: 1px 5px;
-  background-color: #FFFFFF;
-`;
-
-const ModalAssignProfessor = ({ id, actualizar }) => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { user } = useContext(UserContext);
-
-  const handleGetData = async () => {
-    const res = await getBeneficiaryNoAssign(id);
-    setData(res);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    handleGetData();
-  }, []);
+const ModalAssignBenef = ({ id, actualizar }) => {
+  const { resJson: data, loading } = useGet(getBeneficiaryNoAssign, { id });
+  const { user } = useUserContext();
 
   const [idsSelected, setIdsSelected] = useState([]);
   const [checSelected, setChecSelected] = useState([]);
@@ -157,4 +116,35 @@ const ModalAssignProfessor = ({ id, actualizar }) => {
   );
 };
 
-export default ModalAssignProfessor;
+export default ModalAssignBenef;
+
+const DivModal = styled.div`
+  background-color: #F4F4F4;
+  max-width: 400px;
+  height: 150px;
+  max-height: 250px;
+  padding: 10px;
+  border-radius: 10px;
+  overflow: scroll;
+  overflow-x: hidden;
+`;
+
+const DivPersonas = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+`;
+
+const DivPersona = styled.div`
+  font-size: 14px;
+  font-weight: 400;
+  color: #ADA7A7;
+  height: 30px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 1px 5px;
+  background-color: #FFFFFF;
+`;

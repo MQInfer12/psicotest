@@ -1,56 +1,24 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import Cargando from "../components/globals/cargando";
-import Modal from "../components/globals/modal";
 import ModalTest from "../components/test/modalTest";
 import TestCard from "../components/test/testCard";
-import { UserContext } from "../context/userContext";
+import { useUserContext } from "../context/userContext";
 import { addTest, getTests, getTestsToBenef, getTestsToProfessor } from "../services/test";
-import TestCardProfessor from "../components/test/testCardProfessor";
-import TestCardBenef from "../components/test/testCardBenef";
 import { PurpleButton } from "../styles/globals/formularios";
 import { useWindowHeight } from "../hooks/useWindowHeight";
 import { useModal } from "../hooks/useModal";
+import useGet from "../hooks/useGet";
 
 const Test = () => {
   const windowHeight = useWindowHeight(true, true);
-  const [tests, setTests] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { user } = useContext(UserContext);
+  const { user } = useUserContext();
   const idRole = user?.id_rol;
 
-  const llenarTests = async () => {
-    const res = await getTests();
-    const resJson = await res?.json();
-    setTests(resJson);
-    setLoading(false);
-  };
-
-  const llenarTestsToProfessor = async () => {
-    const res = await getTestsToProfessor(user.id);
-    const resJson = await res?.json();
-    setTests(resJson);
-    setLoading(false);
-  };
-
-  const llenarTestsToBenef = async () => {
-    const res = await getTestsToBenef(user.id);
-    const resJson = await res?.json();
-    setTests(resJson);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    if (idRole === 3) {
-      llenarTests();
-    }
-    if (idRole === 2) {
-      llenarTestsToProfessor();
-    }
-    if (idRole === 1) {
-      llenarTestsToBenef();
-    }
-  }, []);
+  const { callAPI: llenarTests, resJson : tests, loading } = useGet(
+    idRole === 3 ? getTests : idRole === 2 ? getTestsToProfessor : getTestsToBenef,
+    { id: user?.id }
+  );
 
   const { openModal, closeModal } = useModal(
     "Añadir test",
@@ -85,15 +53,10 @@ const Test = () => {
           </DivNothing>
         ) : (
           <TestContainer>
-            {idRole === 3 &&
-              tests.map((v, i) => <TestCard key={i} {...v} llenarTests={llenarTests} />
-            )}
-            {idRole === 2 &&
-              tests.map((v, i) => <TestCardProfessor key={i} {...v} id={v.id} llenarTests={llenarTestsToProfessor} />
-            )}
-            {idRole === 1 &&
-              tests.filter(v => v.estado === 0).map((v, i) => <TestCardBenef key={i} {...v}/>
-            )}
+            {idRole === 1 ?
+              tests.filter(v => v.estado === 0).map((v, i) => <TestCard key={i} {...v} idRole={idRole} llenarTests={llenarTests}/>) :
+              tests.map((v, i) => <TestCard key={i} {...v} idRole={idRole} llenarTests={llenarTests} />)
+            }
           </TestContainer>
         )
       }
@@ -107,7 +70,7 @@ const Test = () => {
                 <TestContainer>
                   {
                     tests.filter(v => v.estado === 1).map((v, i) => (
-                      <TestCardBenef key={i} {...v}/>
+                      <TestCard key={i} {...v} idRole={idRole}/>
                     ))
                   }
                 </TestContainer>

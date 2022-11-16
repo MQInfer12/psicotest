@@ -1,7 +1,7 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
-import { UserContext } from "../context/userContext";
+import { useUserContext } from "../context/userContext";
 import Cargando from "../components/globals/cargando";
 
 const TodaLaPantalla = styled.div`
@@ -12,7 +12,7 @@ const ProtectedRoute = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { user } = useContext(UserContext);
+  const { user } = useUserContext();
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
 

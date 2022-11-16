@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { UserContext } from "../context/userContext";
+import React from "react";
+import { useUserContext } from "../context/userContext";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { initialForm, validationsForm } from "../validations/login";
 import styled from "styled-components";
@@ -15,7 +15,7 @@ import { useWindowHeight } from "../hooks/useWindowHeight";
 const Login = () => {
   const windowHeight = useWindowHeight();
   const { goTo } = useParams();
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUserContext();
   const navigate = useNavigate();
 
   const { form, errors, handleChange, handleSubmit } = UseForm(

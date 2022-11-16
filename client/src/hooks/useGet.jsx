@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 
-const useAPI = (call) => {
+const useGet = (call, obj = {}) => {
   const [resJson, setResJson] = useState({});
   const [loading, setLoading] = useState(true);
 
   const callAPI = async () => {
-    const response = await call();
+    const response = await call(obj);
     const json = await response?.json();
     setResJson(json);
     setLoading(false);
@@ -22,4 +22,4 @@ const useAPI = (call) => {
   }
 }
 
-export default useAPI
+export default useGet

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useEffect, useContext, useState } from "react";
-import { UserContext } from "../context/userContext";
+import { useEffect, useState } from "react";
+import { useUserContext } from "../context/userContext";
 import SideBar from "../components/dashboard/sideBar";
 import CenterScreen from "../components/dashboard/centerScreen";
 import RightBar from "../components/dashboard/rightBar";
@@ -9,7 +9,7 @@ import { useWindowHeight } from "../hooks/useWindowHeight";
 
 const Dashboard = () => {
   const windowHeight = useWindowHeight();
-  const {user, setUser} = useContext(UserContext);
+  const {user, setUser} = useUserContext();
 
   const [titlePage, setTitlePage] = useState("");
   const [calendar, setCalendar] = useState(false);

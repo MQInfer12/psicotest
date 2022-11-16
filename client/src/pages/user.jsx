@@ -7,12 +7,18 @@ import UserResponse from "../components/user/filter/userReponse";
 import UserFilter from "../components/user/filter/userFilter";
 import ModalUser from "../components/user/modalUser";
 import { useWindowHeight } from "../hooks/useWindowHeight";
-import useAPI from "../hooks/useAPI";
+import useGet from "../hooks/useGet";
 import { useModal } from "../hooks/useModal";
 
 const User = () => {
   const windowHeight = useWindowHeight(true, true);
-  const { callAPI, resJson: usuarios, loading } = useAPI(getUsers);
+  const { callAPI, resJson: usuarios, loading } = useGet(getUsers);
+
+  /* ====== FILTER ====== */
+
+  const [filter, setFilter] = useState("");
+  const [optionFilter, setOptionFilter] = useState("email");
+
   const {openModal, closeModal} = useModal(
     "Añadir usuario", 
     <ModalUser
@@ -24,12 +30,7 @@ const User = () => {
       funcion="añadir"
     />
   );
-
-  /* ====== FILTER ====== */
-
-  const [filter, setFilter] = useState("");
-  const [optionFilter, setOptionFilter] = useState("email");
-
+  
   if(loading) return (<Cargando container windowHeight={windowHeight} />);
 
   return (

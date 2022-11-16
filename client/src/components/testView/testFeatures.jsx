@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
-import { UserContext } from "../../context/userContext";
+import React, { useEffect, useState } from "react";
+import { useUserContext } from "../../context/userContext";
 import styled from "styled-components";
 import { addCaracteristica, getCaracteristicasByTest } from "../../services/caracteristica";
 import { WhiteButton } from "../../styles/globals/formularios";
@@ -9,7 +9,7 @@ import { useModal } from "../../hooks/useModal";
 import FeatureCard from "./featureCard";
 
 const TestFeatures = ({ idTest }) => {
-  const { user } = useContext(UserContext);
+  const { user } = useUserContext();
   const [loading, setLoading] = useState(true);
   const [features, setFeatures] = useState([]);
 

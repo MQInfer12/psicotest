@@ -4,13 +4,13 @@ import { useEffect } from "react";
 import CalendarBig from "../components/calendar/calendarBig";
 import CalendarMini from "../components/calendar/calendarMini";
 import dayjs from "dayjs";
-import { UserContext } from "../context/userContext";
+import { useUserContext } from "../context/userContext";
 import { getTime, getTimeWithWhoHaveDate } from "../services/horario";
 import { getAllApoinments, getAppointByUser } from "../services/cita";
 
 const Calendar = () => {
   const [screen, setScreen] = useState(window.innerWidth);
-  const { user } = useContext(UserContext);
+  const { user } = useUserContext();
 
   const [mesActual, setMesActual] = useState(dayjs().month());
   const [yearActual, setYearActual] = useState(dayjs().year());

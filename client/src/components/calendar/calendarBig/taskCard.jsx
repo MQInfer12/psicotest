@@ -72,7 +72,7 @@ const TaskCard = ({
         event === "Pendientes" && openAccept()
       }} 
     >
-      {event + " - "}
+      {event === "Libre" && rol === 1 ? v.nombre + " - " : event + " - "}
       {v.hora_inicio.substring(0, 5)} a {v.hora_final.substring(0, 5)}
     </DivTask>
   )

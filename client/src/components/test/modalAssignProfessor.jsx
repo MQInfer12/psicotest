@@ -1,54 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { addProfessorToTest, getProfessorNotAssigned } from "../../services/test";
 import ProfilePic from "../globals/profilePic";
 import { FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import Cargando from "../globals/cargando";
-
-const DivModal = styled.div`
-  background-color: #F4F4F4;
-  max-width: 400px;
-  height: 150px;
-  max-height: 250px;
-  padding: 10px;
-  border-radius: 10px;
-  overflow: scroll;
-  overflow-x: hidden;
-`;
-
-const DivPersonas = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-`;
-
-const DivPersona = styled.div`
-  font-size: 14px;
-  font-weight: 400;
-  color: #ADA7A7;
-  height: 30px;
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  padding: 1px 5px;
-  background-color: #FFFFFF;
-`;
+import useGet from "../../hooks/useGet";
 
 const ModalAssignProfessor = ({ id, actualizar }) => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const handleGetData = async () => {
-    const res = await getProfessorNotAssigned(id);
-    setData(res);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    handleGetData();
-  }, []);
+  const { resJson: data, loading } = useGet(getProfessorNotAssigned, {id})
 
   const [checSelected, setChecSelected] = useState([]);
   const [btnActive, setBtnActive] = useState(false);
@@ -115,3 +74,34 @@ const ModalAssignProfessor = ({ id, actualizar }) => {
 };
 
 export default ModalAssignProfessor;
+
+const DivModal = styled.div`
+  background-color: #F4F4F4;
+  max-width: 400px;
+  height: 150px;
+  max-height: 250px;
+  padding: 10px;
+  border-radius: 10px;
+  overflow: scroll;
+  overflow-x: hidden;
+`;
+
+const DivPersonas = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+`;
+
+const DivPersona = styled.div`
+  font-size: 14px;
+  font-weight: 400;
+  color: #ADA7A7;
+  height: 30px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 1px 5px;
+  background-color: #FFFFFF;
+`;

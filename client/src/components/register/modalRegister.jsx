@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
-import { UserContext } from "../../context/userContext";
+import React from "react";
+import { useUserContext } from "../../context/userContext";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { getProfile, signIn } from "../../services/auth";
 
 const ModalRegister = ({ goTo, form, cerrar }) => {
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUserContext();
 
   const iniciarSesion = async () => {
     const res = await signIn(form);

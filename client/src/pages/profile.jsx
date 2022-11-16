@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { UserContext } from "../context/userContext";
+import { useUserContext } from "../context/userContext";
 import styled from "styled-components";
 import { initialForm, validationsForm } from "../validations/profile";
 import { UseForm } from "../hooks/useForm";
@@ -26,7 +26,7 @@ const Profile = () => {
   const windowHeight = useWindowHeight(true, true);
   const { profilePics, setProfilePics } = useContext(ProfilePicContext);
   const { setCurrentUser } = useContext(UserFirebaseContext);
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useUserContext();
   const [loadingEditable, setLoadingEditable] = useState(true);
   const [editable, setEditable] = useState(false);
 

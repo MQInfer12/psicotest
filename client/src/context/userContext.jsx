@@ -1,7 +1,17 @@
-import React, { useState, createContext, useMemo, useEffect } from "react";
+import React, { useState, createContext, useMemo, useEffect, useContext } from "react";
 import { getProfile } from "../services/auth";
 
 export const UserContext = createContext(null);
+
+export const useUserContext = () => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error(
+      "this contexts must be used whitin a UserContextProvider"
+    );
+  }
+  return context;
+};
 
 export const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);

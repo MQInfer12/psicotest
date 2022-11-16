@@ -1,10 +1,10 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../context/userContext";
+import { useUserContext } from "../context/userContext";
 
 const ProtectedRole = ({ children, roles = [] }) => {
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const { user } = useUserContext();
   const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {

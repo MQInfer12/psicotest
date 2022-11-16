@@ -12,7 +12,7 @@ export const getTests = async () => {
   }
 };
 
-export const getTestsToProfessor = async (id) => {
+export const getTestsToProfessor = async ({ id }) => {
   try {
     const response = await fetch(`${http}test/testToprofessor/${id}`, {
       method: "GET",
@@ -137,7 +137,7 @@ export const deleteTest = async (id) => {
   }
 };
 
-export const getProfessorNotAssigned = async (id) => {
+export const getProfessorNotAssigned = async ({ id }) => {
   try {
     const response = await fetch(`${http}test/professorNotAssigning/${id}`, {
       method: "GET",
@@ -146,17 +146,13 @@ export const getProfessorNotAssigned = async (id) => {
         "Content-Type": "application/json",
       },
     });
-
-    if (response.ok) {
-      const result = await response.json();
-      return result;
-    }
+    return response;
   } catch (err) {
     console.error(err);
   }
 };
 
-export const getProfessorAssigned = async (id) => {
+export const getProfessorAssigned = async ({ id }) => {
   try {
     const response = await fetch(`${http}test/professorAssigning/${id}`, {
       method: "GET",
@@ -165,11 +161,7 @@ export const getProfessorAssigned = async (id) => {
         "Content-Type": "application/json",
       },
     });
-
-    if (response.ok) {
-      const result = await response.json();
-      return result;
-    }
+    return response;
   } catch (err) {
     console.error(err);
   }
@@ -214,7 +206,7 @@ export const getDocenteTest = async (id) => {
 
 /* ======================= BENEFICIARY ============== */
 
-export const getBeneficiaryAssign = async (id) => {
+export const getBeneficiaryAssign = async ({ id }) => {
   try {
     const response = await fetch(`${http}test/benefAssigning/${id}`, {
       method: "GET",
@@ -226,14 +218,13 @@ export const getBeneficiaryAssign = async (id) => {
   }
 };
 
-export const getBeneficiaryNoAssign = async (id) => {
+export const getBeneficiaryNoAssign = async ({ id }) => {
   try {
     const response = await fetch(`${http}test/benefNoAssigning/${id}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
-    const res = await response.json();
-    return res;
+    return response;
   } catch (error) {
     console.log(error);
   }
@@ -273,7 +264,6 @@ export const deleteBenefAssigned = async (obj, id) => {
     });
     if (response.ok) {
       const result = await response.json();
-      console.log(result);
       return result;
     }
   } catch (err) {
@@ -281,7 +271,7 @@ export const deleteBenefAssigned = async (obj, id) => {
   }
 };
 
-export const getTestsToBenef = async (id) => {
+export const getTestsToBenef = async ({ id }) => {
   try {
     const response = await fetch(`${http}test/testToBenef/${id}`, {
       method: "GET",
