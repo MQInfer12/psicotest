@@ -90,7 +90,7 @@ export const getTest = async (id) => {
   }
 };
 
-export const getFullTest = async (id) => {
+export const getFullTest = async ({ id }) => {
   try {
     const response = await fetch(`${http}test/full/${id}`, {
       method: "GET",

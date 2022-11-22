@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { WhiteIconButton } from "../../../styles/globals/formularios";
 import Cargando from "../../globals/cargando";
@@ -61,7 +61,7 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
     }
   }
 
-  useState(() => {
+  useEffect(() => {
     llenarReactivos();
   }, []);
 

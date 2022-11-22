@@ -32,7 +32,7 @@ const SeccionCreator = ({ seccionActual, test, seccion, index, llenarSecciones, 
           <CreatorsContainer>
             <FullScreen translate={editActual}>
               <PreguntaCreator 
-                idSeccion={seccion?.id}
+                idSeccion={seccion.id}
                 preguntas={preguntas}
                 setPreguntas={setPreguntas}
                 reactivos={reactivos}
@@ -41,7 +41,7 @@ const SeccionCreator = ({ seccionActual, test, seccion, index, llenarSecciones, 
             </FullScreen>
             <FullScreen translate={editActual}>
               <ReactivoCreator
-                idSeccion={seccion?.id}
+                idSeccion={seccion.id}
                 reactivos={reactivos}
                 setReactivos={setReactivos}
                 puntuaciones={puntuaciones}

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { getIdTest, getRespuesta } from "../services/respuesta";
-import { getFullTest } from "../services/test";
+import { getFullRespuesta, getRespuesta } from "../services/respuesta";
 import Cargando from "../components/globals/cargando";
 import { useDownloadExcel } from "react-export-table-to-excel";
 import decipherId from "../utilities/decipher";
@@ -15,37 +14,17 @@ import {
 import BigRow from "../components/answer/bigRow";
 import MiniRow from "../components/answer/miniRow";
 import { useWindowHeight } from "../hooks/useWindowHeight";
+import useGet from "../hooks/useGet";
 
 const Answer = () => {
   const windowHeight = useWindowHeight(true, true);
   const { idRespuesta: idCode } = useParams();
   const idRespuesta = Number(decipherId(idCode));
-
   const [tableRef, setTableRef] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [respuesta, setRespuesta] = useState({});
   const [screen, setScreen] = useState(window.innerWidth);
 
-  const [test, setTest] = useState({
-    secciones: [{ reactivos: [], preguntas: [{ puntuaciones: [] }] }],
-  });
-
-  const llenarRespuesta = async () => {
-    const res = await getRespuesta(idRespuesta);
-    const resJson = await res?.json();
-    //RESPUESTA CON PUNTUACIONES
-    setRespuesta(resJson);
-  };
-
-  const llenarTest = async () => {
-    const res = await getIdTest(idRespuesta);
-    const resJson = await res?.json();
-    const resTest = await getFullTest(resJson.id_test);
-    const resTestJson = await resTest?.json();
-    //TEST PARA DIBUJARLO EN LA PAGINA
-    setTest(resTestJson);
-    setLoading(false);
-  };
+  const { resJson: respuesta } = useGet(getRespuesta, { id: idRespuesta });
+  const { resJson: test, loading } = useGet(getFullRespuesta, { id: idRespuesta });
 
   const { onDownload } = useDownloadExcel({
     filename: "Respuesta" + respuesta.nombre_user?.replaceAll(' ', '') + respuesta.nombre_test?.replaceAll(' ', ''),
@@ -57,9 +36,6 @@ const Answer = () => {
     window.addEventListener("resize", () => {
       setScreen(window.innerWidth);
     })
-
-    llenarRespuesta();
-    llenarTest();
   }, []);
 
   const data = [
@@ -149,7 +125,6 @@ const Answer = () => {
                 </tbody>
               </TableAnswers>
             </TableContainer>
-            {/* ================ */}
           </AnswersContainer>
         </SeccionContainer>
       ))}

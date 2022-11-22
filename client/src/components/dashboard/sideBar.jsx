@@ -121,7 +121,6 @@ const SideBarContainer = styled.nav`
 
 const SideBarLogo = styled.img`
   object-fit: cover;
-  //width: 170px;
   width: 170px;
   height: 38px;
   background-color: #D9D9D9;
@@ -171,5 +170,4 @@ const SideBarIcon = styled.i`
 const SideBarOptionText = styled.span`
   font-size: 16px;
   line-height: 27px;
-  //display: none;
 `;

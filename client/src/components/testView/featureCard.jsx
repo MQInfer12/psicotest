@@ -27,7 +27,6 @@ const FeatureCard = ({ index, v, llenarCaracteristicas, user }) => {
       feature={v}
     />
   )
-
   const { openModal: openDelete, closeModal: closeDelete } = useModal(
     "Eliminar característica",
     <SureModal

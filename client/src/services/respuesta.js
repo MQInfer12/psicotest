@@ -16,7 +16,7 @@ export const getRespuestas = async () => {
   }
 }
 
-export const getRespuesta = async (id) => {
+export const getRespuesta = async ({id}) => {
   try {
     const response = await fetch(`${http}respuesta/${id}`, {
       method: "GET",
@@ -78,7 +78,7 @@ export const addRespuesta = async (form) => {
   }
 }
 
-export const getIdTest = async (id) => {
+export const getIdTest = async ({ id }) => {
   try {
     const response = await fetch(`${http}respuesta/test/${id}`, {
       method: "GET",
@@ -93,6 +93,18 @@ export const getIdTest = async (id) => {
 export const getMisDocentes = async (email) => {
   try {
     const response = await fetch(`${http}respuesta/my/${email}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getFullRespuesta = async ({ id }) => {
+  try {
+    const response = await fetch(`${http}respuesta/full/${id}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });

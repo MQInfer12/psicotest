@@ -13,7 +13,7 @@ import { db } from "../../firebase";
 import useGet from "../../hooks/useGet";
 
 const ModalAssignBenef = ({ id, actualizar }) => {
-  const { resJson: data, loading } = useGet(getBeneficiaryNoAssign, { id });
+  const { resJson: data, loading } = useGet(getBeneficiaryNoAssign, {id});
   const { user } = useUserContext();
 
   const [idsSelected, setIdsSelected] = useState([]);

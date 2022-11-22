@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const useGet = (call, obj = {}) => {
+const useGet = (call, obj = {}, trigger = []) => {
   const [resJson, setResJson] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -12,8 +12,16 @@ const useGet = (call, obj = {}) => {
   }
 
   useEffect(() => {
-    callAPI();
-  }, []);
+    let flag = true;
+    trigger.forEach(trig => {
+      if(!trig) {
+        flag = false;
+      }
+    })
+    if(flag) {
+      callAPI();
+    }
+  }, trigger);
 
   return {
     callAPI,

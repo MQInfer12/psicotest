@@ -54,7 +54,7 @@ export const deleteCaracteristica = async (id) => {
   }
 }
 
-export const getCaracteristicasByTest = async (id_test) => {
+export const getCaracteristicasByTest = async ({id_test}) => {
   try {
     const response = await fetch(`${http}caracteristica/test/${id_test}`, {
       method: "GET",

@@ -12,6 +12,7 @@ import { useContext } from 'react';
 import { ThanksContext } from '../../context/thanksContext';
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../hooks/useModal";
+import useGet from "../../hooks/useGet";
 
 const TestResolution = ({
   loading,
@@ -43,23 +44,18 @@ const TestResolution = ({
     }
   };
 
-  const llenarTestEntero = async () => {
-    const res = await getFullTest(idTest);
-    const resJson = await res?.json();
-    setSecciones(resJson.secciones);
-
-    let contPreguntas = 0;
-    resJson.secciones.forEach((seccion) => {
-      contPreguntas += seccion.preguntas.length;
-    });
-    setPreguntasTotales(contPreguntas);
-  };
+  const { resJson: test } = useGet(getFullTest, { id: idTest }, [idTest])
 
   useEffect(() => {
-    if (idTest) {
-      llenarTestEntero();
+    if(test.length != 0) {
+      setSecciones(test.secciones);
+      let contPreguntas = 0;
+      test.secciones.forEach((seccion) => {
+        contPreguntas += seccion.preguntas.length;
+      });
+      setPreguntasTotales(contPreguntas);
     }
-  }, [idTest]);
+  }, [test]);
 
   const { openModal, closeModal } = useModal(
     "",

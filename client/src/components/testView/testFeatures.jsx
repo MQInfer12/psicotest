@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useUserContext } from "../../context/userContext";
 import styled from "styled-components";
 import { addCaracteristica, getCaracteristicasByTest } from "../../services/caracteristica";
@@ -7,24 +7,12 @@ import ModalFeature from "./modalFeature";
 import { BlackTextLoader, GrayTextLoader, PurpleTextLoader } from "../../styles/globals/loaders";
 import { useModal } from "../../hooks/useModal";
 import FeatureCard from "./featureCard";
+import useGet from "../../hooks/useGet";
 
 const TestFeatures = ({ idTest }) => {
   const { user } = useUserContext();
-  const [loading, setLoading] = useState(true);
-  const [features, setFeatures] = useState([]);
 
-  const llenarCaracteristicas = async () => {
-    const res = await getCaracteristicasByTest(idTest);
-    const resJson = await res?.json();
-    setFeatures(resJson);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    if(idTest) {
-      llenarCaracteristicas();
-    }
-  }, [idTest]);
+  const { callAPI: llenarCaracteristicas, resJson: features, loading } = useGet(getCaracteristicasByTest, {id_test: idTest}, [idTest])
 
   const { openModal: openAdd, closeModal: closeAdd } = useModal(
     "Añadir característica",

@@ -10,26 +10,17 @@ const Message = ({ message }) => {
   const { data } = useContext(ChatContext);
   const otherUser = data.user;
 
-  //const ref = useRef();
-
-  useEffect(() => {
-    /* ref.current?.scrollIntoView(); */
-  }, [message]);
-
   const convertSecondosToDate = (seconds) => {
     var d = new Date(seconds * 1000);
-    //var hora = d.getHours() == 0 ? 23 : d.getHours();
     var hora = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
     var minuto = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
     var segundo = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
-    //var hora = d.getHours() == 0 ? 23 : d.getHours();
     let val = hora + ":" + minuto + ":" + segundo;
     return val;
   };
 
   return (
     <Container
-      //ref={ref}
       className={`${message.senderId === currentUser.uid && "owner"}`}
     >
       <div className="messageInfo">
@@ -51,7 +42,6 @@ const Message = ({ message }) => {
       </div>
       <div className="messageContent">
         <p>{message.text}</p>
-        {/*  <img src={PhotoDefault} alt="" /> */}
       </div>
     </Container>
   );

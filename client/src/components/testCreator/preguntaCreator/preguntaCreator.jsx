@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { DangerIconButton, WhiteIconButton } from "../../../styles/globals/formularios";
 import Cargando from "../../globals/cargando";
@@ -51,7 +51,7 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
     }
   }
 
-  useState(() => {
+  useEffect(() => {
     llenarPreguntas();
   }, []);
 
@@ -106,21 +106,17 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
                   </TdCargando>
                 </TrCargando>
               ) : (
-                <>
-                  {
-                    preguntas.filter((v, i) => i >= (preguntasPage - 1) * tableRows && i < preguntasPage * tableRows).map((v, i) => (
-                      <PreguntaCard 
-                        key={i} 
-                        {...v} 
-                        index={((preguntasPage - 1) * tableRows) + (i + 1)} 
-                        llenarPreguntas={llenarPreguntas}
-                        selecteds={selecteds}
-                        setSelecteds={setSelecteds}
-                        rowHeight={rowHeight}
-                      />
-                    ))
-                  }
-                </>
+                preguntas.filter((v, i) => i >= (preguntasPage - 1) * tableRows && i < preguntasPage * tableRows).map((v, i) => (
+                  <PreguntaCard 
+                    key={i} 
+                    {...v} 
+                    index={((preguntasPage - 1) * tableRows) + (i + 1)} 
+                    llenarPreguntas={llenarPreguntas}
+                    selecteds={selecteds}
+                    setSelecteds={setSelecteds}
+                    rowHeight={rowHeight}
+                  />
+                ))
               )
             }
           </tbody>
