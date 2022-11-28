@@ -37,7 +37,7 @@ const Profile = () => {
     setProfilePics(old => ({
       ...old,
       [user.id]: form.perfil 
-    }))
+    }));
     setEditable(false);
   };
 
@@ -148,22 +148,20 @@ const Profile = () => {
   ];
 
   const updateUserFirebase = async () => {
-    let llenado = null;
-    if(form.perfil != null) {
-      llenado = "pendiente...";
-    }
     //ACTUALIZAR EL CONTEXTO DEL USUARIO
     setCurrentUser(old => ({
       ...old,
       name: form.nombre,
-      perfil: llenado
+      perfil: form.perfil
     }));
     //ACTUALIZAR EN EL FIREBASE
     await updateDoc(doc(db, "users", String(user?.id)), {
       name: form.nombre,
-      perfil: llenado
+      perfil: form.perfil
     });
   };
+
+  const [prev, setPrev] = useState(form.perfil ? "pendiente..." : "");
 
   useEffect(() => {
     if(user.perfil) {
@@ -176,6 +174,17 @@ const Profile = () => {
     }
   }, [profilePics]);
 
+  useEffect(() => {
+    if(form.perfil?.type === "image/jpeg" || form.perfil?.type === "image/png") {
+      const imgURL = URL.createObjectURL(form.perfil);
+      setPrev(imgURL);
+    } else if (form.perfil === null) {
+      setPrev("");
+    } else {
+      setPrev("pendiente...");
+    }
+  }, [form.perfil]);
+
   return (
     <ProfileContainer height={windowHeight}>
       <UpContainer>
@@ -187,7 +196,7 @@ const Profile = () => {
             id={user.id}
             perfil={user.perfil}
             editable={editable}
-            prev={form.perfil}
+            prev={prev}
           />
           {editable && (
             <DivPhotoInfo>
@@ -201,13 +210,9 @@ const Profile = () => {
                   />
                   <PurpleButton>Subir foto nueva</PurpleButton>
                 </DivFile>
-                <WhiteButton onClick={() => handleResetImg("perfil")}>
-                  Reset
-                </WhiteButton>
+                <WhiteButton onClick={() => handleResetImg("perfil")}>Reset</WhiteButton>
               </DivPhotoButtons>
-              <InfoPhotoExtensions>
-                Permitido JPG, JPEG o PNG. {/*Tamaño máximo de 800Kb.*/}
-              </InfoPhotoExtensions>
+              <InfoPhotoExtensions>Permitido JPG, JPEG o PNG.</InfoPhotoExtensions>
             </DivPhotoInfo>
           )}
         </DivPhoto>

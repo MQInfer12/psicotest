@@ -20,7 +20,7 @@ const TestCreator = () => {
   const [seccionActual, setSeccionActual] = useState(0);
   
   const llenarSecciones = async () => {
-    const tst = await getTest(idTest);
+    const tst = await getTest({ id: idTest});
     const tstJson = await tst?.json();
     setTest(tstJson);
     const res = await getSeccionesByTest(idTest);
@@ -45,7 +45,7 @@ const TestCreator = () => {
                 <SeccionCreator 
                   key={i}
                   seccionActual={seccionActual}
-                  test={test[0]}
+                  test={test}
                   index={i + 1}
                   llenarSecciones={llenarSecciones}
                   seccionState={{seccionActual, setSeccionActual}}
@@ -54,7 +54,7 @@ const TestCreator = () => {
               ))
             }
             <SeccionCreator
-              test={test[0]}
+              test={test}
               seccionActual={seccionActual}
               index="nueva"
               idTest={idTest}

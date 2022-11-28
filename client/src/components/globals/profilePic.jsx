@@ -4,6 +4,7 @@ import DefaultPhoto from "../../assets/profilePic/defaultPhoto.jpg";
 import { ProfilePicContext } from "../../context/profilePicContext";
 import { getPic } from "../../services/usuario";
 import Cargando from "./cargando";
+import { Image } from "cloudinary-react";
 
 const ProfilePic = ({ width, height, border, translation, id, perfil, editable, prev }) => {
   const { profilePics, setProfilePics } = useContext(ProfilePicContext);
@@ -20,7 +21,6 @@ const ProfilePic = ({ width, height, border, translation, id, perfil, editable, 
   useEffect(() => {
     //SI NO SE ENCUENTRA LA FOTO EN EL CONTEXTO PEDIRLA AL SERVIDOR
     if(!Object.keys(profilePics).includes(String(id)) && perfil != null) {
-      //console.log("Pidiendo foto: " + id);
       //RESERVAR ESPACIO PARA NO PEDIR VARIAS VECES SI ES QUE EXISTEN VARIOS COMPONENTES IGUALES EN LA PAGINA
       setProfilePics(old => ({
         ...old,
@@ -51,9 +51,25 @@ const ProfilePic = ({ width, height, border, translation, id, perfil, editable, 
           </DivLoading>
         ) : (
           //FOTO DE PERFIL CARGADA
-          <Pic
-            src={editable? (prev? prev : DefaultPhoto) : profilePics[id]}
-          />
+          editable ? (
+            prev === "pendiente..." ? (
+              <Image 
+                cloudName="dcy47gguk" 
+                publicId={profilePics[id]} 
+                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} 
+              />
+            ) : (
+              <Pic
+                src={prev ? prev : DefaultPhoto}
+              />
+            )
+          ) : (
+            <Image 
+              cloudName="dcy47gguk" 
+              publicId={profilePics[id]} 
+              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} 
+            />
+          )
         )
       ) : (
         //NO TIENE FOTO DE PERFIL

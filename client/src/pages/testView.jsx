@@ -28,22 +28,22 @@ const TestView = () => {
   const [activateSend, setActivateSend] = useState(false);
 
   const llenarTest = async (id) => {
-    const res = await getTest(id);
+    const res = await getTest({ id });
     const resJson = await res?.json();
-    setTest(resJson[0]);
+    setTest(resJson);
     setLoading(false);
   };
 
   const getTestId = async (id) => {
-    const res = await getIdTest(id);
+    const res = await getIdTest({ id });
     const resJson = await res?.json();
     setEmail_docente(resJson.email_docente);
     if (resJson.estado != 0) {
       setActivateSend(false);
     }
-    const restest = await getTest(resJson.id_test);
+    const restest = await getTest({ id: resJson.id_test });
     const restestJson = await restest?.json();
-    setTest(restestJson[0]);
+    setTest(restestJson);
     setLoading(false);
   };
 

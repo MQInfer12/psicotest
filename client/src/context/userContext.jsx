@@ -14,7 +14,7 @@ export const useUserContext = () => {
 };
 
 export const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 
   const getUser = async () => {

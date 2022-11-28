@@ -271,6 +271,19 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
     }
   }, [profilePics[user?.id]]);
 
+  const [prev, setPrev] = useState(form.perfil ? "pendiente..." : null);
+
+  useEffect(() => {
+    if(form.perfil?.type === "image/jpeg" || form.perfil?.type === "image/png") {
+      const imgURL = URL.createObjectURL(form.perfil);
+      setPrev(imgURL);
+    } else if (form.perfil === null) {
+      setPrev("");
+    } else {
+      setPrev("pendiente...");
+    }
+  }, [form.perfil]);
+
   return (
     <ModalUserContainer>
       {funcion == "editar" && (
@@ -281,7 +294,7 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
             id={user.id}
             perfil={user.perfil}
             editable={true}
-            prev={form.perfil} 
+            prev={prev} 
           />
           <WhiteButton onClick={() => handleResetImg("perfil")}>
             Reset

@@ -78,7 +78,7 @@ export const addProfessorToTest = async (obj, id_test) => {
   }
 };
 
-export const getTest = async (id) => {
+export const getTest = async ({ id }) => {
   try {
     const response = await fetch(`${http}test/${id}`, {
       method: "GET",

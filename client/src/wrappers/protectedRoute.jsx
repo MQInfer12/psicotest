@@ -4,6 +4,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useUserContext } from "../context/userContext";
 import Cargando from "../components/globals/cargando";
 
+let cont = 0;
+
 const ProtectedRoute = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -13,12 +15,15 @@ const ProtectedRoute = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    if(user) {
-      setAuthenticated(true);
-      setLoading(false);
-    } else if(user === undefined) {
-      navigate("/login/" + location.pathname.replaceAll("/", "_47slash_"));
+    if(cont) {
+      if(Object.keys(user).length != 0) {
+        setAuthenticated(true);
+        setLoading(false);
+      } else if(Object.keys(user).length === 0) {
+        navigate("/login/" + location.pathname.replaceAll("/", "_47slash_"));
+      }
     }
+    cont++;
   }, [user]);
 
   return (

@@ -20,11 +20,6 @@ class TestController extends Controller
                                     FROM users as u, docente_tests as dt
                                     WHERE dt.id_test = '$id_test' AND dt.id_docente = u.id
                                     LIMIT 10");
-            foreach($usuarios as $usuario) {
-                if($usuario->perfil != null) {
-                    $usuario->perfil = "pendiente...";
-                }
-            }
             $test->usuarios = $usuarios;
         }        
 
@@ -54,7 +49,7 @@ class TestController extends Controller
         $showTest = DB::select("SELECT *
                                 FROM tests
                                 WHERE id='$id'");
-        return response()->json($showTest);
+        return response()->json($showTest[0]);
     }
 
     public function update(Request $request, $id)

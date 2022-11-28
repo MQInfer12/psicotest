@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { validarInputFile, getBase64 } from "../functions";
+import { uploadImage } from "../services/cloudinary";
 
 export const UseForm = (
   initialForm,
@@ -15,6 +16,19 @@ export const UseForm = (
   //ENVIAR PETICION
   const handleSend = async (form) => {
     try {
+      for(let key in form) {
+        if(form[key]?.type === "image/jpeg" || form[key]?.type === "image/png") {
+          const formData = new FormData();
+          formData.append("file", form[key]);
+          formData.append("upload_preset", "la8fhiin");
+          const res = await uploadImage(formData);
+          if(res.ok) {
+            const resJson = await res?.json();
+            form[key] = resJson.public_id;
+          }
+        }
+      }
+
       let res;
       if (primaryId) {
         //LLAMAR A LA API PARA EDITAR
@@ -53,16 +67,14 @@ export const UseForm = (
   };
 
   //IR CAMBIANDO EL FORM
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     //SI EL INPUT ES DE TIPO FILE VALIDAR Y CONVERTIR A BASE64
     if (e.target.type == "file") {
       if (validarInputFile(e)) return;
-      getBase64(e.target.files[0], (resultado) => {
-        setForm({
-          ...form,
-          [e.target.name]: resultado,
-        });
-      });
+      setForm({
+        ...form,
+        [e.target.name]: e.target.files[0]
+      })
       return;
     }
 

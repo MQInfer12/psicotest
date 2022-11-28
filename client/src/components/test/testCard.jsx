@@ -37,7 +37,7 @@ const TestCard = (props) => {
         props.idRole != 1 &&
         <ContainerImg>
           {props.usuarios.length == 0 && (
-            <Span>{props.idRole === 1 ? "¡Asigna docentes a este Test!" : "¡Asigna beneficiarios a este Test!"}</Span>
+            <Span>{props.idRole === 3 ? "¡Asigna psicólogos a este Test!" : "¡Asigna beneficiarios a este Test!"}</Span>
           )}
           {props.usuarios.map((v, i) => (
             <div key={i}>
