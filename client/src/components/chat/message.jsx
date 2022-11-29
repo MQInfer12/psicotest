@@ -27,11 +27,6 @@ const Message = ({ message }) => {
         <ProfilePic
           width="40px"
           height="40px"
-          id={
-            message.senderId == currentUser.uid
-              ? currentUser.uid
-              : otherUser.uid
-          }
           perfil={
             message.senderId == currentUser.uid
               ? currentUser.perfil

@@ -54,7 +54,6 @@ const ModalUnAssignProfessor = ({ id, actualizar }) => {
                 <ProfilePic 
                   width="20px" 
                   height="20px" 
-                  id={v.id}
                   perfil={v.perfil} 
                 />
                 {v.nombre_user}

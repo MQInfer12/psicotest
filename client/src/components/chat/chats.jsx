@@ -115,7 +115,6 @@ const Chats = ({ handleClick, email: emailURL }) => {
                 <ProfilePic
                   width="50px"
                   height="50px"
-                  id={v.userInfo.uid}
                   perfil={v.userInfo.perfil}
                   className="img"
                 />

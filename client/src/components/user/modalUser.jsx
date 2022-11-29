@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from "react";
-import { ProfilePicContext } from "../../context/profilePicContext";
+import React from "react";
 import styled from "styled-components";
 import { initialForm, validationsForm } from "../../validations/user";
 import { UseForm } from "../../hooks/useForm";
@@ -13,11 +12,8 @@ import FormInputsSelect from "../globals/formInputsSelect";
 import { db } from "../../firebase";
 import { collection, doc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import ProfilePic from "../globals/profilePic";
-import { useState } from "react";
 
 const ModalUser = ({ call, actualizar, funcion, user }) => {
-  const { profilePics, setProfilePics } = useContext(ProfilePicContext);
-  const [loadingEditable, setLoadingEditable] = useState(true);
   const newUser = [];
 
   const { form, errors, handleChange, handleSubmit, handleResetImg, handleReset } = UseForm(
@@ -29,7 +25,7 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
       genero: user.genero,
       sede: String(user.id_sede),
       rol: String(user.id_rol),
-      perfil: profilePics[user.id],
+      perfil: user.perfil,
     } : initialForm,
     validationsForm,
     call,
@@ -38,10 +34,6 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
         createFirebaseUser(respuesta.user);
       } else if(funcion == "editar") {
         updateFirebaseUser(respuesta.user);
-        setProfilePics(old => ({
-          ...old,
-          [user.id]: form.perfil 
-        }));
       }
       actualizar();
     },
@@ -260,17 +252,6 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
     }
   }
 
-  useEffect(() => {
-    if(user?.perfil) {
-      if(profilePics[user?.id]) {
-        handleReset();
-        setLoadingEditable(false);
-      }
-    } else {
-      setLoadingEditable(false);
-    }
-  }, [profilePics[user?.id]]);
-
   return (
     <ModalUserContainer>
       {funcion == "editar" && (
@@ -278,7 +259,6 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
           <ProfilePic
             width="75px" 
             height="75px" 
-            id={user.id}
             perfil={user.perfil}
             editable={true}
             prev={form.perfil} 
@@ -296,7 +276,7 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
           <FormInputsSelect data={dataSelect} handleChange={handleChange} />
         </FormContainer>
       </Columnas>
-      <PurpleButton onClick={handleSubmit} disabled={loadingEditable}>{funcion}</PurpleButton>
+      <PurpleButton onClick={handleSubmit}>{funcion}</PurpleButton>
     </ModalUserContainer>
   );
 };

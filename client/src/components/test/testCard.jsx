@@ -46,7 +46,6 @@ const TestCard = (props) => {
                 height="36px"
                 border={true}
                 translation={i}
-                id={v.id}
                 perfil={v.perfil}
               />
             </div>

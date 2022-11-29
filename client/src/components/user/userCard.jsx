@@ -71,7 +71,7 @@ const UserCard = (props) => {
 
   return (
     <DivCard estado={props.estado}>
-      <ProfilePic width="100px" height="100px" id={props.id} perfil={props.perfil} />
+      <ProfilePic width="100px" height="100px" perfil={props.perfil} />
       <DivEstado estado={props.estado}><i className="fa-solid fa-circle"></i>{props.estado ? "Habilitado" : "Deshabilitado"}</DivEstado>
       <DivCardText>
         <PNombre>{props.nombre_user}</PNombre>

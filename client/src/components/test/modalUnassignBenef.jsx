@@ -50,7 +50,6 @@ const ModalUnAssignBenef = ({ id, actualizar }) => {
                 <ProfilePic 
                   width="20px" 
                   height="20px" 
-                  id={v.id_user}
                   perfil={v.perfil} 
                 />
                 {v.nombre_user}

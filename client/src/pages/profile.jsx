@@ -16,28 +16,20 @@ import FormInputsText from "../components/globals/formInputsText";
 import { updateUser } from "../services/usuario";
 import { db } from "../firebase";
 import { UserFirebaseContext } from "../context/userFirebaseContext";
-import { ProfilePicContext } from "../context/profilePicContext";
 import { doc, updateDoc } from "firebase/firestore";
-import { useEffect } from "react";
 import ProfilePic from "../components/globals/profilePic";
 import { useWindowHeight } from "../hooks/useWindowHeight";
 
 const Profile = () => {
   const windowHeight = useWindowHeight(true, true);
-  const { profilePics, setProfilePics } = useContext(ProfilePicContext);
   const { setCurrentUser } = useContext(UserFirebaseContext);
   const { user, setUser } = useUserContext();
-  const [loadingEditable, setLoadingEditable] = useState(true);
   const [editable, setEditable] = useState(false);
 
   const actualizar = async () => {
     const newUser = await getProfile();
     const resJson = await newUser?.json();
     setUser(resJson);
-    setProfilePics(old => ({
-      ...old,
-      [user.id]: form.perfil 
-    }));
     setEditable(false);
   };
 
@@ -54,7 +46,7 @@ const Profile = () => {
       edad: String(user.edad),
       genero: user.genero,
       sede: String(user.id_sede),
-      perfil: profilePics[user.id],
+      perfil: user.perfil
     } : initialForm,
     validationsForm,
     updateUser,
@@ -161,17 +153,6 @@ const Profile = () => {
     });
   };
 
-  useEffect(() => {
-    if(user.perfil) {
-      if(profilePics[user.id]) {
-        handleReset();
-        setLoadingEditable(false);
-      }
-    } else {
-      setLoadingEditable(false);
-    }
-  }, [profilePics]);
-
   return (
     <ProfileContainer height={windowHeight}>
       <UpContainer>
@@ -180,7 +161,6 @@ const Profile = () => {
           <ProfilePic
             width="100px"
             height="100px"
-            id={user.id}
             perfil={user.perfil}
             editable={editable}
             prev={form.perfil}
@@ -260,7 +240,7 @@ const Profile = () => {
               </WhiteButton>
             </>
           ) : (
-            <PurpleButton onClick={() => setEditable(true)} disabled={loadingEditable}>
+            <PurpleButton onClick={() => setEditable(true)} >
               Editar
             </PurpleButton>
           )}

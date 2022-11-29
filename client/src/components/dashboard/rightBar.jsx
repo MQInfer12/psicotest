@@ -20,7 +20,6 @@ const RightBar = ({ user, calendar, openNav, setOpenNav }) => {
           <ProfilePic
             width="52px"
             height="52px"
-            id={user?.id}
             perfil={user?.perfil}
           />
           <ProfilePencil className="pencil">

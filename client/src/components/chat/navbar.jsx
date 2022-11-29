@@ -13,7 +13,6 @@ const Navbar = ({ handleChange }) => {
         <ProfilePic
           width="24px"
           height="24px"
-          id={user.id}
           perfil={user.perfil}
         />
         {/*  <span className="username">{user.nombre}</span> */}

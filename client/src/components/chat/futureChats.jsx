@@ -78,7 +78,7 @@ const FutureChats = () => {
             key={i}
             onClick={(e) => handleSelect(v.uid)}
           >
-            <ProfilePic width="50px" height="50px" id={v.uid} perfil={v.perfil} />
+            <ProfilePic width="50px" height="50px" perfil={v.perfil} />
             <div className="userChatInfo">
               <span>{v.email}</span>
             </div>
