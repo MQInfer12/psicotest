@@ -161,8 +161,6 @@ const Profile = () => {
     });
   };
 
-  const [prev, setPrev] = useState(form.perfil ? "pendiente..." : "");
-
   useEffect(() => {
     if(user.perfil) {
       if(profilePics[user.id]) {
@@ -173,17 +171,6 @@ const Profile = () => {
       setLoadingEditable(false);
     }
   }, [profilePics]);
-
-  useEffect(() => {
-    if(form.perfil?.type === "image/jpeg" || form.perfil?.type === "image/png") {
-      const imgURL = URL.createObjectURL(form.perfil);
-      setPrev(imgURL);
-    } else if (form.perfil === null) {
-      setPrev("");
-    } else {
-      setPrev("pendiente...");
-    }
-  }, [form.perfil]);
 
   return (
     <ProfileContainer height={windowHeight}>
@@ -196,7 +183,7 @@ const Profile = () => {
             id={user.id}
             perfil={user.perfil}
             editable={editable}
-            prev={prev}
+            prev={form.perfil}
           />
           {editable && (
             <DivPhotoInfo>

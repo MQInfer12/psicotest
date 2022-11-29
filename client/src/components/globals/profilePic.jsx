@@ -5,9 +5,15 @@ import { ProfilePicContext } from "../../context/profilePicContext";
 import { getPic } from "../../services/usuario";
 import Cargando from "./cargando";
 import { Image } from "cloudinary-react";
+import { useState } from "react";
 
 const ProfilePic = ({ width, height, border, translation, id, perfil, editable, prev }) => {
   const { profilePics, setProfilePics } = useContext(ProfilePicContext);
+
+  const [previsualizacion, setPrevisualizacion] = useState(() => {
+    if (prev === null) return "";
+    return "pendiente...";
+  });
 
   const getProfilePic = async () => {
     const res = await getPic(id);
@@ -29,6 +35,14 @@ const ProfilePic = ({ width, height, border, translation, id, perfil, editable, 
       getProfilePic();
     }
   }, []);
+
+  useEffect(() => {
+    setPrevisualizacion(() => {
+      if (prev?.type === "image/jpeg" || prev?.type === "image/png") return URL.createObjectURL(prev);
+      if (prev === null) return "";
+      return "pendiente...";
+    });
+  }, [prev]);
 
   return (
     <DivPic 
@@ -52,7 +66,7 @@ const ProfilePic = ({ width, height, border, translation, id, perfil, editable, 
         ) : (
           //FOTO DE PERFIL CARGADA
           editable ? (
-            prev === "pendiente..." ? (
+            previsualizacion === "pendiente..." ? (
               <Image 
                 cloudName="dcy47gguk" 
                 publicId={profilePics[id]} 
@@ -60,7 +74,7 @@ const ProfilePic = ({ width, height, border, translation, id, perfil, editable, 
               />
             ) : (
               <Pic
-                src={prev ? prev : DefaultPhoto}
+                src={previsualizacion != "" ? previsualizacion : DefaultPhoto}
               />
             )
           ) : (
@@ -74,7 +88,7 @@ const ProfilePic = ({ width, height, border, translation, id, perfil, editable, 
       ) : (
         //NO TIENE FOTO DE PERFIL
         <Pic 
-          src={prev? prev : DefaultPhoto}
+          src={previsualizacion ? previsualizacion : DefaultPhoto}
         />
       )
     }
