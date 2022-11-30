@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ProfilePic from "../globals/profilePic";
-import CardButtons from "./cardButtons";
+import CardButtons from "./testCard/cardButtons";
 
 const TestCard = (props) => {
   return (

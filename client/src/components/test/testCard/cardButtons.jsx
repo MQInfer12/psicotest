@@ -1,18 +1,18 @@
 import React from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import styled from 'styled-components';
-import { useUserContext } from '../../context/userContext';
-import { useModal } from '../../hooks/useModal';
-import { deleteTest, updateTest } from '../../services/test';
-import { DangerIconButton, WhiteIconButton } from '../../styles/globals/formularios';
-import code from '../../utilities/code';
-import SureModal from '../globals/sureModal';
-import ModalAssignBenef from './modalAssignBenef';
-import ModalAssignProfessor from './modalAssignProfessor';
-import ModalLink from './modalLink';
-import ModalTest from './modalTest';
-import ModalUnAssignBenef from './modalUnassignBenef';
-import ModalUnAssignProfessor from './modalUnassignProfessor';
+import { useUserContext } from '../../../context/userContext';
+import { useModal } from '../../../hooks/useModal';
+import { deleteTest, updateTest } from '../../../services/test';
+import { DangerIconButton, WhiteIconButton } from '../../../styles/globals/formularios';
+import code from '../../../utilities/code';
+import SureModal from '../../globals/sureModal';
+import ModalAssignBenef from '../modalAssignBenef';
+import ModalAssignProfessor from '../modalAssignProfessor';
+import ModalLink from '../modalLink';
+import ModalTest from '../modalTest';
+import ModalUnAssignBenef from '../modalUnassignBenef';
+import ModalUnAssignProfessor from '../modalUnassignProfessor';
 
 const CardButtons = ({ props }) => {
   const navigate = useNavigate();
@@ -101,8 +101,8 @@ const CardButtons = ({ props }) => {
     />
   )
   const {openModal: openLink} = useModal(
-    "Compartir enlace",
-    <ModalLink id={props.id} />
+    "Compartir",
+    <ModalLink id={props.id} nombreTest={props.nombre} />
   )
 
   return (
@@ -139,8 +139,8 @@ const CardButtons = ({ props }) => {
             <i className="fa-solid fa-user-minus"></i>
           </WhiteIconButton>
 
-          <WhiteIconButton title="Compartir enlace" onClick={openLink}>
-            <i className="fa-solid fa-link"></i>
+          <WhiteIconButton title="Compartir" onClick={openLink}>
+            <i className="fa-solid fa-share-nodes"></i>
           </WhiteIconButton>
         </>
       }
