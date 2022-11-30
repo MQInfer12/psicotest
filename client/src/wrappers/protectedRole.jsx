@@ -8,7 +8,7 @@ const ProtectedRole = ({ children, roles = [] }) => {
   const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
-    if (!roles.includes(user.id_rol)) {
+    if (!roles.includes(user?.id_rol)) {
       return navigate("/dashboard/tests");
     } else {
       setAuthorized(true);

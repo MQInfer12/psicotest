@@ -25,7 +25,7 @@ const Login = () => {
     async () => {
       const profile = await getProfile();
       const resJson = await profile?.json();
-      setUser(resJson);
+      setUser({ ...resJson, isLogged: true });
       navigate(goTo ? goTo.replaceAll("_47slash_", "/") : "/dashboard/tests");
     }
   );

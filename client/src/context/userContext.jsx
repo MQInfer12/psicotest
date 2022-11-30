@@ -21,15 +21,17 @@ export const UserContextProvider = ({ children }) => {
     const userPromise = await getProfile();
     const resJson = await userPromise?.json();
     if(resJson?.message == "you can't send the token empty") {
-      setUser(undefined);
+      setUser({ isLogged: false });
     } else {
-      setUser(resJson);
+      setUser({...resJson, isLogged: true});
     }
   }
 
   useEffect(() => {
-    getUser();
-  }, []);
+    if(Object.keys(user).length === 0) {
+      getUser();
+    }
+  });
 
   return (
     <UserContext.Provider value={value}>

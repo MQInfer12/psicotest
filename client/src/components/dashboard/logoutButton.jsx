@@ -18,7 +18,7 @@ const LogoutButton = () => {
     const resoutJson = await resout?.json();
     if (resoutJson.message == "Successfully logged out") {
       //logged out postgres
-      setUser({});
+      setUser({ isLogged: false });
       //setFirebaseUser to {}
       setCurrentUser({});
       //resetChatContext
