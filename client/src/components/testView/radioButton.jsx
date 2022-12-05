@@ -1,38 +1,75 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const RadioButton = ({ indexPregunta, setResultados, pregunta, reactivo }) => {
+const RadioButton = ({ indice, setResultados, valor, descripcion, multimarcado }) => {
   const handleChange = (target) => {
-    const { name, value } = target;
+    const name = indice;
+    const { value } = target;
 
-    setResultados(res => ({
-      ...res,
-      [indexPregunta + 1]: value,
-    }));
-    target.checked = true;
+    if(!multimarcado) {
+      if(!target.checked)  {
+        setResultados(old => ({
+          ...old,
+          [name]: value,
+          }));
+          target.checked = true;
+      } else {
+        setResultados(old => (
+          Object.keys(old)
+            .filter((key) => !key.includes(name))
+            .reduce((cur, key) => { return Object.assign(cur, { [key]: old[key] })}, {})
+        ));
+        target.checked = false;
+      }
+    } else {
+      if(!target.checked)  {
+        setResultados(old => {
+          let arr = old[name];
+          if(arr) {
+            arr.push(value);
+          } else {
+            arr = [value];
+          }
+          return {
+            ...old,
+            [name]: arr,
+          }});
+          target.checked = true;
+      } else {
+        setResultados(old => {
+          let arr = old[name];
+          if(arr.length === 1) {
+            return Object.keys(old)
+              .filter((key) => !key.includes(name))
+              .reduce((cur, key) => { return Object.assign(cur, { [key]: old[key] })}, {})
+          } else {
+            const newArr = arr.filter((val) => val != value);
+            return {
+              ...old,
+              [name]: newArr
+            };
+          }
+        });
+        target.checked = false;
+      }
+    }
   };
   
   return (
     <ReactivoContainer onClick={(e) => handleChange(e.target.children[0].children[0])}>
-      <CheckContainer className="cbx">
+      <CheckContainer multimarcado={multimarcado} className="cbx">
         <Checkbox 
-          type="radio"
-          name={pregunta.id} 
-          value={
-            pregunta.puntuaciones
-            .filter(
-              (puntuacion) =>
-                puntuacion.id_reactivo == reactivo.id
-            )
-            .map((puntuacion) => puntuacion.id)
-          }
+          type={multimarcado ? "checkbox" : "radio"}
+          name={indice} 
+          value={valor}
+          multimarcado={multimarcado}
         />
         <label></label>
         <svg width="15" height="14" viewBox="0 0 15 14" fill="none">
           <path d="M2 8.36364L6.23077 12L13 2"></path>
         </svg>
       </CheckContainer>
-      {reactivo.descripcion}
+      {descripcion}
     </ReactivoContainer>
   )
 }
@@ -66,7 +103,7 @@ const ReactivoContainer = styled.div`
 
 const CheckContainer = styled.div`
   position: relative;
-  width: 36px;
+  min-width: 36px;
   height: 36px;
   top: 0;
   left: 0;
@@ -76,7 +113,7 @@ const CheckContainer = styled.div`
     width: 36px;
     height: 36px;
     background: none;
-    border-radius: 50%;
+    border-radius: ${props => props.multimarcado ? "10%" : "50%"};
     position: absolute;
     top: 0;
     left: 0;
@@ -118,7 +155,7 @@ const Checkbox = styled.input`
   width: 36px;
   height: 36px;
   border: 2px solid #bfbfc0;
-  border-radius: 50%;
+  border-radius: ${props => props.multimarcado ? "10%" : "50%"};
 
   &:focus {
     outline: 0;

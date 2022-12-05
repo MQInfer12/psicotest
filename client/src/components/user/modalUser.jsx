@@ -232,6 +232,9 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
       perfil: null,
     });
     await setDoc(doc(db, "userChats", String(id)), {});
+    await setDoc(doc(db, "notifications", String(id)), {
+      notification: [],
+    });
   }
 
   const updateFirebaseUser = async (nuevoUsuario) => {

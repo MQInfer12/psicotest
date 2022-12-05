@@ -7,6 +7,7 @@ const useGet = (call, obj = {}, trigger = []) => {
   const callAPI = async () => {
     const response = await call(obj);
     const json = await response?.json();
+    //console.log(json);
     setResJson(json);
     setLoading(false);
   }

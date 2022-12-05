@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const PageSlider = ({ resultados, indexPregunta, setIndexPregunta, preguntasTotales, activateSend, infoSend, openModal }) => {
+const PageSlider = ({ resultados, indexPregunta, setIndexPregunta, preguntasTotales, activateSend, infoSend, openModal, preguntas }) => {
   return (
     <SliderContainer>
       <ButtonTransparent
@@ -26,7 +26,7 @@ const PageSlider = ({ resultados, indexPregunta, setIndexPregunta, preguntasTota
       ) : (
         <ButtonTransparent
           onClick={() => setIndexPregunta(indexPregunta + 1)}
-          disabled={!Object.keys(resultados).includes(String(indexPregunta + 1)) && activateSend}
+          disabled={(!Object.keys(resultados).includes(String(indexPregunta + 1)) && !preguntas[indexPregunta]?.seccion.vacio) && activateSend}
         >
           <PButton>Pregunta siguiente</PButton>
           <IconButton className="fa-solid fa-arrow-right"></IconButton>

@@ -35,6 +35,27 @@ class SeccionController extends Controller
     {
         return DB::select("SELECT *
                            FROM seccions
-                           WHERE id_test='$idTest'");
+                           WHERE id_test='$idTest'
+                           ORDER BY id");
     }
-}
+
+    public function changeMultimarcado($id) 
+    {
+        $seccion = Seccion::findOrFail($id);
+        $multimarcado = $seccion->multimarcado;
+        $seccion->multimarcado = !$multimarcado;
+        $seccion->save();
+
+        return response()->json(["mensaje" => "se guardo correctamente"], 201);
+    }
+
+    public function changeVacio($id) 
+    {
+        $seccion = Seccion::findOrFail($id);
+        $vacio = $seccion->vacio;
+        $seccion->vacio = !$vacio;
+        $seccion->save();
+
+        return response()->json(["mensaje" => "se guardo correctamente"], 201);
+    }
+} 

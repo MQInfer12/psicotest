@@ -30,7 +30,11 @@ const AnswerReports = ({ secciones, respuesta, setTableRef }) => {
               <tr>
                 <th style={ThStyle}>#</th>
                 <th style={ThStyle}>Pregunta</th>
-                <th style={ThStyle}>Puntaje</th>
+                {
+                  /* FIXME: PUNTUACIONES EN MULTIMARCADO */
+                  !seccion.multimarcado &&
+                  <th style={ThStyle}>Puntaje</th>
+                }
                 {seccion?.reactivos.map((reactivo, j) => (
                   <th style={ThStyle} key={j}>
                     {reactivo.descripcion}
@@ -45,16 +49,20 @@ const AnswerReports = ({ secciones, respuesta, setTableRef }) => {
                   <td style={{width: "300px"}}>
                     <p>{pregunta.descripcion}</p>
                   </td>
-                  <td>
-                    {respuesta.resultados.filter(
-                      (resultado) =>
-                        resultado.puntuacion[0].id_pregunta == pregunta.id
-                    ).map((puntaje, k) => (
-                      <p key={k}>
-                        {puntaje.puntuacion[0].asignado}
-                      </p>
-                    ))}
-                  </td>
+                  {
+                    /* FIXME: PUNTUACIONES EN MULTIMARCADO */
+                    !seccion.multimarcado &&
+                    <td>
+                      {respuesta.resultados.filter(
+                        (resultado) =>
+                          resultado.puntuacion[0].id_pregunta == pregunta.id
+                      ).map((puntaje, k) => (
+                        <p key={k}>
+                          {puntaje.puntuacion[0].asignado}
+                        </p>
+                      ))}
+                    </td>
+                  }
                   {pregunta.puntuaciones.map((puntuacion, k) => (
                     <td key={k}>
                       <p style={{

@@ -82,8 +82,8 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
     <PreguntaCreatorContainer>
       <ControlsContainer spaceBetween>
         <HeadContainer>
-          <WhiteIconButton title="Añadir reactivo" onClick={openModal} disabled={reactivos.length == 5}><i className="fa-solid fa-plus"></i></WhiteIconButton>
-          <PSelected>{reactivos.length} / 5</PSelected>
+          <WhiteIconButton title="Añadir reactivo" onClick={openModal} disabled={reactivos.length == 6}><i className="fa-solid fa-plus"></i></WhiteIconButton>
+          <PSelected>{reactivos.length} / 6</PSelected>
         </HeadContainer>
         {
           save &&
@@ -154,7 +154,7 @@ export default ReactivoCreator;
 
 const PreguntaCreatorContainer = styled.div`
   height: calc(100% - 40px);
-  width: 622px;
+  width: 737px;
   box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
   background-color: #EBF0FA;
   border-radius: 10px;

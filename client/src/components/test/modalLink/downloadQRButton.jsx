@@ -6,8 +6,8 @@ const DownloadQRButton = ({ nombreTest }) => {
     const canvas = document.createElement("canvas");
     const svg = document.getElementById("QRCode");
     const base64doc = btoa(unescape(encodeURIComponent(svg.outerHTML)));
-    const QRw = 500;
-    const QRh = 500;
+    const QRw = 400;
+    const QRh = 400;
     const img_to_download = document.createElement('img');
     img_to_download.src = 'data:image/svg+xml;base64,' + base64doc;
     img_to_download.onload = function () {

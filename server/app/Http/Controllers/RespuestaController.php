@@ -175,10 +175,19 @@ class RespuestaController extends Controller
 
         $puntuaciones = $request->puntuaciones;
         foreach ($puntuaciones as $puntuacion) {
-            $resultado = new Resultado();
-            $resultado->id_respuesta = $respuesta->id;
-            $resultado->id_puntuacion = $puntuacion;
-            $resultado->save();
+            if(gettype($puntuacion) == "array") {
+                foreach($puntuacion as $pt) {
+                    $resultado = new Resultado();
+                    $resultado->id_respuesta = $respuesta->id;
+                    $resultado->id_puntuacion = $pt;
+                    $resultado->save();
+                }
+            } else {
+                $resultado = new Resultado();
+                $resultado->id_respuesta = $respuesta->id;
+                $resultado->id_puntuacion = $puntuacion;
+                $resultado->save();
+            }
         }
 
         return response()->json(["mensaje" => "se guardo correctamente"], 201);
@@ -198,7 +207,7 @@ class RespuestaController extends Controller
 
         $id_test = $test->id;
 
-        $secciones = DB::select("SELECT id FROM seccions WHERE id_test='$id_test'");
+        $secciones = DB::select("SELECT id, multimarcado FROM seccions WHERE id_test='$id_test' ORDER BY id");
         foreach($secciones as $seccion) {
             $id_seccion = $seccion->id;
             $preguntas =DB::select("SELECT id, descripcion FROM preguntas WHERE id_seccion='$id_seccion' ORDER BY id");

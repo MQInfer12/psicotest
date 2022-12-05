@@ -53,3 +53,33 @@ export const deleteSeccion = async (id) => {
     console.log(error);
   }
 }
+
+export const changeMultimarcado = async (id) => {
+  try {
+    const response = await fetch(`${http}seccion/multimarcado/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "accept": "application/json" 
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const changeVacio = async (id) => {
+  try {
+    const response = await fetch(`${http}seccion/vacio/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "accept": "application/json" 
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

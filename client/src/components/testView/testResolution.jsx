@@ -31,6 +31,7 @@ const TestResolution = ({
   const [resultados, setResultados] = useState({});
 
   let cont = 0;
+  let preguntas = [];
 
   const handleSubmit = async () => {
     const form = {
@@ -88,6 +89,7 @@ const TestResolution = ({
           {secciones.map((seccion, i) =>
             seccion.preguntas.map((pregunta, j) => {
               cont++;
+              preguntas.push({seccion, pregunta});
               return (
                 <UnaPreguntaContainer key={j} translate={indexPregunta}>
                   <PreguntaContainer>
@@ -100,10 +102,11 @@ const TestResolution = ({
                     {seccion.reactivos.map((reactivo, k) => (
                       <RadioButton 
                         key={k} 
-                        indexPregunta={indexPregunta}
+                        indice={cont}
                         setResultados={setResultados}
-                        pregunta={pregunta}
-                        reactivo={reactivo}
+                        valor={pregunta.puntuaciones.find(puntuacion => puntuacion.id_reactivo == reactivo.id).id}
+                        descripcion={reactivo.descripcion}
+                        multimarcado={seccion.multimarcado}
                       />
                     ))}
                   </ReactivosContainer>
@@ -121,6 +124,7 @@ const TestResolution = ({
           activateSend={activateSend}
           infoSend={infoSend}
           openModal={openModal}
+          preguntas={preguntas}
         />
       </TestContainer>
     </TestResolutionContainer>
@@ -178,13 +182,10 @@ const TestContainer = styled.div`
 `;
 
 const PreguntasContainer = styled.div`
-  height: 471px;
+  min-height: 471px;
+  height: max-content;
   display: flex;
   overflow: hidden;
-
-  @media (max-width: 1260px) {
-    height: max-content;
-  }
 `;
 
 const UnaPreguntaContainer = styled.div`
@@ -227,9 +228,5 @@ const ReactivosContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 70%;
-
-  @media (max-width: 1260px) {
-    width: 100%;
-  }
+  width: 100%;
 `;

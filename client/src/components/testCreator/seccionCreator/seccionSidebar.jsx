@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { PurpleButton, WhiteButton, DangerButton, WhiteIconButton } from "../../../styles/globals/formularios";
-import { addSeccion, deleteSeccion } from "../../../services/seccion";
+import { addSeccion, changeMultimarcado, changeVacio, deleteSeccion } from "../../../services/seccion";
 import SureModal from "../../globals/sureModal";
 import { useModal } from "../../../hooks/useModal";
 
@@ -21,6 +21,20 @@ const SeccionSidebar = ({ test, seccion, index, llenarSecciones, seccionState, e
     if(resJson) {
       console.log("Se eliminó la sección");
       llenarSecciones();
+    }
+  }
+
+  const handleMultimarcado = async () => {
+    const res = await changeMultimarcado(seccion.id);
+    if(res.ok) {
+      console.log("Se cambió correctamente");
+    }
+  }
+
+  const handleVacio = async () => {
+    const res = await changeVacio(seccion.id);
+    if(res.ok) {
+      console.log("Se cambió correctamente");
     }
   }
 
@@ -53,6 +67,19 @@ const SeccionSidebar = ({ test, seccion, index, llenarSecciones, seccionState, e
           </WhiteIconButton>
         </ButtonContainer>
       </DashPart>
+      {
+        seccion && 
+        <DashPart>
+          <CheckboxDiv>
+            <Checkbox type="checkbox" defaultChecked={seccion.multimarcado} onClick={handleMultimarcado} /> 
+            <PCheckbox>Multimarcado de reactivos</PCheckbox>
+          </CheckboxDiv>
+          <CheckboxDiv>
+            <Checkbox type="checkbox" defaultChecked={seccion.vacio} onClick={handleVacio} /> 
+            <PCheckbox>Aceptar respuestas vacías</PCheckbox>
+          </CheckboxDiv>
+        </DashPart>
+      }
       <DashPart>
         {
           editState.editActual == "0"? (
@@ -104,4 +131,18 @@ const ButtonContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 5px;
+`;
+
+const CheckboxDiv = styled.div`
+  display: flex;
+  gap: 16px;
+`;
+
+const Checkbox = styled.input`
+  accent-color: #660BE1;
+`;
+
+const PCheckbox = styled.p`
+  font-size: 14px;
+  color: #3E435D;
 `;

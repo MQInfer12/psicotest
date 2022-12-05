@@ -1,7 +1,7 @@
 import React from 'react';
 import { DivDouble, PLight, PLightDouble, ResponsiveTr, ThNumber } from '../../styles/globals/table';
 
-const MiniRow = ({index, pregunta, respuesta, cantReactivos}) => {
+const MiniRow = ({index, pregunta, respuesta, cantReactivos, multimarcado}) => {
   return (
     <>
       <ResponsiveTr>
@@ -14,7 +14,8 @@ const MiniRow = ({index, pregunta, respuesta, cantReactivos}) => {
       </ResponsiveTr>
       <ResponsiveTr>
         <td>
-          {respuesta.resultados
+          {/* FIXME: PUNTUACIONES EN MULTIMARCADO */}
+          {!multimarcado && respuesta.resultados
             .filter(
               (resultado) =>
                 resultado.puntuacion[0].id_pregunta == pregunta.id
@@ -28,7 +29,7 @@ const MiniRow = ({index, pregunta, respuesta, cantReactivos}) => {
         {pregunta.puntuaciones.map((puntuacion, k) => (
           <td key={k}>
             <input
-              type="radio"
+              type={multimarcado ? "checkbox" : "radio"}
               name={pregunta.id}
               value={puntuacion.id}
               disabled

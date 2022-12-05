@@ -93,7 +93,11 @@ const Answer = () => {
                       screen >= 1000 &&
                       <>
                         <ThAnswer>Pregunta</ThAnswer>
-                        <ThAnswer center width="90px">Puntaje</ThAnswer>
+                        {
+                          /* FIXME: PUNTUACIONES EN MULTIMARCADO */
+                          !seccion.multimarcado &&
+                          <ThAnswer center width="90px">Puntaje</ThAnswer>
+                        }
                       </>
                     }
                     {seccion.reactivos.map((reactivo, j) => (
@@ -111,6 +115,7 @@ const Answer = () => {
                         index={j}
                         pregunta={pregunta}
                         respuesta={respuesta}
+                        multimarcado={seccion.multimarcado}
                       />
                     ) : (
                       <MiniRow 
@@ -119,6 +124,7 @@ const Answer = () => {
                         pregunta={pregunta}
                         respuesta={respuesta}
                         cantReactivos={seccion.reactivos.length}
+                        multimarcado={seccion.multimarcado}
                       />
                     )
                   ))}
