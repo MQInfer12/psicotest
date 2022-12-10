@@ -1,31 +1,24 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import { getFullTest } from "../../services/test";
 import { updateRespuesta } from "../../services/respuesta";
 import ConfirmModal from "../globals/confirmModal";
-import { BlackTextLoader } from "../../styles/globals/loaders";
 import RadioButton from "./radioButton";
 import PageSlider from "./pageSlider";
-
 import { useContext } from 'react';
 import { ThanksContext } from '../../context/thanksContext';
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../hooks/useModal";
-import useGet from "../../hooks/useGet";
 
 const TestResolution = ({
-  loading,
-  idTest,
   nombreTest,
+  secciones,
   activateSend,
   infoSend,
   idRespuesta
 }) => {
   const navigate = useNavigate();
   const { setActivateThanks } = useContext(ThanksContext);
-
-  const [secciones, setSecciones] = useState([]);
   const [preguntasTotales, setPreguntasTotales] = useState(0);
   const [indexPregunta, setIndexPregunta] = useState(0);
   const [resultados, setResultados] = useState({});
@@ -45,18 +38,13 @@ const TestResolution = ({
     }
   };
 
-  const { resJson: test } = useGet(getFullTest, { id: idTest }, [idTest])
-
   useEffect(() => {
-    if(test.length != 0) {
-      setSecciones(test.secciones);
-      let contPreguntas = 0;
-      test.secciones.forEach((seccion) => {
-        contPreguntas += seccion.preguntas.length;
-      });
-      setPreguntasTotales(contPreguntas);
-    }
-  }, [test]);
+    let contPreguntas = 0;
+    secciones.forEach((seccion) => {
+      contPreguntas += seccion.preguntas.length;
+    });
+    setPreguntasTotales(contPreguntas);
+  }, []);
 
   const { openModal, closeModal } = useModal(
     "",
@@ -69,13 +57,7 @@ const TestResolution = ({
 
   return (
     <TestResolutionContainer>
-      {loading ? (
-        <TitleContainer>
-          <BlackTextLoader width="300px" fontSize="60px" />
-        </TitleContainer>
-      ) : (
-        <ResolutionTitle>{nombreTest}</ResolutionTitle>
-      )}
+      <ResolutionTitle>{nombreTest}</ResolutionTitle>
       {
         activateSend ? (
           <StartText>Comienza tu test</StartText>
@@ -137,39 +119,43 @@ const TestResolutionContainer = styled.div`
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
-  padding: 0px 40px 40px;
-
-  @media (max-width: 500px) {
-    padding: 0px 20px 40px;
-  }
-`;
-
-const TitleContainer = styled.div`
-  height: 90px;
-  display: flex;
-  align-items: center;
+  width: 100%;
 `;
 
 const ResolutionTitle = styled.h1`
   font-size: 60px;
   font-weight: 600;
+  padding-bottom: 16px;
   text-align: center;
   width: fit-content;
   &::after {
     content: ".";
     color: #6209db;
   }
+
+  @media (max-width: 600px) {
+    font-size: 48px;
+    line-height: 60px;
+  }
 `;
 
 const StartText = styled.h4`
   font-size: 20px;
   font-weight: 400;
+
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
 `;
 
 const StartTextPurple = styled.h4`
   font-size: 20px;
   font-weight: 400;
   color: #6209db;
+
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
 `;
 
 const TestContainer = styled.div`
@@ -221,6 +207,10 @@ const Pregunta = styled.h3`
 
   @media (max-width: 1260px) {
     font-size: 18px;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 16px;
   }
 `;
 

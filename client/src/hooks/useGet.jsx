@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-const useGet = (call, obj = {}, trigger = []) => {
-  const [resJson, setResJson] = useState([]);
+const useGet = (call, obj = {}, trigger = [], initialValue = []) => {
+  const [resJson, setResJson] = useState(initialValue);
   const [loading, setLoading] = useState(true);
 
   const callAPI = async () => {

@@ -108,7 +108,7 @@ const CardButtons = ({ props }) => {
   return (
     <ButtonContainer>
       <WhiteIconButton title="Ver test" onClick={handleTestView}>
-        <i className="fa-solid fa-newspaper"></i>
+        <i className="fa-solid fa-eye"></i>
       </WhiteIconButton>
       {
         idRole === 3 ?

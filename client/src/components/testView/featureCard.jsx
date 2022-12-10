@@ -96,6 +96,10 @@ const FeatureIndex = styled.h3`
   color: #660BE1;
   background-color: #FFFFFF;
   z-index: 1;
+
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
 `;
 
 const FeatureLine = styled.span`
@@ -107,11 +111,19 @@ const FeatureTitle = styled.h2`
   width: 100%;
   font-size: 20px;
   font-weight: 600;
+
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
 `;
 
 const FeatureDescription = styled.p`
   font-size: 16px;
   font-weight: 400;
+
+  @media (max-width: 600px) {
+    font-size: 14px;
+  }
 `;
 
 const ButtonContainer = styled.div`

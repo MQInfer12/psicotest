@@ -99,6 +99,10 @@ const ReactivoContainer = styled.div`
   @media (max-width: 1260px) {
     font-size: 16px;
   }
+
+  @media (max-width: 600px) {
+    font-size: 14px;
+  }
 `;
 
 const CheckContainer = styled.div`
