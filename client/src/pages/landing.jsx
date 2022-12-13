@@ -1,4 +1,5 @@
 import React from "react";
+import ArticlesSection from "../components/landing/articlesSection";
 import FirstSection from "../components/landing/firstSection";
 import Footer from "../components/landing/footer";
 import FourthSection from "../components/landing/fourthSection";
@@ -12,6 +13,7 @@ const Landing = () => {
       <Navbar />
       <FirstSection />
       <SecondSection />
+      <ArticlesSection />
       <ThirdSection />
       <FourthSection />
       <Footer />

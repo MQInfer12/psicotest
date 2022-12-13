@@ -29,7 +29,7 @@ const Profile = () => {
   const actualizar = async () => {
     const newUser = await getProfile();
     const resJson = await newUser?.json();
-    setUser(resJson);
+    setUser({ ...resJson, isLogged: true });
     setEditable(false);
   };
 

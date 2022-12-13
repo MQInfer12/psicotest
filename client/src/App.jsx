@@ -26,6 +26,7 @@ import TestShare from "./pages/testShare";
 import Thanks from "./pages/thanks";
 import ProtectedThanks from "./wrappers/protectedThanks";
 import Modal from "./components/globals/modal";
+import Blog from "./pages/blog";
 
 function App() {
   return (
@@ -209,6 +210,16 @@ function App() {
                 <ProtectedRole roles={[3, 2]}>
                   <OutletContext titlePage="Respuestas" calendar={false}>
                     <Answers />
+                  </OutletContext>
+                </ProtectedRole>
+              }
+            />
+            <Route
+              path="blogs"
+              element={
+                <ProtectedRole roles={[3, 2]}>
+                  <OutletContext titlePage="Blogs" calendar={false}>
+                    <Blog />
                   </OutletContext>
                 </ProtectedRole>
               }

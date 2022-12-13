@@ -14,7 +14,7 @@ const RightBar = ({ user, calendar, openNav, setOpenNav }) => {
   return (
     <RightContainer onClick={() => openNav && setOpenNav(!openNav)} height={windowHeight} calendar={calendar}>
       <UpbarSquares>
-        <UpbarName>{user?.nombre}{/* {user?.id} */}</UpbarName>
+        <UpbarName>{/* {user?.id} */}{user?.nombre}</UpbarName>
         <Notifications />
         <PhotoContainer onClick={() => { navigate('/dashboard/profile'); window.scroll(0, 0); }}>
           <ProfilePic

@@ -59,7 +59,7 @@ const SliderContainer = styled.div`
 `;
 
 const ButtonTransparent = styled.button`
-  background-color: #6209db;
+  background-color: #866EFB;
   border: 1px solid #d9d9d9;
   border-radius: 10px;
   display: flex;
@@ -72,7 +72,7 @@ const ButtonTransparent = styled.button`
   transition: all 0.2s;
   
   &:hover {
-    background-color: #5a08cc;
+    filter: grayscale(0.4);
   }
 
   &:disabled {

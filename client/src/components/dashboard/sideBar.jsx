@@ -44,6 +44,13 @@ const SideBar = ({ rol, setUser, openNav, setOpenNav }) => {
       icon: "fa-solid fa-comments",
     },
     {
+      roles: [2],
+      select: "blogs",
+      title: "Blogs",
+      goTo: "./blogs",
+      icon: "fa-solid fa-newspaper",
+    },
+    {
       roles: [1, 2],
       select: "calendar",
       title: "Calendario",

@@ -111,6 +111,7 @@ const TitleSeccion = styled.span`
   font-size: 24px;
   font-weight: 600;
   color: #3E435D;
+  padding-left: 10px;
 `;
 
 const DivNothing = styled.div`

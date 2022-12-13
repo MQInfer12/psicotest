@@ -5,12 +5,7 @@ import { UseForm } from "../../hooks/useForm";
 import FormInputsText from "../globals/formInputsText";
 
 const ModalTest = ({ funcion, call, actualizar, test }) => {
-  const {
-    form,
-    errors,
-    handleChange,
-    handleSubmit
-  } = UseForm(
+  const { form, errors, handleChange, handleSubmit} = UseForm(
     test? {
       nombre: test.nombre,
       descripcion: test.descripcion,
