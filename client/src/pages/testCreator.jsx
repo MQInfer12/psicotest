@@ -19,6 +19,7 @@ const TestCreator = () => {
   const [loading, setLoading] = useState(true);
   const [seccionActual, setSeccionActual] = useState(0);
   
+  //TODO: Hacer una sola petición
   const llenarSecciones = async () => {
     const tst = await getTest({ id: idTest});
     const tstJson = await tst?.json();

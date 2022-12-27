@@ -6,6 +6,7 @@ import { DivContainer, DivUser } from '../../styles/pages/calendar';
 import Cargando from '../globals/cargando';
 
 const ModalAceptarCita = ({horario, actualizar}) => {
+  //TODO: Cambiar useGet
   const { resJson: citas, loading } = useGet(getAppointByHorario, { idHorario: horario.id_horario });
 
   const AceptarCita = async (id) => {

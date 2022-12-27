@@ -27,6 +27,8 @@ const Answers = () => {
   const [page, setPage] = useState(0);
 
   const { tableHeightRef, tableRows, rowHeight } = useTableHeight();
+
+  //TODO: Cambiar por un solo useGet
   const { resJson: respuestas, loading } = useGet(user.id_rol === 3 ? getRespuestas : getRespuestasByDocente, { id: user.id });
 
   const { onDownload } = useDownloadExcel({

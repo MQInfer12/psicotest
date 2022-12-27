@@ -7,6 +7,7 @@ import useGet from "../../hooks/useGet";
 import { DivModal, DivPersona, DivPersonas } from "../../styles/pages/test";
 
 const ModalUnAssignBenef = ({ id, actualizar }) => {
+  //TODO: Cambiar useGet
   const { resJson: data, loading } = useGet(getBeneficiaryAssign, {id})
 
   const [checSelected, setChecSelected] = useState([]);
@@ -30,7 +31,6 @@ const ModalUnAssignBenef = ({ id, actualizar }) => {
   
   const saveData = async () => {
     const obj = Object.assign({}, checSelected);
-    console.log(id);
     const resp = await deleteBenefAssigned(obj, id);
     if(resp.msg === "se ha eliminado"){
         actualizar();

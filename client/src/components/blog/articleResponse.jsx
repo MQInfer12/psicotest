@@ -9,15 +9,12 @@ import ArticleCard from './articleCard';
 const ArticleResponse = ({ fwrap = true, setLlenarArticulos = () => {} }) => {
   const { user } = useUserContext();
 
+  //TODO: Cambiar useGet
   const { resJson: articles, loading, callAPI: llenarArticulos } = useGet(getArticuloByDocente, { id: user.isLogged ? user.id : 88 });
 
   useEffect(() => {
     setLlenarArticulos(llenarArticulos);
   }, [])
-
-  useEffect(() => {
-    console.log(articles);
-  }, [articles])
 
   return (
     <ArticleContainer fwrap={fwrap}>

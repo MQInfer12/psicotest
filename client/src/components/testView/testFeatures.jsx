@@ -11,7 +11,8 @@ import { Features, TestInfoContainer, TestInfoTitle } from "../../styles/pages/t
 const TestFeatures = ({ idTest, caracteristicas }) => {
   const { user } = useUserContext();
 
-  const { callAPI: llenarCaracteristicas, resJson: features } = useGet(getCaracteristicasByTest, {id_test: idTest}, [idTest], caracteristicas)
+  //TODO: Cambiar useGet
+  const { callAPI: llenarCaracteristicas, resJson: features } = useGet(getCaracteristicasByTest, {id_test: idTest}, [], caracteristicas)
 
   const { openModal: openAdd, closeModal: closeAdd } = useModal(
     "Añadir característica",
@@ -27,13 +28,10 @@ const TestFeatures = ({ idTest, caracteristicas }) => {
   );
 
   return (
-    (features.length != 0) &&
+    (features.length != 0 || user.id_rol === 3) && 
     <TestInfoContainer>
-      <TestInfoTitle>CARACTERÍSTICAS</TestInfoTitle>
-      {
-        user.id_rol == 3 &&
-        <WhiteButton onClick={openAdd}>Añadir</WhiteButton>
-      }
+      <TestInfoTitle>Características</TestInfoTitle>
+      { user.id_rol === 3 && <WhiteButton onClick={openAdd}>Añadir</WhiteButton> }
       <Features>
         {
           features.map((v, i) => (

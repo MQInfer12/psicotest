@@ -13,9 +13,10 @@ import useGet from "../../hooks/useGet";
 import { DivModal, DivPersona, DivPersonas } from "../../styles/pages/test";
 
 const ModalAssignBenef = ({ id, actualizar }) => {
+  //TODO: Cambiar useGet
   const { resJson: data, loading } = useGet(getBeneficiaryNoAssign, {id});
-  const { user } = useUserContext();
 
+  const { user } = useUserContext();
   const [idsSelected, setIdsSelected] = useState([]);
   const [checSelected, setChecSelected] = useState([]);
 

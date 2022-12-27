@@ -22,6 +22,7 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
 
   const { tableHeightRef, tableRows, rowHeight } = useTableHeight();
 
+  //TODO: Cambiar por un useGet
   const llenarPreguntas = async () => {
     const res = await getPreguntasBySeccion(idSeccion);
     const resJson = await res?.json();

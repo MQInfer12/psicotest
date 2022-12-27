@@ -23,6 +23,7 @@ const Answer = () => {
   const [tableRef, setTableRef] = useState(null);
   const [screen, setScreen] = useState(window.innerWidth);
 
+  //TODO: Doble useGet?
   const { resJson: respuesta } = useGet(getRespuesta, { id: idRespuesta });
   const { resJson: test, loading } = useGet(getFullRespuesta, { id: idRespuesta });
 

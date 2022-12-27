@@ -7,6 +7,7 @@ import Cargando from "../globals/cargando";
 import ProfilePic from "../globals/profilePic";
 
 const ModalUnAssignProfessor = ({ id, actualizar }) => {
+  //TODO: Cambiar useGet
   const { resJson: data, loading } = useGet(getProfessorAssigned, {id})
 
   const [checSelected, setChecSelected] = useState([]);

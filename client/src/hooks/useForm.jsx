@@ -71,7 +71,6 @@ export const UseForm = (
     //SI EL INPUT ES DE TIPO FILE VALIDAR Y CONVERTIR A BASE64
     if (e.target.type == "file") {
       if (validarInputFile(e)) return;
-      console.log(e);
       setForm({
         ...form,
         [e.target.name]: e.target.files[0]

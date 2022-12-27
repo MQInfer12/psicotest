@@ -7,6 +7,7 @@ import useGet from "../../hooks/useGet";
 import { DivModal, DivPersona, DivPersonas } from "../../styles/pages/test";
 
 const ModalAssignProfessor = ({ id, actualizar }) => {
+  //TODO: Cambiar useGet
   const { resJson: data, loading } = useGet(getProfessorNotAssigned, {id})
 
   const [checSelected, setChecSelected] = useState([]);

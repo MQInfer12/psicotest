@@ -25,6 +25,7 @@ const TestView = () => {
   const [test, setTest] = useState([]);
   const [activateSend, setActivateSend] = useState(false);
 
+  //TODO: Cambiar por un solo useGet
   const llenarTest = async (id) => {
     const res = await getFullTest({ id });
     const resJson = await res?.json();

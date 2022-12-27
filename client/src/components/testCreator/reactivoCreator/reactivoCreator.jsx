@@ -22,6 +22,7 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
 
   const { tableHeightRef, tableRows, rowHeight, resizing } = useTableHeight();
 
+  //TODO: Cambiar por un useGet
   const llenarReactivos = async () => {
     const res = await getReactivosBySeccion(idSeccion);
     const resJson = await res?.json();
