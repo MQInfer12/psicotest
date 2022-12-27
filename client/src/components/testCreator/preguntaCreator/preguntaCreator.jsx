@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import { DangerIconButton, WhiteIconButton } from "../../../styles/globals/formularios";
 import Cargando from "../../globals/cargando";
 import { addPregunta,getPreguntasBySeccion, massDestroy } from "../../../services/pregunta";
@@ -14,6 +13,7 @@ import {
 } from "../../../styles/globals/table";
 import { useTableHeight } from "../../../hooks/useTableHeight";
 import { useModal } from "../../../hooks/useModal";
+import { DeleteContainer, PreguntaCreatorContainer, PSelected, TdCargando, TrCargando } from "../../../styles/pages/testCreator";
 
 const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPuntuaciones }) => {
   const [loading, setLoading] = useState(true);
@@ -133,39 +133,3 @@ const PreguntaCreator = ({ idSeccion, preguntas, setPreguntas, reactivos, setPun
 }
 
 export default PreguntaCreator;
-
-const PreguntaCreatorContainer = styled.div`
-  height: calc(100% - 40px);
-  width: 622px;
-  box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
-  background-color: #EBF0FA;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const DeleteContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-`;
-
-const PSelected = styled.p`
-  height: max-content;
-  font-size: 12px;
-  color: #464F60;
-`;
-
-//TABLA
-
-const TrCargando = styled.tr`
-  display: flex;
-  width: 622px;
-  height: calc(100vh - 400px);
-`;
-
-const TdCargando = styled.td`
-  background-color: #FFFFFF;
-  display: flex;
-  width: 622px;
-`;

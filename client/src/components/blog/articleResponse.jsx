@@ -1,9 +1,9 @@
 import React from 'react'
 import { useEffect } from 'react';
-import styled from 'styled-components';
 import { useUserContext } from '../../context/userContext';
 import useGet from '../../hooks/useGet';
 import { getArticuloByDocente } from '../../services/articulo';
+import { ArticleContainer } from '../../styles/pages/blog';
 import ArticleCard from './articleCard';
 
 const ArticleResponse = ({ fwrap = true, setLlenarArticulos = () => {} }) => {
@@ -33,13 +33,3 @@ const ArticleResponse = ({ fwrap = true, setLlenarArticulos = () => {} }) => {
 }
 
 export default ArticleResponse
-
-const ArticleContainer = styled.div`
-  display: flex;
-  flex-wrap: ${props => props.fwrap ? "wrap" : "nowrap"};
-  gap: 20px;
-
-  @media (max-width: 1020px) {
-    justify-content: space-around;
-  }
-`;

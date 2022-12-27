@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import {
   FormContainer,
   DivText,
@@ -11,6 +10,7 @@ import codeId from "../../utilities/code";
 import { useState } from "react";
 import QRCode from "react-qr-code";
 import DownloadQRButton from "./modalLink/downloadQRButton";
+import { DivCenter, ModalDivButtons } from "../../styles/pages/test";
 
 const ModalLink = ({ id, nombreTest }) => {
   let stringInd = id.toString();
@@ -25,14 +25,14 @@ const ModalLink = ({ id, nombreTest }) => {
 
   return (
     <FormContainer>
-      <DivButtons>
+      <ModalDivButtons>
         <WhiteIconButton title="Ver enlace" onClick={() => setOption("link")}>
           <i className="fa-solid fa-link"></i>
         </WhiteIconButton>
         <WhiteIconButton title="Ver código QR" onClick={() => setOption("QR")}>
           <i className="fa-solid fa-qrcode"></i>
         </WhiteIconButton>
-      </DivButtons>
+      </ModalDivButtons>
         {
           option === "link" ? (
             <DivCenter>
@@ -50,7 +50,7 @@ const ModalLink = ({ id, nombreTest }) => {
             </DivCenter>
           )
         }
-      <DivButtons>
+      <ModalDivButtons>
         {
           option === "link" ? (
             <WhiteIconButton title="Copiar al portapapeles" onClick={handleCopy}>
@@ -60,23 +60,9 @@ const ModalLink = ({ id, nombreTest }) => {
             <DownloadQRButton nombreTest={nombreTest} />
           )
         }
-      </DivButtons>
+      </ModalDivButtons>
     </FormContainer>
   );
 };
 
 export default ModalLink;
-
-const DivButtons = styled.div`
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-`;
-
-const DivCenter = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-`;

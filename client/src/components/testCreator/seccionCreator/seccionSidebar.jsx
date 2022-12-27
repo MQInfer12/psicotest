@@ -1,9 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import { PurpleButton, WhiteButton, DangerButton, WhiteIconButton } from "../../../styles/globals/formularios";
 import { addSeccion, changeMultimarcado, changeVacio, deleteSeccion } from "../../../services/seccion";
 import SureModal from "../../globals/sureModal";
 import { useModal } from "../../../hooks/useModal";
+import { ButtonContainer, Checkbox, CheckboxDiv, DashPart, DashTitle, PCheckbox, SeccionCreatorDash } from "../../../styles/pages/testCreator";
 
 const SeccionSidebar = ({ test, seccion, index, llenarSecciones, seccionState, editState }) => {
   const añadirSeccion = async () => {
@@ -100,49 +100,3 @@ const SeccionSidebar = ({ test, seccion, index, llenarSecciones, seccionState, e
 }
 
 export default SeccionSidebar;
-
-const SeccionCreatorDash = styled.div`
-  width: 263px;
-  height: 100%;
-  border-left: 1px solid #D9D9D9;
-  border-right: 1px solid #D9D9D9;
-  display: flex;
-  flex-direction: column;
-`;
-
-const DashPart = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid #D9D9D9;
-  padding: 20px;
-`;
-
-const DashTitle = styled.h3`
-  color: #3E435D;
-  font-size: 20px;
-  font-weight: 600;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 5px;
-`;
-
-const CheckboxDiv = styled.div`
-  display: flex;
-  gap: 16px;
-`;
-
-const Checkbox = styled.input`
-  accent-color: #660BE1;
-`;
-
-const PCheckbox = styled.p`
-  font-size: 14px;
-  color: #3E435D;
-`;

@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { DangerIconButton, WhiteIconButton } from "../../styles/globals/formularios";
 import { ableUser, updateUser, deleteUser as serviceDeleteUser } from "../../services/usuario";
 import ModalUser from "./modalUser";
@@ -8,6 +7,7 @@ import SureModal from "../globals/sureModal";
 import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useModal } from "../../hooks/useModal";
+import { DivCard, DivCardButtons, DivCardText, DivColumns, DivEstado, DivRow, PGenero, PNombre, PRol, PText } from "../../styles/pages/user";
 
 const UserCard = (props) => {
   const newUser = [];
@@ -124,95 +124,3 @@ const UserCard = (props) => {
 };
 
 export default UserCard;
-
-const DivCard = styled.div`
-  margin-top: 35px;
-  width: 350px;
-  background-color: #E6E6E6;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-  padding: 20px;
-  border-radius: 20px;
-  position: relative;
-
-  & > .img {
-    position: absolute;
-    top: -50px;
-    left: 125px;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-  }
-`;
-
-const DivCardText = styled.div`
-  padding-top: 50px;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-`;
-
-const PNombre = styled.p`
-  color: #3E435D;
-  font-size: 22px;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const PRol = styled.p`
-  color: #ADA7A7;
-  font-size: 16px;
-  font-weight: 300;
-  text-transform: capitalize;
-`;
-
-const DivRow = styled.div`
-  padding-top: 5px;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const DivColumns = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
-
-const PText = styled.p`
-  color: #3E435D;
-  font-size: 14px;
-  font-weight: 400;
-  width: 110%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const PGenero = styled.p`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  text-transform: capitalize;
-  color: #3E435D;
-  font-size: 14px;
-  font-weight: 400;
-`;
-
-const DivCardButtons = styled.div`
-  padding-top: 10px;
-  justify-content: center;
-  display: flex;
-  gap: 20px;
-`;
-
-const DivEstado = styled.div`
-  display: flex;
-  gap: 5px;
-  position: absolute;
-  top: 10px;
-  left: 15px;
-  font-size: 12px;
-  color: ${props => props.estado ? "#40dca0" : "#DC4067"};
-  align-items: center;
-  transition: all 0.2s;
-`;

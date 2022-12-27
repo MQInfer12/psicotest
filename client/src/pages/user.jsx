@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { WhiteButton } from "../styles/globals/formularios";
 import { addUser, getUsers } from "../services/usuario";
 import Cargando from "../components/globals/cargando";
@@ -9,6 +8,7 @@ import ModalUser from "../components/user/modalUser";
 import { useWindowHeight } from "../hooks/useWindowHeight";
 import useGet from "../hooks/useGet";
 import { useModal } from "../hooks/useModal";
+import { DivControls, DivUsersPage } from "../styles/pages/user";
 
 const User = () => {
   const windowHeight = useWindowHeight(true, true);
@@ -53,17 +53,3 @@ const User = () => {
 };
 
 export default User;
-
-const DivUsersPage = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: ${props => props.height};
-`;
-
-const DivControls = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-`;

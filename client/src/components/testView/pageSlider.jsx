@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import { ButtonTransparent, IconButton, PButton, SliderContainer } from '../../styles/pages/testView';
 
 const PageSlider = ({ resultados, indexPregunta, setIndexPregunta, preguntasTotales, activateSend, infoSend, openModal, preguntas }) => {
   return (
@@ -37,61 +37,3 @@ const PageSlider = ({ resultados, indexPregunta, setIndexPregunta, preguntasTota
 }
 
 export default PageSlider
-
-const SliderContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 17px 40px;
-  justify-content: space-between;
-  border-top: 1px solid #d9d9d9;
-  gap: 15px;
-
-  @media (max-width: 1260px) {
-    background-color: #6209db;
-    padding: 17px 20px;
-    height: max-content;
-    border-top: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-radius: 15px;
-  }
-`;
-
-const ButtonTransparent = styled.button`
-  background-color: #866EFB;
-  border: 1px solid #d9d9d9;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-  gap: 25px;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.2s;
-  
-  &:hover {
-    filter: grayscale(0.4);
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    pointer-events: none;
-  }
-`;
-
-const IconButton = styled.div`
-  font-size: 18px;
-  color: #d9d9d9;
-`;
-
-const PButton = styled.div`
-  font-size: 20px;
-  font-weight: 600;
-  color: #d9d9d9;
-
-  @media (max-width: 1260px) {
-    display: none;
-  }
-`;

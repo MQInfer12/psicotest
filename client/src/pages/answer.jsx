@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { getFullRespuesta, getRespuesta } from "../services/respuesta";
 import Cargando from "../components/globals/cargando";
@@ -15,6 +14,7 @@ import BigRow from "../components/answer/bigRow";
 import MiniRow from "../components/answer/miniRow";
 import { useWindowHeight } from "../hooks/useWindowHeight";
 import useGet from "../hooks/useGet";
+import { AnswerPage, DataContainer, DataKey, DataRow, DataValue, SeccionContainer, TitleSeccion } from "../styles/pages/answer";
 
 const Answer = () => {
   const windowHeight = useWindowHeight(true, true);
@@ -139,58 +139,3 @@ const Answer = () => {
 };
 
 export default Answer;
-
-const AnswerPage = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  min-height: 100%;
-  align-items: center;
-`;
-
-const DataContainer = styled.div`
-  background-color: #ffffff;
-  padding: 24px 64px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 22px;
-`;
-
-const DataRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 370px;
-`;
-
-const DataKey = styled.strong`
-  font-weight: 500;
-  font-size: 16px;
-  color: #3e435d;
-`;
-
-const DataValue = styled.p`
-  color: #ada7a7;
-  font-weight: 300;
-  font-size: 14px;
-  white-space: nowrap;
-`;
-
-const SeccionContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-`;
-
-//TABLA
-
-const TitleSeccion = styled.span`
-  font-size: 24px;
-  font-weight: 600;
-  color: #3e435d;
-  width: 100%;
-  text-align: start;
-`;

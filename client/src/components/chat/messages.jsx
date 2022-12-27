@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import styled from "styled-components";
 import { ChatContext } from "../../context/chatContext";
 import Message from "./message";
 import { db } from "../../firebase";
@@ -7,6 +6,7 @@ import { onSnapshot } from "firebase/firestore";
 import { doc } from "firebase/firestore";
 import Cargando from "../globals/cargando";
 import { useRef } from "react";
+import { MessagesContainer } from "../../styles/pages/chat";
 
 const Messages = () => {
   const MessageContainerRef = useRef(null);
@@ -35,7 +35,7 @@ const Messages = () => {
   }, [messagesEstate]);
 
   return (
-    <Container ref={MessageContainerRef}>
+    <MessagesContainer ref={MessageContainerRef}>
       {
         loading ? (
           <Cargando container />
@@ -47,15 +47,8 @@ const Messages = () => {
           </div>
         )
       }
-    </Container>
+    </MessagesContainer>
   );
 };
 
 export default Messages;
-
-const Container = styled.div`
-  background-color: #ddddf7;
-  padding: 10px;
-  height: calc(100% - 95px);
-  overflow-y: scroll;
-`;

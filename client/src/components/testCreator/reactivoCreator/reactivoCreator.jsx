@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import { WhiteIconButton } from "../../../styles/globals/formularios";
 import Cargando from "../../globals/cargando";
 import { addReactivo, getReactivosBySeccion } from "../../../services/reactivo";
@@ -14,6 +13,7 @@ import {
 } from "../../../styles/globals/table";
 import { useTableHeight } from "../../../hooks/useTableHeight";
 import { useModal } from "../../../hooks/useModal";
+import { HeadContainer, InputNumber, PSelected, ReactivoCreatorContainer, TdCargando, TrCargando } from "../../../styles/pages/testCreator";
 
 const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, setPuntuaciones, preguntas }) => {
   const [loading, setLoading] = useState(true);
@@ -79,7 +79,7 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
   );
 
   return (
-    <PreguntaCreatorContainer>
+    <ReactivoCreatorContainer>
       <ControlsContainer spaceBetween>
         <HeadContainer>
           <WhiteIconButton title="Añadir reactivo" onClick={openModal} disabled={reactivos.length == 6}><i className="fa-solid fa-plus"></i></WhiteIconButton>
@@ -146,53 +146,8 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
         page={reactivosPage}
         setPage={setReactivosPage}
       />
-    </PreguntaCreatorContainer>
+    </ReactivoCreatorContainer>
   )
 }
 
 export default ReactivoCreator;
-
-const PreguntaCreatorContainer = styled.div`
-  height: calc(100% - 40px);
-  width: 737px;
-  box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
-  background-color: #EBF0FA;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const HeadContainer = styled.div`
-  width: max-content;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-`;
-
-const PSelected = styled.p`
-  height: max-content;
-  font-size: 12px;
-  color: #464F60;
-`;
-
-//TABLA
-
-const TrCargando = styled.tr`
-  display: flex;
-  height: calc(100vh - 400px);
-  width: 622px;
-`;
-
-const TdCargando = styled.td`
-  background-color: #FFFFFF;
-  display: flex;
-  width: 100%;
-`;
-
-const InputNumber = styled.input`
-  border: none;
-  background-color: transparent;
-  text-align: center;
-  width: 40%;
-  outline: none;
-`;

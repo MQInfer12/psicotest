@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import styled from "styled-components";
+import { ButtonChange, ButtonPagContainer, ChangePageContainer, PaginationContainer, PaginationCounter, RowsPage } from "../../styles/pages/answers";
 
 const Pagination = ({ cant, rows, page, setPage }) => {
   const pagination = cant != 0? page : 0;
@@ -45,48 +45,3 @@ const Pagination = ({ cant, rows, page, setPage }) => {
 }
 
 export default Pagination;
-
-const PaginationContainer = styled.div`
-  padding: 0px 20px 0px;
-  min-height: 68px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const PaginationCounter = styled.p`
-  font-size: 12px;
-  letter-spacing: 0.03em;
-  color: #687182;
-`;
-
-const ChangePageContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 20px;
-`;
-
-const RowsPage = styled.p`
-  font-size: 12px;
-  color: #687182;
-`;
-
-const ButtonPagContainer = styled.div`
-  width: 100px;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const ButtonChange = styled.button`
-  box-shadow: 0px 0px 0px 1px rgba(70, 79, 96, 0.24);
-  width: 24px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 7px;
-  color: #868FA0;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-`;

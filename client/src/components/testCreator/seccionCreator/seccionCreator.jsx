@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import SeccionSidebar from "./seccionSidebar";
 import PreguntaCreator from "../preguntaCreator/preguntaCreator";
 import ReactivoCreator from "../reactivoCreator/reactivoCreator";
+import { CreatorsContainer, EmptySeccion, FullScreen, SeccionContainer } from "../../../styles/pages/testCreator";
 
 const SeccionCreator = ({ seccionActual, test, seccion, index, llenarSecciones, seccionState }) => {
   const [editActual, setEditActual] = useState(0);
@@ -57,37 +57,3 @@ const SeccionCreator = ({ seccionActual, test, seccion, index, llenarSecciones, 
 }
 
 export default SeccionCreator;
-
-const SeccionContainer = styled.div`
-  transform: translateX(${props => props.translate * -100}%);
-  min-width: 100%;
-  height: 100%;
-  display: flex;
-  transition: all 1.5s;
-`;
-
-const CreatorsContainer = styled.div`
-  min-width: calc(100% - 263px);
-  display: flex;
-  flex-direction: column;
-`;
-
-const FullScreen = styled.div`
-  width: 100%;
-  min-height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translateY(${props => props.translate * -100}%);
-  transition: all 1s;
-  overflow: hidden;
-`;
-
-const EmptySeccion = styled.p`
-  width: 400px;
-  line-height: 24px;
-  font-size: 14px;
-  font-weight: 500;
-  opacity: 0.6;
-  text-align: center;
-`;

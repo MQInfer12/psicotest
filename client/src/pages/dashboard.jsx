@@ -1,11 +1,11 @@
 import React from "react";
-import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useUserContext } from "../context/userContext";
 import SideBar from "../components/dashboard/sideBar";
 import CenterScreen from "../components/dashboard/centerScreen";
 import RightBar from "../components/dashboard/rightBar";
 import { useWindowHeight } from "../hooks/useWindowHeight";
+import { DashboardContainer } from "../styles/pages/dashboard";
 
 const Dashboard = () => {
   const windowHeight = useWindowHeight();
@@ -51,13 +51,3 @@ const Dashboard = () => {
 }
 
 export default Dashboard;
-
-const DashboardContainer = styled.div`
-  min-height: ${props => props.height};
-  display: flex;
-  overflow: hidden;
-
-  @media (max-width: 1135px) {
-    flex-direction: column;
-  }
-`;

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import styled from "styled-components";
 import { updateRespuesta } from "../../services/respuesta";
 import ConfirmModal from "../globals/confirmModal";
 import RadioButton from "./radioButton";
@@ -9,6 +8,10 @@ import { useContext } from 'react';
 import { ThanksContext } from '../../context/thanksContext';
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../hooks/useModal";
+import { Pregunta, PreguntaContainer, PreguntaIndex, 
+  PreguntasContainer, ReactivosContainer, ResolutionTitle, StartText, 
+  StartTextPurple, TestResolutionContainer, TestResolveContainer, UnaPreguntaContainer 
+} from "../../styles/pages/testView";
 
 const TestResolution = ({
   nombreTest,
@@ -66,7 +69,7 @@ const TestResolution = ({
         )
       }
 
-      <TestContainer>
+      <TestResolveContainer>
         <PreguntasContainer>
           {secciones.map((seccion, i) =>
             seccion.preguntas.map((pregunta, j) => {
@@ -108,115 +111,9 @@ const TestResolution = ({
           openModal={openModal}
           preguntas={preguntas}
         />
-      </TestContainer>
+      </TestResolveContainer>
     </TestResolutionContainer>
   );
 };
 
 export default TestResolution;
-
-const TestResolutionContainer = styled.div`
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-const ResolutionTitle = styled.h1`
-  font-size: 60px;
-  font-weight: 600;
-  padding-bottom: 16px;
-  text-align: center;
-  width: fit-content;
-  &::after {
-    content: ".";
-    color: #6209db;
-  }
-
-  @media (max-width: 600px) {
-    font-size: 48px;
-    line-height: 60px;
-  }
-`;
-
-const StartText = styled.h4`
-  font-size: 20px;
-  font-weight: 400;
-
-  @media (max-width: 600px) {
-    font-size: 16px;
-  }
-`;
-
-const StartTextPurple = styled.h4`
-  font-size: 20px;
-  font-weight: 400;
-  color: #6209db;
-
-  @media (max-width: 600px) {
-    font-size: 16px;
-  }
-`;
-
-const TestContainer = styled.div`
-  margin-top: 40px;
-  background: #6209db;
-  border-radius: 15px;
-  color: #ffffff;
-  position: relative;
-  overflow: hidden;
-`;
-
-const PreguntasContainer = styled.div`
-  min-height: 471px;
-  height: max-content;
-  display: flex;
-  overflow: hidden;
-`;
-
-const UnaPreguntaContainer = styled.div`
-  transform: translateX(${(props) => props.translate * -100}%);
-  min-width: 100%;
-  padding: 40px;
-  gap: 36px;
-  display: flex;
-  transition: all 1s;
-
-  @media (max-width: 1260px) {
-    flex-direction: column;
-    gap: 16px;
-    padding: 24px;
-  }
-`;
-
-const PreguntaContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 30px;
-`;
-
-const PreguntaIndex = styled.h2`
-  font-weight: 600;
-  font-size: 24px;
-`;
-
-const Pregunta = styled.h3`
-  font-weight: 600;
-  font-size: 24px;
-
-  @media (max-width: 1260px) {
-    font-size: 18px;
-  }
-
-  @media (max-width: 600px) {
-    font-size: 16px;
-  }
-`;
-
-const ReactivosContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
-`;

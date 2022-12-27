@@ -4,10 +4,10 @@ import { UseForm } from '../../hooks/useForm'
 import { ErrorCss, FormContainer, PurpleButton } from '../../styles/globals/formularios'
 import { initialForm, validationsForm } from '../../validations/blog'
 import FormInputsText from '../globals/formInputsText'
-import styled from 'styled-components'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { addArticulo } from '../../services/articulo'
+import { DivFile, InputFile } from '../../styles/pages/blog'
 
 const ModalBlog = ({ funcion, call, actualizar, blog }) => {
   const { user } = useUserContext();
@@ -89,17 +89,3 @@ const ModalBlog = ({ funcion, call, actualizar, blog }) => {
 }
 
 export default ModalBlog
-
-const DivFile = styled.div`
-  position: relative;
-`;
-
-const InputFile = styled.input`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  opacity: 0;
-  cursor: pointer;
-`;

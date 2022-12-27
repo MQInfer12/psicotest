@@ -1,10 +1,13 @@
 import React from "react";
-import styled from "styled-components";
 import { addHorario } from "../../services/horario";
 import { PurpleButton } from "../../styles/globals/formularios";
 import ModalHorario from "./modalHorario";
 import { useModal } from "../../hooks/useModal";
 import EventCard from "./calendarMini/eventCard";
+import { CalendarMiniContainer, CalendarMonth, CalendarTable, 
+  DaysTd, DaysThMini, EventsDiv, 
+  EventsTitle, MonthButton, MonthContainer 
+} from "../../styles/pages/calendar";
 
 const CalendarMini = ({
   horarios, citas, user,
@@ -56,7 +59,7 @@ const CalendarMini = ({
   )
 
   return (
-    <CalendarContainer>
+    <CalendarMiniContainer>
       <MonthContainer>
         <MonthButton onClick={lastMonth}>
           <i className="fa-solid fa-arrow-left"></i>
@@ -71,13 +74,13 @@ const CalendarMini = ({
       <CalendarTable>
         <thead>
           <tr>
-            <DaysTh>Do</DaysTh>
-            <DaysTh>Lu</DaysTh>
-            <DaysTh>Ma</DaysTh>
-            <DaysTh>Mi</DaysTh>
-            <DaysTh>Ju</DaysTh>
-            <DaysTh>Vi</DaysTh>
-            <DaysTh>Sa</DaysTh>
+            <DaysThMini>Do</DaysThMini>
+            <DaysThMini>Lu</DaysThMini>
+            <DaysThMini>Ma</DaysThMini>
+            <DaysThMini>Mi</DaysThMini>
+            <DaysThMini>Ju</DaysThMini>
+            <DaysThMini>Vi</DaysThMini>
+            <DaysThMini>Sa</DaysThMini>
           </tr>
         </thead>
         <tbody>
@@ -165,112 +168,8 @@ const CalendarMini = ({
             })
           }
       </EventsDiv>
-    </CalendarContainer>
+    </CalendarMiniContainer>
   )
 }
 
 export default CalendarMini;
-
-const CalendarContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-`;
-
-const MonthContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 353px;
-`;
-
-const CalendarMonth = styled.h2`
-  color: #000000;
-  font-size: 36px;
-  font-weight: 600;
-`;
-
-const CalendarTable = styled.table`
-  text-align: center;
-  width: 353px;
-  transform: scale(1);
-`;
-
-const DaysTh = styled.th`
-  color: #660be1;
-  height: 45px;
-  min-width: 45px;
-`;
-
-const DaysTd = styled.td`
-  border-radius: 50%;
-  position: relative;
-  font-size: 13px;
-  height: 50px;
-  min-width: 50px;
-  z-index: 1;
-  color: ${(props) => props.month && "rgba(0, 0, 0, 0.3)"};
-  color: ${(props) => props.today && "#FFFFFF"};
-  cursor: pointer;
-
-  &::before {
-    content: "";
-    opacity: ${props => props.today ? "1" : "0"};
-    z-index: -1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #660be1;
-    border-radius: 50%;
-    transform: scale(0.8);
-  }
-
-  &::after {
-    content: "";
-    opacity: ${props => props.hayEventos ? "1" : "0"};
-    background-color: ${(props) => props.today ? "#FFFFFF" : "#660be1"};
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    top: 9px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-`;
-
-const MonthButton = styled.button`
-  width: 30px;
-  height: 30px;
-  border: 1.5px solid #d9d9d9;
-  background-color: transparent;
-  font-size: 14px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover {
-    color: #d9d9d9;
-    background-color: #660be1;
-  }
-`;
-
-const EventsDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0 20px;
-  width: 100%;
-  gap: 16px;
-  max-width: 500px;
-`;
-
-const EventsTitle = styled.h3`
-  font-weight: 600;
-  font-size: 20px;
-`;

@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
 import { useUserContext } from "../context/userContext";
 import { useParams, useNavigate } from "react-router-dom";
 import Cargando from "../components/globals/cargando";
@@ -10,6 +9,7 @@ import { useWindowHeight } from "../hooks/useWindowHeight";
 import { getDocenteTest } from "../services/test";
 import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import { TestShareContainer } from "../styles/pages/testShare";
 
 const TestShare = () => {
   const windowHeight = useWindowHeight(true, true);
@@ -80,7 +80,3 @@ const TestShare = () => {
 };
 
 export default TestShare;
-
-const TestShareContainer = styled.div`
-  height: ${props => props.height};
-`;

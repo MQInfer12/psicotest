@@ -1,5 +1,4 @@
 import "./App.css";
-import styled from "styled-components";
 import { HashRouter, Route, Routes, Link } from "react-router-dom";
 import Contexts from "./wrappers/contexts";
 import OutletContext from "./wrappers/outletContext";
@@ -27,6 +26,7 @@ import Thanks from "./pages/thanks";
 import ProtectedThanks from "./wrappers/protectedThanks";
 import Modal from "./components/globals/modal";
 import Blog from "./pages/blog";
+import { StyledLink } from "./styles/pages/dashboard";
 
 function App() {
   return (
@@ -233,9 +233,7 @@ function App() {
                     calendar={false}
                     links={
                       <>
-                        <StyledLink to="/dashboard/answers">
-                          Respuestas
-                        </StyledLink>
+                        <StyledLink to="/dashboard/answers">Respuestas</StyledLink>
                         /
                       </>
                     }
@@ -256,22 +254,3 @@ function App() {
 }
 
 export default App;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  font-size: 16px;
-  color: #ada7a7;
-  display: flex;
-  flex-direction: column;
-
-  &::after {
-    content: "";
-    width: 0%;
-    border-top: 1px solid #ada7a7;
-    transition: all 0.2s;
-  }
-
-  &:hover::after {
-    width: 100%;
-  }
-`;

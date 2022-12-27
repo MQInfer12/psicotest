@@ -1,9 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import patronGrupo from '../../assets/grupo/patrongrupo.jpg';
 import ModalGroup from "./modalGroup";
 import { ableGrupo, updateGrupo } from '../../services/grupo';
 import { useModal } from "../../hooks/useModal";
+import { ButtonGroup, DivGroupCard, DivInfo, ImgGroup, PDesc, PText } from "../../styles/pages/group";
 
 const GroupCard = (props) => {
   const cambiarHabilitado = async (id) => {
@@ -45,49 +45,3 @@ const GroupCard = (props) => {
 }
 
 export default GroupCard;
-
-const DivGroupCard = styled.div`
-  border-radius: 20px;
-  width: 350px;
-  height: 200px;
-  background-color: #e0e0e0;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-`;
-
-const ImgGroup = styled.img`
-  width: 100%;
-  height: 80px;
-  object-fit: cover;
-`;
-
-const DivInfo = styled.div`
-  width: 100%;
-  height: 120px;
-  padding: 10px;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  white-space: nowrap;
-`;
-
-const PText = styled.p`
-  font-size: 1rem;
-  font-weight: bold;
-`;
-
-const PDesc = styled.p`
-  width: 100%;
-  font-size: 0.9rem;
-  text-align: justify;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const ButtonGroup = styled.button`
-  width: 100px;
-  height: 30px;
-  cursor: pointer;
-`;

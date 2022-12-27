@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
 import DefaultPhoto from "../../assets/profilePic/defaultPhoto.jpg";
 import { Image } from "cloudinary-react";
 import { useState } from "react";
+import { DivPic, Pic } from "../../styles/global-components/profilePic";
 
 const ProfilePic = ({ width, height, border, translation, perfil, editable, prev }) => {
   const [previsualizacion, setPrevisualizacion] = useState("");
@@ -62,20 +62,3 @@ ProfilePic.defaultProps = {
 };
 
 export default ProfilePic;
-
-const DivPic = styled.div`
-  border-radius: ${props => props.border ? "100%" : "10px"};
-  border: ${props => props.border && "2px solid #FFFFFF"};
-  transform: ${props => `translateX(${-15 * props.translation}px)`};
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  overflow: hidden;
-
-`;
-
-const Pic = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-`;

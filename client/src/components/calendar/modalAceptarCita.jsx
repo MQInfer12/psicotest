@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import useGet from '../../hooks/useGet';
 import { acceptAppointment, getAppointByHorario } from '../../services/cita';
 import { WhiteButton } from '../../styles/globals/formularios';
+import { DivContainer, DivUser } from '../../styles/pages/calendar';
 import Cargando from '../globals/cargando';
 
 const ModalAceptarCita = ({horario, actualizar}) => {
@@ -34,19 +34,3 @@ const ModalAceptarCita = ({horario, actualizar}) => {
 }
 
 export default ModalAceptarCita;
-
-const DivContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  height: 200px;
-  max-height: 200px;
-  overflow: auto;
-`;
-
-const DivUser = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;

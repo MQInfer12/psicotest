@@ -1,8 +1,8 @@
 import React from 'react'
 import { useEffect } from 'react';
-import styled from 'styled-components';
 import { useWindowHeight } from '../hooks/useWindowHeight';
 import Secret from '../assets/home/home.mp3';
+import { DivEntero } from '../styles/pages/home';
 
 const Home = () => {
   const windowHeight = useWindowHeight(true, true);
@@ -22,15 +22,3 @@ const Home = () => {
 }
 
 export default Home;
-
-const DivEntero = styled.div`
-  height: ${props => props.height};
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
-  color: #ADA7A7;
-  font-size: 16px;
-  font-weight: 300;
-`;

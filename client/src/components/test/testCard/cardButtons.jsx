@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-import styled from 'styled-components';
 import { useUserContext } from '../../../context/userContext';
 import { useModal } from '../../../hooks/useModal';
 import { deleteTest, updateTest } from '../../../services/test';
 import { DangerIconButton, WhiteIconButton } from '../../../styles/globals/formularios';
+import { CardButtonContainer } from '../../../styles/pages/test';
 import code from '../../../utilities/code';
 import SureModal from '../../globals/sureModal';
 import ModalAssignBenef from '../modalAssignBenef';
@@ -106,7 +106,7 @@ const CardButtons = ({ props }) => {
   )
 
   return (
-    <ButtonContainer>
+    <CardButtonContainer>
       <WhiteIconButton title="Ver test" onClick={handleTestView}>
         <i className="fa-solid fa-eye"></i>
       </WhiteIconButton>
@@ -144,13 +144,8 @@ const CardButtons = ({ props }) => {
           </WhiteIconButton>
         </>
       }
-    </ButtonContainer>
+    </CardButtonContainer>
   )
 }
 
 export default CardButtons
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;

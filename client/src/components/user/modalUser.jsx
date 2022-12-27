@@ -1,17 +1,13 @@
 import React from "react";
-import styled from "styled-components";
 import { initialForm, validationsForm } from "../../validations/user";
 import { UseForm } from "../../hooks/useForm";
-import {
-  FormContainer,
-  PurpleButton,
-  WhiteButton,
-} from "../../styles/globals/formularios";
+import { FormContainer, PurpleButton, WhiteButton } from "../../styles/globals/formularios";
 import FormInputsText from "../globals/formInputsText";
 import FormInputsSelect from "../globals/formInputsSelect";
 import { db } from "../../firebase";
 import { collection, doc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import ProfilePic from "../globals/profilePic";
+import { Columnas, FotoContainer, ModalUserContainer } from "../../styles/pages/user";
 
 const ModalUser = ({ call, actualizar, funcion, user }) => {
   const newUser = [];
@@ -285,24 +281,3 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
 };
 
 export default ModalUser;
-
-const ModalUserContainer = styled.div`
-  display: flex;
-  gap: 16px;
-  flex-direction: column;
-`;
-
-const Columnas = styled.div`
-  display: flex;
-  gap: 16px;
-
-  @media (max-width: 700px) {
-    flex-direction: column;
-  }
-`;
-
-const FotoContainer = styled.div`
-  display: flex;
-  gap: 16px;
-  align-items: center;
-`;

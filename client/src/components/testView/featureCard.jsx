@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useModal } from '../../hooks/useModal';
 import { deleteCaracteristica, updateCaracteristica } from '../../services/caracteristica';
 import { DangerIconButton, WhiteIconButton } from '../../styles/globals/formularios';
+import { ButtonContainer, FeatureContainer, FeatureDescription, FeatureIndex, FeatureLine, FeatureTitle, IndexContainer } from '../../styles/pages/testView';
 import SureModal from '../globals/sureModal';
 import ModalFeature from './modalFeature';
 
@@ -67,72 +67,3 @@ const FeatureCard = ({ index, v, llenarCaracteristicas, user }) => {
 }
 
 export default FeatureCard;
-
-const FeatureContainer = styled.div`
-  display: flex;
-  gap: 20px;
-  width: 272px;
-  overflow: hidden;
-
-  &:hover > div > .botones {
-    transform: translateY(30px);
-  }
-`;
-
-const IndexContainer = styled.div`
-  min-width: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-  position: relative;
-`;
-
-const FeatureIndex = styled.h3`
-  width: 100%;
-  text-align: center;
-  font-size: 20px;
-  font-weight: 600;
-  color: #660BE1;
-  background-color: #FFFFFF;
-  z-index: 1;
-
-  @media (max-width: 600px) {
-    font-size: 16px;
-  }
-`;
-
-const FeatureLine = styled.span`
-  height: 60px;
-  border-left: 1px solid #D9D9D9;
-`;
-
-const FeatureTitle = styled.h2`
-  width: 100%;
-  font-size: 20px;
-  font-weight: 600;
-
-  @media (max-width: 600px) {
-    font-size: 16px;
-  }
-`;
-
-const FeatureDescription = styled.p`
-  font-size: 16px;
-  font-weight: 400;
-
-  @media (max-width: 600px) {
-    font-size: 14px;
-  }
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  position: absolute;
-  top: 0;
-  transition: all 0.5s;
-  transform: translateY(-45px);
-`;

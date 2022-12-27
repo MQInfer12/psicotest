@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { getSeccionesByTest } from "../services/seccion";
 import { getTest } from "../services/test";
@@ -7,6 +6,7 @@ import Cargando from "../components/globals/cargando";
 import SeccionCreator from "../components/testCreator/seccionCreator/seccionCreator";
 import decipherId from "../utilities/decipher";
 import { useWindowHeight } from "../hooks/useWindowHeight";
+import { TestCreatorContainer } from "../styles/pages/testCreator";
 
 const TestCreator = () => {
   const windowHeight = useWindowHeight(true, true);
@@ -69,12 +69,3 @@ const TestCreator = () => {
 }
 
 export default TestCreator;
-
-//CONTROLES ARRIBA
-const TestCreatorContainer = styled.div`
-  height: ${props => props.height};
-  border-radius: 10px;
-  background-color: #FFFFFF;
-  display: flex;
-  overflow: hidden;
-`;

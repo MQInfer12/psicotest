@@ -1,7 +1,7 @@
 import React from 'react'
-import styled from 'styled-components';
 import { useModal } from '../../../hooks/useModal';
 import { updateHorario } from '../../../services/horario';
+import { DivTask } from '../../../styles/pages/calendar';
 import ModalAceptarCita from '../modalAceptarCita';
 import ModalAsignarCita from '../modalAsignarCita';
 import ModalCancelarCita from '../modalCancelarCita';
@@ -79,18 +79,3 @@ const TaskCard = ({
 }
 
 export default TaskCard
-
-const DivTask = styled.div`
-  width: 100%;
-  background-color: ${props => props.background};
-  color: ${props => props.textcolor};
-  padding: 2px 10px;
-  font-size: 12px;
-  font-weight: 400;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover {
-    opacity: 0.8;
-  }
-`;

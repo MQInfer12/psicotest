@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
 import TestFeatures from "../components/testView/testFeatures";
 import TestResolution from "../components/testView/testResolution";
 import { getIdTest } from "../services/respuesta";
@@ -11,6 +10,7 @@ import { useOutletContext } from "react-router-dom";
 import TestChat from "../components/testView/testViewChat";
 import Cargando from "../components/globals/cargando";
 import { useWindowHeight } from "../hooks/useWindowHeight";
+import { AllContainer, Paragraph, TestContainer, TestTextContainer, TestTitle } from "../styles/pages/testView";
 
 const TestView = () => {
   const windowHeight = useWindowHeight(true, true);
@@ -87,67 +87,9 @@ const TestView = () => {
           email_docente &&
           <TestChat email_docente={email_docente} />
         }
-    </TestContainer>
+      </TestContainer>
     </AllContainer>
   );
 };
 
 export default TestView;
-
-const AllContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-  overflow: hidden;
-  min-height: ${props => props.height};
-`;
-
-const Paragraph = styled.p`
-  max-width: 500px;
-  font-size: 20px;
-  font-weight: 300;
-  line-height: 175%;
-  padding: 0 20px;
-
-  @media (max-width: 600px) {
-    font-size: 16px;
-  }
-`;
-
-const TestTextContainer = styled.div`
-  width: 100%;
-  text-align: justify;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  padding-bottom: 50px;
-`;
-
-const TestTitle = styled.h2`
-  height: 30px;
-  gap: 4px;
-  display: flex;
-  align-items: center;
-  font-size: 20px;
-  font-weight: 600;
-  color: #660be1;
-
-  @media (max-width: 600px) {
-    font-size: 18px;
-  }
-`;
-
-const TestContainer = styled.div`
-  border-radius: 10px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  background-color: #FFFFFF;
-  padding: 40px;
-  gap: 40px;
-
-  @media (max-width: 500px) {
-    padding: 40px 20px;
-  }
-`;

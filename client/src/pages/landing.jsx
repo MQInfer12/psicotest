@@ -13,7 +13,7 @@ const Landing = () => {
       <Navbar />
       <FirstSection />
       <SecondSection />
-      <ArticlesSection />
+      {/* <ArticlesSection /> */}
       <ThirdSection />
       <FourthSection />
       <Footer />

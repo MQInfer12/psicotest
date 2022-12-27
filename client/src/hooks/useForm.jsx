@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { validarInputFile } from "../functions";
 import { uploadImage } from "../services/cloudinary";
+import { validarInputFile } from "../utilities/validarInputFile";
 
 export const UseForm = (
   initialForm,

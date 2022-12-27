@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from "react";
-//import { useRef } from "react";
-import styled from "styled-components";
+import React, { useContext } from "react";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
 import { ChatContext } from "../../context/chatContext";
 import ProfilePic from "../globals/profilePic";
+import { MessageContainer } from "../../styles/pages/chat";
 
 const Message = ({ message }) => {
   const { currentUser } = useContext(UserFirebaseContext);
@@ -20,9 +19,7 @@ const Message = ({ message }) => {
   };
 
   return (
-    <Container
-      className={`${message.senderId === currentUser.uid && "owner"}`}
-    >
+    <MessageContainer className={`${message.senderId === currentUser.uid && "owner"}`}>
       <div className="messageInfo">
         <ProfilePic
           width="40px"
@@ -38,56 +35,8 @@ const Message = ({ message }) => {
       <div className="messageContent">
         <p>{message.text}</p>
       </div>
-    </Container>
+    </MessageContainer>
   );
 };
 
 export default Message;
-
-const Container = styled.div`
-  display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
-
-  .messageInfo {
-    display: flex;
-    flex-direction: column;
-    color: gray;
-    font-weight: 300;
-  }
-  
-  .messageContent {
-    max-width: 80%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    overflow: hidden;
-
-    p {
-      width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      background-color: white;
-      padding: 10px 20px;
-      border-radius: 0px 10px 10px 10px;
-    }
-
-    img {
-      width: 50%;
-    }
-  }
-
-  &.owner {
-    flex-direction: row-reverse;
-
-    .messageContent {
-      align-items: flex-end;
-
-      p {
-        background-color: #8da4f1;
-        color: white;
-        border-radius: 10px 0px 10px 10px;
-      }
-    }
-  }
-`;

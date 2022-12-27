@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useModal } from '../../../hooks/useModal';
 import { addHorario } from '../../../services/horario';
 import { WhiteIconButton } from '../../../styles/globals/formularios';
+import { DivDay, DivTd, PDay, TdDay } from '../../../styles/pages/calendar';
 import ModalHorario from '../modalHorario';
 import TaskCard from './taskCard';
 
@@ -114,61 +114,3 @@ const DayCard = ({
 }
 
 export default DayCard;
-
-const TdDay = styled.td`
-  opacity: ${props => props.month? 0.5 : 1};
-  border: 1px solid #D9D9D9;
-`;
-
-const DivTd = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  overflow: auto;
-  overflow-x: hidden;
-
-  position: relative;
-  width: 100%;
-  height: 100%;
-  font-size: 14px;
-
-  &:hover > div > button {
-    display: block;
-  }
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #D9D9D9;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #660BE1;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: #660BE1;
-  }
-`;
-
-const DivDay = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: all 0.2s;
-  min-height: 32px;
-
-  & > button {
-    display: none;
-    transform: scale(0.8);
-  }
-`;
-
-const PDay = styled.p`
-  color: ${props => props.today && '#660BE1'};
-  padding: 1px 10px;
-`;

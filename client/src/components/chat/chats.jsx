@@ -9,10 +9,10 @@ import {
   where,
 } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
-import styled from "styled-components";
 import { ChatContext } from "../../context/chatContext";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
 import { db } from "../../firebase";
+import { ChatsContainer } from "../../styles/pages/chat";
 import Cargando from "../globals/cargando";
 import ProfilePic from "../globals/profilePic";
 
@@ -98,7 +98,7 @@ const Chats = ({ handleClick, email: emailURL }) => {
   }
 
   return (
-    <Container>
+    <ChatsContainer>
       {
         loading ? (
           <Cargando container text={false} />
@@ -126,41 +126,8 @@ const Chats = ({ handleClick, email: emailURL }) => {
             ))
         )
       }
-    </Container>
+    </ChatsContainer>
   );
 };
 
 export default Chats;
-
-const Container = styled.div`
-  height: calc(100% - 50px);
-  .userChat {
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: white;
-    cursor: pointer;
-    width: 100%;
-
-    &>div:first-child{
-      min-width: 50px;
-    }
-    &:hover {
-      background-color: #2f2d52;
-    }
-
-    .userChatInfo {
-      span {
-        font-size: 18px;
-        font-weight: 500;
-      }
-      p {
-        font-size: 14px;
-        color: lightgray;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-  }
-`;

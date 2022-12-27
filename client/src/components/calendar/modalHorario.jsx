@@ -1,10 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import { DangerButton, FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import FormInputsText from "../globals/formInputsText";
 import { UseForm } from "../../hooks/useForm";
 import { validationsForm } from "../../validations/schedule";
 import { deleteHorario } from "../../services/horario";
+import { DoubleButton } from "../../styles/pages/calendar";
 
 const ModalHorario = ({ funcion, call, actualizar, horario, fecha, id_docente }) => {
   const {
@@ -84,13 +84,3 @@ const ModalHorario = ({ funcion, call, actualizar, horario, fecha, id_docente })
 }
 
 export default ModalHorario;
-
-const DoubleButton = styled.div`
-  width: 100%;
-  display: flex;
-  gap: 10px;
-
-  & > button {
-    width: 100%;
-  }
-`;

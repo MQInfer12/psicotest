@@ -1,16 +1,14 @@
 import React, { useContext } from "react";
-import styled from "styled-components";
-import Cam from "../../assets/msg/cam.png";
-import Add from "../../assets/msg/add.png";
 import More from "../../assets/msg/more.png";
 import Messages from "./messages";
 import Input from "./input";
 import { ChatContext } from "../../context/chatContext";
+import { ChatComContainer } from "../../styles/pages/chat";
 
 const ChatCom = ({ showSide, handleClick, isInTestView }) => {
   const { data } = useContext(ChatContext);
   return (
-    <Container showSide={showSide}>
+    <ChatComContainer showSide={showSide}>
       <div className="chatInfo">
         <span>{data.user.email}</span>
         {!isInTestView && (
@@ -21,37 +19,8 @@ const ChatCom = ({ showSide, handleClick, isInTestView }) => {
       </div>
       <Messages />
       <Input />
-    </Container>
+    </ChatComContainer>
   );
 };
 
 export default ChatCom;
-
-const Container = styled.div`
-  width: ${(props) => (props.showSide ? "calc(100% - 350px)" : "100%")};
-
-  .chatInfo {
-    background-color: #5d5b8d;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    color: lightgray;
-    height: 45px;
-  }
-
-  .chatIcons {
-    display: flex;
-    gap: 10px;
-
-    img {
-      height: 24px;
-      cursor: pointer;
-      z-index: 2;
-    }
-  }
-
-  @media (max-width: 1080px) {
-    width: 100%;
-  }
-`;

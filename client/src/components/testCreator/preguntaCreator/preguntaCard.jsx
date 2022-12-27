@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { WhiteIconButton } from "../../../styles/globals/formularios";
 import { updatePregunta } from "../../../services/pregunta";
-import Modal from "../../globals/modal";
 import ModalPregunta from "./modalPregunta";
 import { 
   ResponsiveTr, ThNumber, DivDouble, PLight
 } from "../../../styles/globals/table";
 import { useModal } from "../../../hooks/useModal";
+import { DivButtonsTd } from "../../../styles/pages/testCreator";
 
 const PreguntaCard = (props) => {
   const [selected, setSelected] = useState(false);
@@ -71,16 +70,3 @@ const PreguntaCard = (props) => {
 }
 
 export default PreguntaCard;
-
-const DivButtonsTd = styled.div`
-  height: 100%;
-  padding-right: 10px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translateX(100px);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: all 0.3s;
-`;
