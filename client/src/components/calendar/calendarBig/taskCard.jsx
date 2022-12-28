@@ -8,8 +8,7 @@ import ModalCancelarCita from '../modalCancelarCita';
 import ModalHorario from '../modalHorario';
 
 const TaskCard = ({
-  v, background, textcolor, event, rol,
-  llenarHorarios, llenarCitasDisponibles, llenarCitasDocente, llenarCitasPorUsuario,
+  v, background, textcolor, event, rol, llenarTareas
 }) => {
   const { openModal: openEdit, closeModal: closeEdit } = useModal(
     rol != 1 ? "Editar horario" : "Asignar cita",
@@ -19,33 +18,27 @@ const TaskCard = ({
         call={updateHorario}
         horario={v}
         actualizar={() => {
-          llenarHorarios();
+          llenarTareas();
           closeEdit();
         }}
       />
     ) : (
       <ModalAsignarCita 
         actualizar={() => {
-          llenarCitasDisponibles();
-          llenarCitasPorUsuario();
+          llenarTareas();
           closeEdit();
         }}
         horario={v}
       />
     )
   )
+
   const { openModal: openCancel, closeModal: closeCancel } = useModal(
     "Cancelar cita",
     <ModalCancelarCita 
       cita={v}
       actualizar={() => {
-        if(rol != 1) {
-          llenarCitasDocente();
-          llenarHorarios();
-        } else {
-          llenarCitasPorUsuario();
-          llenarCitasDisponibles();
-        }
+        llenarTareas();
         closeCancel();
       }}
     />
@@ -55,8 +48,7 @@ const TaskCard = ({
     <ModalAceptarCita 
       horario={v}
       actualizar={() => {
-        llenarCitasDocente();
-        llenarHorarios();
+        llenarTareas();
         closeAccept();
       }}
     />

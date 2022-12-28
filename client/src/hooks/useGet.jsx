@@ -1,20 +1,32 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react';
+import { useState } from 'react'
+import { useGetContext } from '../context/getContext';
+import { http } from '../services/htpp';
 
-const useGet = (call, obj = {}, trigger = [], initialValue = []) => {
-  const [resJson, setResJson] = useState(initialValue);
-  const [loading, setLoading] = useState(true);
+const useGet = (url, opt = { initialValue: [], alwaysLoading: false, trigger: [] }) => {
+  const initialOpt = { initialValue: [], alwaysLoading: false, trigger: [] };
+  opt = {...initialOpt, ...opt};
+
+  const { gets, setGets } = useGetContext();
+  const [resJson, setResJson] = useState(gets[url] ? gets[url] : opt.initialValue);
+  const [loading, setLoading] = useState((!gets[url] || opt.alwaysLoading) ? true : false);
 
   const callAPI = async () => {
-    const response = await call(obj);
-    const json = await response?.json();
-    //console.log(json);
-    setResJson(json);
-    setLoading(false);
+    const response = await fetch(http + url);
+    if(response.ok) {
+      const json = await response?.json();
+      setGets(old => ({
+        ...old,
+        [url]: json
+      }))
+      setResJson(json);
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
     let flag = true;
-    trigger.forEach(trig => {
+    opt.trigger.forEach((trig) => {
       if(!trig) {
         flag = false;
       }
@@ -22,7 +34,7 @@ const useGet = (call, obj = {}, trigger = [], initialValue = []) => {
     if(flag) {
       callAPI();
     }
-  }, trigger);
+  }, opt.trigger);
 
   return {
     callAPI,

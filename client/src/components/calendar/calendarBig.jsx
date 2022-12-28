@@ -7,8 +7,7 @@ import { CalendarMonth, DaysThBig, DivCalendarBig, DivControls, TableCalendar } 
 const CalendarBig = ({
   horarios, citas, user,
   mesActual, yearActual,
-  llenarHorarios, llenarCitasDisponibles, llenarCitasDocente, llenarCitasPorUsuario,
-  meses, getMes,
+  llenarTareas, meses, getMes,
   comprobarDiaActual, comprobarMesActual,
   nextMonth, lastMonth
 }) => {
@@ -50,10 +49,7 @@ const CalendarBig = ({
                   user={user}
                   horarios={horarios}
                   citas={citas}
-                  llenarHorarios={llenarHorarios}
-                  llenarCitasDisponibles={llenarCitasDisponibles}
-                  llenarCitasDocente={llenarCitasDocente}
-                  llenarCitasPorUsuario={llenarCitasPorUsuario}
+                  llenarTareas={llenarTareas}
                 />
               ))}
             </tr>

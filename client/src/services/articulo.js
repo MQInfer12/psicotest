@@ -13,21 +13,6 @@ export const addArticulo = async (form) => {
   } catch (error) {
     console.log(error);
   }
-} 
-
-export const getArticuloByDocente = async ({ id }) => {
-  try {
-    const response = await fetch(`${http}articulo/docente/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
 }
 
 export const pdfIndividual = async (id) => {

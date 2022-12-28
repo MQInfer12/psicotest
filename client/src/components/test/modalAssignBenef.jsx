@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import {
-  addBenefToTest,
-  getBeneficiaryNoAssign,
-} from "../../services/test";
+import { addBenefToTest } from "../../services/test";
 import ProfilePic from "../globals/profilePic";
 import { FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import Cargando from "../globals/cargando";
@@ -13,8 +10,7 @@ import useGet from "../../hooks/useGet";
 import { DivModal, DivPersona, DivPersonas } from "../../styles/pages/test";
 
 const ModalAssignBenef = ({ id, actualizar }) => {
-  //TODO: Cambiar useGet
-  const { resJson: data, loading } = useGet(getBeneficiaryNoAssign, {id});
+  const { resJson: data, loading } = useGet(`test/benefNoAssigning/${id}`, { alwaysLoading: true });
 
   const { user } = useUserContext();
   const [idsSelected, setIdsSelected] = useState([]);

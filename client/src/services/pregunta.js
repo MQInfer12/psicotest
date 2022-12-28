@@ -1,29 +1,5 @@
 import { http } from './htpp';
 
-export const getPreguntas = async () => {
-  try {
-    const response = await fetch(`${http}pregunta`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getPreguntasBySeccion = async (idSeccion) => {
-  try {
-    const response = await fetch(`${http}pregunta/seccion/${idSeccion}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const addPregunta = async (form, idSeccion) => {
   try {
     const response = await fetch(`${http}pregunta`, {

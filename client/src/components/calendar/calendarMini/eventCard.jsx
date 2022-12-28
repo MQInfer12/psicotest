@@ -1,15 +1,14 @@
 import React from 'react';
 import { useModal } from '../../../hooks/useModal';
 import { updateHorario } from '../../../services/horario';
-import { EventCardContainer, EventH4, EventPoint, EventText } from '../../../styles/pages/calendar';
+import { EventCardContainer, EventDesc, EventH4, EventPoint, EventText } from '../../../styles/pages/calendar';
 import ModalAceptarCita from '../modalAceptarCita';
 import ModalAsignarCita from '../modalAsignarCita';
 import ModalCancelarCita from '../modalCancelarCita';
 import ModalHorario from '../modalHorario';
 
 const EventCard = ({
-  v, color, event, rol,
-  llenarHorarios, llenarCitasDisponibles, llenarCitasDocente, llenarCitasPorUsuario,
+  v, color, event, rol, llenarTareas
 }) => {
   const { openModal: openEdit, closeModal: closeEdit } = useModal(
     rol != 1 ? "Editar horario" : "Asignar cita",
@@ -19,15 +18,14 @@ const EventCard = ({
         call={updateHorario}
         horario={v}
         actualizar={() => {
-          llenarHorarios();
+          llenarTareas();
           closeEdit();
         }}
       />
     ) : (
       <ModalAsignarCita 
         actualizar={() => {
-          llenarCitasDisponibles();
-          llenarCitasPorUsuario();
+          llenarTareas();
           closeEdit();
         }}
         horario={v}
@@ -39,13 +37,7 @@ const EventCard = ({
     <ModalCancelarCita 
       cita={v}
       actualizar={() => {
-        if(rol != 1) {
-          llenarCitasDocente();
-          llenarHorarios();
-        } else {
-          llenarCitasPorUsuario();
-          llenarCitasDisponibles();
-        }
+        llenarTareas();
         closeCancel();
       }}
     />
@@ -55,8 +47,7 @@ const EventCard = ({
     <ModalAceptarCita 
       horario={v}
       actualizar={() => {
-        llenarCitasDocente();
-        llenarHorarios();
+        llenarTareas();
         closeAccept();
       }}
     />

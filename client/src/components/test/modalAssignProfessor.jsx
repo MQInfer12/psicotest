@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addProfessorToTest, getProfessorNotAssigned } from "../../services/test";
+import { addProfessorToTest } from "../../services/test";
 import ProfilePic from "../globals/profilePic";
 import { FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import Cargando from "../globals/cargando";
@@ -7,8 +7,7 @@ import useGet from "../../hooks/useGet";
 import { DivModal, DivPersona, DivPersonas } from "../../styles/pages/test";
 
 const ModalAssignProfessor = ({ id, actualizar }) => {
-  //TODO: Cambiar useGet
-  const { resJson: data, loading } = useGet(getProfessorNotAssigned, {id})
+  const { resJson: data, loading } = useGet(`test/professorNotAssigning/${id}`, { alwaysLoading: true })
 
   const [checSelected, setChecSelected] = useState([]);
   const [btnActive, setBtnActive] = useState(false);

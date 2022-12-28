@@ -13,8 +13,7 @@ const CalendarMini = ({
   horarios, citas, user,
   mesActual, yearActual,
   fechaSelected, setFechaSelected,
-  llenarHorarios, llenarCitasDisponibles, llenarCitasDocente, llenarCitasPorUsuario,
-  meses, getMes,
+  llenarTareas, meses, getMes,
   comprobarDiaActual, comprobarMesActual,
   nextMonth, lastMonth
 }) => {
@@ -50,9 +49,9 @@ const CalendarMini = ({
       funcion="añadir"
       call={addHorario}
       id_docente={user.id}
-      fecha={fechaSelected.MDY}
+      fecha={fechaSelected.DMY}
       actualizar={() => {
-        llenarHorarios();
+        llenarTareas();
         closeModal();
       }}
     />
@@ -110,14 +109,11 @@ const CalendarMini = ({
           {
             horarios.filter(horario => horario.fecha === fechaSelected.DMY).map((v, i) => (
               <EventCard key={i}
-                v={{...v, fecha: fechaSelected.MDY}}
+                v={{...v, fecha: fechaSelected.DMY}}
                 color={"#660be1"}
                 event={"Libre"}
                 rol={user.id_rol}
-                llenarHorarios={llenarHorarios} 
-                llenarCitasDisponibles={llenarCitasDisponibles}
-                llenarCitasDocente={llenarCitasDocente} 
-                llenarCitasPorUsuario={llenarCitasPorUsuario}
+                llenarTareas={llenarTareas} 
               />
             ))
           }
@@ -126,41 +122,32 @@ const CalendarMini = ({
               if(v.aceptado) {
                 return (
                   <EventCard key={i}
-                    v={{...v, fecha: fechaSelected.MDY}}
+                    v={{...v, fecha: fechaSelected.DMY}}
                     color={"#14804A"}
                     event={"Cita"}
                     rol={user.id_rol}
-                    llenarHorarios={llenarHorarios} 
-                    llenarCitasDisponibles={llenarCitasDisponibles}
-                    llenarCitasDocente={llenarCitasDocente} 
-                    llenarCitasPorUsuario={llenarCitasPorUsuario}
+                    llenarTareas={llenarTareas} 
                   />
                 )
               } else {
                 if(user.id_rol != 1) {
                   return (
                     <EventCard key={i}
-                      v={{...v, fecha: fechaSelected.MDY}}
+                      v={{...v, fecha: fechaSelected.DMY}}
                       color={"#817633"}
                       event={"Pendientes"}
                       rol={user.id_rol}
-                      llenarHorarios={llenarHorarios} 
-                      llenarCitasDisponibles={llenarCitasDisponibles}
-                      llenarCitasDocente={llenarCitasDocente} 
-                      llenarCitasPorUsuario={llenarCitasPorUsuario}
+                      llenarTareas={llenarTareas}
                     />
                   )
                 } else {
                   return (
                     <EventCard key={i}
-                      v={{...v, fecha: fechaSelected.MDY}}
+                      v={{...v, fecha: fechaSelected.DMY}}
                       color={"#817633"}
                       event={"Pendiente"}
                       rol={user.id_rol}
-                      llenarHorarios={llenarHorarios} 
-                      llenarCitasDisponibles={llenarCitasDisponibles}
-                      llenarCitasDocente={llenarCitasDocente} 
-                      llenarCitasPorUsuario={llenarCitasPorUsuario}
+                      llenarTareas={llenarTareas}
                     />
                   )
                 }

@@ -47,7 +47,7 @@ const TestResolution = ({
       contPreguntas += seccion.preguntas.length;
     });
     setPreguntasTotales(contPreguntas);
-  }, []);
+  }, [secciones]);
 
   const { openModal, closeModal } = useModal(
     "",
@@ -71,7 +71,7 @@ const TestResolution = ({
 
       <TestResolveContainer>
         <PreguntasContainer>
-          {secciones.map((seccion, i) =>
+          {secciones.map((seccion, i) => 
             seccion.preguntas.map((pregunta, j) => {
               cont++;
               preguntas.push({seccion, pregunta});

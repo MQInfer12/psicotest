@@ -1,44 +1,5 @@
 import { http } from "./htpp";
 
-export const getTests = async () => {
-  try {
-    const response = await fetch(`${http}test`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getTestsToProfessor = async ({ id }) => {
-  try {
-    const response = await fetch(`${http}test/testToprofessor/${id}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getProfessorTests = async (id) => {
-  try {
-    const response = await fetch(`${http}test/professor/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        accept: "application/json",
-      },
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const addTest = async (form) => {
   try {
     const response = await fetch(`${http}test`, {
@@ -71,30 +32,6 @@ export const addProfessorToTest = async (obj, id_test) => {
         objeto: obj,
         id_test: id_test,
       }),
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getTest = async ({ id }) => {
-  try {
-    const response = await fetch(`${http}test/${id}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getFullTest = async ({ id }) => {
-  try {
-    const response = await fetch(`${http}test/full/${id}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
     });
     return response;
   } catch (error) {
@@ -137,36 +74,6 @@ export const deleteTest = async (id) => {
   }
 };
 
-export const getProfessorNotAssigned = async ({ id }) => {
-  try {
-    const response = await fetch(`${http}test/professorNotAssigning/${id}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-    return response;
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-export const getProfessorAssigned = async ({ id }) => {
-  try {
-    const response = await fetch(`${http}test/professorAssigning/${id}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-    return response;
-  } catch (err) {
-    console.error(err);
-  }
-};
-
 export const deleteProfessorAssigned = async (vec, id) => {
   try {
     const response = await fetch(`${http}test/deleteprofessorAssigning`, {
@@ -192,6 +99,7 @@ export const deleteProfessorAssigned = async (vec, id) => {
 
 /* ======================= DOCENTETESTS ============= */
 
+// ESTE GET SE USA PARA OBTENER DATOS DEL DOCENTE TEST EN TESTSHARE
 export const getDocenteTest = async (id) => {
   try {
     const response = await fetch(`${http}test/ids/${id}`, {
@@ -205,30 +113,6 @@ export const getDocenteTest = async (id) => {
 }
 
 /* ======================= BENEFICIARY ============== */
-
-export const getBeneficiaryAssign = async ({ id }) => {
-  try {
-    const response = await fetch(`${http}test/benefAssigning/${id}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getBeneficiaryNoAssign = async ({ id }) => {
-  try {
-    const response = await fetch(`${http}test/benefNoAssigning/${id}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 export const addBenefToTest = async (obj, id_docente_test) => {
   try {
@@ -270,15 +154,3 @@ export const deleteBenefAssigned = async (obj, id) => {
     console.error(err);
   }
 };
-
-export const getTestsToBenef = async ({ id }) => {
-  try {
-    const response = await fetch(`${http}test/testToBenef/${id}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-}

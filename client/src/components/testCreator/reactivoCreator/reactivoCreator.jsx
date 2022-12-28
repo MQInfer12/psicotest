@@ -1,46 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { WhiteIconButton } from "../../../styles/globals/formularios";
-import Cargando from "../../globals/cargando";
-import { addReactivo, getReactivosBySeccion } from "../../../services/reactivo";
-import { getPuntuacionesByReactivos, massUpdatePuntuaciones } from "../../../services/puntuacion";
+import { addReactivo } from "../../../services/reactivo";
+import { massUpdatePuntuaciones } from "../../../services/puntuacion";
 import { ErrorCss } from "../../../styles/globals/formularios";
 import Pagination from "../pagination";
 import ModalReactivo from "./modalReactivo";
 import ReactivoCard from "./reactivoCard";
-import { 
-  ControlsContainer, TableContainer, TableAnswers,
-  ThNumberal, ThNumber, ResponsiveTr
-} from "../../../styles/globals/table";
+import { ControlsContainer, TableContainer, TableAnswers, ThNumberal, ThNumber, ResponsiveTr } from "../../../styles/globals/table";
 import { useTableHeight } from "../../../hooks/useTableHeight";
 import { useModal } from "../../../hooks/useModal";
-import { HeadContainer, InputNumber, PSelected, ReactivoCreatorContainer, TdCargando, TrCargando } from "../../../styles/pages/testCreator";
+import { HeadContainer, InputNumber, PSelected, ReactivoCreatorContainer } from "../../../styles/pages/testCreator";
+import { useEffect } from "react";
 
-const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, setPuntuaciones, preguntas }) => {
-  const [loading, setLoading] = useState(true);
+const ReactivoCreator = ({ idSeccion, reactivos, preguntas, oldPuntuaciones, llenarSeccion }) => {
   const [reactivosPage, setReactivosPage] = useState(1);
   const [save, setSave] = useState(false);
+  const [puntuaciones, setPuntuaciones] = useState([]);
 
   const { tableHeightRef, tableRows, rowHeight, resizing } = useTableHeight();
-
-  //TODO: Cambiar por un useGet
-  const llenarReactivos = async () => {
-    const res = await getReactivosBySeccion(idSeccion);
-    const resJson = await res?.json();
-    setReactivos(resJson);
-
-    //BUSCAR PUNTUACIONES POR ID REACTIVOS
-    let idReactivos = [];
-    resJson.forEach(reactivo => {
-      idReactivos.push(reactivo.id);
-    });
-
-    const resPunt = await getPuntuacionesByReactivos(idReactivos);
-    const resPuntJson = await resPunt?.json();
-    setPuntuaciones(resPuntJson);
-
-    //DEJAR DE CARGAR
-    setLoading(false);
-  }
 
   const handleChange = (e) => {
     setSave(true);
@@ -63,15 +40,15 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
   }
 
   useEffect(() => {
-    llenarReactivos();
-  }, []);
+    setPuntuaciones(oldPuntuaciones);
+  }, [oldPuntuaciones])
 
   const { openModal, closeModal } = useModal(
     "Añadir reactivo",
     <ModalReactivo
       call={addReactivo}
       actualizar={() => {
-        llenarReactivos();
+        llenarSeccion();
         closeModal();
       }}
       funcion="añadir"
@@ -104,7 +81,7 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
                   <ReactivoCard 
                     key={i} 
                     {...v}
-                    llenarReactivos={llenarReactivos}
+                    llenarSeccion={llenarSeccion}
                   />
                 ))
               }
@@ -112,31 +89,23 @@ const ReactivoCreator = ({ idSeccion, reactivos, setReactivos, puntuaciones, set
           </thead>
           <tbody>
             {
-              loading? (
-                <TrCargando>
-                  <TdCargando>
-                    <Cargando />
-                  </TdCargando>
-                </TrCargando>
-              ) : (
-                preguntas.filter((v, i) => i >= (reactivosPage - 1) * tableRows && i < reactivosPage * tableRows).map((v, i) => (
-                  <ResponsiveTr rowHeight={rowHeight} key={i}>
-                    <ThNumber>{((reactivosPage - 1) * tableRows) + (i + 1)}</ThNumber>
-                    {
-                      puntuaciones.filter(va => va.id_pregunta == v.id).map((va, j) => (
-                        <td key={j}>
-                          <InputNumber 
-                            name={va.id}
-                            type="number"
-                            value={va.asignado}
-                            onChange={handleChange}
-                          />
-                        </td>
-                      )) 
-                    }
-                  </ResponsiveTr>
-                ))
-              )
+              preguntas.filter((v, i) => i >= (reactivosPage - 1) * tableRows && i < reactivosPage * tableRows).map((v, i) => (
+                <ResponsiveTr rowHeight={rowHeight} key={i}>
+                  <ThNumber>{((reactivosPage - 1) * tableRows) + (i + 1)}</ThNumber>
+                  {
+                    puntuaciones.filter(va => va.id_pregunta == v.id).map((va, j) => (
+                      <td key={j}>
+                        <InputNumber 
+                          name={va.id}
+                          type="number"
+                          value={va.asignado}
+                          onChange={handleChange}
+                        />
+                      </td>
+                    )) 
+                  }
+                </ResponsiveTr>
+              ))
             }
           </tbody>
         </TableAnswers>

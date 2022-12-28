@@ -3,62 +3,31 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import TestFeatures from "../components/testView/testFeatures";
 import TestResolution from "../components/testView/testResolution";
-import { getIdTest } from "../services/respuesta";
-import { getFullTest } from "../services/test";
 import decipherId from "../utilities/decipher";
 import { useOutletContext } from "react-router-dom";
 import TestChat from "../components/testView/testViewChat";
 import Cargando from "../components/globals/cargando";
 import { useWindowHeight } from "../hooks/useWindowHeight";
 import { AllContainer, Paragraph, TestContainer, TestTextContainer, TestTitle } from "../styles/pages/testView";
+import useGet from "../hooks/useGet";
+import { useUserContext } from "../context/userContext";
 
 const TestView = () => {
   const windowHeight = useWindowHeight(true, true);
-  const { idTest: idTestCode } = useParams();
-  const { idRespuesta: idRespCode } = useParams();
+
+  const { idTest: idTestCode, idRespuesta: idRespCode } = useParams();
+  const idTest = idTestCode && Number(decipherId(idTestCode));
+  const idRespuesta = idRespCode && Number(decipherId(idRespCode));
+
+  const activateSend = !!idRespCode;
+
+  const { user } = useUserContext();
+  const { resJson: test, loading } = useGet(`test/full/${user.id}/${idRespuesta ? idRespuesta : idTest}`, { alwaysLoading: true });
+
   const { handleScrollTop } = useOutletContext();
-
-  const [idTest, setIdTest] = useState(undefined);
-  const [idRespuesta, setIdRespuesta] = useState(undefined);
-  const [email_docente, setEmail_docente] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [test, setTest] = useState([]);
-  const [activateSend, setActivateSend] = useState(false);
-
-  //TODO: Cambiar por un solo useGet
-  const llenarTest = async (id) => {
-    const res = await getFullTest({ id });
-    const resJson = await res?.json();
-    setTest(resJson);
-    setLoading(false);
-  };
-
-  const getTestId = async (id) => {
-    const res = await getIdTest({ id });
-    const resJson = await res?.json();
-    setEmail_docente(resJson.email_docente);
-    if (resJson.estado != 0) {
-      setActivateSend(false);
-    }
-    const restest = await getFullTest({ id: resJson.id_test });
-    const restestJson = await restest?.json();
-    setTest(restestJson);
-    setLoading(false);
-  };
-
   useEffect(() => {
     window.scroll(0, 0);
     handleScrollTop();
-
-    if (idTestCode) {
-      setIdTest(Number(decipherId(idTestCode)));
-      llenarTest(Number(decipherId(idTestCode)));
-    }
-    if (idRespCode) {
-      setIdRespuesta(Number(decipherId(idRespCode)));
-      getTestId(Number(decipherId(idRespCode)));
-      setActivateSend(true);
-    }
   }, []);
 
   if(loading) return <Cargando container windowHeight={windowHeight} />
@@ -85,8 +54,8 @@ const TestView = () => {
           }
         />
         {
-          email_docente &&
-          <TestChat email_docente={email_docente} />
+          test.email_docente &&
+          <TestChat email_docente={test.email_docente} />
         }
       </TestContainer>
     </AllContainer>

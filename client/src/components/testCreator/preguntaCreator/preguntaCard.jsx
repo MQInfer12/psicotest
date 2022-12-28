@@ -20,7 +20,7 @@ const PreguntaCard = (props) => {
     <ModalPregunta 
       call={updatePregunta}
       actualizar={() => {
-        props.llenarPreguntas();
+        props.llenarSeccion();
         closeModal();
       }}
       funcion="editar"

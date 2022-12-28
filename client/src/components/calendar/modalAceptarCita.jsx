@@ -1,13 +1,12 @@
 import React from 'react';
 import useGet from '../../hooks/useGet';
-import { acceptAppointment, getAppointByHorario } from '../../services/cita';
+import { acceptAppointment } from '../../services/cita';
 import { WhiteButton } from '../../styles/globals/formularios';
 import { DivContainer, DivUser } from '../../styles/pages/calendar';
 import Cargando from '../globals/cargando';
 
 const ModalAceptarCita = ({horario, actualizar}) => {
-  //TODO: Cambiar useGet
-  const { resJson: citas, loading } = useGet(getAppointByHorario, { idHorario: horario.id_horario });
+  const { resJson: citas, loading } = useGet(`cita/horario/${horario.id_horario}`, { alwaysLoading: true });
 
   const AceptarCita = async (id) => {
     const res = await acceptAppointment(horario.id_horario, id);

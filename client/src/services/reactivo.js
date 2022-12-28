@@ -1,29 +1,5 @@
 import { http } from './htpp';
 
-export const getReactivos = async () => {
-  try {
-    const response = await fetch(`${http}reactivo`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getReactivosBySeccion = async (idSeccion) => {
-  try {
-    const response = await fetch(`${http}reactivo/seccion/${idSeccion}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const addReactivo = async (form, idSeccion) => {
   try {
     const response = await fetch(`${http}reactivo`, {

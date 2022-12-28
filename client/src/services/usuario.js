@@ -1,50 +1,5 @@
 import { http } from './htpp';
 
-export const getUsers = async () => {
-  try {
-    const response = await fetch(`${http}user`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getPic = async (id) => {
-  try {
-    const response = await fetch(`${http}user/pic/${id}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export const getProfessor = async() => {
-
-  try {
-    const response = await fetch(`${http}user/getProfessors/1`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    });
-  
-    if (response.ok) {
-      const result = await response.json();
-      return result;
-    }
-  } catch (err) {
-    console.error(err);
-  }
-
-}
-
 export const addUser = async (form) => {
   try {
     const response = await fetch(`${http}user`, {
@@ -60,18 +15,6 @@ export const addUser = async (form) => {
         id_rol: form.rol,
         estado: "1"
       }),
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export const getUser = async (id) => {
-  try {
-    const response = await fetch(`${http}user/${id}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
     });
     return response;
   } catch (error) {

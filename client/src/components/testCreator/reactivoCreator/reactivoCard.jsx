@@ -12,7 +12,7 @@ const ReactivoCard = (props) => {
     const resJson = await res?.json();
     if(resJson) {
       console.log("Se borro correctamente");
-      props.llenarReactivos();
+      props.llenarSeccion();
     }
   }
 
@@ -21,7 +21,7 @@ const ReactivoCard = (props) => {
     <ModalReactivo 
       call={updateReactivo}
       actualizar={() => {
-        props.llenarReactivos();
+        props.llenarSeccion();
         closeEdit();
       }}
       funcion="editar"

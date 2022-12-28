@@ -2,18 +2,16 @@ import React from 'react'
 import { useEffect } from 'react';
 import { useUserContext } from '../../context/userContext';
 import useGet from '../../hooks/useGet';
-import { getArticuloByDocente } from '../../services/articulo';
 import { ArticleContainer } from '../../styles/pages/blog';
 import ArticleCard from './articleCard';
 
 const ArticleResponse = ({ fwrap = true, setLlenarArticulos = () => {} }) => {
   const { user } = useUserContext();
 
-  //TODO: Cambiar useGet
-  const { resJson: articles, loading, callAPI: llenarArticulos } = useGet(getArticuloByDocente, { id: user.isLogged ? user.id : 88 });
+  const { resJson: articles, loading, callAPI: llenarArticulos } = useGet(`articulo/docente/${user.id}`);
 
   useEffect(() => {
-    setLlenarArticulos(llenarArticulos);
+    setLlenarArticulos(() => llenarArticulos);
   }, [])
 
   return (

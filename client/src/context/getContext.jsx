@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
-import { useEffect } from "react";
 
 export const GetContext = createContext(null);
 
@@ -16,10 +15,6 @@ export const useGetContext = () => {
 export const GetContextProvider = ({ children }) => {
   const [gets, setGets] = useState({});
   const value = useMemo(() => ({ gets, setGets }), [gets, setGets]);
-
-  useEffect(() => {
-    console.log(gets);
-  }, [gets])
 
   return (
     <GetContext.Provider value={value}>

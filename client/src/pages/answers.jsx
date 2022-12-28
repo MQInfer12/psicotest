@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Pagination from "../components/answers/pagination";
 import { useNavigate } from "react-router-dom";
 import { WhiteIconButton } from "../styles/globals/formularios";
-import { getRespuestas, getRespuestasByDocente } from "../services/respuesta";
 import { useUserContext } from "../context/userContext";
 import Cargando from "../components/globals/cargando";
 import { useDownloadExcel } from "react-export-table-to-excel";
@@ -28,8 +27,7 @@ const Answers = () => {
 
   const { tableHeightRef, tableRows, rowHeight } = useTableHeight();
 
-  //TODO: Cambiar por un solo useGet
-  const { resJson: respuestas, loading } = useGet(user.id_rol === 3 ? getRespuestas : getRespuestasByDocente, { id: user.id });
+  const { resJson: respuestas, loading } = useGet(`respuesta/user/${user.id}`);
 
   const { onDownload } = useDownloadExcel({
     filename:"Respuestas",
@@ -124,7 +122,6 @@ const Answers = () => {
             <tbody>
               {searchRespuestas()
                 .filter((v, i) => i >= (page - 1) * tableRows && i < page * tableRows)
-                /*.filter((v) => search(v))*/
                 .map((v, i) => (
                   <ResponsiveTr rowHeight={rowHeight} key={i}>
                     <ThNumber>{(page - 1) * tableRows + (i + 1)}</ThNumber>

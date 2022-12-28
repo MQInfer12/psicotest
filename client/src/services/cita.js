@@ -1,43 +1,5 @@
 import { http } from "./htpp";
 
-export const getAppointByUser = async (id) => {
-  try {
-    const response = await fetch(`${http}cita/schedule/${id}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      return result;
-    }
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-export const getAllApoinments = async (email) => {
-  try {
-    const response = await fetch(`${http}cita/allschedule/${email}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      return result;
-    }
-  } catch (err) {
-    console.error(err);
-  }
-};
-
 export const scheduleAppoinment = async (idHorario, idUsuario) => {
   try {
     const response = await fetch(`${http}cita/schedule/${idHorario}`, {
@@ -84,21 +46,6 @@ export const cancelAppoinment = async (idHorario, idCita) => {
     console.error(err);
   }
 };
-
-export const getAppointByHorario = async ({ idHorario }) => {
-  try {
-    const response = await fetch(`${http}cita/horario/${idHorario}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-    return response;
-  } catch (err) {
-    console.error(err);
-  }
-}
 
 export const acceptAppointment = async (idHorario, idCita) => {
   try {

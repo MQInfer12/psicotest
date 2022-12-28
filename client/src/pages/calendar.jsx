@@ -1,12 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import CalendarBig from "../components/calendar/calendarBig";
 import CalendarMini from "../components/calendar/calendarMini";
 import dayjs from "dayjs";
 import { useUserContext } from "../context/userContext";
-import { getTime, getTimeWithWhoHaveDate } from "../services/horario";
-import { getAllApoinments, getAppointByUser } from "../services/cita";
+import useGet from "../hooks/useGet";
 
 const Calendar = () => {
   const [screen, setScreen] = useState(window.innerWidth);
@@ -24,9 +23,6 @@ const Calendar = () => {
       DMY: (dia + "/" + mes + "/" + year)
     };
   });
-  
-  const [horarios, setHorarios] = useState([]);
-  const [citas, setCitas] = useState([]);
 
   const meses = [
     "Enero",
@@ -96,39 +92,25 @@ const Calendar = () => {
     }
   };
 
-  const callAPI = async (call, param, setState) => {
-    const res = await call(param);
-    setState(res);
-  }
-
   useEffect(() => {
     window.addEventListener("resize", () => {
       setScreen(window.innerWidth);
     });
-
-    if(user.id_rol != 1) {
-      callAPI(getTime, user.id, setHorarios);
-      callAPI(getTimeWithWhoHaveDate, user.id, setCitas);
-    } else {
-      callAPI(getAllApoinments, user.email, setHorarios);
-      callAPI(getAppointByUser, user.id, setCitas);
-    }
   }, []);
+
+  const { callAPI: llenarTareas, resJson: tareas } = useGet(`cita/all/${user.id}`, { initialValue: { horarios: [], citas: [] }});
 
   return (
     screen <= 1050 ? (
       <CalendarMini 
-        horarios={horarios}
-        citas={citas}
+        horarios={tareas.horarios}
+        citas={tareas.citas}
         user={user}
         mesActual={mesActual}
         yearActual={yearActual}
         fechaSelected={fechaSelected}
         setFechaSelected={setFechaSelected}
-        llenarHorarios={() => callAPI(getTime, user.id, setHorarios)}
-        llenarCitasDisponibles={() => callAPI(getAllApoinments, user.email, setHorarios)}
-        llenarCitasDocente={() => callAPI(getTimeWithWhoHaveDate, user.id, setCitas)}
-        llenarCitasPorUsuario={() => callAPI(getAppointByUser, user.id, setCitas)}
+        llenarTareas={llenarTareas}
         meses={meses}
         getMes={getMes}
         comprobarDiaActual={comprobarDiaActual}
@@ -138,15 +120,12 @@ const Calendar = () => {
       />
     ) : (
       <CalendarBig 
-        horarios={horarios}
-        citas={citas}
+        horarios={tareas.horarios}
+        citas={tareas.citas}
         user={user}
         mesActual={mesActual}
         yearActual={yearActual}
-        llenarHorarios={() => callAPI(getTime, user.id, setHorarios)}
-        llenarCitasDisponibles={() => callAPI(getAllApoinments, user.email, setHorarios)}
-        llenarCitasDocente={() => callAPI(getTimeWithWhoHaveDate, user.id, setCitas)}
-        llenarCitasPorUsuario={() => callAPI(getAppointByUser, user.id, setCitas)}
+        llenarTareas={llenarTareas}
         meses={meses}
         getMes={getMes}
         comprobarDiaActual={comprobarDiaActual}

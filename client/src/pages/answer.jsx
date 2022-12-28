@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getFullRespuesta, getRespuesta } from "../services/respuesta";
 import Cargando from "../components/globals/cargando";
 import { useDownloadExcel } from "react-export-table-to-excel";
 import decipherId from "../utilities/decipher";
@@ -23,9 +22,7 @@ const Answer = () => {
   const [tableRef, setTableRef] = useState(null);
   const [screen, setScreen] = useState(window.innerWidth);
 
-  //TODO: Doble useGet?
-  const { resJson: respuesta } = useGet(getRespuesta, { id: idRespuesta });
-  const { resJson: test, loading } = useGet(getFullRespuesta, { id: idRespuesta });
+  const { resJson: respuesta, loading } = useGet(`respuesta/${idRespuesta}`);
 
   const { onDownload } = useDownloadExcel({
     filename: "Respuesta" + respuesta.nombre_user?.replaceAll(' ', '') + respuesta.nombre_test?.replaceAll(' ', ''),
@@ -77,11 +74,11 @@ const Answer = () => {
         ))}
       </DataContainer>
       <AnswerReports 
-        secciones={test.secciones} 
+        secciones={respuesta.test.secciones} 
         respuesta={respuesta} 
         setTableRef={setTableRef} 
       />
-      {test.secciones.map((seccion, i) => (
+      {respuesta.test.secciones.map((seccion, i) => (
         <SeccionContainer key={i}>
           <TitleSeccion>Sección {i + 1}</TitleSeccion>
           <AnswersContainer maxw="1200px">

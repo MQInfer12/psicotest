@@ -5,6 +5,7 @@ import ArticleResponse from '../components/blog/articleResponse'
 import { useModal } from '../hooks/useModal'
 import { PurpleButton } from '../styles/globals/formularios'
 import { AllContainer, ButtonContainer, TitleSeccion } from '../styles/pages/blog'
+import { useEffect } from 'react'
 
 const Blog = () => {
   const [llenarArticulos, setLlenarArticulos] = useState(() => {});
@@ -20,6 +21,10 @@ const Blog = () => {
       }}
     />
   )
+
+  useEffect(() => {
+    console.log(llenarArticulos);
+  }, [llenarArticulos]);
 
   return (
     <AllContainer>

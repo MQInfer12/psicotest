@@ -53,18 +53,3 @@ export const deleteCaracteristica = async (id) => {
     console.log(error);
   }
 }
-
-export const getCaracteristicasByTest = async ({id_test}) => {
-  try {
-    const response = await fetch(`${http}caracteristica/test/${id_test}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      }
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-}

@@ -1,29 +1,5 @@
 import { http } from './htpp';
 
-export const getSecciones = async () => {
-  try {
-    const response = await fetch(`${http}seccion`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getSeccionesByTest = async (idTest) => {
-  try {
-    const response = await fetch(`${http}seccion/test/${idTest}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const addSeccion = async (idTest) => {
   try {
     const response = await fetch(`${http}seccion`, {

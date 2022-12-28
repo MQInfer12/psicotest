@@ -2,7 +2,6 @@ import React from "react";
 import Cargando from "../components/globals/cargando";
 import TestCard from "../components/test/testCard";
 import { useUserContext } from "../context/userContext";
-import { getTests, getTestsToBenef, getTestsToProfessor } from "../services/test";
 import { useWindowHeight } from "../hooks/useWindowHeight";
 import useGet from "../hooks/useGet";
 import AddTestButton from "../components/test/addTestButton";
@@ -13,11 +12,7 @@ const Test = () => {
   const { user } = useUserContext();
   const idRole = user?.id_rol;
 
-  //TODO: Cambiar useGet
-  const { callAPI: llenarTests, resJson : tests, loading } = useGet(
-    idRole === 3 ? getTests : idRole === 2 ? getTestsToProfessor : getTestsToBenef,
-    { id: user?.id }
-  );
+  const { callAPI: llenarTests, resJson : tests, loading } = useGet(`test/user/${user.id}`);
   
   if(loading) return (<Cargando container windowHeight={windowHeight} />);
 

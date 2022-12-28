@@ -7,8 +7,7 @@ import ModalHorario from '../modalHorario';
 import TaskCard from './taskCard';
 
 const DayCard = ({ 
-  day, comprobarDiaActual, comprobarMesActual, user, horarios, citas,
-  llenarHorarios, llenarCitasDisponibles, llenarCitasDocente, llenarCitasPorUsuario
+  day, comprobarDiaActual, comprobarMesActual, user, horarios, citas, llenarTareas
 }) => {
   const { openModal, closeModal } = useModal(
     "Añadir horario",
@@ -16,9 +15,9 @@ const DayCard = ({
       funcion="añadir"
       call={ addHorario }
       id_docente={user.id}
-      fecha={day.format("MM/DD/YYYY")}
+      fecha={day.format("DD/MM/YYYY")}
       actualizar={() => {
-        llenarHorarios();
+        llenarTareas();
         closeModal();
       }}
     />
@@ -47,15 +46,12 @@ const DayCard = ({
         {
           horarios.filter(v => v.fecha == day.format("DD/MM/YYYY")).map((v, i) => (
             <TaskCard key={i}
-              v={{...v, fecha: day.format("MM/DD/YYYY")}}
+              v={{...v, fecha: day.format("DD/MM/YYYY")}}
               background="#F0F1FA"
               textcolor="#4F5AED"
               event="Libre"
               rol={user.id_rol}
-              llenarHorarios={llenarHorarios}
-              llenarCitasDisponibles={llenarCitasDisponibles}
-              llenarCitasDocente={llenarCitasDocente}
-              llenarCitasPorUsuario={llenarCitasPorUsuario}
+              llenarTareas={llenarTareas}
             />
           ))
         }
@@ -64,44 +60,35 @@ const DayCard = ({
             if(v.aceptado) {
               return (
                 <TaskCard key={i}
-                  v={{...v, fecha: day.format("MM/DD/YYYY")}}
+                  v={{...v, fecha: day.format("DD/MM/YYYY")}}
                   background="#E1FCEF"
                   textcolor="#14804A"
                   event="Cita"
                   rol={user.id_rol}
-                  llenarHorarios={llenarHorarios}
-                  llenarCitasDisponibles={llenarCitasDisponibles}
-                  llenarCitasDocente={llenarCitasDocente}
-                  llenarCitasPorUsuario={llenarCitasPorUsuario}
+                  llenarTareas={llenarTareas}
                 />
               )
             } else {
               if(user.id_rol != 1) {
                 return (
                   <TaskCard key={i}
-                    v={{...v, fecha: day.format("MM/DD/YYYY")}}
+                    v={{...v, fecha: day.format("DD/MM/YYYY")}}
                     background="#faea8e"
                     textcolor="#817633"
                     event="Pendientes"
                     rol={user.id_rol}
-                    llenarHorarios={llenarHorarios}
-                    llenarCitasDisponibles={llenarCitasDisponibles}
-                    llenarCitasDocente={llenarCitasDocente}
-                    llenarCitasPorUsuario={llenarCitasPorUsuario}
+                    llenarTareas={llenarTareas}
                   />
                 )
               } else {
                 return (
                   <TaskCard key={i}
-                    v={{...v, fecha: day.format("MM/DD/YYYY")}}
+                    v={{...v, fecha: day.format("DD/MM/YYYY")}}
                     background="#faea8e"
                     textcolor="#817633"
                     event="Pendiente"
                     rol={user.id_rol}
-                    llenarHorarios={llenarHorarios}
-                    llenarCitasDisponibles={llenarCitasDisponibles}
-                    llenarCitasDocente={llenarCitasDocente}
-                    llenarCitasPorUsuario={llenarCitasPorUsuario}
+                    llenarTareas={llenarTareas}
                   />
                 )
               }

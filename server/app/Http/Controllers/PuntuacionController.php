@@ -26,6 +26,16 @@ class PuntuacionController extends Controller
         }
     }
 
+    public function puntuacionesBySeccion($id)
+    {
+        $puntuaciones = DB::select(
+            "SELECT DISTINCT on (pu.id) pu.id, pu.id_pregunta, pu.id_reactivo, pu.asignado 
+            FROM puntuacions as pu, preguntas as pr, reactivos as r
+            WHERE (pu.id_pregunta=pr.id AND pr.id_seccion='$id') OR (pu.id_reactivo=r.id AND r.id_seccion='$id')"
+        );
+        return $puntuaciones;
+    }
+
     public function massUpdate(Request $request)
     {
         $puntuaciones = $request->puntuaciones;

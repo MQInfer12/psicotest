@@ -1,28 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useUserContext } from '../context/userContext';
-import { addGrupo, getGruposDocente } from '../services/grupo';
+import { addGrupo } from '../services/grupo';
 import ModalGroup from '../components/group/modalGroup';
 import GroupResponse from '../components/group/groupResponse';
 import Cargando from '../components/globals/cargando';
 import { useModal } from '../hooks/useModal';
 import { ButtonAdd, DivGroups, DivGroupsPage } from '../styles/pages/group';
+import useGet from '../hooks/useGet';
 
 const Group = () => {
   const { user } = useUserContext();
-  const [ grupos, setGrupos ] = useState([]);
-  const [ loading, setLoading ] = useState(true);
 
-  const llenarGrupos = async () => {
-    const res = await getGruposDocente(user.id);
-    const resJson = await res?.json();
-    setGrupos(resJson);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    //LLENAR GRUPOS
-    llenarGrupos();
-  }, []);
+  const { callAPI: llenarGrupos, resJson: grupos, loading } = useGet(`grupo/docente/${user.id}`);
 
   const { openModal, closeModal } = useModal(
     "Añadir grupo",

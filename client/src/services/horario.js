@@ -1,44 +1,5 @@
 import { http } from "./htpp";
 
-export const getTime = async (id) => {
-  try {
-    const response = await fetch(`${http}horario/show/${id}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    });
-  
-    if (response.ok) {
-      const result = await response.json();
-      return result;
-    }
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-export const getTimeWithWhoHaveDate = async (id) => {
-  try {
-    const response = await fetch(`${http}horario/showWho/${id}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    });
-  
-    if (response.ok) {
-      const result = await response.json();
-      return result;
-    }
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-
 export const addHorario = async (form, id_docente) => {
   try {
     const response = await fetch(`${http}horario`, {

@@ -1,6 +1,6 @@
 import React from "react";
 import { useUserContext } from "../../context/userContext";
-import { addCaracteristica, getCaracteristicasByTest } from "../../services/caracteristica";
+import { addCaracteristica } from "../../services/caracteristica";
 import { WhiteButton } from "../../styles/globals/formularios";
 import ModalFeature from "./modalFeature";
 import { useModal } from "../../hooks/useModal";
@@ -11,8 +11,7 @@ import { Features, TestInfoContainer, TestInfoTitle } from "../../styles/pages/t
 const TestFeatures = ({ idTest, caracteristicas }) => {
   const { user } = useUserContext();
 
-  //TODO: Cambiar useGet
-  const { callAPI: llenarCaracteristicas, resJson: features } = useGet(getCaracteristicasByTest, {id_test: idTest}, [], caracteristicas)
+  const { callAPI: llenarCaracteristicas, resJson: features } = useGet(`caracteristica/test/${idTest}`, { initialValue: caracteristicas });
 
   const { openModal: openAdd, closeModal: closeAdd } = useModal(
     "Añadir característica",

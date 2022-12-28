@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import useGet from "../../hooks/useGet";
-import { deleteProfessorAssigned, getProfessorAssigned } from "../../services/test";
+import { deleteProfessorAssigned } from "../../services/test";
 import { FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import { DivModal, DivPersona, DivPersonas } from "../../styles/pages/test";
 import Cargando from "../globals/cargando";
 import ProfilePic from "../globals/profilePic";
 
 const ModalUnAssignProfessor = ({ id, actualizar }) => {
-  //TODO: Cambiar useGet
-  const { resJson: data, loading } = useGet(getProfessorAssigned, {id})
+  const { resJson: data, loading } = useGet(`test/professorAssigning/${id}`, { alwaysLoading: true });
 
   const [checSelected, setChecSelected] = useState([]);
   const [btnActive, setBtnActive] = useState(false);

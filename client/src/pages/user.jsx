@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { WhiteButton } from "../styles/globals/formularios";
-import { addUser, getUsers } from "../services/usuario";
+import { addUser } from "../services/usuario";
 import Cargando from "../components/globals/cargando";
 import UserResponse from "../components/user/filter/userReponse";
 import UserFilter from "../components/user/filter/userFilter";
@@ -12,7 +12,7 @@ import { DivControls, DivUsersPage } from "../styles/pages/user";
 
 const User = () => {
   const windowHeight = useWindowHeight(true, true);
-  const { callAPI, resJson: usuarios, loading } = useGet(getUsers);
+  const { callAPI, resJson: usuarios, loading } = useGet("user");
 
   /* ====== FILTER ====== */
 

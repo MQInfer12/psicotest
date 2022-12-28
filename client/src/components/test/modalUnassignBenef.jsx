@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { deleteBenefAssigned, getBeneficiaryAssign } from "../../services/test";
+import { deleteBenefAssigned } from "../../services/test";
 import ProfilePic from "../globals/profilePic";
 import { FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import Cargando from "../globals/cargando";
@@ -7,8 +7,7 @@ import useGet from "../../hooks/useGet";
 import { DivModal, DivPersona, DivPersonas } from "../../styles/pages/test";
 
 const ModalUnAssignBenef = ({ id, actualizar }) => {
-  //TODO: Cambiar useGet
-  const { resJson: data, loading } = useGet(getBeneficiaryAssign, {id})
+  const { resJson: data, loading } = useGet(`test/benefAssigning/${id}`, { alwaysLoading: true })
 
   const [checSelected, setChecSelected] = useState([]);
   const [btnActive, setBtnActive] = useState(false);
