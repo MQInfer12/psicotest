@@ -11,7 +11,7 @@ const BigRow = ({index, pregunta, respuesta, multimarcado}) => {
         </DivDouble>
       </td>
       {
-        /* FIXME: PUNTUACIONES EN MULTIMARCADO */
+        /* TODO: PUNTUACIONES EN MULTIMARCADO */
         !multimarcado && 
         <td>
           {respuesta.resultados

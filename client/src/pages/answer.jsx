@@ -92,7 +92,7 @@ const Answer = () => {
                       <>
                         <ThAnswer>Pregunta</ThAnswer>
                         {
-                          /* FIXME: PUNTUACIONES EN MULTIMARCADO */
+                          /* TODO: PUNTUACIONES EN MULTIMARCADO */
                           !seccion.multimarcado &&
                           <ThAnswer center width="90px">Puntaje</ThAnswer>
                         }

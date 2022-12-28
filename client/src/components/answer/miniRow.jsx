@@ -14,7 +14,7 @@ const MiniRow = ({index, pregunta, respuesta, cantReactivos, multimarcado}) => {
       </ResponsiveTr>
       <ResponsiveTr>
         <td>
-          {/* FIXME: PUNTUACIONES EN MULTIMARCADO */}
+          {/* TODO: PUNTUACIONES EN MULTIMARCADO */}
           {!multimarcado && respuesta.resultados
             .filter(
               (resultado) =>

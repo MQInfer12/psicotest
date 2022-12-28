@@ -31,7 +31,7 @@ const AnswerReports = ({ secciones, respuesta, setTableRef }) => {
                 <th style={ThStyle}>#</th>
                 <th style={ThStyle}>Pregunta</th>
                 {
-                  /* FIXME: PUNTUACIONES EN MULTIMARCADO */
+                  /* TODO: PUNTUACIONES EN MULTIMARCADO */
                   !seccion.multimarcado &&
                   <th style={ThStyle}>Puntaje</th>
                 }
@@ -50,7 +50,7 @@ const AnswerReports = ({ secciones, respuesta, setTableRef }) => {
                     <p>{pregunta.descripcion}</p>
                   </td>
                   {
-                    /* FIXME: PUNTUACIONES EN MULTIMARCADO */
+                    /* TODO: PUNTUACIONES EN MULTIMARCADO */
                     !seccion.multimarcado &&
                     <td>
                       {respuesta.resultados.filter(
