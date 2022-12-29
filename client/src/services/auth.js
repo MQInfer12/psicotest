@@ -18,9 +18,7 @@ export const signIn = async (form) => {
 
     const res = await response.json();
     if (res.token) {
-      document.cookie = `token=${res.token}; max-age=${
-        60 * 60 * 24
-      }; path=/; samesite=stric`;
+      document.cookie = `token=${res.token}; max-age=86400; path=/; samesite=stric`;
     }
 
     return response;

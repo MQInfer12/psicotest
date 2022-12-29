@@ -11,7 +11,7 @@ const ModalPregunta = ({ pregunta, call, actualizar, funcion, idSeccion }) => {
     handleChange,
     handleSubmit
   } = UseForm(
-    pregunta? {
+    pregunta ? {
       id_seccion: idSeccion,
       descripcion: pregunta.descripcion
     } : initialForm,

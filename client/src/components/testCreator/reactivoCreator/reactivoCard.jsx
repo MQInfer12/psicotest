@@ -5,6 +5,7 @@ import { deleteReactivo, updateReactivo } from "../../../services/reactivo";
 import SureModal from "../../globals/sureModal";
 import { useModal } from "../../../hooks/useModal";
 import { DivReactivoButtonsTd, PText, ThReactivo } from "../../../styles/pages/testCreator";
+import ModalPuntuacion from "./modalPuntuacion";
 
 const ReactivoCard = (props) => {
   const borrarReactivo = async () => {
@@ -38,6 +39,17 @@ const ReactivoCard = (props) => {
     />
   )
 
+  const { openModal: openPredeterminado, closeModal: closePredeterminado } = useModal(
+    "Establecer puntuación",
+    <ModalPuntuacion 
+      actualizar={() => {
+        props.llenarSeccion();
+        closePredeterminado();
+      }}
+      reactivo={props}
+    />
+  )
+
   return (
     <ThReactivo>
       <PText>
@@ -45,6 +57,7 @@ const ReactivoCard = (props) => {
       </PText>
       <DivReactivoButtonsTd>
         <WhiteIconButton title="Editar reactivo" onClick={openEdit}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
+        <WhiteIconButton title="Establecer puntuación de la columna" onClick={openPredeterminado}><i className="fa-solid fa-marker"></i></WhiteIconButton>
         <DangerIconButton title="Eliminar reactivo" onClick={openDelete}><i className="fa-solid fa-trash-can"></i></DangerIconButton>
       </DivReactivoButtonsTd>
     </ThReactivo>

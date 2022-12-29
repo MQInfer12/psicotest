@@ -49,3 +49,21 @@ export const deleteReactivo = async (id) => {
     console.log(error);
   }
 }
+
+export const changePredeterminado = async (form, id) => {
+  try {
+    const response = await fetch(`${http}reactivo/predeterminado/${id}`, {
+      method: "PUT",
+      headers: { 
+        "Content-Type": "application/json",
+        "accept": "application/json", 
+      },
+      body: JSON.stringify({
+        predeterminado: form.predeterminado,
+      }),
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

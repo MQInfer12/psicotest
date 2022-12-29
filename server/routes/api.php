@@ -75,6 +75,7 @@ Route::group(['middleware' => 'api'], function(){
     //REACTIVOS ROUTES
     Route::apiResource("reactivo", ReactivoController::class);
     Route::get("reactivo/seccion/{idSeccion}", [ReactivoController::class, 'reactivosBySeccion']);
+    Route::put("reactivo/predeterminado/{id}", [ReactivoController::class, 'changePredeterminado']);
 
     //SECCIONES ROUTES
     Route::get("seccion/full/{id}", [SeccionController::class, 'getFullSeccion']);
@@ -103,5 +104,5 @@ Route::group(['middleware' => 'api'], function(){
     //ARTICULOS
     Route::apiResource("articulo", ArticuloController::class);
     Route::get('articulo/docente/{id_docente}', [ArticuloController::class, 'getArticlesByDocente']);
-    Route::get('articulo/documento/{id}', [ArticuloController::class, 'getArticlePdf']);  
+    Route::get('articulo/documento/{id}', [ArticuloController::class, 'getArticlePdf']);
 });
