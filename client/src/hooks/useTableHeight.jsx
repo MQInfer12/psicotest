@@ -26,11 +26,11 @@ export const useTableHeight = () => {
     if(resizing) {
       let timer = setTimeout(() => {
         setResizing(false);
-      }, 1000);
+      }, 500);
       clearTimeout(timer);
       timer = setTimeout(() => {
         setResizing(false);
-      }, 2000);
+      }, 500);
     }
   }, [resizing]);
 

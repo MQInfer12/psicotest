@@ -46,4 +46,17 @@ class PuntuacionController extends Controller
         }
         return response()->json(["mensaje" => "se guardo correctamente"], 201);
     }
+
+    public function voltearPuntuaciones($idPregunta)
+    {
+        $puntuaciones = DB::select("SELECT * FROM puntuacions WHERE id_pregunta='$idPregunta' ORDER BY id");
+        foreach($puntuaciones as $puntuacion) {
+            $aux[] = $puntuacion->asignado;
+        }
+        foreach($puntuaciones as $i => $puntuacion) {
+            $newValue = $aux[count($puntuaciones) - 1 - $i];
+            DB::update("UPDATE puntuacions SET asignado='$newValue' WHERE id='$puntuacion->id'");
+        }
+        return response()->json(["mensaje" => "se guardo correctamente"], 201);
+    }
 }

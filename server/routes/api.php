@@ -86,6 +86,7 @@ Route::group(['middleware' => 'api'], function(){
     Route::post("puntuacion/reactivo", [PuntuacionController::class, 'puntuacionesByReactivos']);
     Route::get("puntuacion/seccion/{id}", [PuntuacionController::class, 'puntuacionesBySeccion']);
     Route::put("puntuacion/update", [PuntuacionController::class, 'massUpdate']);
+    Route::put("puntuacion/voltear/{idPregunta}", [PuntuacionController::class, 'voltearPuntuaciones']);
 
     //RESPUESTA ROUTES
     Route::apiResource("respuesta", RespuestaController::class);

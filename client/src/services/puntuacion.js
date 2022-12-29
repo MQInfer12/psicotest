@@ -17,3 +17,18 @@ export const massUpdatePuntuaciones = async (puntuaciones) => {
     console.log(error);
   }
 }
+
+export const turnPuntuaciones = async (idPregunta) => {
+  try {
+    const response = await fetch(`${http}puntuacion/voltear/${idPregunta}`, {
+      method: "PUT",
+      headers: { 
+        "Content-Type": "application/json",
+        "accept": "application/json", 
+      }
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

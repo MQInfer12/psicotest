@@ -70,6 +70,7 @@ export const ThNumber = styled.th`
   padding-left: 11px;
   width: 47px;
   text-align: start;
+  position: relative;
 `;
 
 export const DivDouble = styled.div`
@@ -161,4 +162,20 @@ export const ResponsiveTr = styled.tr.attrs(props => ({
       transform: ${props => props.inTestCreator && "translateX(0)"};
     }
   }
+
+  &:hover .buttons {
+    transform: translateX(-56px);
+  }
 `;
+
+export const ButtonReactivosTr = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  z-index: -1;
+  transition: all 0.2s;
+`
