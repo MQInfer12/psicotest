@@ -1,35 +1,27 @@
 import React, { useState } from "react";
 import { WhiteIconButton } from "../../../styles/globals/formularios";
 import { addReactivo } from "../../../services/reactivo";
-import { massUpdatePuntuaciones, turnPuntuaciones } from "../../../services/puntuacion";
+import { massUpdatePuntuaciones } from "../../../services/puntuacion";
 import { ErrorCss } from "../../../styles/globals/formularios";
 import Pagination from "../pagination";
 import ModalReactivo from "./modalReactivo";
 import ReactivoCard from "./reactivoCard";
-import { ControlsContainer, TableContainer, TableAnswers, ThNumberal, ThNumber, ResponsiveTr, ButtonReactivosTr } from "../../../styles/globals/table";
+import { ControlsContainer, TableContainer, TableAnswers, ThNumberal } from "../../../styles/globals/table";
 import { useTableHeight } from "../../../hooks/useTableHeight";
 import { useModal } from "../../../hooks/useModal";
-import { HeadContainer, InputNumber, PSelected, ReactivoCreatorContainer } from "../../../styles/pages/testCreator";
+import { HeadContainer, PSelected, ReactivoCreatorContainer } from "../../../styles/pages/testCreator";
 import { useEffect } from "react";
+import ReactivoTableBody from "./reactivoTableBody";
+import { useTestCreatorContext } from "../../../context/testCreatorContext";
 
-const ReactivoCreator = ({ idSeccion, reactivos, preguntas, oldPuntuaciones, llenarSeccion }) => {
+const ReactivoCreator = ({ llenarSeccion }) => {
   const [reactivosPage, setReactivosPage] = useState(1);
   const [save, setSave] = useState(false);
   const [puntuaciones, setPuntuaciones] = useState([]);
 
   const { tableHeightRef, tableRows, rowHeight, resizing } = useTableHeight();
-
-  const handleChange = (e) => {
-    setSave(true);
-    const {name, value} = e.target;
-
-    let puntuacion = puntuaciones.find(obj => {
-      return obj.id == name
-    })
-    puntuacion.asignado = Number(value);
-
-    setPuntuaciones(old => [...old]);
-  }
+  
+  const { seccion } = useTestCreatorContext();
 
   const handleSave = async () => {
     const res = await massUpdatePuntuaciones(puntuaciones);
@@ -39,16 +31,9 @@ const ReactivoCreator = ({ idSeccion, reactivos, preguntas, oldPuntuaciones, lle
     }
   }
 
-  const handleTurn = async (idPregunta) => {
-    const res = await turnPuntuaciones(idPregunta);
-    if(res.ok) {
-      llenarSeccion();
-    }
-  }
-
   useEffect(() => {
-    setPuntuaciones(oldPuntuaciones);
-  }, [oldPuntuaciones])
+    setPuntuaciones(seccion.puntuaciones);
+  }, [seccion])
 
   const { openModal, closeModal } = useModal(
     "Añadir reactivo",
@@ -59,7 +44,7 @@ const ReactivoCreator = ({ idSeccion, reactivos, preguntas, oldPuntuaciones, lle
         closeModal();
       }}
       funcion="añadir"
-      idSeccion={idSeccion}
+      idSeccion={seccion.id}
     />
   );
 
@@ -67,8 +52,8 @@ const ReactivoCreator = ({ idSeccion, reactivos, preguntas, oldPuntuaciones, lle
     <ReactivoCreatorContainer>
       <ControlsContainer spaceBetween>
         <HeadContainer>
-          <WhiteIconButton title="Añadir reactivo" onClick={openModal} disabled={reactivos.length == 6}><i className="fa-solid fa-plus"></i></WhiteIconButton>
-          <PSelected>{reactivos.length} / 6</PSelected>
+          <WhiteIconButton title="Añadir reactivo" onClick={openModal} disabled={seccion.reactivos.length == 6}><i className="fa-solid fa-plus"></i></WhiteIconButton>
+          <PSelected>{seccion.reactivos.length} / 6</PSelected>
         </HeadContainer>
         {
           save &&
@@ -84,7 +69,7 @@ const ReactivoCreator = ({ idSeccion, reactivos, preguntas, oldPuntuaciones, lle
             <tr>
               <ThNumberal>#</ThNumberal>
               {
-                reactivos.map((v, i) => (
+                seccion.reactivos.map((v, i) => (
                   <ReactivoCard 
                     key={i} 
                     {...v}
@@ -95,38 +80,19 @@ const ReactivoCreator = ({ idSeccion, reactivos, preguntas, oldPuntuaciones, lle
             </tr>
           </thead>
           <tbody>
-            {
-              preguntas.filter((v, i) => i >= (reactivosPage - 1) * tableRows && i < reactivosPage * tableRows).map((v, i) => (
-                <ResponsiveTr rowHeight={rowHeight} key={i}>
-                  <ThNumber>
-                    {((reactivosPage - 1) * tableRows) + (i + 1)}
-                    <ButtonReactivosTr className="buttons">
-                      {/* FIXME: EL BOTON SE OCULTA AL SALIR DE LA TABLA */}
-                      <WhiteIconButton title="Voltear puntuaciones" onClick={() => handleTurn(v.id)}>
-                        <i className="fa-solid fa-arrow-right-arrow-left"></i>
-                      </WhiteIconButton>
-                    </ButtonReactivosTr>
-                  </ThNumber>
-                  {
-                    puntuaciones.filter(va => va.id_pregunta == v.id).map((va, j) => (
-                      <td key={j}>
-                        <InputNumber 
-                          name={va.id}
-                          type="number"
-                          value={va.asignado}
-                          onChange={handleChange}
-                        />
-                      </td>
-                    )) 
-                  }
-                </ResponsiveTr>
-              ))
-            }
+            <ReactivoTableBody 
+              reactivosPage={reactivosPage} 
+              llenarSeccion={llenarSeccion}
+              puntuaciones={puntuaciones}
+              setPuntuaciones={setPuntuaciones}
+              setSave={setSave}
+              rowHeight={rowHeight}
+              tableRows={tableRows}
+            />
           </tbody>
         </TableAnswers>
       </TableContainer>
-      <Pagination 
-        cant={preguntas.length}
+      <Pagination
         rows={tableRows}
         page={reactivosPage}
         setPage={setReactivosPage}

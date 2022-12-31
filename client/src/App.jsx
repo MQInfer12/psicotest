@@ -27,6 +27,7 @@ import ProtectedThanks from "./wrappers/protectedThanks";
 import Modal from "./components/globals/modal";
 import Blog from "./pages/blog";
 import { StyledLink } from "./styles/pages/dashboard";
+import { TestCreatorContextProvider } from "./context/testCreatorContext";
 
 function App() {
   return (
@@ -99,7 +100,9 @@ function App() {
                       </>
                     }
                   >
-                    <TestCreator />
+                    <TestCreatorContextProvider>
+                      <TestCreator />
+                    </TestCreatorContextProvider>
                   </OutletContext>
                 </ProtectedRole>
               }

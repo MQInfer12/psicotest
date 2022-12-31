@@ -65,13 +65,13 @@ export const PurpleButton = styled.button`
   gap: 20px;
   min-height: 42px;
   width: ${props => props.width};
-  border: none;
+  border: 1px solid #660BE1;
   padding: 8px 26px 8px 26px;
   background-color: #660BE1;
   border-radius: 8px;
   color: #D9D9D9;
   text-align: center;
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
   text-transform: capitalize;
   transition: all 0.2s;
@@ -84,21 +84,23 @@ export const PurpleButton = styled.button`
     pointer-events: none;
     background-color: #ADA7A7;
     color: #D9D9D9;
+    border: 1px solid #ADA7A7;
   }
 `;
 
 export const WhiteButton = styled.button`
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 20px;
   min-height: 42px;
   border: 1px solid #D9D9D9;
-  padding: 8px 20px 8px 20px;
+  padding: 8px 26px 8px 26px;
   background-color: #FFFFFF;
   border-radius: 8px;
   color: #ADA7A7;
   text-align: center;
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.2s;
 
@@ -107,6 +109,10 @@ export const WhiteButton = styled.button`
     background-color: #660be1;
     border: 1px solid #660be1;
   }
+
+  color: ${props => props.active && "#D9D9D9"};
+  background-color: ${props => props.active && "#660be1"};
+  border: ${props => props.active && "1px solid #660be1"};
 
   &:disabled {
     pointer-events: none;
@@ -124,7 +130,7 @@ export const DangerButton = styled.button`
   border-radius: 8px;
   color: #DC4067;
   text-align: center;
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.2s;
 
@@ -189,6 +195,10 @@ export const WhiteIconButton = styled.button`
     background-color: #660be1;
     border: 1px solid #660be1;
   }
+
+  color: ${props => props.active && "#D9D9D9"};
+  background-color: ${props => props.active && "#660be1"};
+  border: ${props => props.active && "1px solid #660be1"};
 
   &:disabled {
     pointer-events: none;

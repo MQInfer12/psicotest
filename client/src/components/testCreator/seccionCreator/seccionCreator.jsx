@@ -4,29 +4,35 @@ import PreguntaCreator from "../preguntaCreator/preguntaCreator";
 import ReactivoCreator from "../reactivoCreator/reactivoCreator";
 import { CreatorsContainer, EmptySeccion, FullScreen, SeccionContainer } from "../../../styles/pages/testCreator";
 import useGet from "../../../hooks/useGet";
-import Cargando from "../../globals/cargando";
+import { useTestCreatorContext } from "../../../context/testCreatorContext";
 
-const SeccionCreator = ({ seccionActual, test, seccion, index, llenarSecciones, seccionState }) => {
+const SeccionCreator = ({ test, llenarSecciones }) => {
   const [editActual, setEditActual] = useState(0);
 
-  const { 
-    callAPI: llenarSeccion, 
-    resJson: fullSeccion, 
-    loading 
-  } = useGet(`seccion/full/${seccion?.id}`, { initialValue: { preguntas: [], reactivos: [], puntuaciones: [] }, trigger: [seccion], alwaysLoading: true });
+  const { seccion, setSecciones, seccionActual } = useTestCreatorContext();
+
+  const { callAPI: llenarSeccion } = useGet(`seccion/full/${seccion?.id}`, {
+    callback: (fullSeccion) => {
+      setSecciones(old => {
+        return old.map((v, i) => {
+          if(i === seccionActual) {
+            return fullSeccion;
+          }
+          return v;
+        });
+      });
+    }
+  });
 
   return (
-    <SeccionContainer translate={seccionActual}>
+    <SeccionContainer>
       <SeccionSidebar 
         test={test}
-        seccion={seccion}
-        index={index}
         llenarSecciones={llenarSecciones}
-        seccionState={seccionState}
         editState={{editActual, setEditActual}}
       />
       {
-        index == "nueva" ? (
+        !seccion ? (
           <CreatorsContainer>
             <FullScreen translate="0">
               <EmptySeccion>Añade una nueva sección para comenzar a editar preguntas y reactivos.</EmptySeccion>
@@ -34,32 +40,12 @@ const SeccionCreator = ({ seccionActual, test, seccion, index, llenarSecciones, 
           </CreatorsContainer>
         ) : (
           <CreatorsContainer>
-            {
-              loading ? (
-                <FullScreen translate="0">
-                  <Cargando />
-                </FullScreen>
-              ) : (
-                <>
-                  <FullScreen translate={editActual}>
-                    <PreguntaCreator 
-                      idSeccion={seccion.id}
-                      preguntas={fullSeccion.preguntas}
-                      llenarSeccion={llenarSeccion}
-                    />
-                  </FullScreen>
-                  <FullScreen translate={editActual}>
-                    <ReactivoCreator
-                      idSeccion={seccion.id}
-                      reactivos={fullSeccion.reactivos}
-                      preguntas={fullSeccion.preguntas}
-                      oldPuntuaciones={fullSeccion.puntuaciones}
-                      llenarSeccion={llenarSeccion}
-                    />
-                  </FullScreen>
-                </>
-              )
-            }
+            <FullScreen translate={editActual}>
+              <PreguntaCreator llenarSeccion={llenarSeccion} />
+            </FullScreen>
+            <FullScreen translate={editActual}>
+              <ReactivoCreator llenarSeccion={llenarSeccion} />
+            </FullScreen>
           </CreatorsContainer>
         )
       }

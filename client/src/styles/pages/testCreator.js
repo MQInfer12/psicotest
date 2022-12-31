@@ -11,11 +11,9 @@ export const TestCreatorContainer = styled.div`
 // SECCION CREATOR
 
 export const SeccionContainer = styled.div`
-  transform: translateX(${props => props.translate * -100}%);
   min-width: 100%;
   height: 100%;
   display: flex;
-  transition: all 1.5s;
 `;
 
 export const CreatorsContainer = styled.div`
@@ -31,7 +29,7 @@ export const FullScreen = styled.div`
   align-items: center;
   justify-content: center;
   transform: translateY(${props => props.translate * -100}%);
-  transition: all 1s;
+  transition: all 0.7s;
   overflow: hidden;
 `;
 
@@ -47,7 +45,7 @@ export const EmptySeccion = styled.p`
 // SECCION SIDEBAR
 
 export const SeccionCreatorDash = styled.div`
-  width: 263px;
+  min-width: 263px;
   height: 100%;
   border-left: 1px solid #D9D9D9;
   border-right: 1px solid #D9D9D9;
@@ -58,16 +56,16 @@ export const SeccionCreatorDash = styled.div`
 export const DashPart = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid #D9D9D9;
-  padding: 20px;
+  padding: 12px;
 `;
 
 export const DashTitle = styled.h3`
   color: #3E435D;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
 `;
 
@@ -83,13 +81,14 @@ export const CheckboxDiv = styled.div`
   gap: 16px;
 `;
 
-export const Checkbox = styled.input`
+export const CheckboxInput = styled.input`
   accent-color: #660BE1;
 `;
 
 export const PCheckbox = styled.p`
   font-size: 14px;
-  color: #3E435D;
+  font-weight: 300;
+  color: #ADA7A7;
 `;
 
 // PREGUNTA CREATOR
@@ -172,6 +171,19 @@ export const InputNumber = styled.input`
   text-align: center;
   width: 40%;
   outline: none;
+  padding: 4px;
+  animation: ${props => props.blink && "blink 0.7s"};
+  border-radius: 4px;
+
+  @keyframes blink {
+    50% {
+      background-color: #660be1;
+      color: #FFFFFF;
+    }
+    100% {
+      background-color: transparent;
+    }
+  }
 `;
 
 // REACTIVO CARD
@@ -269,4 +281,63 @@ export const ButtonChange = styled.button`
   border: none;
   border-radius: 6px;
   cursor: pointer;
+`;
+
+// SECCION INDEX
+
+export const DashIndex = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #ADA7A7;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #660BE1;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #660BE1;
+  }
+`;
+
+export const Details = styled.details`
+  font-size: 14px;
+  width: 100%;
+  text-align: start;
+  user-select: none;
+  color: #ADA7A7;
+
+  &:hover summary {
+    background-color: #EBF0FA;
+  }
+
+  & summary {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #EBF0FA;
+    transition: all 0.2s;
+  }
+`;
+
+export const PreguntasList = styled.ul`
+  list-style: none;
+  font-size: 12px;
+
+  & li {
+    padding: 4px 40px;
+    border-bottom: 1px solid #EBF0FA;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #EBF0FA;
+    }
+  }
 `;

@@ -55,7 +55,7 @@ export const DivChildContainer = styled.div`
 
 export const PTitulo = styled.p`
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
   color: rgba(0, 0, 0, 0.5);
 `;
 

@@ -9,12 +9,15 @@ import { ControlsContainer, TableContainer, TableAnswers, ThNumberal, ThAnswer }
 import { useTableHeight } from "../../../hooks/useTableHeight";
 import { useModal } from "../../../hooks/useModal";
 import { DeleteContainer, PreguntaCreatorContainer, PSelected } from "../../../styles/pages/testCreator";
+import { useTestCreatorContext } from "../../../context/testCreatorContext";
 
-const PreguntaCreator = ({ idSeccion, preguntas, llenarSeccion }) => {
+const PreguntaCreator = ({ llenarSeccion }) => {
   const [preguntasPage, setPreguntasPage] = useState(1);
   const [selecteds, setSelecteds] = useState([]);
 
   const { tableHeightRef, tableRows, rowHeight } = useTableHeight();
+
+  const { seccion } = useTestCreatorContext();
 
   const borrarPreguntas = async () => {
     const res = await massDestroy(selecteds);
@@ -35,7 +38,7 @@ const PreguntaCreator = ({ idSeccion, preguntas, llenarSeccion }) => {
         closeAdd();
       }}
       funcion="añadir"
-      idSeccion={idSeccion}
+      idSeccion={seccion.id}
     />
   )
   const { openModal: openDelete, closeModal: closeDelete } = useModal(
@@ -70,7 +73,7 @@ const PreguntaCreator = ({ idSeccion, preguntas, llenarSeccion }) => {
           </thead>
           <tbody>
             {
-              preguntas.filter((v, i) => i >= (preguntasPage - 1) * tableRows && i < preguntasPage * tableRows).map((v, i) => (
+              seccion.preguntas.filter((v, i) => i >= (preguntasPage - 1) * tableRows && i < preguntasPage * tableRows).map((v, i) => (
                 <PreguntaCard key={i} 
                   {...v} 
                   index={((preguntasPage - 1) * tableRows) + (i + 1)} 
@@ -84,8 +87,7 @@ const PreguntaCreator = ({ idSeccion, preguntas, llenarSeccion }) => {
           </tbody>
         </TableAnswers>
       </TableContainer>
-      <Pagination 
-        cant={preguntas.length}
+      <Pagination
         rows={tableRows}
         page={preguntasPage}
         setPage={setPreguntasPage}
