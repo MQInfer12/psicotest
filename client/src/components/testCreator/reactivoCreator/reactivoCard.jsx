@@ -6,14 +6,27 @@ import SureModal from "../../globals/sureModal";
 import { useModal } from "../../../hooks/useModal";
 import { DivReactivoButtonsTd, PText, ThReactivo } from "../../../styles/pages/testCreator";
 import ModalPuntuacion from "./modalPuntuacion";
+import { useTestCreatorContext } from "../../../context/testCreatorContext";
 
 const ReactivoCard = (props) => {
+  const { setSecciones, seccionActual } = useTestCreatorContext();
+
   const borrarReactivo = async () => {
     const res = await deleteReactivo(props.id);
-    const resJson = await res?.json();
-    if(resJson) {
+    if(res.ok) {
+      setSecciones(old => {
+        return old.map((v, i) => {
+          if(i === seccionActual) {
+            const newReactivos = v.reactivos.filter((reactivo) => reactivo.id != props.id);
+            v.reactivos = newReactivos;
+            const newPuntuaciones = v.puntuaciones.filter(puntuacion => puntuacion.id_reactivo != props.id);
+            v.puntuaciones = newPuntuaciones;
+            props.setPuntuaciones(newPuntuaciones);
+          }
+          return v;
+        })
+      });
       console.log("Se borro correctamente");
-      props.llenarSeccion();
     }
   }
 
@@ -21,8 +34,21 @@ const ReactivoCard = (props) => {
     "Editar reactivo",
     <ModalReactivo 
       call={updateReactivo}
-      actualizar={() => {
-        props.llenarSeccion();
+      actualizar={(res) => {
+        setSecciones(old => {
+          return old.map((v, i) => {
+            if(i === seccionActual) {
+              const newReactivos = v.reactivos.map((reactivo) => {
+                if(reactivo.id === props.id) {
+                  return res.data;
+                }
+                return reactivo;
+              });
+              v.reactivos = newReactivos;
+            }
+            return v;
+          })
+        });
         closeEdit();
       }}
       funcion="editar"
@@ -30,6 +56,7 @@ const ReactivoCard = (props) => {
       idSeccion={props.id_seccion}
     />
   )
+
   const { openModal: openDelete, closeModal: closeDelete } = useModal(
     "Eliminar reactivo",
     <SureModal
@@ -42,8 +69,22 @@ const ReactivoCard = (props) => {
   const { openModal: openPredeterminado, closeModal: closePredeterminado } = useModal(
     "Establecer puntuación",
     <ModalPuntuacion 
-      actualizar={() => {
-        props.llenarSeccion();
+      actualizar={(res) => {
+        setSecciones(old => {
+          return old.map((v, i) => {
+            if(i === seccionActual) {
+              v.reactivos.find(reactivo => reactivo.id === props.id).predeterminado = Number(res.data);
+              const newPuntuaciones = v.puntuaciones.map(puntuacion => {
+                if(puntuacion.id_reactivo === props.id) {
+                  puntuacion.asignado = Number(res.data);
+                }
+                return puntuacion;
+              });
+              v.puntuaciones = newPuntuaciones;
+            }
+            return v;
+          })
+        });
         closePredeterminado();
       }}
       reactivo={props}

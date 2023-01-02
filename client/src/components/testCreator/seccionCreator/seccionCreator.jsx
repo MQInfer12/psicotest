@@ -5,9 +5,11 @@ import ReactivoCreator from "../reactivoCreator/reactivoCreator";
 import { CreatorsContainer, EmptySeccion, FullScreen, SeccionContainer } from "../../../styles/pages/testCreator";
 import useGet from "../../../hooks/useGet";
 import { useTestCreatorContext } from "../../../context/testCreatorContext";
+import Cargando from "../../globals/cargando";
 
-const SeccionCreator = ({ test, llenarSecciones }) => {
+const SeccionCreator = ({ test }) => {
   const [editActual, setEditActual] = useState(0);
+  const [loadingNewSection, setLoadingNewSection] = useState(false);
 
   const { seccion, setSecciones, seccionActual } = useTestCreatorContext();
 
@@ -27,24 +29,29 @@ const SeccionCreator = ({ test, llenarSecciones }) => {
   return (
     <SeccionContainer>
       <SeccionSidebar 
+        loading={loadingNewSection}
+        setLoading={setLoadingNewSection}
         test={test}
-        llenarSecciones={llenarSecciones}
         editState={{editActual, setEditActual}}
       />
       {
         !seccion ? (
           <CreatorsContainer>
             <FullScreen translate="0">
-              <EmptySeccion>Añade una nueva sección para comenzar a editar preguntas y reactivos.</EmptySeccion>
+              {
+                loadingNewSection ? 
+                <Cargando /> :
+                <EmptySeccion>Añade una nueva sección para comenzar a editar preguntas y reactivos.</EmptySeccion>
+              }
             </FullScreen>
           </CreatorsContainer>
         ) : (
           <CreatorsContainer>
             <FullScreen translate={editActual}>
-              <PreguntaCreator llenarSeccion={llenarSeccion} />
+              <PreguntaCreator />
             </FullScreen>
             <FullScreen translate={editActual}>
-              <ReactivoCreator llenarSeccion={llenarSeccion} />
+              <ReactivoCreator />
             </FullScreen>
           </CreatorsContainer>
         )

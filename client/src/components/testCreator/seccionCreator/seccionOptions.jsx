@@ -6,24 +6,29 @@ import { DangerButton, WhiteButton, WhiteIconButton } from '../../../styles/glob
 import { ButtonContainer, DashPart, DashTitle } from '../../../styles/pages/testCreator'
 import SureModal from '../../globals/sureModal';
 
-const SeccionOptions = ({ llenarSecciones, test }) => {
-  const { seccion, seccionActual, setSeccionActual, option, setOption } = useTestCreatorContext();
+const SeccionOptions = ({ test, loading, setLoading }) => {
+  const { seccion, seccionActual, setSeccionActual, setSecciones, option, setOption } = useTestCreatorContext();
 
   const añadirSeccion = async () => {
+    setLoading(true);
     const res = await addSeccion(test.id);
-    const resJson = await res?.json();
-    if(resJson.mensaje == "se guardo correctamente") {
+    if(res.ok) {
+      const resJson = await res?.json();
+      setSecciones(old => {
+        return [...old, resJson.data];
+      })
       console.log("Se creó una nueva sección");
-      llenarSecciones();
+      setLoading(false);
     }
   }
 
   const eliminarSeccion = async () => {
     const res = await deleteSeccion(seccion.id);
-    const resJson = await res?.json();
-    if(resJson) {
+    if(res.ok) {
+      setSecciones(old => {
+        return old.filter((v, i) => v.id !== seccion.id);
+      })
       console.log("Se eliminó la sección");
-      llenarSecciones();
     }
   }
 
@@ -47,7 +52,7 @@ const SeccionOptions = ({ llenarSecciones, test }) => {
           seccion ?
           <DangerButton onClick={openModal}>Eliminar Sección</DangerButton>
           :
-          <WhiteButton onClick={añadirSeccion}>Crear Sección</WhiteButton>
+          <WhiteButton onClick={añadirSeccion} disabled={loading}>Crear Sección</WhiteButton>
         }
         <WhiteIconButton disabled={!seccion} onClick={() => setSeccionActual(oldSeccionActual => oldSeccionActual + 1)}>
           <i className="fa-solid fa-angle-right"></i>

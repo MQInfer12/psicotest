@@ -14,14 +14,14 @@ import { useEffect } from "react";
 import ReactivoTableBody from "./reactivoTableBody";
 import { useTestCreatorContext } from "../../../context/testCreatorContext";
 
-const ReactivoCreator = ({ llenarSeccion }) => {
+const ReactivoCreator = () => {
   const [reactivosPage, setReactivosPage] = useState(1);
   const [save, setSave] = useState(false);
   const [puntuaciones, setPuntuaciones] = useState([]);
 
   const { tableHeightRef, tableRows, rowHeight, resizing } = useTableHeight();
   
-  const { seccion } = useTestCreatorContext();
+  const { seccion, setSecciones, seccionActual } = useTestCreatorContext();
 
   const handleSave = async () => {
     const res = await massUpdatePuntuaciones(puntuaciones);
@@ -39,8 +39,17 @@ const ReactivoCreator = ({ llenarSeccion }) => {
     "Añadir reactivo",
     <ModalReactivo
       call={addReactivo}
-      actualizar={() => {
-        llenarSeccion();
+      actualizar={(res) => {
+        setSecciones(old => {
+          return old.map((v, i) => {
+            if(i === seccionActual) {
+              v.reactivos.push(res.data.reactivo);
+              v.puntuaciones = [...v.puntuaciones, ...res.data.puntuaciones];
+              setPuntuaciones(v.puntuaciones);
+            }
+            return v;
+          });
+        });
         closeModal();
       }}
       funcion="añadir"
@@ -73,7 +82,7 @@ const ReactivoCreator = ({ llenarSeccion }) => {
                   <ReactivoCard 
                     key={i} 
                     {...v}
-                    llenarSeccion={llenarSeccion}
+                    setPuntuaciones={setPuntuaciones}
                   />
                 ))
               }
@@ -82,7 +91,6 @@ const ReactivoCreator = ({ llenarSeccion }) => {
           <tbody>
             <ReactivoTableBody 
               reactivosPage={reactivosPage} 
-              llenarSeccion={llenarSeccion}
               puntuaciones={puntuaciones}
               setPuntuaciones={setPuntuaciones}
               setSave={setSave}

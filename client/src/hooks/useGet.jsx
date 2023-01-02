@@ -21,7 +21,7 @@ const useGet = (url, opt = { initialValue: [], alwaysLoading: false, trigger: []
       }))
       setResJson(json);
       if(cb) {
-        cb();
+        cb(json);
         opt.callback(json);
       } else {
         opt.callback(json);

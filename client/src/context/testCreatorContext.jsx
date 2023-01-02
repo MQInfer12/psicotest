@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import { useEffect } from "react";
 
 export const TestCreatorContext = createContext(null);
 
@@ -26,6 +27,10 @@ export const TestCreatorContextProvider = ({ children }) => {
     setSecciones, 
     seccion: seccionActual < secciones.length ? secciones[seccionActual] : undefined
   }
+
+  useEffect(() => {
+    console.log(secciones);
+  }, [secciones]);
 
   return (
     <TestCreatorContext.Provider value={value}>

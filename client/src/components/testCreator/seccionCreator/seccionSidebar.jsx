@@ -6,7 +6,7 @@ import SeccionCheckboxes from "./seccionCheckboxes";
 import SeccionIndex from "./seccionIndex";
 import SeccionOptions from "./seccionOptions";
 
-const SeccionSidebar = ({ test, llenarSecciones, editState }) => {
+const SeccionSidebar = ({ test, editState, loading, setLoading }) => {
   const { option, seccion } = useTestCreatorContext();
 
   return (
@@ -14,9 +14,10 @@ const SeccionSidebar = ({ test, llenarSecciones, editState }) => {
       <DashPart>
         <DashTitle>{test.nombre}</DashTitle>
       </DashPart>
-      <SeccionOptions 
-        llenarSecciones={llenarSecciones} 
+      <SeccionOptions
         test={test}
+        loading={loading}
+        setLoading={setLoading}
       />
       {
         seccion && (

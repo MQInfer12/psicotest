@@ -6,10 +6,10 @@ import { WhiteIconButton } from '../../../styles/globals/formularios';
 import { ButtonReactivosTr, ResponsiveTr, ThNumber } from '../../../styles/globals/table';
 import { InputNumber } from '../../../styles/pages/testCreator';
 
-const ReactivoTableBody = ({ reactivosPage, tableRows, rowHeight, llenarSeccion, puntuaciones, setPuntuaciones, setSave }) => {
+const ReactivoTableBody = ({ reactivosPage, tableRows, rowHeight, puntuaciones, setPuntuaciones, setSave }) => {
   const [blink, setBlink] = useState(false);
   
-  const { seccion } = useTestCreatorContext();
+  const { seccion, setSecciones, seccionActual } = useTestCreatorContext();
 
   const handleChange = (e) => {
     setSave(true);
@@ -26,12 +26,26 @@ const ReactivoTableBody = ({ reactivosPage, tableRows, rowHeight, llenarSeccion,
   const handleTurn = async (idPregunta) => {
     const res = await turnPuntuaciones(idPregunta);
     if(res.ok) {
-      llenarSeccion(() => {
-        setBlink(true);
-        setTimeout(() => {
-          setBlink(false);
-        }, 1000);
+      const resJson = await res?.json();
+      setSecciones(old => {
+        return old.map((v, i) => {
+          if(i === seccionActual) {
+            const newPuntuaciones = v.puntuaciones.map(puntuacion => {
+              if(puntuacion.id_pregunta === idPregunta) {
+                puntuacion = resJson.data.find(va => va.id === puntuacion.id);
+              }
+              return puntuacion;
+            });
+            v.puntuaciones = newPuntuaciones;
+            setPuntuaciones(newPuntuaciones);
+          }
+          return v;
+        })
       });
+      setBlink(true);
+      setTimeout(() => {
+        setBlink(false);
+      }, 500);
     }
   }
 

@@ -14,7 +14,7 @@ const TestCreator = () => {
   const idTest = Number(decipherId(idCode));
   const { setSecciones } = useTestCreatorContext();
 
-  const { callAPI: llenarSecciones, resJson: test, loading } = useGet(`test/edit/${idTest}`, { 
+  const { resJson: test, loading } = useGet(`test/edit/${idTest}`, { 
     alwaysLoading: true, 
     callback: (res) => {
       setSecciones(res.secciones);
@@ -27,10 +27,7 @@ const TestCreator = () => {
         loading ? (
           <Cargando />
         ) : (
-          <SeccionCreator
-            test={test}
-            llenarSecciones={llenarSecciones}
-          />
+          <SeccionCreator test={test} />
         )
       }
     </TestCreatorContainer>

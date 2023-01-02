@@ -11,21 +11,28 @@ import { useModal } from "../../../hooks/useModal";
 import { DeleteContainer, PreguntaCreatorContainer, PSelected } from "../../../styles/pages/testCreator";
 import { useTestCreatorContext } from "../../../context/testCreatorContext";
 
-const PreguntaCreator = ({ llenarSeccion }) => {
+const PreguntaCreator = () => {
   const [preguntasPage, setPreguntasPage] = useState(1);
   const [selecteds, setSelecteds] = useState([]);
 
   const { tableHeightRef, tableRows, rowHeight } = useTableHeight();
 
-  const { seccion } = useTestCreatorContext();
+  const { seccion, setSecciones, seccionActual } = useTestCreatorContext();
 
   const borrarPreguntas = async () => {
     const res = await massDestroy(selecteds);
-    const resJson = await res?.json();
-    if(resJson.mensaje = "se borro correctamente") {
-      console.log("Se borraron las preguntas");
-      llenarSeccion();
+    if(res.ok) {
+      setSecciones(old => {
+        return old.map((v, i) => {
+          if(i === seccionActual) {
+            const newPreguntas = v.preguntas.filter((pregunta) => !selecteds.includes(pregunta.id));
+            v.preguntas = newPreguntas;
+          }
+          return v;
+        })
+      });
       setSelecteds([]);
+      console.log("Se borraron las preguntas");
     }
   }
 
@@ -33,14 +40,22 @@ const PreguntaCreator = ({ llenarSeccion }) => {
     "Añadir pregunta",
     <ModalPregunta
       call={addPregunta}
-      actualizar={() => {
-        llenarSeccion();
+      actualizar={(res) => {
+        setSecciones(old => {
+          return old.map((v, i) => {
+            if(i === seccionActual) {
+              v.preguntas.push(res.data);
+            }
+            return v;
+          });
+        });
         closeAdd();
       }}
       funcion="añadir"
       idSeccion={seccion.id}
     />
-  )
+  );
+
   const { openModal: openDelete, closeModal: closeDelete } = useModal(
     "Eliminar preguntas",
     <SureModal
@@ -48,7 +63,7 @@ const PreguntaCreator = ({ llenarSeccion }) => {
       sure={borrarPreguntas}
       text={"Se eliminarán " + selecteds.length + " preguntas permanentemente"}
     />
-  )
+  );
 
   return (
     <PreguntaCreatorContainer>
@@ -76,8 +91,7 @@ const PreguntaCreator = ({ llenarSeccion }) => {
               seccion.preguntas.filter((v, i) => i >= (preguntasPage - 1) * tableRows && i < preguntasPage * tableRows).map((v, i) => (
                 <PreguntaCard key={i} 
                   {...v} 
-                  index={((preguntasPage - 1) * tableRows) + (i + 1)} 
-                  llenarSeccion={llenarSeccion}
+                  index={((preguntasPage - 1) * tableRows) + (i + 1)}
                   selecteds={selecteds}
                   setSelecteds={setSelecteds}
                   rowHeight={rowHeight}

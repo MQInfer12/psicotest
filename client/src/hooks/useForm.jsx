@@ -44,7 +44,8 @@ export const UseForm = (
       if (res.status == 201) {
         //ESTADO DE GUARDADO O EDITADO
         console.log("¡Petición correcta!");
-        success();
+        const resJson = await res?.json();
+        success(resJson);
       } else if (res.status == 200) {
         //ESTADO DE LOGEADO
         console.log("¡Logeado con éxito!");

@@ -167,23 +167,14 @@ export const HeadContainer = styled.div`
 
 export const InputNumber = styled.input`
   border: none;
-  background-color: transparent;
+  background-color: ${props => props.blink ? "#660be1" : "transparent"};
+  color: ${props => props.blink ? "#FFFFFF" : "auto"};
   text-align: center;
   width: 40%;
   outline: none;
   padding: 4px;
-  animation: ${props => props.blink && "blink 0.7s"};
   border-radius: 4px;
-
-  @keyframes blink {
-    50% {
-      background-color: #660be1;
-      color: #FFFFFF;
-    }
-    100% {
-      background-color: transparent;
-    }
-  }
+  transition: all 0.5s;
 `;
 
 // REACTIVO CARD
