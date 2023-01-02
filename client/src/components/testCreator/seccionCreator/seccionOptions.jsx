@@ -6,8 +6,9 @@ import { DangerButton, WhiteButton, WhiteIconButton } from '../../../styles/glob
 import { ButtonContainer, DashPart, DashTitle } from '../../../styles/pages/testCreator'
 import SureModal from '../../globals/sureModal';
 
-const SeccionOptions = ({ test, loading, setLoading }) => {
-  const { seccion, seccionActual, setSeccionActual, setSecciones, option, setOption } = useTestCreatorContext();
+const SeccionOptions = ({ test, loading, setLoading, optionState }) => {
+  const { option, setOption } = optionState;
+  const { seccion, seccionActual, setSeccionActual, setSecciones } = useTestCreatorContext();
 
   const añadirSeccion = async () => {
     setLoading(true);

@@ -3,7 +3,6 @@ import SeccionSidebar from "./seccionSidebar";
 import PreguntaCreator from "../preguntaCreator/preguntaCreator";
 import ReactivoCreator from "../reactivoCreator/reactivoCreator";
 import { CreatorsContainer, EmptySeccion, FullScreen, SeccionContainer } from "../../../styles/pages/testCreator";
-import useGet from "../../../hooks/useGet";
 import { useTestCreatorContext } from "../../../context/testCreatorContext";
 import Cargando from "../../globals/cargando";
 
@@ -11,20 +10,7 @@ const SeccionCreator = ({ test }) => {
   const [editActual, setEditActual] = useState(0);
   const [loadingNewSection, setLoadingNewSection] = useState(false);
 
-  const { seccion, setSecciones, seccionActual } = useTestCreatorContext();
-
-  const { callAPI: llenarSeccion } = useGet(`seccion/full/${seccion?.id}`, {
-    callback: (fullSeccion) => {
-      setSecciones(old => {
-        return old.map((v, i) => {
-          if(i === seccionActual) {
-            return fullSeccion;
-          }
-          return v;
-        });
-      });
-    }
-  });
+  const { seccion } = useTestCreatorContext();
 
   return (
     <SeccionContainer>

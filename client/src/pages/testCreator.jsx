@@ -14,6 +14,7 @@ const TestCreator = () => {
   const idTest = Number(decipherId(idCode));
   const { setSecciones } = useTestCreatorContext();
 
+  //LLENAR EL TEST ENTERO
   const { resJson: test, loading } = useGet(`test/edit/${idTest}`, { 
     alwaysLoading: true, 
     callback: (res) => {

@@ -11,30 +11,36 @@ import { useTestCreatorContext } from "../../../context/testCreatorContext";
 
 const PreguntaCard = (props) => {
   const [selected, setSelected] = useState(false);
-  const { setSecciones, seccionActual } = useTestCreatorContext();
+  const { updateSeccion } = useTestCreatorContext();
 
   useEffect(() => {
     props.selecteds.includes(props.id)? setSelected(true) : setSelected(false);
   });
+  
+  const selectPregunta = () => {
+    if(!props.selecteds.includes(props.id)) {
+      props.setSelecteds(old => [...old, props.id]);
+      setSelected(true);
+    } else {
+      props.setSelecteds(old => old.filter(value => value != props.id));
+      setSelected(false);
+    }
+  }
 
   const {openModal, closeModal} = useModal(
     "Editar pregunta",
     <ModalPregunta 
       call={updatePregunta}
       actualizar={(res) => {
-        setSecciones(old => {
-          return old.map((v, i) => {
-            if(i === seccionActual) {
-              const newPreguntas = v.preguntas.map((pregunta) => {
-                if(pregunta.id === props.id) {
-                  return res.data;
-                }
-                return pregunta;
-              })
-              v.preguntas = newPreguntas;
+        updateSeccion(seccion => {
+          const newPreguntas = seccion.preguntas.map((pregunta) => {
+            if(pregunta.id === props.id) {
+              return res.data;
             }
-            return v;
+            return pregunta;
           })
+          seccion.preguntas = newPreguntas;
+          return seccion;
         });
         closeModal();
       }}
@@ -42,7 +48,7 @@ const PreguntaCard = (props) => {
       pregunta={props}
       idSeccion={props.id_seccion}
     />
-  )
+  );
 
   return (
     <ResponsiveTr 
@@ -59,18 +65,10 @@ const PreguntaCard = (props) => {
           <WhiteIconButton title="Editar pregunta" onClick={openModal}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
           <WhiteIconButton 
             title="Seleccionar pregunta"
-            onClick={() => {
-              if(!props.selecteds.includes(props.id)) {
-                props.setSelecteds(old => [...old, props.id]);
-                setSelected(true);
-              } else {
-                props.setSelecteds(old => old.filter(value => value != props.id));
-                setSelected(false);
-              }
-            }}
+            onClick={selectPregunta}
           >
             {
-              selected? (
+              selected ? (
                 <i className="fa-solid fa-square-check"></i>
               ) : (
                 <i className="fa-regular fa-square-check"></i>

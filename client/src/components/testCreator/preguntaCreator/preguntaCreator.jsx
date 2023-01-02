@@ -17,19 +17,15 @@ const PreguntaCreator = () => {
 
   const { tableHeightRef, tableRows, rowHeight } = useTableHeight();
 
-  const { seccion, setSecciones, seccionActual } = useTestCreatorContext();
+  const { seccion, updateSeccion } = useTestCreatorContext();
 
   const borrarPreguntas = async () => {
     const res = await massDestroy(selecteds);
     if(res.ok) {
-      setSecciones(old => {
-        return old.map((v, i) => {
-          if(i === seccionActual) {
-            const newPreguntas = v.preguntas.filter((pregunta) => !selecteds.includes(pregunta.id));
-            v.preguntas = newPreguntas;
-          }
-          return v;
-        })
+      updateSeccion(seccion => {
+        const newPreguntas = seccion.preguntas.filter((pregunta) => !selecteds.includes(pregunta.id));
+        seccion.preguntas = newPreguntas;
+        return seccion;
       });
       setSelecteds([]);
       console.log("Se borraron las preguntas");
@@ -40,14 +36,10 @@ const PreguntaCreator = () => {
     "Añadir pregunta",
     <ModalPregunta
       call={addPregunta}
-      actualizar={(res) => {
-        setSecciones(old => {
-          return old.map((v, i) => {
-            if(i === seccionActual) {
-              v.preguntas.push(res.data);
-            }
-            return v;
-          });
+      actualizar={res => {
+        updateSeccion(seccion => {
+          seccion.preguntas.push(res.data);
+          return seccion;
         });
         closeAdd();
       }}

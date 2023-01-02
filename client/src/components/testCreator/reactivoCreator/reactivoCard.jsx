@@ -9,23 +9,19 @@ import ModalPuntuacion from "./modalPuntuacion";
 import { useTestCreatorContext } from "../../../context/testCreatorContext";
 
 const ReactivoCard = (props) => {
-  const { setSecciones, seccionActual } = useTestCreatorContext();
+  const { updateSeccion } = useTestCreatorContext();
 
   const borrarReactivo = async () => {
     const res = await deleteReactivo(props.id);
     if(res.ok) {
-      setSecciones(old => {
-        return old.map((v, i) => {
-          if(i === seccionActual) {
-            const newReactivos = v.reactivos.filter((reactivo) => reactivo.id != props.id);
-            v.reactivos = newReactivos;
-            const newPuntuaciones = v.puntuaciones.filter(puntuacion => puntuacion.id_reactivo != props.id);
-            v.puntuaciones = newPuntuaciones;
-            props.setPuntuaciones(newPuntuaciones);
-          }
-          return v;
-        })
-      });
+      updateSeccion(seccion => {
+        const newReactivos = seccion.reactivos.filter((reactivo) => reactivo.id != props.id);
+        seccion.reactivos = newReactivos;
+        const newPuntuaciones = seccion.puntuaciones.filter(puntuacion => puntuacion.id_reactivo != props.id);
+        seccion.puntuaciones = newPuntuaciones;
+        props.setPuntuaciones(newPuntuaciones);
+        return seccion;
+      })
       console.log("Se borro correctamente");
     }
   }
@@ -34,20 +30,16 @@ const ReactivoCard = (props) => {
     "Editar reactivo",
     <ModalReactivo 
       call={updateReactivo}
-      actualizar={(res) => {
-        setSecciones(old => {
-          return old.map((v, i) => {
-            if(i === seccionActual) {
-              const newReactivos = v.reactivos.map((reactivo) => {
-                if(reactivo.id === props.id) {
-                  return res.data;
-                }
-                return reactivo;
-              });
-              v.reactivos = newReactivos;
+      actualizar={res => {
+        updateSeccion(seccion => {
+          const newReactivos = seccion.reactivos.map((reactivo) => {
+            if(reactivo.id === props.id) {
+              return res.data;
             }
-            return v;
-          })
+            return reactivo;
+          });
+          seccion.reactivos = newReactivos;
+          return seccion;
         });
         closeEdit();
       }}
@@ -70,20 +62,16 @@ const ReactivoCard = (props) => {
     "Establecer puntuación",
     <ModalPuntuacion 
       actualizar={(res) => {
-        setSecciones(old => {
-          return old.map((v, i) => {
-            if(i === seccionActual) {
-              v.reactivos.find(reactivo => reactivo.id === props.id).predeterminado = Number(res.data);
-              const newPuntuaciones = v.puntuaciones.map(puntuacion => {
-                if(puntuacion.id_reactivo === props.id) {
-                  puntuacion.asignado = Number(res.data);
-                }
-                return puntuacion;
-              });
-              v.puntuaciones = newPuntuaciones;
+        updateSeccion(seccion => {
+          seccion.reactivos.find(reactivo => reactivo.id === props.id).predeterminado = Number(res.data);
+          const newPuntuaciones = seccion.puntuaciones.map(puntuacion => {
+            if(puntuacion.id_reactivo === props.id) {
+              puntuacion.asignado = Number(res.data);
             }
-            return v;
-          })
+            return puntuacion;
+          });
+          seccion.puntuaciones = newPuntuaciones;
+          return seccion;
         });
         closePredeterminado();
       }}

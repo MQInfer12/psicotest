@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { useTestCreatorContext } from "../../../context/testCreatorContext";
 import { WhiteButton } from "../../../styles/globals/formularios";
 import { DashPart, DashTitle, SeccionCreatorDash } from "../../../styles/pages/testCreator";
@@ -7,7 +8,8 @@ import SeccionIndex from "./seccionIndex";
 import SeccionOptions from "./seccionOptions";
 
 const SeccionSidebar = ({ test, editState, loading, setLoading }) => {
-  const { option, seccion } = useTestCreatorContext();
+  const [option, setOption] = useState(0);
+  const { seccion } = useTestCreatorContext();
 
   return (
     <SeccionCreatorDash>
@@ -18,6 +20,7 @@ const SeccionSidebar = ({ test, editState, loading, setLoading }) => {
         test={test}
         loading={loading}
         setLoading={setLoading}
+        optionState={{option, setOption}}
       />
       {
         seccion && (

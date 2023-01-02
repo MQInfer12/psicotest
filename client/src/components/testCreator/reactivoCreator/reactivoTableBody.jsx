@@ -9,7 +9,7 @@ import { InputNumber } from '../../../styles/pages/testCreator';
 const ReactivoTableBody = ({ reactivosPage, tableRows, rowHeight, puntuaciones, setPuntuaciones, setSave }) => {
   const [blink, setBlink] = useState(false);
   
-  const { seccion, setSecciones, seccionActual } = useTestCreatorContext();
+  const { seccion, updateSeccion } = useTestCreatorContext();
 
   const handleChange = (e) => {
     setSave(true);
@@ -27,20 +27,16 @@ const ReactivoTableBody = ({ reactivosPage, tableRows, rowHeight, puntuaciones, 
     const res = await turnPuntuaciones(idPregunta);
     if(res.ok) {
       const resJson = await res?.json();
-      setSecciones(old => {
-        return old.map((v, i) => {
-          if(i === seccionActual) {
-            const newPuntuaciones = v.puntuaciones.map(puntuacion => {
-              if(puntuacion.id_pregunta === idPregunta) {
-                puntuacion = resJson.data.find(va => va.id === puntuacion.id);
-              }
-              return puntuacion;
-            });
-            v.puntuaciones = newPuntuaciones;
-            setPuntuaciones(newPuntuaciones);
+      updateSeccion(seccion => {
+        const newPuntuaciones = seccion.puntuaciones.map(puntuacion => {
+          if(puntuacion.id_pregunta === idPregunta) {
+            puntuacion = resJson.data.find(va => va.id === puntuacion.id);
           }
-          return v;
-        })
+          return puntuacion;
+        });
+        seccion.puntuaciones = newPuntuaciones;
+        setPuntuaciones(newPuntuaciones);
+        return seccion;
       });
       setBlink(true);
       setTimeout(() => {

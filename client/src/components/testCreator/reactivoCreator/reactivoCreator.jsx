@@ -21,7 +21,7 @@ const ReactivoCreator = () => {
 
   const { tableHeightRef, tableRows, rowHeight, resizing } = useTableHeight();
   
-  const { seccion, setSecciones, seccionActual } = useTestCreatorContext();
+  const { seccion, updateSeccion } = useTestCreatorContext();
 
   const handleSave = async () => {
     const res = await massUpdatePuntuaciones(puntuaciones);
@@ -40,15 +40,11 @@ const ReactivoCreator = () => {
     <ModalReactivo
       call={addReactivo}
       actualizar={(res) => {
-        setSecciones(old => {
-          return old.map((v, i) => {
-            if(i === seccionActual) {
-              v.reactivos.push(res.data.reactivo);
-              v.puntuaciones = [...v.puntuaciones, ...res.data.puntuaciones];
-              setPuntuaciones(v.puntuaciones);
-            }
-            return v;
-          });
+        updateSeccion(seccion => {
+          seccion.reactivos.push(res.data.reactivo);
+          seccion.puntuaciones = [...seccion.puntuaciones, ...res.data.puntuaciones];
+          setPuntuaciones(seccion.puntuaciones);
+          return seccion;
         });
         closeModal();
       }}

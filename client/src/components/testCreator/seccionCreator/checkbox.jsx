@@ -3,24 +3,19 @@ import { useTestCreatorContext } from '../../../context/testCreatorContext';
 import { CheckboxDiv, CheckboxInput, PCheckbox } from '../../../styles/pages/testCreator';
 
 const Checkbox = ({ name, call, text }) => {
-  const { seccion, setSecciones, seccionActual } = useTestCreatorContext();
+  const { seccion, updateSeccion } = useTestCreatorContext();
 
   const [active, setActive] = useState(seccion[name]);
 
   const handleChange = async () => {
     const res = await call(seccion.id);
     if(res.ok) {
-      setSecciones(old => {
-        return old.map((v, i) => {
-          if(i === seccionActual) {
-            return {
-              ...v,
-              [name]: !v[name]
-            };
-          }
-          return v;
-        })
-      })
+      updateSeccion(seccion => {
+        return {
+          ...seccion,
+          [name]: !seccion[name]
+        };
+      });
       console.log("Se cambió correctamente");
     }
   }
