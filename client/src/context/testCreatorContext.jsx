@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import { useEffect } from "react";
 
 export const TestCreatorContext = createContext(null);
 
@@ -16,8 +17,6 @@ export const TestCreatorContextProvider = ({ children }) => {
   const [secciones, setSecciones] = useState([]);
   const [seccionActual, setSeccionActual] = useState(0);
 
-  const seccion = seccionActual < secciones.length ? secciones[seccionActual] : undefined;
-
   const updateSeccion = (modificar) => {
     setSecciones(old => {
       return old.map((seccion, i) => {
@@ -28,6 +27,8 @@ export const TestCreatorContextProvider = ({ children }) => {
       });
     });
   }
+  
+  const seccion = seccionActual < secciones.length ? secciones[seccionActual] : undefined;
 
   const value = { 
     seccionActual, 
@@ -36,7 +37,11 @@ export const TestCreatorContextProvider = ({ children }) => {
     setSecciones, 
     updateSeccion,
     seccion
-  };
+  }
+
+  /* useEffect(() => {
+    console.log(secciones);
+  }, [secciones]); */
 
   return (
     <TestCreatorContext.Provider value={value}>

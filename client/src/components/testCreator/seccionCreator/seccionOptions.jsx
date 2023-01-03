@@ -3,12 +3,12 @@ import { useTestCreatorContext } from '../../../context/testCreatorContext';
 import { useModal } from '../../../hooks/useModal';
 import { addSeccion, deleteSeccion } from '../../../services/seccion';
 import { DangerButton, WhiteButton, WhiteIconButton } from '../../../styles/globals/formularios'
-import { ButtonContainer, DashPart, DashTitle } from '../../../styles/pages/testCreator'
+import { ButtonContainer, DashPart, DashTitle, Point, PointsContainer } from '../../../styles/pages/testCreator'
 import SureModal from '../../globals/sureModal';
 
 const SeccionOptions = ({ test, loading, setLoading, optionState }) => {
   const { option, setOption } = optionState;
-  const { seccion, seccionActual, setSeccionActual, setSecciones } = useTestCreatorContext();
+  const { seccion, secciones, seccionActual, setSeccionActual, setSecciones } = useTestCreatorContext();
 
   const añadirSeccion = async () => {
     setLoading(true);
@@ -17,7 +17,7 @@ const SeccionOptions = ({ test, loading, setLoading, optionState }) => {
       const resJson = await res?.json();
       setSecciones(old => {
         return [...old, resJson.data];
-      })
+      });
       console.log("Se creó una nueva sección");
       setLoading(false);
     }
@@ -44,7 +44,7 @@ const SeccionOptions = ({ test, loading, setLoading, optionState }) => {
 
   return (
     <DashPart>
-      <DashTitle>Sección {seccion ? seccionActual + 1 : "nueva"}</DashTitle>
+      <DashTitle>{seccion ? seccion.nombre : "Sección nueva"}</DashTitle>
       <ButtonContainer>
         <WhiteIconButton disabled={seccionActual === 0} onClick={() => setSeccionActual(oldSeccionActual => oldSeccionActual - 1)}>
           <i className="fa-solid fa-angle-left"></i>
@@ -59,12 +59,22 @@ const SeccionOptions = ({ test, loading, setLoading, optionState }) => {
           <i className="fa-solid fa-angle-right"></i>
         </WhiteIconButton>
       </ButtonContainer>
+      <PointsContainer>
+        {
+          secciones.map((v, i) => (
+            <Point key={i} colorized={i === seccionActual} onClick={() => setSeccionActual(i)} />
+          ))
+        }
+        <Point colorized={seccionActual === secciones.length} onClick={() => setSeccionActual(secciones.length)}>
+          <i className="fa-solid fa-plus"></i>
+        </Point>
+      </PointsContainer>
       <ButtonContainer>
         {
           seccion &&
-            <WhiteIconButton title="Mostrar opciones de sección" active={option === 0} onClick={() => setOption(0)}>
-              <i className="fa-solid fa-gear"></i>
-            </WhiteIconButton>
+          <WhiteIconButton title="Mostrar opciones de sección" active={option === 0} onClick={() => setOption(0)}>
+            <i className="fa-solid fa-gear"></i>
+          </WhiteIconButton>
         }
         <WhiteIconButton title="Mostrar índice" active={option === 1} onClick={() => setOption(1)}>
           <i className="fa-solid fa-indent"></i>

@@ -60,6 +60,7 @@ const ReactivoTableBody = ({ reactivosPage, tableRows, rowHeight, puntuaciones, 
         {
           puntuaciones.filter(va => va.id_pregunta == v.id).map((va, j) => (
             <td key={j}>
+              {/* FIXME: TODOS LOS INPUTS BLINKEAN */}
               <InputNumber 
                 blink={blink}
                 name={va.id}

@@ -80,7 +80,7 @@ const Answer = () => {
       />
       {respuesta.test.secciones.map((seccion, i) => (
         <SeccionContainer key={i}>
-          <TitleSeccion>Sección {i + 1}</TitleSeccion>
+          <TitleSeccion>{seccion.nombre}</TitleSeccion>
           <AnswersContainer maxw="1200px">
             <TableContainer>
               <TableAnswers>

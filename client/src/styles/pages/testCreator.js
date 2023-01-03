@@ -69,11 +69,56 @@ export const DashTitle = styled.h3`
   font-weight: 600;
 `;
 
+export const PointsContainer = styled.div`
+  display: flex;
+  gap: 4px;
+  max-width: 90%;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    height: 2px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #ADA7A7;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #660BE1;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #660BE1;
+  }
+`;
+
+export const Point = styled.div`
+  min-width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: ${props => props.colorized && "#660BE1"};
+  border: 1px solid #D9D9D9;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${props => props.colorized ? "#660BE1" : "#D9D9D9"};
+`;
+
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 5px;
+  padding: ${props => props.padding && "12px"};
+  width: ${props => props.allWidth && "100%"};
+
+  & > div {
+    display: flex;
+    gap: 5px;
+  }
 `;
 
 export const CheckboxDiv = styled.div`
@@ -280,10 +325,10 @@ export const DashIndex = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: auto;
+  overflow-y: scroll;
 
   &::-webkit-scrollbar {
-    width: 8px;
+    width: 2px;
   }
 
   &::-webkit-scrollbar-track {
@@ -299,22 +344,36 @@ export const DashIndex = styled.div`
   }
 `;
 
+export const List = styled.div`
+  width: 100%;
+`;
+
 export const Details = styled.details`
   font-size: 14px;
   width: 100%;
   text-align: start;
   user-select: none;
   color: #ADA7A7;
+  position: relative;
 
   &:hover summary {
     background-color: #EBF0FA;
   }
 
   & summary {
-    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    height: 42px;
     cursor: pointer;
     border-bottom: 1px solid #EBF0FA;
     transition: all 0.2s;
+    
+    pointer-events: ${props => props.movible && "none"};
+    & button {
+      pointer-events: ${props => props.movible && "all"};
+    }
   }
 `;
 

@@ -15,12 +15,12 @@ const ReactivoCard = (props) => {
     const res = await deleteReactivo(props.id);
     if(res.ok) {
       updateSeccion(seccion => {
-        const newReactivos = seccion.reactivos.filter((reactivo) => reactivo.id != props.id);
-        seccion.reactivos = newReactivos;
-        const newPuntuaciones = seccion.puntuaciones.filter(puntuacion => puntuacion.id_reactivo != props.id);
-        seccion.puntuaciones = newPuntuaciones;
-        props.setPuntuaciones(newPuntuaciones);
-        return seccion;
+        const newSeccion = {...seccion};
+        console.log(newSeccion.reactivos, props.id);
+        newSeccion.reactivos = seccion.reactivos.filter((reactivo) => reactivo.id != props.id);
+        newSeccion.puntuaciones = seccion.puntuaciones.filter(puntuacion => puntuacion.id_reactivo != props.id);
+        props.setPuntuaciones(newSeccion.puntuaciones);
+        return newSeccion;
       })
       console.log("Se borro correctamente");
     }
@@ -32,13 +32,12 @@ const ReactivoCard = (props) => {
       call={updateReactivo}
       actualizar={res => {
         updateSeccion(seccion => {
-          const newReactivos = seccion.reactivos.map((reactivo) => {
+          seccion.reactivos = seccion.reactivos.map((reactivo) => {
             if(reactivo.id === props.id) {
               return res.data;
             }
             return reactivo;
           });
-          seccion.reactivos = newReactivos;
           return seccion;
         });
         closeEdit();

@@ -14,8 +14,8 @@ import { useEffect } from "react";
 import ReactivoTableBody from "./reactivoTableBody";
 import { useTestCreatorContext } from "../../../context/testCreatorContext";
 
-const ReactivoCreator = () => {
-  const [reactivosPage, setReactivosPage] = useState(1);
+const ReactivoCreator = ({ pageState }) => {
+  const { page: reactivosPage, setPage: setReactivosPage } = pageState;
   const [save, setSave] = useState(false);
   const [puntuaciones, setPuntuaciones] = useState([]);
 
@@ -25,15 +25,19 @@ const ReactivoCreator = () => {
 
   const handleSave = async () => {
     const res = await massUpdatePuntuaciones(puntuaciones);
-    const resJson = await res?.json();
-    if(resJson.mensaje == "se guardo correctamente") {
+    if(res.ok) {
+      updateSeccion(seccion => {
+        const newSeccion = {...seccion};
+        newSeccion.puntuaciones = puntuaciones;
+        return newSeccion;
+      });
       setSave(false);
     }
   }
 
   useEffect(() => {
     setPuntuaciones(seccion.puntuaciones);
-  }, [seccion])
+  }, [seccion]);
 
   const { openModal, closeModal } = useModal(
     "Añadir reactivo",
@@ -41,10 +45,11 @@ const ReactivoCreator = () => {
       call={addReactivo}
       actualizar={(res) => {
         updateSeccion(seccion => {
-          seccion.reactivos.push(res.data.reactivo);
-          seccion.puntuaciones = [...seccion.puntuaciones, ...res.data.puntuaciones];
-          setPuntuaciones(seccion.puntuaciones);
-          return seccion;
+          const newSeccion = {...seccion};
+          newSeccion.reactivos = [...newSeccion.reactivos, res.data.reactivo];
+          newSeccion.puntuaciones = [...newSeccion.puntuaciones, ...res.data.puntuaciones];
+          setPuntuaciones(newSeccion.puntuaciones);
+          return newSeccion;
         });
         closeModal();
       }}
@@ -97,6 +102,7 @@ const ReactivoCreator = () => {
         </TableAnswers>
       </TableContainer>
       <Pagination
+        cant={seccion.preguntas.length}
         rows={tableRows}
         page={reactivosPage}
         setPage={setReactivosPage}

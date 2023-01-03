@@ -9,6 +9,7 @@ import Cargando from "../../globals/cargando";
 const SeccionCreator = ({ test }) => {
   const [editActual, setEditActual] = useState(0);
   const [loadingNewSection, setLoadingNewSection] = useState(false);
+  const [page, setPage] = useState(1);
 
   const { seccion } = useTestCreatorContext();
 
@@ -34,10 +35,10 @@ const SeccionCreator = ({ test }) => {
         ) : (
           <CreatorsContainer>
             <FullScreen translate={editActual}>
-              <PreguntaCreator />
+              <PreguntaCreator pageState={{page, setPage}} />
             </FullScreen>
             <FullScreen translate={editActual}>
-              <ReactivoCreator />
+              <ReactivoCreator pageState={{page, setPage}} />
             </FullScreen>
           </CreatorsContainer>
         )

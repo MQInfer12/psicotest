@@ -11,8 +11,8 @@ import { useModal } from "../../../hooks/useModal";
 import { DeleteContainer, PreguntaCreatorContainer, PSelected } from "../../../styles/pages/testCreator";
 import { useTestCreatorContext } from "../../../context/testCreatorContext";
 
-const PreguntaCreator = () => {
-  const [preguntasPage, setPreguntasPage] = useState(1);
+const PreguntaCreator = ({ pageState }) => {
+  const { page: preguntasPage, setPage: setPreguntasPage } = pageState;
   const [selecteds, setSelecteds] = useState([]);
 
   const { tableHeightRef, tableRows, rowHeight } = useTableHeight();
@@ -23,9 +23,10 @@ const PreguntaCreator = () => {
     const res = await massDestroy(selecteds);
     if(res.ok) {
       updateSeccion(seccion => {
-        const newPreguntas = seccion.preguntas.filter((pregunta) => !selecteds.includes(pregunta.id));
-        seccion.preguntas = newPreguntas;
-        return seccion;
+        const newSeccion = {...seccion};
+        newSeccion.preguntas = newSeccion.preguntas.filter((pregunta) => !selecteds.includes(pregunta.id));
+        newSeccion.puntuaciones = newSeccion.puntuaciones.filter((puntuacion) => !selecteds.includes(puntuacion.id_pregunta));
+        return newSeccion;
       });
       setSelecteds([]);
       console.log("Se borraron las preguntas");
@@ -38,8 +39,10 @@ const PreguntaCreator = () => {
       call={addPregunta}
       actualizar={res => {
         updateSeccion(seccion => {
-          seccion.preguntas.push(res.data);
-          return seccion;
+          const newSeccion = {...seccion};
+          newSeccion.preguntas = [...newSeccion.preguntas, res.data.pregunta];
+          newSeccion.puntuaciones = [...newSeccion.puntuaciones, ...res.data.puntuaciones];
+          return newSeccion;
         });
         closeAdd();
       }}
@@ -63,6 +66,7 @@ const PreguntaCreator = () => {
         <WhiteIconButton title="Añadir pregunta" onClick={openAdd}><i className="fa-solid fa-plus"></i></WhiteIconButton>
         <DeleteContainer>
           <PSelected>{selecteds.length} seleccionadas</PSelected>
+          {/* FIXME: BOTON AL CAMBIAR DE SECCION CON PREGUNTAS SELECCIONADAS */}
           <DangerIconButton 
             title="Eliminar preguntas seleccionadas" 
             disabled={selecteds.length == 0} 
@@ -94,6 +98,7 @@ const PreguntaCreator = () => {
         </TableAnswers>
       </TableContainer>
       <Pagination
+        cant={seccion.preguntas.length}
         rows={tableRows}
         page={preguntasPage}
         setPage={setPreguntasPage}

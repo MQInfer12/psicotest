@@ -59,3 +59,21 @@ export const changeVacio = async (id) => {
     console.log(error);
   }
 }
+
+export const changeOrden = async (ordenes) => {
+  try {
+    const response = await fetch(`${http}seccion/change/orden`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "accept": "application/json" 
+      },
+      body: JSON.stringify({
+        ordenes: ordenes
+      })
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

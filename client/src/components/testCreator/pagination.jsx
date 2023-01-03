@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useTestCreatorContext } from "../../context/testCreatorContext";
 import { ButtonChange, ButtonPagContainer, ChangePageContainer, PaginationContainer, PaginationCounter, RowsPage } from "../../styles/pages/testCreator";
 
-const Pagination = ({ rows, page, setPage }) => {
-  const { seccion } = useTestCreatorContext();
-  const cant = seccion.preguntas.length;
-  const pagination = cant != 0? page : 0;
+const Pagination = ({ cant, rows, page, setPage }) => {
+  const pagination = cant != 0 ? page : 0;
   const [from, setFrom] = useState(0);
   const [to, setTo] = useState(0);
   const [pages, setPages] = useState(0);
@@ -16,18 +13,18 @@ const Pagination = ({ rows, page, setPage }) => {
     setPages(newPages);
     if(page > newPages) setPage(newPages);
     if(page < 1 && cant != 0) setPage(1);
-  }, [seccion, rows]);
+  }, [cant, rows]);
 
   useEffect(() => {
     //RECALCULAR VARIABLES
     setFrom(((page - 1) * rows) + 1);
     setTo(page * rows);
-  }, [seccion, page])
+  }, [cant, page])
 
   return (
     <PaginationContainer>
       <PaginationCounter>
-        {cant ? from : 0}-{to > cant ? cant : to} de {cant}
+        {cant ? from : cant}-{to > cant ? cant : to} de {cant}
       </PaginationCounter>
       <ChangePageContainer>
         <RowsPage>Filas por pagina: {rows}</RowsPage>
