@@ -12,13 +12,14 @@ const TestCreator = () => {
   const windowHeight = useWindowHeight(true, true);
   const { idTest: idCode } = useParams();
   const idTest = Number(decipherId(idCode));
-  const { setSecciones } = useTestCreatorContext();
+  const { setSecciones, setDimensiones } = useTestCreatorContext();
 
   //LLENAR EL TEST ENTERO
   const { resJson: test, loading } = useGet(`test/edit/${idTest}`, { 
     alwaysLoading: true, 
     callback: (res) => {
       setSecciones(res.secciones);
+      setDimensiones(res.dimensiones);
     } 
   });
 

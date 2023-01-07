@@ -23,7 +23,6 @@ const SeccionIndex = () => {
       newSecciones.forEach((seccion, i) => {
         ordenes[seccion.id] = i + 1
       });
-      console.log(ordenes);
       const res = await changeOrden(ordenes);
       if(res.ok) {
         setSecciones(newSecciones);
@@ -48,7 +47,7 @@ const SeccionIndex = () => {
   }
 
   return (
-    <DashIndex noBorder>
+    <DashIndex>
       <ButtonContainer padding>
         <WhiteIconButton title="Ordenar" /* active={movible} */ onClick={changeMovible}>
           {movible ? <i className="fa-solid fa-floppy-disk"></i> : <i className="fa-solid fa-arrows-up-down"></i>}

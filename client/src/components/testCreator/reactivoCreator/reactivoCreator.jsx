@@ -21,16 +21,27 @@ const ReactivoCreator = ({ pageState }) => {
 
   const { tableHeightRef, tableRows, rowHeight, resizing } = useTableHeight();
   
-  const { seccion, updateSeccion } = useTestCreatorContext();
+  const { seccion, updateSeccion, setDimensiones } = useTestCreatorContext();
 
   const handleSave = async () => {
     const res = await massUpdatePuntuaciones(puntuaciones);
     if(res.ok) {
+      const resJson = await res?.json();
       updateSeccion(seccion => {
         const newSeccion = {...seccion};
         newSeccion.puntuaciones = puntuaciones;
         return newSeccion;
       });
+      console.log(resJson.data);
+      setDimensiones(old => {
+        return old.map(dimension => {
+          const resDimension = resJson.data.find(dim => dim.id === dimension.id);
+          if(resDimension) {
+            dimension.escalas[0].valores = resDimension.valores;
+          }
+          return dimension;
+        });
+      })
       setSave(false);
     }
   }
@@ -44,6 +55,7 @@ const ReactivoCreator = ({ pageState }) => {
     <ModalReactivo
       call={addReactivo}
       actualizar={(res) => {
+        console.log(res);
         updateSeccion(seccion => {
           const newSeccion = {...seccion};
           newSeccion.reactivos = [...newSeccion.reactivos, res.data.reactivo];
@@ -51,6 +63,15 @@ const ReactivoCreator = ({ pageState }) => {
           setPuntuaciones(newSeccion.puntuaciones);
           return newSeccion;
         });
+        setDimensiones(old => {
+          return old.map(dimension => {
+            const resDimension = res.data.valores.find(dim => dim.id === dimension.id);
+            if(resDimension) {
+              dimension.escalas[0].valores = resDimension.valores;
+            }
+            return dimension;
+          });
+        })
         closeModal();
       }}
       funcion="añadir"

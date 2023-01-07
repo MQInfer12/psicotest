@@ -18,15 +18,45 @@ export const ControlsContainer = styled.div`
   min-height: 68px;
   padding: 0px 20px;
   gap: 16px;
+
+  & > div {
+    display: flex;
+    gap: 5px;
+  }
+`;
+
+export const TwoRows = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
 `;
 
 export const TableContainer = styled.div`
   height: 100%;
-  overflow-y: hidden;
+  overflow-y: ${props => props.scrollable ? "scroll" : "hidden"};
   overflow-x: ${props => props.hideX ? "hidden" : "auto"};
   overflow: ${props => props.noHide && "visible"};
   overflow-y: ${props => props.resizing && "hidden"};
   overflow-x: ${props => props.resizing && "hidden"};
+  position: relative;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #ADA7A7;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #660BE1;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #660BE1;
+  }
 `;
 
 export const TableAnswers = styled.table`
@@ -36,6 +66,11 @@ export const TableAnswers = styled.table`
 
   & > thead {
     height: 40px;
+    background-color: #ebf0fa;
+    box-shadow: ${props => props.sticky && "0px 4px 4px rgba(0, 0, 0, 0.1)"};
+    position: ${props => props.sticky && "sticky"};
+    top: ${props => props.sticky && "0"};
+    z-index: ${props => props.sticky && "1"};
   }
 
   & > thead > tr > th {

@@ -31,6 +31,7 @@ export const SideBarContainer = styled.nav`
   position: fixed;
   width: 263px;
 
+  /* LO CONVIERTE EN OCULTABLE */
   @media ${device.tablet} {
     transform: scaleX(${props => props.openNav? "1" : "0"});
     box-shadow: 4px 1px 16px -7px rgba(0,0,0,0.6);

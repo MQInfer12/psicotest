@@ -12,18 +12,54 @@ export const DivInput = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  max-height: ${props => props.maxheight};
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #ADA7A7;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #660BE1;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #660BE1;
+  }
+`;
+
+export const DivSeparador = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 `;
 
 export const DivText = styled.div`
   display: flex;
   justify-content: space-between;
+  padding: ${props => props.padding};
 `;
 
 export const PText = styled.p`
+  max-width: 300px;
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: ${props => props.titulo ? "14px" : "12px"};
   color: #ADA7A7;
-  font-weight: 500;
+  font-weight: ${props => props.titulo ? "700" : "500"};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  & > .bolder {
+    font-weight: 600;
+  }
+  & > .lighter {
+    font-weight: 400;
+  }
 `;
 
 export const InputText = styled.input`
@@ -103,6 +139,8 @@ export const WhiteButton = styled.button`
   font-size: 14px;
   cursor: pointer;
   transition: all 0.2s;
+  max-width: ${props => props.maxwidth};
+  width: ${props => props.width};
 
   &:hover {
     color: #D9D9D9;

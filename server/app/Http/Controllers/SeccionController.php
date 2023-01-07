@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Seccion;
+use App\Traits\PuntuacionesNaturales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class SeccionController extends Controller
 {
+    use PuntuacionesNaturales;
+
     public function index()
     {
         return Seccion::all();
@@ -75,11 +78,17 @@ class SeccionController extends Controller
     public function changeVacio($id) 
     {
         $seccion = Seccion::findOrFail($id);
-        $vacio = $seccion->vacio;
-        $seccion->vacio = !$vacio;
+        $seccion->vacio = !$seccion->vacio;
         $seccion->save();
 
-        return response()->json(["mensaje" => "se guardo correctamente"], 201);
+        $dimensiones = DB::select(
+            "SELECT DISTINCT ON (d.id) d.id
+            FROM preguntas as p, pregunta_dimensions as pd, dimensions as d 
+            WHERE p.id_seccion='$id' AND pd.id_pregunta=p.id AND pd.id_dimension=d.id"
+        );
+        $naturales = $this->getPuntuacionesNaturales($dimensiones);
+
+        return response()->json(["mensaje" => "se guardo correctamente", "data" => $naturales], 201);
     }
 
     public function changeOrden(Request $request)

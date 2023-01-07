@@ -3,8 +3,9 @@ import { useTestCreatorContext } from '../../../context/testCreatorContext';
 import { useModal } from '../../../hooks/useModal';
 import { addSeccion, deleteSeccion } from '../../../services/seccion';
 import { DangerButton, WhiteButton, WhiteIconButton } from '../../../styles/globals/formularios'
-import { ButtonContainer, DashPart, DashTitle, Point, PointsContainer } from '../../../styles/pages/testCreator'
+import { ButtonContainer, DashPart, DashTitle } from '../../../styles/pages/testCreator'
 import SureModal from '../../globals/sureModal';
+import Points from '../points';
 
 const SeccionOptions = ({ test, loading, setLoading, optionState }) => {
   const { option, setOption } = optionState;
@@ -59,16 +60,7 @@ const SeccionOptions = ({ test, loading, setLoading, optionState }) => {
           <i className="fa-solid fa-angle-right"></i>
         </WhiteIconButton>
       </ButtonContainer>
-      <PointsContainer>
-        {
-          secciones.map((v, i) => (
-            <Point key={i} colorized={i === seccionActual} onClick={() => setSeccionActual(i)} />
-          ))
-        }
-        <Point colorized={seccionActual === secciones.length} onClick={() => setSeccionActual(secciones.length)}>
-          <i className="fa-solid fa-plus"></i>
-        </Point>
-      </PointsContainer>
+      <Points array={secciones} state={seccionActual} setState={setSeccionActual} />
       <ButtonContainer>
         {
           seccion &&

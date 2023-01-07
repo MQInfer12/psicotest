@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Puntuacion;
 use App\Models\Reactivo;
+use App\Traits\PuntuacionesNaturales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ReactivoController extends Controller
 {
+    use PuntuacionesNaturales;
+
     public function index()
     {
         return Reactivo::all();
@@ -47,9 +50,17 @@ class ReactivoController extends Controller
             $puntuaciones[] = $puntuacion;
         }
 
+        $dimensiones = DB::select(
+            "SELECT d.id
+            FROM reactivos as r, puntuacions as pt, preguntas as pr, pregunta_dimensions as pd, dimensions as d
+            WHERE r.id='$id_reactivo' AND pt.id_reactivo=r.id AND pt.id_pregunta=pr.id AND pd.id_pregunta=pr.id AND pd.id_dimension=d.id"
+        );
+        $naturales = $this->getPuntuacionesNaturales($dimensiones);
+
         $data = array(
             "reactivo" => $reactivo,
-            "puntuaciones" => $puntuaciones
+            "puntuaciones" => $puntuaciones,
+            "valores" => $naturales
         );
 
         //RETORNAR
@@ -73,7 +84,14 @@ class ReactivoController extends Controller
 
     public function destroy($id)
     {
-        return Reactivo::destroy($id);
+        $dimensiones = DB::select(
+            "SELECT d.id
+            FROM reactivos as r, puntuacions as pt, preguntas as pr, pregunta_dimensions as pd, dimensions as d
+            WHERE r.id='$id' AND pt.id_reactivo=r.id AND pt.id_pregunta=pr.id AND pd.id_pregunta=pr.id AND pd.id_dimension=d.id"
+        );
+        Reactivo::destroy($id);
+        $naturales = $this->getPuntuacionesNaturales($dimensiones);
+        return response()->json(["mensaje" => "se guardo correctamente", "data" => $naturales], 201);
     }
 
     public function changePredeterminado(Request $request, $id)
@@ -85,6 +103,18 @@ class ReactivoController extends Controller
         DB::update("UPDATE reactivos SET predeterminado='$request->predeterminado' WHERE id='$id'");
         DB::select("UPDATE puntuacions SET asignado='$request->predeterminado' WHERE id_reactivo='$id'");
 
-        return response()->json(["mensaje" => "se guardo correctamente", "data" => $request->predeterminado], 201);
+        $dimensiones = DB::select(
+            "SELECT d.id
+            FROM reactivos as r, puntuacions as pt, preguntas as pr, pregunta_dimensions as pd, dimensions as d
+            WHERE r.id='$id' AND pt.id_reactivo=r.id AND pt.id_pregunta=pr.id AND pd.id_pregunta=pr.id AND pd.id_dimension=d.id"
+        );
+        $naturales = $this->getPuntuacionesNaturales($dimensiones);
+
+        $data = array(
+            "predeterminado" => $request->predeterminado,
+            "valores" => $naturales
+        );
+
+        return response()->json(["mensaje" => "se guardo correctamente", "data" => $data], 201);
     }
 }

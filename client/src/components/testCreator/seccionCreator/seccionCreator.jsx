@@ -5,6 +5,7 @@ import ReactivoCreator from "../reactivoCreator/reactivoCreator";
 import { CreatorsContainer, EmptySeccion, FullScreen, SeccionContainer } from "../../../styles/pages/testCreator";
 import { useTestCreatorContext } from "../../../context/testCreatorContext";
 import Cargando from "../../globals/cargando";
+import DimensionCreator from "../dimensionCreator/dimensionCreator";
 
 const SeccionCreator = ({ test }) => {
   const [editActual, setEditActual] = useState(0);
@@ -24,16 +25,23 @@ const SeccionCreator = ({ test }) => {
       {
         !seccion ? (
           <CreatorsContainer>
-            <FullScreen translate="0">
-              {
-                loadingNewSection ? 
-                <Cargando /> :
-                <EmptySeccion>Añade una nueva sección para comenzar a editar preguntas y reactivos.</EmptySeccion>
-              }
-            </FullScreen>
+            {
+              ['dimensiones', 'preguntas', 'reactivos'].map((v, i) => (
+                <FullScreen key={i} translate={editActual}>
+                  {
+                    loadingNewSection ? 
+                    <Cargando /> :
+                    <EmptySeccion>Añade una nueva sección para comenzar a editar preguntas y reactivos.</EmptySeccion>
+                  }
+                </FullScreen>
+              ))
+            }
           </CreatorsContainer>
         ) : (
           <CreatorsContainer>
+            <FullScreen translate={editActual}>
+              <DimensionCreator />
+            </FullScreen>
             <FullScreen translate={editActual}>
               <PreguntaCreator pageState={{page, setPage}} />
             </FullScreen>

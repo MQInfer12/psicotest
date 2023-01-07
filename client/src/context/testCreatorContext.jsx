@@ -14,6 +14,7 @@ export const useTestCreatorContext = () => {
 };
 
 export const TestCreatorContextProvider = ({ children }) => {
+  const [dimensiones, setDimensiones] = useState([]);
   const [secciones, setSecciones] = useState([]);
   const [seccionActual, setSeccionActual] = useState(0);
 
@@ -35,6 +36,8 @@ export const TestCreatorContextProvider = ({ children }) => {
     setSeccionActual, 
     secciones, 
     setSecciones, 
+    dimensiones,
+    setDimensiones,
     updateSeccion,
     seccion
   }

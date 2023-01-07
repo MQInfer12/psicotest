@@ -26,9 +26,9 @@ export const FullScreen = styled.div`
   width: 100%;
   min-height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translateY(${props => props.translate * -100}%);
+  align-items: ${props => !props.noCenter && "center"};
+  justify-content: ${props => !props.noCenter && "center"};
+  transform: translateY(calc(${props => props.translate * -100}% - 100%));
   transition: all 0.7s;
   overflow: hidden;
 `;
@@ -47,10 +47,12 @@ export const EmptySeccion = styled.p`
 export const SeccionCreatorDash = styled.div`
   min-width: 263px;
   height: 100%;
-  border-left: 1px solid #D9D9D9;
+  border-left: ${props => !props.otherBorders && "1px solid #D9D9D9"};
   border-right: 1px solid #D9D9D9;
+  border-bottom: ${props => props.otherBorders && "1px solid #D9D9D9"};
   display: flex;
   flex-direction: column;
+  overflow: auto;
 `;
 
 export const DashPart = styled.div`
@@ -220,6 +222,10 @@ export const InputNumber = styled.input`
   padding: 4px;
   border-radius: 4px;
   transition: all 0.5s;
+  max-width: ${props => props.maxwidth};
+  color: #687182;
+  font-size: 12px;
+  font-weight: 400;
 `;
 
 // REACTIVO CARD

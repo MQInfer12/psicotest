@@ -9,11 +9,12 @@ import ModalPuntuacion from "./modalPuntuacion";
 import { useTestCreatorContext } from "../../../context/testCreatorContext";
 
 const ReactivoCard = (props) => {
-  const { updateSeccion } = useTestCreatorContext();
+  const { updateSeccion, setDimensiones } = useTestCreatorContext();
 
   const borrarReactivo = async () => {
     const res = await deleteReactivo(props.id);
     if(res.ok) {
+      const resJson = await res?.json();
       updateSeccion(seccion => {
         const newSeccion = {...seccion};
         console.log(newSeccion.reactivos, props.id);
@@ -21,7 +22,16 @@ const ReactivoCard = (props) => {
         newSeccion.puntuaciones = seccion.puntuaciones.filter(puntuacion => puntuacion.id_reactivo != props.id);
         props.setPuntuaciones(newSeccion.puntuaciones);
         return newSeccion;
-      })
+      });
+      setDimensiones(old => {
+        return old.map(dimension => {
+          const resDimension = resJson.data.find(dim => dim.id === dimension.id);
+          if(resDimension) {
+            dimension.escalas[0].valores = resDimension.valores;
+          }
+          return dimension;
+        });
+      });
       console.log("Se borro correctamente");
     }
   }
@@ -62,15 +72,24 @@ const ReactivoCard = (props) => {
     <ModalPuntuacion 
       actualizar={(res) => {
         updateSeccion(seccion => {
-          seccion.reactivos.find(reactivo => reactivo.id === props.id).predeterminado = Number(res.data);
+          seccion.reactivos.find(reactivo => reactivo.id === props.id).predeterminado = Number(res.data.predeterminado);
           const newPuntuaciones = seccion.puntuaciones.map(puntuacion => {
             if(puntuacion.id_reactivo === props.id) {
-              puntuacion.asignado = Number(res.data);
+              puntuacion.asignado = Number(res.data.predeterminado);
             }
             return puntuacion;
           });
           seccion.puntuaciones = newPuntuaciones;
           return seccion;
+        });
+        setDimensiones(old => {
+          return old.map(dimension => {
+            const resDimension = res.data.valores.find(dim => dim.id === dimension.id);
+            if(resDimension) {
+              dimension.escalas[0].valores = resDimension.valores;
+            }
+            return dimension;
+          })
         });
         closePredeterminado();
       }}

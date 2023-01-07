@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useTestCreatorContext } from '../../../context/testCreatorContext';
 import { CheckboxDiv, CheckboxInput, PCheckbox } from '../../../styles/pages/testCreator';
 
-const Checkbox = ({ name, call, text }) => {
+const Checkbox = ({ name, call, text, cb }) => {
   const { seccion, updateSeccion } = useTestCreatorContext();
 
   const [active, setActive] = useState(seccion[name]);
@@ -10,6 +10,10 @@ const Checkbox = ({ name, call, text }) => {
   const handleChange = async () => {
     const res = await call(seccion.id);
     if(res.ok) {
+      const resJson = await res?.json();
+      if(cb) {
+        cb(resJson);
+      }
       updateSeccion(seccion => {
         return {
           ...seccion,

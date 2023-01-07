@@ -24,7 +24,7 @@ const AnswerReports = ({ secciones, respuesta, setTableRef }) => {
       <br/>
       {secciones.map((seccion, i) => (
         <div key={i}>
-          Sección {i + 1}
+          {seccion.nombre}
           <table>
             <thead>
               <tr>

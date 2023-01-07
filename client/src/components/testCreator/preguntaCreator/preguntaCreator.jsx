@@ -17,16 +17,28 @@ const PreguntaCreator = ({ pageState }) => {
 
   const { tableHeightRef, tableRows, rowHeight } = useTableHeight();
 
-  const { seccion, updateSeccion } = useTestCreatorContext();
+  const { seccion, updateSeccion, setDimensiones } = useTestCreatorContext();
 
   const borrarPreguntas = async () => {
     const res = await massDestroy(selecteds);
     if(res.ok) {
+      const resJson = await res?.json();
       updateSeccion(seccion => {
         const newSeccion = {...seccion};
         newSeccion.preguntas = newSeccion.preguntas.filter((pregunta) => !selecteds.includes(pregunta.id));
         newSeccion.puntuaciones = newSeccion.puntuaciones.filter((puntuacion) => !selecteds.includes(puntuacion.id_pregunta));
         return newSeccion;
+      });
+      setDimensiones(old => {
+        return old.map(dimension => {
+          const newDimension = {...dimension};
+          newDimension.preguntas = newDimension.preguntas.filter(pregunta => !selecteds.includes(pregunta));
+          const resDimension = resJson.data.find(dim => dim.id === dimension.id);
+          if(resDimension) {
+            dimension.escalas[0].valores = resDimension.valores;
+          }
+          return newDimension;
+        })
       });
       setSelecteds([]);
       console.log("Se borraron las preguntas");
