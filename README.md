@@ -36,6 +36,7 @@ Los programas necesarios son:
 1. Se ingresa a la carpeta `server`
 2. Se abre una terminal en la que se ejecuta el comando `composer install`
 3. Contactar con el creador para el archivo `.env` ubicado en la raíz de la carpeta
+3. Ejecutar el comando `php artisan migrate` para crear las tablas en la base de datos
 4. Para iniciar el servidor ejecutar `php artisan serve`
 
 <h2 align="center">Servidores en la nube</h2>
@@ -48,12 +49,12 @@ Los programas necesarios son:
 <p align="center">
 <a href="https://es.reactjs.org/" target="_blank"><img src="https://user-images.githubusercontent.com/97072752/211161846-8cb79ff8-c318-4973-aa5e-445f62d89365.png" width="80"></a>
 <a href="https://laravel.com/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Laravel.svg/1200px-Laravel.svg.png" width="80"></a>
-
+<a href="https://www.postgresql.org/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/640px-Postgresql_elephant.svg.png" width="80"></a>
 </p>
 
 <p align="center">
 <a href="https://vitejs.dev/" target="_blank"><img src="https://vitejs.dev/logo-with-shadow.png" width="80"></a>
-<a href="https://styled-components.com/" target="_blank"><img src="https://raw.githubusercontent.com/styled-components/brand/master/styled-components.png" width="80"></a>
+<a href="https://styled-components.com/" target="_blank"><img src="https://raw.githubusercontent.com/styled-components/brand/master/styled-components.png" width="80">
 <a href="https://firebase.google.com/" target="_blank"><img src="https://www.gstatic.com/devrel-devsite/prod/v4f875a1b81b7f452d4ad95ddc2e0847267daa183c4980c794500a8a63318384d/firebase/images/touchicon-180.png" width="80"></a>
 <a href="https://cloudinary.com/" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzpJaptrp_3sQ5g6QVNziD-0yfHDhiYN_DEW83NcIWRW_hKQgxiZLihSeorqKN6jZLoMU&usqp=CAU" width="80"></a>
 <a href="https://railway.app/" target="_blank"><img src="https://railway.app/brand/logo-dark.svg" width="80"></a>
