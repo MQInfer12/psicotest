@@ -215,7 +215,7 @@ export const HeadContainer = styled.div`
 export const InputNumber = styled.input`
   border: none;
   background-color: ${props => props.blink ? "#660be1" : "transparent"};
-  color: ${props => props.blink ? "#FFFFFF" : "auto"};
+  color: ${props => props.blink ? "#FFFFFF" : "#687182"};
   text-align: center;
   width: 40%;
   outline: none;
@@ -223,7 +223,6 @@ export const InputNumber = styled.input`
   border-radius: 4px;
   transition: all 0.5s;
   max-width: ${props => props.maxwidth};
-  color: #687182;
   font-size: 12px;
   font-weight: 400;
 `;

@@ -49,7 +49,7 @@ const SeccionIndex = () => {
   return (
     <DashIndex>
       <ButtonContainer padding>
-        <WhiteIconButton title="Ordenar" /* active={movible} */ onClick={changeMovible}>
+        <WhiteIconButton title="Ordenar" onClick={changeMovible}>
           {movible ? <i className="fa-solid fa-floppy-disk"></i> : <i className="fa-solid fa-arrows-up-down"></i>}
         </WhiteIconButton>
       </ButtonContainer>

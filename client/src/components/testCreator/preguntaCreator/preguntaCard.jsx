@@ -1,54 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { WhiteIconButton } from "../../../styles/globals/formularios";
-import { updatePregunta } from "../../../services/pregunta";
-import ModalPregunta from "./modalPregunta";
 import { 
   ResponsiveTr, ThNumber, DivDouble, PLight
 } from "../../../styles/globals/table";
-import { useModal } from "../../../hooks/useModal";
 import { DivButtonsTd } from "../../../styles/pages/testCreator";
-import { useTestCreatorContext } from "../../../context/testCreatorContext";
+import EditarPreguntaButton from "../buttons/editarPreguntaButton";
+import SeleccionarPreguntasButton from "../buttons/seleccionarPreguntasButton";
 
 const PreguntaCard = (props) => {
   const [selected, setSelected] = useState(false);
-  const { updateSeccion } = useTestCreatorContext();
 
   useEffect(() => {
     props.selecteds.includes(props.id)? setSelected(true) : setSelected(false);
   });
-  
-  const selectPregunta = () => {
-    if(!props.selecteds.includes(props.id)) {
-      props.setSelecteds(old => [...old, props.id]);
-      setSelected(true);
-    } else {
-      props.setSelecteds(old => old.filter(value => value != props.id));
-      setSelected(false);
-    }
-  }
-
-  const {openModal, closeModal} = useModal(
-    "Editar pregunta",
-    <ModalPregunta 
-      call={updatePregunta}
-      actualizar={(res) => {
-        updateSeccion(seccion => {
-          const newPreguntas = seccion.preguntas.map((pregunta) => {
-            if(pregunta.id === props.id) {
-              return res.data;
-            }
-            return pregunta;
-          })
-          seccion.preguntas = newPreguntas;
-          return seccion;
-        });
-        closeModal();
-      }}
-      funcion="editar"
-      pregunta={props}
-      idSeccion={props.id_seccion}
-    />
-  );
 
   return (
     <ResponsiveTr 
@@ -62,19 +25,14 @@ const PreguntaCard = (props) => {
           <PLight>{props.descripcion}</PLight>
         </DivDouble>
         <DivButtonsTd>
-          <WhiteIconButton title="Editar pregunta" onClick={openModal}><i className="fa-solid fa-pencil"></i></WhiteIconButton>
-          <WhiteIconButton 
-            title="Seleccionar pregunta"
-            onClick={selectPregunta}
-          >
-            {
-              selected ? (
-                <i className="fa-solid fa-square-check"></i>
-              ) : (
-                <i className="fa-regular fa-square-check"></i>
-              )
-            }
-          </WhiteIconButton>
+          <EditarPreguntaButton {...props} />
+          <SeleccionarPreguntasButton 
+            selected={selected}
+            setSelected={setSelected}
+            selecteds={props.selecteds} 
+            setSelecteds={props.setSelecteds}
+            id={props.id}
+          />
         </DivButtonsTd>
       </td>
     </ResponsiveTr>

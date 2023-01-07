@@ -1,47 +1,14 @@
 import React from 'react'
 import { useTestCreatorContext } from '../../../context/testCreatorContext';
-import { useModal } from '../../../hooks/useModal';
-import { addSeccion, deleteSeccion } from '../../../services/seccion';
-import { DangerButton, WhiteButton, WhiteIconButton } from '../../../styles/globals/formularios'
+import { WhiteIconButton } from '../../../styles/globals/formularios'
 import { ButtonContainer, DashPart, DashTitle } from '../../../styles/pages/testCreator'
-import SureModal from '../../globals/sureModal';
+import AñadirSeccionButton from '../buttons/añadirSeccionButton';
+import EliminarSeccionButton from '../buttons/eliminarSeccionButton';
 import Points from '../points';
 
 const SeccionOptions = ({ test, loading, setLoading, optionState }) => {
   const { option, setOption } = optionState;
   const { seccion, secciones, seccionActual, setSeccionActual, setSecciones } = useTestCreatorContext();
-
-  const añadirSeccion = async () => {
-    setLoading(true);
-    const res = await addSeccion(test.id);
-    if(res.ok) {
-      const resJson = await res?.json();
-      setSecciones(old => {
-        return [...old, resJson.data];
-      });
-      console.log("Se creó una nueva sección");
-      setLoading(false);
-    }
-  }
-
-  const eliminarSeccion = async () => {
-    const res = await deleteSeccion(seccion.id);
-    if(res.ok) {
-      setSecciones(old => {
-        return old.filter((v, i) => v.id !== seccion.id);
-      })
-      console.log("Se eliminó la sección");
-    }
-  }
-
-  const { openModal, closeModal } = useModal(
-    "Eliminar sección",
-    <SureModal
-      cerrar={() => closeModal()}
-      sure={eliminarSeccion}
-      text="Se eliminará esta sección permanentemente"
-    />
-  );
 
   return (
     <DashPart>
@@ -51,10 +18,15 @@ const SeccionOptions = ({ test, loading, setLoading, optionState }) => {
           <i className="fa-solid fa-angle-left"></i>
         </WhiteIconButton>
         {
-          seccion ?
-          <DangerButton onClick={openModal}>Eliminar Sección</DangerButton>
-          :
-          <WhiteButton onClick={añadirSeccion} disabled={loading}>Crear Sección</WhiteButton>
+          seccion ? (
+            <EliminarSeccionButton />
+          ) : (
+            <AñadirSeccionButton 
+              loading={loading} 
+              setLoading={setLoading} 
+              id={test.id} 
+            />
+          )
         }
         <WhiteIconButton disabled={!seccion} onClick={() => setSeccionActual(oldSeccionActual => oldSeccionActual + 1)}>
           <i className="fa-solid fa-angle-right"></i>
