@@ -233,6 +233,8 @@ export const ThReactivo = styled.th`
   position: relative;
   font-weight: 400;
   transition: all 0.2s;
+  border-left: ${props => props.border && "1px solid #D0D0D0"};
+  border-left: ${props => props.border && "1px solid #D0D0D0"};
 
   &:hover {
     & > p {

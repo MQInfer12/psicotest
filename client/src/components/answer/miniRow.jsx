@@ -14,33 +14,27 @@ const MiniRow = ({index, pregunta, respuesta, cantReactivos, multimarcado}) => {
       </ResponsiveTr>
       <ResponsiveTr>
         <td>
-          {/* TODO: PUNTUACIONES EN MULTIMARCADO */}
-          {!multimarcado && respuesta.resultados
-            .filter(
-              (resultado) =>
-                resultado.puntuacion[0].id_pregunta == pregunta.id
-            )
-            .map((puntaje, k) => (
-              <PLight key={k}>
-                pts: {puntaje.puntuacion[0].asignado}
-              </PLight>
-            ))}
+          <PLight>
+            pts: {respuesta.resultados.find((resultado) => resultado.id_pregunta == pregunta.id)?.asignado}
+          </PLight>
         </td>
-        {pregunta.puntuaciones.map((puntuacion, k) => (
-          <td key={k}>
-            <input
-              type={multimarcado ? "checkbox" : "radio"}
-              name={pregunta.id}
-              value={puntuacion.id}
-              disabled
-              defaultChecked={
-                respuesta.resultados.find((resultado) =>
-                  puntuacion.id == resultado.id_puntuacion
-                )
-              }
-            />
-          </td>
-        ))}
+        {
+          pregunta.puntuaciones.map((puntuacion, k) => (
+            <td key={k}>
+              <input
+                type={multimarcado ? "checkbox" : "radio"}
+                name={pregunta.id}
+                value={puntuacion.id}
+                disabled
+                defaultChecked={
+                  respuesta.resultados.find((resultado) =>
+                    puntuacion.id == resultado.id_puntuacion
+                  )
+                }
+              />
+            </td>
+          ))
+        }
       </ResponsiveTr>
     </>
   )

@@ -88,11 +88,13 @@ export const ThNumberal = styled.th`
 `;
 
 export const ThAnswer = styled.th`
-  width: ${(props) => props.width};
+  width: ${(props) => props.w};
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
   text-align: ${props => props.center ? "center" : "start"};
+  border-left: ${props => props.border && "1px solid #D0D0D0"};
+  border-right: ${props => props.border && "1px solid #D0D0D0"};
   color: #464f60;
   overflow: hidden;
 `;

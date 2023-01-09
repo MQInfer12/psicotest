@@ -88,18 +88,14 @@ const Answer = () => {
                   <tr>
                     <ThNumberal>#</ThNumberal>
                     {
-                      screen >= 1000 &&
+                      screen >= 1200 &&
                       <>
                         <ThAnswer>Pregunta</ThAnswer>
-                        {
-                          /* TODO: PUNTUACIONES EN MULTIMARCADO */
-                          !seccion.multimarcado &&
-                          <ThAnswer center width="90px">Puntaje</ThAnswer>
-                        }
+                        <ThAnswer center width="90px">Puntaje</ThAnswer>
                       </>
                     }
                     {seccion.reactivos.map((reactivo, j) => (
-                      <ThAnswer center width={screen >= 1000 ? "90px" : undefined} key={j}>
+                      <ThAnswer border center w={screen >= 1200 && "90px"} key={j}>
                         {reactivo.descripcion}
                       </ThAnswer>
                     ))}
@@ -107,7 +103,7 @@ const Answer = () => {
                 </thead>
                 <tbody>
                   {seccion.preguntas.map((pregunta, j) => (
-                    screen >= 1000 ? (
+                    screen >= 1200 ? (
                       <BigRow 
                         key={j}
                         index={j}

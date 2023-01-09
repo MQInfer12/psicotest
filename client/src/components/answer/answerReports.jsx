@@ -30,11 +30,7 @@ const AnswerReports = ({ secciones, respuesta, setTableRef }) => {
               <tr>
                 <th style={ThStyle}>#</th>
                 <th style={ThStyle}>Pregunta</th>
-                {
-                  /* TODO: PUNTUACIONES EN MULTIMARCADO */
-                  !seccion.multimarcado &&
-                  <th style={ThStyle}>Puntaje</th>
-                }
+                <th style={ThStyle}>Puntaje</th>
                 {seccion?.reactivos.map((reactivo, j) => (
                   <th style={ThStyle} key={j}>
                     {reactivo.descripcion}
@@ -49,33 +45,26 @@ const AnswerReports = ({ secciones, respuesta, setTableRef }) => {
                   <td style={{width: "300px"}}>
                     <p>{pregunta.descripcion}</p>
                   </td>
+                  <td>
+                    <p>
+                      {respuesta.resultados.find((resultado) => resultado.id_pregunta == pregunta.id)?.asignado}
+                    </p>
+                  </td>
                   {
-                    /* TODO: PUNTUACIONES EN MULTIMARCADO */
-                    !seccion.multimarcado &&
-                    <td>
-                      {respuesta.resultados.filter(
-                        (resultado) =>
-                          resultado.puntuacion[0].id_pregunta == pregunta.id
-                      ).map((puntaje, k) => (
-                        <p key={k}>
-                          {puntaje.puntuacion[0].asignado}
-                        </p>
-                      ))}
-                    </td>
-                  }
-                  {pregunta.puntuaciones.map((puntuacion, k) => (
-                    <td key={k}>
-                      <p style={{
-                        backgroundColor: respuesta.resultados.find(resultado =>
-                          puntuacion.id == resultado.id_puntuacion
-                        ) ? "#d7dbfd" : "" 
-                      }}>
-                        {respuesta.resultados.find(resultado =>
+                    pregunta.puntuaciones.map((puntuacion, k) => (
+                      <td key={k}>
+                        <p style={{
+                          backgroundColor: respuesta.resultados.find(resultado =>
                             puntuacion.id == resultado.id_puntuacion
-                        ) ? 1 : 0}
-                      </p>
-                    </td>
-                  ))}
+                          ) ? "#d7dbfd" : "" 
+                        }}>
+                          {respuesta.resultados.find(resultado =>
+                              puntuacion.id == resultado.id_puntuacion
+                          ) ? 1 : 0}
+                        </p>
+                      </td>
+                    ))
+                  }
                 </tr>
               ))}
             </tbody>

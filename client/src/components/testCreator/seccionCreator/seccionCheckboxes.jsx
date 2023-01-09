@@ -13,6 +13,17 @@ const SeccionCheckboxes = () => {
         name="multimarcado" 
         call={changeMultimarcado} 
         text="Multimarcado de reactivos" 
+        cb={resJson => {
+          setDimensiones(old => {
+            return old.map(dimension => {
+              const resDimension = resJson.data.find(dim => dim.id === dimension.id);
+              if(resDimension) {
+                dimension.escalas[0].valores = resDimension.valores;
+              }
+              return dimension;
+            })
+          })
+        }}
       />
       <Checkbox 
         name="vacio" 

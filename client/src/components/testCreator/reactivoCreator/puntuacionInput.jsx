@@ -4,7 +4,6 @@ import { InputNumber } from '../../../styles/pages/testCreator'
 const PuntuacionInput = ({ id, value, blink, puntuaciones, setPuntuaciones, setSave }) => {
   const handleChange = (e) => {
     setSave(true);
-    console.log(e.target);
     const {name, value} = e.target;
 
     let puntuacion = puntuaciones.find(obj => obj.id == name);
