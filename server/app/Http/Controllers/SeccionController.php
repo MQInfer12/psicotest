@@ -110,15 +110,4 @@ class SeccionController extends Controller
         }
         return response()->json(["mensaje" => "se guardó correctamente"], 201);
     }
-
-    /* public function change()
-    {
-        $tests = DB::select("SELECT * FROM tests");
-        foreach($tests as $test) {
-            $secciones = DB::select("SELECT * FROM seccions WHERE id_test='$test->id'");
-            foreach($secciones as $seccion) {
-                DB::update("UPDATE seccions SET nombre='Sección $seccion->orden' WHERE id='$seccion->id'");
-            }
-        }
-    } */
 } 

@@ -94,7 +94,8 @@ export const PointsContainer = styled.div`
   }
 `;
 
-export const Point = styled.div`
+export const Point = styled.button`
+  background-color: transparent;
   min-width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -107,6 +108,11 @@ export const Point = styled.div`
   align-items: center;
   justify-content: center;
   color: ${props => props.colorized ? "#660BE1" : "#D9D9D9"};
+
+  &:disabled {
+    background-color: ${props => !props.selected && "#D9D9D9"};
+    pointer-events: none;
+  }
 `;
 
 export const ButtonContainer = styled.div`
@@ -148,6 +154,7 @@ export const PreguntaCreatorContainer = styled.div`
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  overflow: ${props => props.hidden && "hidden"};
 `;
 
 export const DeleteContainer = styled.div`
@@ -239,12 +246,12 @@ export const ThReactivo = styled.th`
   &:hover {
     & > p {
       background-color: #FFFFFF;
+      color: ${props => !props.noWhite && "#FFFFFF"};
     }
 
     & > div {
       opacity: 1;
       z-index: 1;
-      transform: translateY(-40px);
     }
   }
 `;

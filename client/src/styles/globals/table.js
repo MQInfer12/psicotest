@@ -5,7 +5,7 @@ export const AnswersContainer = styled.div`
   max-width: ${props => props.maxw};
   box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
   background-color: #ebf0fa;
-  border-radius: 10px;
+  border-radius: ${props => !props.noRadius && "10px"};
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -19,7 +19,7 @@ export const ControlsContainer = styled.div`
   padding: 0px 20px;
   gap: 16px;
 
-  & > div {
+  & > .buttons {
     display: flex;
     gap: 5px;
   }
@@ -35,12 +35,38 @@ export const TwoRows = styled.div`
 
 export const TableContainer = styled.div`
   height: 100%;
-  overflow-y: ${props => props.scrollable ? "scroll" : "hidden"};
-  overflow-x: ${props => props.hideX ? "hidden" : "auto"};
-  overflow: ${props => props.noHide && "visible"};
-  overflow-y: ${props => props.resizing && "hidden"};
-  overflow-x: ${props => props.resizing && "hidden"};
+  overflow-x: ${props => props.hideX && "hidden"};
+  overflow-y: ${props => props.scrollable && "scroll"};
   position: relative;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #ADA7A7;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #660BE1;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #660BE1;
+  }
+`;
+
+export const TBodyScrollable = styled.tbody`
+  display: block;
+  overflow-y: scroll;
+  height: ${props => props.alto};
+  width: 622px;
+
+  & > tr {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+  }
 
   &::-webkit-scrollbar {
     width: 2px;
@@ -63,6 +89,7 @@ export const TableAnswers = styled.table`
   table-layout: fixed;
   border-collapse: collapse;
   width: 100%;
+  overflow: scroll;
 
   & > thead {
     height: 40px;

@@ -5,16 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Articulo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Svg\Gradient\Stop;
 
 class ArticuloController extends Controller
-{
-    public function index()
-    {
-        //
-    }
-
+{ 
     public function store(Request $request)
     {
         $file = $request->documento;
@@ -30,11 +23,6 @@ class ArticuloController extends Controller
          
         return response()->json(["message" => "Se guardo correctamente"], 201);
     }
-
-    public function show($id)
-    {
-        //
-    }
     
     public function getArticlesByDocente($id_docente)
     {
@@ -48,15 +36,5 @@ class ArticuloController extends Controller
         $name = $article->documento;
         $file = "storage/".$name;
         return response()->file($file);
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

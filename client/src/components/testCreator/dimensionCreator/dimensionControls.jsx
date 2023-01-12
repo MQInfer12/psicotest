@@ -5,31 +5,17 @@ import { ControlsContainer, TwoRows } from '../../../styles/globals/table'
 import { PText } from '../../../styles/pages/testCreator'
 import AsignarPreguntasButton from '../buttons/asignarPreguntasButton'
 import AñadirDimensionButton from '../buttons/añadirDimensionButton'
+import AñadirEscalaButton from '../buttons/añadirEscalaButton'
+import EditarConversionesButton from '../buttons/editarConversionesButton'
 import EditarDimensionButton from '../buttons/editarDimensionButton'
 import EliminarDimensionButton from '../buttons/eliminarDimensionButton'
 import Points from '../points'
 
-const DimensionControls = ({ dimensionActualState }) => {
-  const { dimensionActual, setDimensionActual } = dimensionActualState;
-  const { dimensiones } = useTestCreatorContext();
-  const dimension = dimensionActual != dimensiones.length ? dimensiones[dimensionActual] : undefined;
+const DimensionControls = ({ valores }) => {
+  const { dimensiones, dimension, dimensionActual, setDimensionActual, saveConversiones } = useTestCreatorContext();
 
   return (
     <ControlsContainer spaceBetween>
-      <div>
-        <WhiteIconButton title="Dimensión anterior" disabled={dimensionActual === 0} onClick={() => setDimensionActual(old => old - 1)}>
-          <i className="fa-solid fa-angle-left"></i>
-        </WhiteIconButton>
-        {
-          dimension ? (
-            <WhiteIconButton title="Dimensión siguiente" onClick={() => setDimensionActual(old => old + 1)}>
-              <i className="fa-solid fa-angle-right"></i>
-            </WhiteIconButton>
-          ) : (
-            <AñadirDimensionButton />
-          )
-        }
-      </div>
       <TwoRows>
         {
           dimension ? (
@@ -38,12 +24,41 @@ const DimensionControls = ({ dimensionActualState }) => {
             <PText>Crea una dimensión para tus preguntas</PText>
           )
         }
-        <Points array={dimensiones} state={dimensionActual} setState={setDimensionActual} />
+        <Points 
+          array={dimensiones} 
+          state={dimensionActual} 
+          setState={setDimensionActual} 
+          disabled={saveConversiones}
+        />
       </TwoRows>
-      <div>
+      <div className='buttons'>
+        <WhiteIconButton 
+          title="Dimensión anterior" 
+          disabled={dimensionActual === 0 || saveConversiones} 
+          onClick={() => setDimensionActual(old => old - 1)}
+        >
+          <i className="fa-solid fa-angle-left"></i>
+        </WhiteIconButton>
+        {
+          dimension ? (
+            <WhiteIconButton 
+              title="Dimensión siguiente" 
+              disabled={saveConversiones}
+              onClick={() => setDimensionActual(old => old + 1)}
+            >
+              <i className="fa-solid fa-angle-right"></i>
+            </WhiteIconButton>
+          ) : (
+            <AñadirDimensionButton />
+          )
+        }
         <AsignarPreguntasButton dimension={dimension} />
         <EditarDimensionButton dimension={dimension} />
         <EliminarDimensionButton dimension={dimension} />
+      </div>
+      <div className='buttons'>
+        <AñadirEscalaButton />
+        <EditarConversionesButton dimension={dimension} valores={valores} />
       </div>
     </ControlsContainer>
   )

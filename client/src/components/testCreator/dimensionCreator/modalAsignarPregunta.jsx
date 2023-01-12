@@ -23,18 +23,15 @@ const ModalAsignarPregunta = ({ secciones, dimension, setDimensiones, cerrar }) 
     if(res.ok) {
       const resJson = await res?.json();
       setDimensiones(old => {
-        return old.map(dim => {
+        let newOld = [...old];
+        newOld = newOld.map(dim => {
           if(dim.id === dimension.id) {
             dim.preguntas = resJson.data.preguntas;
-            dim.escalas.map(escala => {
-              if(escala.nombre === "Natural") {
-                escala.valores = resJson.data.natural;
-              }
-              return escala;
-            })
+            dim.valores = resJson.data.natural;
           }
           return dim;
         });
+        return newOld;
       });
       cerrar();
     }

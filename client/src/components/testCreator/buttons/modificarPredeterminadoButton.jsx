@@ -26,7 +26,7 @@ const ModificarPredeterminadoButton = (props) => {
           return old.map(dimension => {
             const resDimension = res.data.valores.find(dim => dim.id === dimension.id);
             if(resDimension) {
-              dimension.escalas[0].valores = resDimension.valores;
+              dimension.valores = resDimension.valores;
             }
             return dimension;
           })

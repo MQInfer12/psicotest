@@ -1,37 +1,41 @@
 import React from 'react'
 import { useTestCreatorContext } from '../../../context/testCreatorContext'
-import { PLight, ResponsiveTr, TableAnswers, TableContainer, ThAnswer } from '../../../styles/globals/table'
+import { TableAnswers, TableContainer, TBodyScrollable } from '../../../styles/globals/table'
+import { DivReactivoButtonsTd, PText, ThReactivo } from '../../../styles/pages/testCreator';
+import EditarEscalaButton from '../buttons/editarEscalaButton';
+import EliminarEscalaButton from '../buttons/eliminarEscalaButton';
+import InputMapper from './inputMapper';
 
-const DimensionTable = ({ dimensionActualState }) => {
-  const {dimensionActual } = dimensionActualState;
-  const { dimensiones } = useTestCreatorContext();
-  const dimension = dimensionActual != dimensiones.length ? dimensiones[dimensionActual] : undefined;
+const DimensionTable = ({ tableHeightRef, valores, setValores }) => {
+  const { escalas } = useTestCreatorContext();
 
   return (
-    <TableContainer scrollable>
+    <TableContainer>
       <TableAnswers inReactivoCreator sticky>
         <thead>
           <tr>
             {
-              dimension.escalas.map((escala, i) => (
-                <ThAnswer key={i} center>{escala.nombre}</ThAnswer>
+              escalas.map((escala, i) => (
+                <ThReactivo noWhite={i === 0} key={i}>
+                  <PText>{escala.descripcion}</PText>
+                  {
+                    i != 0 &&
+                    <DivReactivoButtonsTd>
+                      <EditarEscalaButton escala={escala} />
+                      <EliminarEscalaButton escala={escala} />
+                    </DivReactivoButtonsTd>
+                  }
+                </ThReactivo>
               ))
             }
           </tr>
         </thead>
-        <tbody>
-          {
-            dimension.escalas.map((escala, i) => (
-              escala.valores.map((valor, j) => (
-                <ResponsiveTr key={j}>
-                  <td>
-                    <PLight>{valor.natural}</PLight>
-                  </td>
-                </ResponsiveTr>
-              ))
-            ))
-          }
-        </tbody>
+        <TBodyScrollable alto={tableHeightRef.current?.offsetHeight - 108 + "px"}>
+          <InputMapper 
+            valores={valores}
+            setValores={setValores}
+          />
+        </TBodyScrollable>
       </TableAnswers>
     </TableContainer>
   )

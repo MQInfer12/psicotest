@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTestCreatorContext } from '../../../context/testCreatorContext';
 import { massUpdatePuntuaciones } from '../../../services/puntuacion';
-import { WhiteIconButton } from '../../../styles/globals/formularios';
+import { DangerIconButton } from '../../../styles/globals/formularios';
 
 const EditarPuntuacionesButton = ({ setSave, puntuaciones }) => {
   const { setDimensiones, updateSeccion } = useTestCreatorContext();
@@ -19,7 +19,7 @@ const EditarPuntuacionesButton = ({ setSave, puntuaciones }) => {
         return old.map(dimension => {
           const resDimension = resJson.data.find(dim => dim.id === dimension.id);
           if(resDimension) {
-            dimension.escalas[0].valores = resDimension.valores;
+            dimension.valores = resDimension.valores;
           }
           return dimension;
         });
@@ -29,12 +29,12 @@ const EditarPuntuacionesButton = ({ setSave, puntuaciones }) => {
   }
 
   return (
-    <WhiteIconButton 
+    <DangerIconButton 
       title="Guardar puntuaciones" 
       onClick={handleSave}
     >
-      <i className="fa-solid fa-plus"></i>
-    </WhiteIconButton>
+      <i className="fa-solid fa-floppy-disk"></i>
+    </DangerIconButton>
   )
 }
 

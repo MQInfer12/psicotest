@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conversion;
 use App\Models\PreguntaDimension;
 use App\Models\Test;
 use App\Traits\PuntuacionesNaturales;
@@ -37,6 +38,12 @@ class TestController extends Controller
             FROM tests
             WHERE id='$id'"
         )[0];
+        
+        $escalas = DB::select("SELECT * FROM escalas WHERE id_test='$id' ORDER BY id");
+        $idEscalas = array_column($escalas, 'id');
+        $escalaNatural = array("descripcion" => "Natural");
+        array_unshift($escalas, $escalaNatural);
+        $test->escalas = $escalas;
 
         $dimensiones = DB::select("SELECT * FROM dimensions WHERE id_test='$id' ORDER BY id");
         $test->dimensiones = $dimensiones;
@@ -45,8 +52,8 @@ class TestController extends Controller
             $dimension->preguntas = $preguntasPorDimension;
 
             //CALCULAR ESCALA NATURAL DE CADA DIMENSION
-            $natural = $this->getPuntuacionNatural($dimension->id);
-            $dimension->escalas = [array("nombre" => "Natural", "valores" => $natural)];
+            $naturales = $this->getPuntuacionNatural($dimension->id);
+            $dimension->valores = $naturales;
         }
 
         $secciones = DB::select(

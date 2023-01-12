@@ -5,15 +5,13 @@ import { useDownloadExcel } from "react-export-table-to-excel";
 import decipherId from "../utilities/decipher";
 import AnswerReports from "../components/answer/answerReports";
 import { WhiteButton } from "../styles/globals/formularios";
-import { 
-  AnswersContainer, TableContainer, TableAnswers, 
-  ThNumberal, ThAnswer
-} from "../styles/globals/table";
+import { AnswersContainer, TableContainer, TableAnswers, ThNumberal, ThAnswer } from "../styles/globals/table";
 import BigRow from "../components/answer/bigRow";
 import MiniRow from "../components/answer/miniRow";
 import { useWindowHeight } from "../hooks/useWindowHeight";
 import useGet from "../hooks/useGet";
 import { AnswerPage, DataContainer, DataKey, DataRow, DataValue, SeccionContainer, TitleSeccion } from "../styles/pages/answer";
+import Totals from "../components/answer/totals";
 
 const Answer = () => {
   const windowHeight = useWindowHeight(true, true);
@@ -78,6 +76,7 @@ const Answer = () => {
         respuesta={respuesta} 
         setTableRef={setTableRef} 
       />
+      {/* <Totals /> */}
       {respuesta.test.secciones.map((seccion, i) => (
         <SeccionContainer key={i}>
           <TitleSeccion>{seccion.nombre}</TitleSeccion>

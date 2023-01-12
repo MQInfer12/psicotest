@@ -12,7 +12,7 @@ const TestCreator = () => {
   const windowHeight = useWindowHeight(true, true);
   const { idTest: idCode } = useParams();
   const idTest = Number(decipherId(idCode));
-  const { setSecciones, setDimensiones } = useTestCreatorContext();
+  const { setSecciones, setDimensiones, setEscalas } = useTestCreatorContext();
 
   //LLENAR EL TEST ENTERO
   const { resJson: test, loading } = useGet(`test/edit/${idTest}`, { 
@@ -20,6 +20,7 @@ const TestCreator = () => {
     callback: (res) => {
       setSecciones(res.secciones);
       setDimensiones(res.dimensiones);
+      setEscalas(res.escalas);
     } 
   });
 

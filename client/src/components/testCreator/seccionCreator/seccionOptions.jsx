@@ -8,7 +8,7 @@ import Points from '../points';
 
 const SeccionOptions = ({ test, loading, setLoading, optionState }) => {
   const { option, setOption } = optionState;
-  const { seccion, secciones, seccionActual, setSeccionActual, setSecciones } = useTestCreatorContext();
+  const { seccion, secciones, seccionActual, setSeccionActual } = useTestCreatorContext();
 
   return (
     <DashPart>

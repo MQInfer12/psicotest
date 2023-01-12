@@ -5,8 +5,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BeneficiarioDocenteController;
 use App\Http\Controllers\CaracteristicaController;
 use App\Http\Controllers\CitaController;
+use App\Http\Controllers\ConversionController;
 use App\Http\Controllers\DimensionController;
 use App\Http\Controllers\DocenteTestController;
+use App\Http\Controllers\EscalaController;
 use App\Http\Controllers\GrupoBeneficiarioController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\HorarioController;
@@ -91,6 +93,12 @@ Route::group(['middleware' => 'api'], function(){
     //DIMENSIONES ROUTES
     Route::apiResource("dimension", DimensionController::class);
     Route::put("pregunta/dimension/{id}", [PreguntaDimensionController::class, 'storeVarious']);
+
+    //ESCALA ROUTES
+    Route::apiResource("escala", EscalaController::class);
+
+    //CONVERSION ROUTES
+    Route::put("conversion/update", [ConversionController::class, 'massUpdate']);
 
     //RESPUESTA ROUTES
     Route::apiResource("respuesta", RespuestaController::class);

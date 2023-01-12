@@ -18,7 +18,7 @@ const SeccionCheckboxes = () => {
             return old.map(dimension => {
               const resDimension = resJson.data.find(dim => dim.id === dimension.id);
               if(resDimension) {
-                dimension.escalas[0].valores = resDimension.valores;
+                dimension.valores = resDimension.valores;
               }
               return dimension;
             })
@@ -34,7 +34,7 @@ const SeccionCheckboxes = () => {
             return old.map(dimension => {
               const resDimension = resJson.data.find(dim => dim.id === dimension.id);
               if(resDimension) {
-                dimension.escalas[0].valores = resDimension.valores;
+                dimension.valores = resDimension.valores;
               }
               return dimension;
             })

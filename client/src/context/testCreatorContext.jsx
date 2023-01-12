@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState } from "react";
-import { useEffect } from "react";
 
 export const TestCreatorContext = createContext(null);
 
@@ -15,8 +14,11 @@ export const useTestCreatorContext = () => {
 
 export const TestCreatorContextProvider = ({ children }) => {
   const [dimensiones, setDimensiones] = useState([]);
+  const [escalas, setEscalas] = useState([]);
   const [secciones, setSecciones] = useState([]);
   const [seccionActual, setSeccionActual] = useState(0);
+  const [dimensionActual, setDimensionActual] = useState(0);
+  const [saveConversiones, setSaveConversiones] = useState(false);
 
   const updateSeccion = (modificar) => {
     setSecciones(old => {
@@ -30,6 +32,7 @@ export const TestCreatorContextProvider = ({ children }) => {
   }
   
   const seccion = seccionActual < secciones.length ? secciones[seccionActual] : undefined;
+  const dimension = dimensionActual < dimensiones.length ? dimensiones[dimensionActual] : undefined;
 
   const value = { 
     seccionActual, 
@@ -38,13 +41,16 @@ export const TestCreatorContextProvider = ({ children }) => {
     setSecciones, 
     dimensiones,
     setDimensiones,
+    dimensionActual,
+    setDimensionActual,
+    escalas,
+    setEscalas,
+    saveConversiones,
+    setSaveConversiones,
     updateSeccion,
-    seccion
+    seccion,
+    dimension
   }
-
-  /* useEffect(() => {
-    console.log(secciones);
-  }, [secciones]); */
 
   return (
     <TestCreatorContext.Provider value={value}>

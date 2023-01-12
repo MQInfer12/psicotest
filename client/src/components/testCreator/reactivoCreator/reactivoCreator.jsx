@@ -12,7 +12,7 @@ const ReactivoCreator = ({ pageState }) => {
   const [save, setSave] = useState(false);
   const [puntuaciones, setPuntuaciones] = useState([]);
 
-  const { tableHeightRef, tableRows, rowHeight, resizing } = useTableHeight();
+  const { tableHeightRef, tableRows, rowHeight } = useTableHeight();
   
   const { seccion } = useTestCreatorContext();
 
@@ -33,7 +33,6 @@ const ReactivoCreator = ({ pageState }) => {
         setPuntuaciones={setPuntuaciones}
         reactivosPage={reactivosPage}
         setSave={setSave}
-        resizing={resizing}
         tableHeightRef={tableHeightRef}
         tableRows={tableRows}
         rowHeight={rowHeight}

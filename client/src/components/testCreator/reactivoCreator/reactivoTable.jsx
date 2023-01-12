@@ -4,11 +4,11 @@ import { TableAnswers, TableContainer, ThNumberal } from '../../../styles/global
 import ReactivoCard from './reactivoCard'
 import ReactivoTableBody from './reactivoTableBody'
 
-const ReactivoTable = ({ resizing, tableHeightRef, rowHeight, tableRows, puntuaciones, setPuntuaciones, reactivosPage, setSave }) => {
+const ReactivoTable = ({ tableHeightRef, rowHeight, tableRows, puntuaciones, setPuntuaciones, reactivosPage, setSave }) => {
   const { seccion } = useTestCreatorContext();
 
   return (
-    <TableContainer resizing={resizing} noHide ref={tableHeightRef}>
+    <TableContainer ref={tableHeightRef}>
       <TableAnswers inReactivoCreator>
         <thead>
           <tr>

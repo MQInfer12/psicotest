@@ -24,7 +24,7 @@ const EliminarPreguntasButton = ({ selecteds, setSelecteds }) => {
           newDimension.preguntas = newDimension.preguntas.filter(pregunta => !selecteds.includes(pregunta));
           const resDimension = resJson.data.find(dim => dim.id === dimension.id);
           if(resDimension) {
-            dimension.escalas[0].valores = resDimension.valores;
+            dimension.valores = resDimension.valores;
           }
           return newDimension;
         })

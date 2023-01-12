@@ -27,11 +27,22 @@ const SeccionSidebar = ({ test, editState, loading, setLoading }) => {
           option === 0 && (
             <>
               <DashPart>
-                <WhiteButton maxwidth="125.27px" active={editState.editActual == "-1"} onClick={() => editState.setEditActual(-1)}>Dimensiones</WhiteButton>
+                <WhiteButton 
+                  maxwidth="125.27px" 
+                  active={editState.editActual == "-1"} 
+                  onClick={() => editState.setEditActual(-1)}
+                >Dimensiones</WhiteButton>
               </DashPart>
               <DashPart>
-                <WhiteButton active={editState.editActual == "0"} onClick={() => editState.setEditActual(0)}>Preguntas</WhiteButton>
-                <WhiteButton width="125.27px" active={editState.editActual == "1"} onClick={() => editState.setEditActual(1)}>Reactivos</WhiteButton>
+                <WhiteButton 
+                  active={editState.editActual == "0"} 
+                  onClick={() => editState.setEditActual(0)}
+                >Preguntas</WhiteButton>
+                <WhiteButton 
+                  width="125.27px" 
+                  active={editState.editActual == "1"} 
+                  onClick={() => editState.setEditActual(1)}
+                >Reactivos</WhiteButton>
               </DashPart>
               <SeccionCheckboxes />
             </>

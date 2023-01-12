@@ -4,7 +4,7 @@ import { addSeccion } from '../../../services/seccion';
 import { WhiteButton } from '../../../styles/globals/formularios'
 
 const AñadirSeccionButton = ({ loading, setLoading, id }) => {
-  const { setSecciones } = useTestCreatorContext();
+  const { setSecciones, saveConversiones } = useTestCreatorContext();
 
   const añadirSeccion = async () => {
     setLoading(true);
@@ -22,7 +22,7 @@ const AñadirSeccionButton = ({ loading, setLoading, id }) => {
   return (
     <WhiteButton 
       onClick={añadirSeccion} 
-      disabled={loading}
+      disabled={loading || saveConversiones}
     >
       Crear Sección
     </WhiteButton>

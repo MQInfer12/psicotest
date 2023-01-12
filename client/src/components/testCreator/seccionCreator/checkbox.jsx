@@ -30,7 +30,11 @@ const Checkbox = ({ name, call, text, cb }) => {
 
   return (
     <CheckboxDiv>
-      <CheckboxInput type="checkbox" checked={active} onChange={handleChange} /> 
+      <CheckboxInput 
+        type="checkbox" 
+        checked={active} 
+        onChange={handleChange}
+      /> 
       <PCheckbox>{text}</PCheckbox>
     </CheckboxDiv>
   )
