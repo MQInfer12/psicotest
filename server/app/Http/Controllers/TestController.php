@@ -40,7 +40,6 @@ class TestController extends Controller
         )[0];
         
         $escalas = DB::select("SELECT * FROM escalas WHERE id_test='$id' ORDER BY id");
-        $idEscalas = array_column($escalas, 'id');
         $escalaNatural = array("descripcion" => "Natural");
         array_unshift($escalas, $escalaNatural);
         $test->escalas = $escalas;

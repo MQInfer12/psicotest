@@ -76,7 +76,10 @@ const Answer = () => {
         respuesta={respuesta} 
         setTableRef={setTableRef} 
       />
-      {/* <Totals /> */}
+      {
+        respuesta.test.dimensiones.length != 0 &&
+        <Totals test={respuesta.test} />
+      }
       {respuesta.test.secciones.map((seccion, i) => (
         <SeccionContainer key={i}>
           <TitleSeccion>{seccion.nombre}</TitleSeccion>

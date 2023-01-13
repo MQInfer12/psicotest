@@ -25,7 +25,7 @@ class ConversionController extends Controller
                     //ELIMINAR SI EXISTE Y NO HAY VALOR CONVERTIDO
                     Conversion::destroy($conversion->id);
                 }
-            } else if($valor['convertido']) {
+            } else if($valor['convertido'] || $valor['convertido'] == "0") {
                 //CREAR SI NO EXISTE Y HAY VALOR CONVERTIDO
                 $conversion = new Conversion();
                 $conversion->id_escala_dimension = $valor['id_escala_dimension'];

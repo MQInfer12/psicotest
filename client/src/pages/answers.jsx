@@ -103,7 +103,7 @@ const Answers = () => {
           setTableRef={setTableRef}
         />
       </ControlsContainer>
-      <TableContainer ref={tableHeightRef}>
+      <TableContainer scrollableX ref={tableHeightRef}>
         {loading ? (
           <Cargando />
         ) : (
@@ -175,7 +175,6 @@ const Answers = () => {
           </TableAnswers>
         )}
       </TableContainer>
-
       <Pagination
         cant={searchRespuestas().length}
         rows={tableRows}

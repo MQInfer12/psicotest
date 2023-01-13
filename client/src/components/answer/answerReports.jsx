@@ -14,12 +14,46 @@ const AnswerReports = ({ secciones, respuesta, setTableRef }) => {
 
   return (
     <div style={{display: "none"}} ref={tableRef}>
+      <table>
+        <thead><tr><th style={ThStyle}>Dato</th><th style={ThStyle}>Usuario</th></tr></thead>
+        <tbody>
+          <tr><td>Test:</td><td>{respuesta.nombre_test}</td></tr>
+          <tr><td>Nombre:</td><td>{respuesta.nombre_user}</td></tr>
+          <tr><td>Email:</td><td>{respuesta.email_user}</td></tr>
+          <tr><td>Edad:</td><td>{respuesta.edad}</td></tr>
+          <tr><td>Genero:</td><td>{respuesta.genero?.charAt(0).toUpperCase() + respuesta.genero?.slice(1)}</td></tr>
+        </tbody>
+      </table>
+      <br/>
       <div>
-        Test:<br/> {respuesta.nombre_test}<br/>
-        Nombre:<br/> {respuesta.nombre_user}<br/>
-        Email:<br/> {respuesta.email_user}<br/>
-        Edad:<br/> {respuesta.edad}<br/>
-        Genero:<br/> {respuesta.genero?.charAt(0).toUpperCase() + respuesta.genero?.slice(1)}<br/>
+        Totales:
+        <table>
+          <thead>
+            <tr>
+              <th style={ThStyle}>Dimensión</th>
+              <th style={ThStyle}>Natural</th>
+              {
+                respuesta.test.escalas.map((v, i) => (
+                  <th key={i} style={ThStyle}>{v.descripcion}</th>
+                ))
+              }
+            </tr>
+          </thead>
+          <tbody>
+            {
+              respuesta.test.dimensiones.map((v, i) => (
+                <tr key={i}>
+                  <td><p>{v.descripcion}</p></td>
+                  {
+                    v.puntuaciones.map((punt, j) => (
+                      <td key={j}><p>{punt}</p></td>
+                    ))
+                  }
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
       </div>
       <br/>
       {secciones.map((seccion, i) => (

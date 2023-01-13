@@ -37,9 +37,11 @@ export const TableContainer = styled.div`
   height: 100%;
   overflow-x: ${props => props.hideX && "hidden"};
   overflow-y: ${props => props.scrollable && "scroll"};
+  overflow-x: ${props => props.scrollableX && "auto"};
   position: relative;
 
   &::-webkit-scrollbar {
+    height: 2px;
     width: 2px;
   }
 

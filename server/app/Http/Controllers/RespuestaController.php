@@ -141,11 +141,45 @@ class RespuestaController extends Controller
         $test = DB::select("SELECT * FROM tests WHERE id='$respuesta->id_test'");
         $test = $test[0];
 
+        $escalas = DB::select("SELECT * FROM escalas WHERE id_test='$test->id' ORDER BY id");
+        $idEscalas = array_column($escalas, 'id');
+        $test->escalas = $escalas;
+
+        $dimensiones = DB::select("SELECT * FROM dimensions WHERE id_test='$test->id'");
+        foreach($dimensiones as $dimension) {
+            $nat = DB::select(
+                "SELECT SUM(pu.asignado) as nat
+                FROM resultados as r, puntuacions as pu, preguntas as pr, pregunta_dimensions as pd, dimensions as d
+                WHERE r.id_respuesta='$respuesta->id' AND r.id_puntuacion=pu.id AND pu.id_pregunta=pr.id
+                AND pd.id_pregunta=pr.id AND pd.id_dimension=d.id AND d.id='$dimension->id'"
+            )[0]->nat;
+            $puntuacionesPorDimension = [$nat];
+            $totales = DB::select(
+                "SELECT co.convertido, e.id as id_escala
+                FROM conversions as co, escala_dimensions as ed, dimensions as d, escalas as e
+                WHERE co.id_escala_dimension=ed.id AND ed.id_dimension=d.id AND ed.id_escala=e.id 
+                AND d.id='$dimension->id' AND co.natural='$nat'
+                ORDER BY e.id"    
+            );
+            $idEscalasInTotales = array_column($totales, 'id_escala');
+            $convertidos = array_column($totales, 'convertido');
+            foreach($idEscalas as $idEscala) {
+                if(in_array($idEscala, $idEscalasInTotales)) {
+                    $index = array_search($idEscala, $idEscalasInTotales);
+                    $puntuacionesPorDimension[] = $convertidos[$index];
+                } else {
+                    $puntuacionesPorDimension[] = "N/A";
+                }
+            }
+            $dimension->puntuaciones = $puntuacionesPorDimension;
+        }
+        $test->dimensiones = $dimensiones;
+
         $secciones = DB::select("SELECT id, multimarcado, nombre FROM seccions WHERE id_test='$test->id' ORDER BY orden");
         $idsPreguntas = [];
         foreach($secciones as $seccion) {
-            $preguntas =DB::select("SELECT id, descripcion FROM preguntas WHERE id_seccion='$seccion->id' ORDER BY id");
-            $reactivos =DB::select("SELECT id, descripcion FROM reactivos WHERE id_seccion='$seccion->id' ORDER BY id");
+            $preguntas = DB::select("SELECT id, descripcion FROM preguntas WHERE id_seccion='$seccion->id' ORDER BY id");
+            $reactivos = DB::select("SELECT id, descripcion FROM reactivos WHERE id_seccion='$seccion->id' ORDER BY id");
             foreach($preguntas as $pregunta) {
                 $idsPreguntas[] = $pregunta->id;
                 $puntuaciones = DB::select("SELECT id, id_reactivo, asignado FROM puntuacions WHERE id_pregunta='$pregunta->id' ORDER BY id_reactivo");
