@@ -43,11 +43,11 @@ const Login = () => {
   return (
     <LoginTemplate
       title="Login"
-      haveAcountText="¿No tienes una cuenta?"
-      haveAcountLink={goTo ? "/register/" + goTo : "/register"}
-      haveAcountButton="Regístrate"
+      goTo={goTo}
       submitButton="INICIA SESIÓN"
       handleSubmit={handleSubmit}
+      toRegister
+      toRecover
     >
       {data.map((v, i) => (
         <DivInputs key={i}>

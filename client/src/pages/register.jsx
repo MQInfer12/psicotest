@@ -146,11 +146,11 @@ const Register = () => {
   return (
     <LoginTemplate
       title="Registro"
-      haveAcountText="¿Ya tienes una cuenta?"
-      haveAcountLink={goTo ? "/login/" + goTo : "/login"}
-      haveAcountButton="Inicia sesión"
+      goTo={goTo}
       submitButton="REGISTRARSE"
       handleSubmit={handleSubmit}
+      toLogin
+      toRecover
     >
       {data.map((v, i) => (
         <DivInputs key={i}>

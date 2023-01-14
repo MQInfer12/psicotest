@@ -60,9 +60,17 @@ export const DivFormlog = styled.div`
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
   }
+`;
 
-  & form {
-    margin: auto 0;
+export const DivContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  margin: auto 0;
+  
+  & > form {
     width: 250px;
     display: flex;
     flex-direction: column;
@@ -70,13 +78,12 @@ export const DivFormlog = styled.div`
 `;
 
 export const H1Title = styled.h1`
-  height: 20vh;
   font-size: 60px;
   font-weight: 700;
   color: #000000;
   display: flex;
   flex-direction: column;
-  gap: 21px;
+  gap: 15px;
   align-items: center;
 
   &::after {
@@ -98,16 +105,13 @@ export const H1Title = styled.h1`
   }
 `;
 
-export const DivButton = styled.div`
-  padding-top: 2rem;
-`;
-
 export const ButtonSubmit = styled.button`
   width: 100%;
   height: 54px;
   font-size: 20px;
   font-weight: 600;
   color: #ffffff;
+  margin-top: 1rem;
 
   text-decoration: none;
   border: none;
@@ -122,16 +126,29 @@ export const ButtonSubmit = styled.button`
   }
 `;
 
+export const GoToDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+
 export const GoToContainer = styled.div`
   display: flex;
   gap: 10px;
+  justify-content: center;
 `;
 
 export const GoToDescription = styled.p`
   color: #000000;
   font-size: 12px;
   font-weight: 400;
-  text-decoration: none;
+`;
+
+export const Instructions = styled.p`
+  color: ${props => props.alert ? "red" : "#000000"};
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 20px;
 `;
 
 export const GoToText = styled(Link)`
@@ -149,9 +166,15 @@ export const DivInputs = styled.div`
   margin-bottom: 20px;
 `;
 
+export const DivInputsNumber = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+`;
+
 export const DivInputBox = styled.div`
   position: relative;
-  width: 250px;
+  width: 100%;
 `;
 
 export const InputText = styled.input`
@@ -164,6 +187,7 @@ export const InputText = styled.input`
   font-size: 1em;
   letter-spacing: 0.1em;
   padding: 10px 0 7px;
+  text-align: ${props => props.centerText && "center"};
 
   &:valid ~ span,
   &:focus ~ span {
@@ -196,6 +220,7 @@ export const IInput = styled.i`
   height: 2px;
   background: #808291;
   overflow: hidden;
+  background: ${props => props.mostrarError && "red"};
 
   &::before {
     content: "";
@@ -211,7 +236,7 @@ export const IInput = styled.i`
       #7613fd,
       #ff1b69
     );
-    animation: animate 2s linear infinite;
+    animation: animate ${props => props.lento ? "16s" : "2s"} linear infinite;
   }
 
   @keyframes animate {

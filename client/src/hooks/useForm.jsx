@@ -124,6 +124,6 @@ export const UseForm = (
     handleChange,
     handleSubmit,
     handleReset,
-    handleResetImg,
+    handleResetImg
   };
 };

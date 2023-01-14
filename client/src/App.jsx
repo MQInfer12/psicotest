@@ -28,6 +28,7 @@ import Modal from "./components/globals/modal";
 import Blog from "./pages/blog";
 import { StyledLink } from "./styles/pages/dashboard";
 import { TestCreatorContextProvider } from "./context/testCreatorContext";
+import Recover from "./pages/recover";
 
 function App() {
   return (
@@ -41,6 +42,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/register/:goTo" element={<Register />} />
           <Route path="/register/email/:userEmail" element={<Register />} />
+          <Route path="/recover" element={<Recover />}/>
+          <Route path="/recover/:goTo" element={<Recover />}/>
           <Route
             path="/dashboard"
             element={
