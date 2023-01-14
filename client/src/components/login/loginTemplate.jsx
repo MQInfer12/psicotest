@@ -3,7 +3,7 @@ import { useWindowHeight } from '../../hooks/useWindowHeight';
 import { ButtonSubmit, DivContainer, DivFormlog, DivImagelog, DivItemlog, DivPrincipal, GoToContainer, GoToDescription, GoToDiv, GoToText, H1Title, Instructions } from '../../styles/pages/login';
 import Navbar from '../landing/navbar';
 
-const LoginTemplate = ({ children, title, submitButton, handleSubmit, toLogin, toRegister, toRecover, goTo, responseMessage }) => {
+const LoginTemplate = ({ children, title, submitButton, handleSubmit, toLogin, toRegister, toRecover, goTo, loading, responseMessage }) => {
   const windowHeight = useWindowHeight();
   return (
     <>
@@ -18,7 +18,7 @@ const LoginTemplate = ({ children, title, submitButton, handleSubmit, toLogin, t
             <form>
               { children }
               { responseMessage && <Instructions alert>{responseMessage}</Instructions>}
-              <ButtonSubmit onClick={handleSubmit}>{submitButton}</ButtonSubmit>
+              <ButtonSubmit loading={loading} onClick={handleSubmit}>{ loading ? "CARGANDO..." : submitButton}</ButtonSubmit>
             </form>
             <GoToDiv>
               {

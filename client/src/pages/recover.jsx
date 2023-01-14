@@ -28,7 +28,8 @@ const Recover = () => {
     form: formEmail, 
     errors: errorsEmail, 
     handleChange: handleChangeEmail, 
-    handleSubmit: handleSubmitEmail 
+    handleSubmit: handleSubmitEmail,
+    loading: loadingEmail
   } = UseForm(
     initialFormEmail,
     validationsFormEmail,
@@ -45,7 +46,8 @@ const Recover = () => {
     form: formCode,
     errors: errorsCode,
     handleChange: handleChangeCode,
-    handleSubmit: handleSubmitCode
+    handleSubmit: handleSubmitCode,
+    loading: loadingCode
   } = UseForm(
     initialFormCode,
     validationsFormCode,
@@ -63,7 +65,8 @@ const Recover = () => {
     form: formPassword,
     errors: errorsPassword,
     handleChange: handleChangePassword,
-    handleSubmit: handleSubmitPassword
+    handleSubmit: handleSubmitPassword,
+    loading: loadingPassword
   } = UseForm(
     initialFormPassword,
     validationsFormPassword,
@@ -84,6 +87,7 @@ const Recover = () => {
     <LoginTemplate
       title="Recuperar"
       goTo={goTo}
+      loading={recoverState === 0 ? loadingEmail : recoverState === 1 ? loadingCode : loadingPassword}
       submitButton={recoverState === 0 ? "Enviar correo" : recoverState === 1 ? "Comprobar" : "Aceptar"}
       handleSubmit={recoverState === 0 ? handleSubmitEmail : recoverState === 1 ? handleSubmitCode : handleSubmitPassword}
       responseMessage={responseMessage}

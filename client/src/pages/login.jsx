@@ -13,7 +13,7 @@ const Login = () => {
   const { setUser } = useUserContext();
   const navigate = useNavigate();
 
-  const { form, errors, handleChange, handleSubmit } = UseForm(
+  const { form, errors, loading, handleChange, handleSubmit } = UseForm(
     initialForm,
     validationsForm,
     signIn,
@@ -44,6 +44,7 @@ const Login = () => {
     <LoginTemplate
       title="Login"
       goTo={goTo}
+      loading={loading}
       submitButton="INICIA SESIÓN"
       handleSubmit={handleSubmit}
       toRegister

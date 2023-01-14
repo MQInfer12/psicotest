@@ -12,9 +12,12 @@ export const UseForm = (
 ) => {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({ reseted: true });
+  const [loading, setLoading] = useState(false);
 
   //ENVIAR PETICION
   const handleSend = async (form) => {
+    setLoading(true);
+
     try {
       for(let key in form) {
         if(form[key]?.type === "image/jpeg" || form[key]?.type === "image/png") {
@@ -49,7 +52,7 @@ export const UseForm = (
       } else if (res.status == 200) {
         //ESTADO DE LOGEADO
         console.log("¡Logeado con éxito!");
-        success();
+        return success();
       } else if (res.status == 209) {
         //ESTADO DE REGISTRO
         const resJson = await res?.json();
@@ -62,6 +65,8 @@ export const UseForm = (
         console.log("¡No se puede ingresar a esta cuenta!");
         alert("¡No se puede ingresar a esta cuenta!");
       }
+
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -121,6 +126,7 @@ export const UseForm = (
   return {
     form,
     errors,
+    loading,
     handleChange,
     handleSubmit,
     handleReset,

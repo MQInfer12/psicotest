@@ -20,7 +20,7 @@ class RecuperarController extends Controller
         if(!$user) return response()->json(["error" => "No existe el usuario con este correo."], 201);
         if($user->id_rol === 3) return response()->json(["error" => "Algo salió mal."], 201);
 
-        $codigo = rand(0, 999999);
+        $codigo = rand(100000, 999999);
 
         $recover = new Recuperar();
         $recover->id_usuario = $user->id;

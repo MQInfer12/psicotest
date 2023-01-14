@@ -14,7 +14,7 @@ import { DivInputBox, DivInputs, IInput, InputSelect, InputText, SpanText } from
 const Register = () => {
   const { goTo, userEmail } = useParams();
 
-  const { form, errors, handleChange, handleSubmit, handleReset } = UseForm(
+  const { form, errors, loading, handleChange, handleSubmit, handleReset } = UseForm(
     userEmail ? {
       email: userEmail,
       contrasenia: "",
@@ -147,6 +147,7 @@ const Register = () => {
     <LoginTemplate
       title="Registro"
       goTo={goTo}
+      loading={loading}
       submitButton="REGISTRARSE"
       handleSubmit={handleSubmit}
       toLogin

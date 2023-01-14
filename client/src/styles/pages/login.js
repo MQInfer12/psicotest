@@ -124,6 +124,21 @@ export const ButtonSubmit = styled.button`
   &:hover {
     filter: grayscale(0.2);
   }
+
+  background: ${props => props.loading && "linear-gradient(90deg, rgba(118,19,253,1) 0%, rgba(149,71,255,1) 50%, rgba(118,19,253,1) 100%)"};
+  animation: animate 1.5s ease infinite;
+
+  @keyframes animate {
+    0% {
+      background-position-x: 125px;
+    }
+    50% {
+      background-position-x: 125px;
+    }
+    100% {
+      background-position-x: 0;
+    }
+  }
 `;
 
 export const GoToDiv = styled.div`
