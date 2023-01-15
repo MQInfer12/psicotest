@@ -1,4 +1,7 @@
-<h1 align="center">Psicotest</h1>
+<h1 align="center">
+  <img src="https://user-images.githubusercontent.com/97072752/212562754-8731a3a4-d54b-4402-b113-74c5de1f2333.png" height=40></br>
+  <p>Psicotest<p>
+</h1>
 
 <p>Psicotest es una aplicación de tests psicológicos desarrollada para la carrera de psicología de la universidad Franz Tamayo en Bolivia.</p>
 
