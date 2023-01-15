@@ -72,14 +72,18 @@ export const TitleLink = styled(Link)`
 
 export const PageTitle = styled.h1`
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 300;
   color: #000000;
   display: flex;
   gap: 10px;
   align-items: center;
 
-  & > img {
+  & img {
     height: 35px;
+  }
+
+  & span {
+    font-weight: 600;
   }
 `;
 

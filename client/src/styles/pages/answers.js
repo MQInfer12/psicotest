@@ -5,6 +5,7 @@ export const SearchDiv = styled.div`
 `;
 
 export const SearchInput = styled.input`
+  min-width: 200px;
   width: 320px;
   height: 32px;
   font-weight: 400;

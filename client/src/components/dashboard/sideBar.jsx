@@ -74,7 +74,7 @@ const SideBar = ({ rol, setUser, openNav, setOpenNav }) => {
 
   return (
     <SideBarContainer height={windowHeight} openNav={openNav}>
-      <PageTitle><img src={Logo}/>Psicotest</PageTitle>
+      <PageTitle><img src={Logo}/><div><span>Psico</span>test</div></PageTitle>
       <SideBarList>
         {
           linksData.map((v, i) => (

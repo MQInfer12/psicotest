@@ -18,10 +18,28 @@ export const ControlsContainer = styled.div`
   min-height: 68px;
   padding: 0px 20px;
   gap: 16px;
+  overflow: auto;
 
   & > .buttons {
     display: flex;
     gap: 5px;
+  }
+
+  &::-webkit-scrollbar {
+    height: 2px;
+    width: 2px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #ADA7A7;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #660BE1;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #660BE1;
   }
 `;
 

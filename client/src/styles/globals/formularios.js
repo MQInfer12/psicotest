@@ -227,6 +227,7 @@ export const WhiteIconButton = styled.button`
   font-size: 16px;
   cursor: pointer;
   transition: all 0.2s;
+  min-width: ${props => props.minwidth};
 
   &:hover {
     color: #D9D9D9;
