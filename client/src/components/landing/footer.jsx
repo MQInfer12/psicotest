@@ -22,7 +22,7 @@ const Footer = () => {
         <FooterColumn>
           <FooterLinks>
             <ColumnTitle>Productos</ColumnTitle>
-            <FooterOptionLink to="#">PsicoTest</FooterOptionLink>
+            <FooterOptionLink to="#">Psicotest</FooterOptionLink>
           </FooterLinks>
         </FooterColumn>
         <FooterColumn>
@@ -49,7 +49,7 @@ const Footer = () => {
         </FooterColumn>
       </FooterInfo>
       <FooterRights>
-        <Rights>© 2022 PsicoTest / CIDTEC y todos los derechos reservados</Rights>
+        <Rights>© 2022 Psicotest / CIDTEC y todos los derechos reservados</Rights>
       </FooterRights>
     </FooterContainer>
   );

@@ -30,6 +30,7 @@ export const SideBarContainer = styled.nav`
   transform-origin: left;
   position: fixed;
   width: 263px;
+  gap: 54px;
 
   /* LO CONVIERTE EN OCULTABLE */
   @media ${device.tablet} {

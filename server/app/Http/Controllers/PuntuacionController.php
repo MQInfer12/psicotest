@@ -42,25 +42,17 @@ class PuntuacionController extends Controller
     public function massUpdate(Request $request)
     {
         $puntuaciones = $request->puntuaciones;
-        $dimensiones = [];
+        $idPreguntas = array_unique(array_column($puntuaciones, 'id_pregunta'));
+        $dimensiones = DB::select(
+            "SELECT DISTINCT ON (d.id) d.id 
+            FROM dimensions as d, preguntas as p, pregunta_dimensions as pd
+            WHERE p.id IN (".implode(',', $idPreguntas).") AND pd.id_pregunta=p.id AND pd.id_dimension=d.id"
+        );
         foreach($puntuaciones as $puntuacion) {
             $new = Puntuacion::findOrFail($puntuacion['id']);
             $new->asignado = $puntuacion['asignado'];
             $new->save();
-
-            $idPregunta = $puntuacion['id_pregunta'];
-            $idsDimensiones = DB::select(
-                "SELECT d.id 
-                FROM dimensions as d, preguntas as p, pregunta_dimensions as pd
-                WHERE p.id='$idPregunta' AND pd.id_pregunta=p.id AND pd.id_dimension=d.id"
-            );
-            foreach($idsDimensiones as $idDimension) {
-                if(!in_array($idDimension, $dimensiones)) {
-                    $dimensiones[] = $idDimension;
-                }
-            }
         }
-
         $naturales = $this->getPuntuacionesNaturales($dimensiones);
 
         return response()->json(["mensaje" => "se guardo correctamente", "data" => $naturales], 201);

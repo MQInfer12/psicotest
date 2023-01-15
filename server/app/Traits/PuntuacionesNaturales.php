@@ -2,8 +2,6 @@
 
 namespace App\Traits;
 
-use App\Models\PreguntaDimension;
-use App\Models\Puntuacion;
 use Illuminate\Support\Facades\DB;
 
 trait PuntuacionesNaturales {
@@ -20,13 +18,20 @@ trait PuntuacionesNaturales {
     }
 
     public function getPuntuacionNatural($id) {
-        $preguntas = PreguntaDimension::where('id_dimension',$id)->pluck('id_pregunta')->toArray();
+        $select = DB::select(
+            "SELECT p.id, s.vacio, s.multimarcado, pu.asignado
+            FROM seccions as s, preguntas as p, pregunta_dimensions as pd, dimensions as d, puntuacions as pu
+            WHERE p.id_seccion=s.id AND pu.id_pregunta=p.id
+            AND pd.id_pregunta=p.id AND pd.id_dimension=d.id AND d.id=$id"
+        );
+        $preguntas = array_unique(array_column($select, 'id'));
         $naturales = [];
         if(count($preguntas)) {
             $arrayDeArrays = [];
             foreach($preguntas as $pregunta) {
-                $array = Puntuacion::where('id_pregunta', $pregunta)->pluck('asignado')->toArray();
-                $options = DB::select("SELECT s.vacio, s.multimarcado FROM seccions as s, preguntas as p WHERE p.id_seccion=s.id AND p.id='$pregunta'")[0];
+                $new = $this->array_filter_column($select, 'id', $pregunta);
+                $array = array_column($new, 'asignado');
+                $options = $new[0];
                 $vacio = $options->vacio;
                 $multimarcado = $options->multimarcado;
                 if($multimarcado) {
@@ -46,35 +51,29 @@ trait PuntuacionesNaturales {
 
         //CODIGO PARA OBTENER LAS CONVERSIONES
         $conversiones = DB::select(
-            "SELECT c.id_escala_dimension, c.convertido, c.natural
+            "SELECT c.id_escala_dimension, c.convertido, c.natural, e.id as id_escala
             FROM conversions as c, dimensions as d, escalas as e, escala_dimensions as ed
             WHERE ed.id_dimension=d.id AND ed.id_escala=e.id 
             AND c.id_escala_dimension=ed.id 
             AND d.id='$id'"
         );
-        $idsEscalaDimension = DB::select(
-            "SELECT ed.id, e.id as id_escala
-            FROM dimensions as d, escalas as e, escala_dimensions as ed
-            WHERE ed.id_dimension=d.id AND ed.id_escala=e.id
-            AND d.id='$id'
-            ORDER BY e.id"
-        );
+        $idsEscalaDimension = array_unique(array_column($conversiones, 'id_escala_dimension'));
+        $idsEscala = array_unique(array_column($conversiones, 'id_escala'));
         $newNaturales = [];
         foreach($naturales as $natural) {
             $conversionesPorNatural = [];
-            foreach($idsEscalaDimension as $escalaDimension) {
+            foreach($idsEscalaDimension as $i => $escalaDimension) {
                 $flagEncontrado = false;
                 foreach($conversiones as $conversion) {
-                    if($conversion->natural == $natural && $conversion->id_escala_dimension == $escalaDimension->id) {
-                        $conversion->id_escala = $escalaDimension->id_escala;
+                    if($conversion->natural == $natural && $conversion->id_escala_dimension == $escalaDimension) {
                         $conversionesPorNatural[] = $conversion;
                         $flagEncontrado = true;
                     }
                 }
                 if(!$flagEncontrado) {
                     $conversionesPorNatural[] = array(
-                        "id_escala_dimension" => $escalaDimension->id,
-                        "id_escala" => $escalaDimension->id_escala,
+                        "id_escala_dimension" => $escalaDimension,
+                        "id_escala" => $idsEscala[$i],
                         "convertido" => "",
                         "natural" => $natural
                     );
@@ -128,5 +127,15 @@ trait PuntuacionesNaturales {
             }
         }
         return $combinations;
+    }
+
+    public function array_filter_column($array, $column, $value) {
+        $newArray = [];
+        foreach($array as $val) {
+            if($val->$column == $value) {
+                $newArray[] = $val;
+            }
+        }
+        return $newArray;
     }
 }

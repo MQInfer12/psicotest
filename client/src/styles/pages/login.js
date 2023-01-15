@@ -125,7 +125,7 @@ export const ButtonSubmit = styled.button`
     filter: grayscale(0.2);
   }
 
-  background: ${props => props.loading && "linear-gradient(90deg, rgba(118,19,253,1) 0%, rgba(149,71,255,1) 50%, rgba(118,19,253,1) 100%)"};
+  background: ${props => props.load && "linear-gradient(90deg, rgba(118,19,253,1) 0%, rgba(149,71,255,1) 50%, rgba(118,19,253,1) 100%)"};
   animation: animate 1.5s ease infinite;
 
   @keyframes animate {

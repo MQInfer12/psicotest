@@ -45,15 +45,18 @@ class TestController extends Controller
         $test->escalas = $escalas;
 
         $dimensiones = DB::select("SELECT * FROM dimensions WHERE id_test='$id' ORDER BY id");
-        $test->dimensiones = $dimensiones;
+        $idDimensiones = array_column($dimensiones, 'id');
+        $preguntasPorDimension = DB::select(
+            "SELECT id_pregunta, id_dimension FROM pregunta_dimensions WHERE id_dimension IN (".implode(',', $idDimensiones).")"
+        );
         foreach($dimensiones as $dimension) {
-            $preguntasPorDimension = PreguntaDimension::where('id_dimension',$dimension->id)->pluck('id_pregunta')->toArray();
-            $dimension->preguntas = $preguntasPorDimension;
+            $dimension->preguntas = array_column($this->array_filter_column($preguntasPorDimension, 'id_dimension', $dimension->id), 'id_pregunta');
 
             //CALCULAR ESCALA NATURAL DE CADA DIMENSION
             $naturales = $this->getPuntuacionNatural($dimension->id);
             $dimension->valores = $naturales;
         }
+        $test->dimensiones = $dimensiones;
 
         $secciones = DB::select(
             "SELECT *
@@ -61,15 +64,28 @@ class TestController extends Controller
             WHERE id_test='$id'
             ORDER BY orden"
         );
+        $preguntasPorSecciones = DB::select(
+            "SELECT p.id, p.id_seccion, p.descripcion 
+            FROM preguntas as p, seccions as s 
+            WHERE p.id_seccion=s.id AND s.id_test='$id'
+            ORDER BY p.id"
+        );
+        $reactivosPorSecciones = DB::select(
+            "SELECT r.id, r.id_seccion, r.descripcion 
+            FROM reactivos as r, seccions as s 
+            WHERE r.id_seccion=s.id AND s.id_test='$id'
+            ORDER BY r.id"
+        );
+        $puntuacionesPorSecciones = DB::select(
+            "SELECT pu.id, pu.id_pregunta, pu.id_reactivo, pu.asignado, s.id as id_seccion 
+            FROM puntuacions as pu, reactivos as r, seccions as s
+            WHERE pu.id_reactivo=r.id AND r.id_seccion=s.id AND s.id_test='$id'
+            ORDER BY r.id"
+        );
         foreach($secciones as $seccion) {
-            $idSeccion = $seccion->id;
-            $seccion->preguntas = DB::select("SELECT * FROM preguntas WHERE id_seccion='$idSeccion' ORDER BY id");
-            $seccion->reactivos = DB::select("SELECT * FROM reactivos WHERE id_seccion='$idSeccion' ORDER BY id");
-            $seccion->puntuaciones = DB::select(
-                "SELECT DISTINCT on (pu.id) pu.id, pu.id_pregunta, pu.id_reactivo, pu.asignado 
-                FROM puntuacions as pu, preguntas as pr, reactivos as r
-                WHERE (pu.id_pregunta=pr.id AND pr.id_seccion='$id') OR (pu.id_reactivo=r.id AND r.id_seccion='$idSeccion')"
-            );
+            $seccion->preguntas = $this->array_filter_column($preguntasPorSecciones, 'id_seccion', $seccion->id);
+            $seccion->reactivos = $this->array_filter_column($reactivosPorSecciones, 'id_seccion', $seccion->id);
+            $seccion->puntuaciones = $this->array_filter_column($puntuacionesPorSecciones, 'id_seccion', $seccion->id);;
         }
         $test->secciones = $secciones;
 

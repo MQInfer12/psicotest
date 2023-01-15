@@ -18,7 +18,7 @@ const LoginTemplate = ({ children, title, submitButton, handleSubmit, toLogin, t
             <form>
               { children }
               { responseMessage && <Instructions alert>{responseMessage}</Instructions>}
-              <ButtonSubmit loading={loading} onClick={handleSubmit}>{ loading ? "CARGANDO..." : submitButton}</ButtonSubmit>
+              <ButtonSubmit load={loading} onClick={handleSubmit}>{ loading ? "CARGANDO..." : submitButton}</ButtonSubmit>
             </form>
             <GoToDiv>
               {

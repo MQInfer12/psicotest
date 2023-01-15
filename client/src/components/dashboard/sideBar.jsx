@@ -1,8 +1,9 @@
 import React from "react";
-import Logo from "../../assets/dashboard/logopsico.png";
 import LogoutButton from "./logoutButton";
 import { useWindowHeight } from "../../hooks/useWindowHeight";
-import { SideBarContainer, SideBarIcon, SideBarLink, SideBarList, SideBarLogo, SideBarOptionText } from "../../styles/pages/dashboard";
+import { SideBarContainer, SideBarIcon, SideBarLink, SideBarList, SideBarOptionText } from "../../styles/pages/dashboard";
+import { PageTitle } from "../../styles/pages/landing";
+import Logo from "../../assets/logo/logo.png"
 
 const SideBar = ({ rol, setUser, openNav, setOpenNav }) => {
   const windowHeight = useWindowHeight();
@@ -73,7 +74,7 @@ const SideBar = ({ rol, setUser, openNav, setOpenNav }) => {
 
   return (
     <SideBarContainer height={windowHeight} openNav={openNav}>
-      <SideBarLogo src={Logo} />
+      <PageTitle><img src={Logo}/>Psicotest</PageTitle>
       <SideBarList>
         {
           linksData.map((v, i) => (

@@ -74,6 +74,13 @@ export const PageTitle = styled.h1`
   font-size: 20px;
   font-weight: 600;
   color: #000000;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  & > img {
+    height: 35px;
+  }
 `;
 
 export const OptionList = styled.ul`

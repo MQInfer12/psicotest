@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ButtonContainer, DisplayButton, LoginLink, Nav, OptionLink, OptionList, PageTitle, RegisterLink, TitleLink } from '../../styles/pages/landing';
+import Logo from '../../assets/logo/logo.png'
 
 const Navbar = () => {
   const [displayOptions, setDisplayOptions] = useState(false);
@@ -8,7 +9,7 @@ const Navbar = () => {
     <Nav>
       <ButtonContainer>
         <TitleLink to="/">
-          <PageTitle>Psico Test</PageTitle>
+          <PageTitle><img src={Logo}/>Psicotest</PageTitle>
         </TitleLink>
         <DisplayButton onClick={() => setDisplayOptions(!displayOptions)}>
           {
