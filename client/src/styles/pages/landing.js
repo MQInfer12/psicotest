@@ -42,7 +42,7 @@ export const DisplayButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, #6209DB 0%, #7613FD 100%);
+  background: linear-gradient(180deg, #660BE1 0%, #7613FD 100%);
   border-radius: 6px;
   border: none;
   color: #FFFFFF;
@@ -73,7 +73,7 @@ export const TitleLink = styled(Link)`
 export const PageTitle = styled.h1`
   font-size: 20px;
   font-weight: 300;
-  color: #000000;
+  color: #3E435D;
   display: flex;
   gap: 10px;
   align-items: center;
@@ -106,7 +106,7 @@ export const OptionLink = styled(Link)`
   text-decoration: none;
   font-size: 16px;
   font-weight: 400;
-  color: #000000;
+  color: #3E435D;
   position: relative;
 
   &::after {
@@ -115,7 +115,7 @@ export const OptionLink = styled(Link)`
     position: absolute;
     bottom: 0;
     left: 0;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #3E435D;
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.3s;
@@ -136,7 +136,7 @@ export const LoginLink = styled(Link)`
   font-size: 16px;
   cursor: pointer;
   transition: all 0.3s;
-  color: #000000;
+  color: #3E435D;
 
   &:hover {
     opacity: 0.7;
@@ -150,7 +150,7 @@ export const LoginLink = styled(Link)`
 export const RegisterLink = styled(Link)`
   text-decoration: none;
   padding: 10px 20px;
-  background: linear-gradient(180deg, #6209DB 0%, #7613FD 100%);
+  background: linear-gradient(180deg, #660BE1 0%, #7613FD 100%);
   border-radius: 6px;
   font-weight: 600;
   font-size: 16px;
@@ -169,6 +169,8 @@ export const FirstSectionContainer = styled.div`
   width: 100%;
   min-height: 100vh;
   display: flex;
+  background-color: #FFFFFF;
+  color: #3E435D;
 
   @media ${device.laptop} {
     flex-direction: column;
@@ -201,14 +203,14 @@ export const NewContainer = styled.div`
   gap: 10px;
   font-size: 12px;
   font-weight: 400;
-  color: #6209db;
+  color: #660BE1;
   padding-bottom: 10px;
 
   &::before {
     content: "Nuevo";
     padding: 4px 6px;
     color: #ffffff;
-    background: linear-gradient(180deg, #6209db 0%, #7613fd 100%);
+    background: linear-gradient(180deg, #660BE1 0%, #7613fd 100%);
     border-radius: 6px;
   }
 `;
@@ -221,7 +223,7 @@ export const BestPlatform = styled.h2`
 
   &::after {
     content: ".";
-    color: #6209db;
+    color: #660BE1;
   }
 `;
 
@@ -234,7 +236,7 @@ export const PlatformInfo = styled.h3`
 export const OpenAccountLink = styled(Link)`
   text-decoration: none;
   width: fit-content;
-  background: linear-gradient(180deg, #6209db 0%, #7613fd 100%);
+  background: linear-gradient(180deg, #660BE1 0%, #7613fd 100%);
   border-radius: 6px;
   padding: 20px;
   color: #ffffff;
@@ -254,7 +256,7 @@ export const RightContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f5f5f5;
+  background-color: #F4F4F4;
   border-radius: 0 0 0 50px;
 
   @media ${device.laptop} {
@@ -267,7 +269,7 @@ export const PurpleCircle = styled.div`
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  background: linear-gradient(180deg, #6209db 0%, #7613fd 100%);
+  background: linear-gradient(180deg, #660BE1 0%, #7613fd 100%);
   position: relative;
 
   @media (max-width: 520px) {
@@ -298,6 +300,8 @@ export const Img = styled.img`
 export const SecondSectionContainer = styled.div`
   padding: 60px 0;
   display: flex;
+  background-color: #FFFFFF;
+  color: #3E435D;
 
   @media ${device.laptop} {
     flex-direction: reverse;
@@ -327,7 +331,7 @@ export const PurpleDiv = styled.div`
   padding-top: 40px;
   width: 500px;
   height: 600px;
-  background: linear-gradient(180deg, #6209DB 0%, #7613FD 100%);
+  background: linear-gradient(180deg, #660BE1 0%, #7613FD 100%);
   border-radius: 50px;
   overflow: hidden;
 `;
@@ -357,7 +361,7 @@ export const MakeYourTests = styled.h2`
 
   &::after {
     content: ".";
-    color: #6209DB;
+    color: #660BE1;
   }
 `;
 
@@ -414,12 +418,14 @@ export const ThirdSectionContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #FFFFFF;
+  color: #3E435D;
 `;
 
 export const GrayDiv = styled.div`
   min-height: 535px;
   width: 1200px;
-  background-color: #F5F5F5;
+  background-color: #F4F4F4;
   border-radius: 50px;
   padding: 50px 20px;
   display: flex;
@@ -458,7 +464,7 @@ export const SendResponses = styled.h2`
 
   &::after {
     content: ".";
-    color: #6209DB;
+    color: #660BE1;
   }
 `;
 
@@ -478,7 +484,7 @@ export const ThirdPurpleCircle = styled.div`
   width: 350px;
   height: 350px;
   border-radius: 50%;
-  background: linear-gradient(180deg, #6209DB 0%, #7613FD 100%);
+  background: linear-gradient(180deg, #660BE1 0%, #7613FD 100%);
   position: relative;
 `;
 
@@ -501,10 +507,11 @@ export const FourthSectionContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: #FFFFFF;
 `;
 
 export const FourthPurpleDiv = styled.div`
-  background: linear-gradient(180deg, #6209DB 0%, #7613FD 100%);
+  background: linear-gradient(180deg, #660BE1 0%, #7613FD 100%);
   border-radius: 25px;
   width: 100%;
   max-width: 1000px;
@@ -561,7 +568,7 @@ export const DivButtonInput = styled.div`
 export const OpenAccountButton = styled.button`
   border: none;
   width: fit-content;
-  background: linear-gradient(180deg, #6209DB 0%, #7613FD 100%);
+  background: linear-gradient(180deg, #660BE1 0%, #7613FD 100%);
   border-radius: 6px;
   padding: 20px;
   color: #FFFFFF;
@@ -582,6 +589,8 @@ export const FooterContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: #FFFFFF;
+  color: #3E435D;
 `;
 
 export const FooterInfo = styled.div`
@@ -628,7 +637,7 @@ export const FooterOptionLink = styled(Link)`
   text-decoration: none;
   font-size: 12px;
   font-weight: 400;
-  color: #000000;
+  color: #3E435D;
   position: relative;
 
   &::after {
@@ -637,7 +646,7 @@ export const FooterOptionLink = styled(Link)`
     position: absolute;
     bottom: 0;
     left: 0;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #3E435D;
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.3s;
@@ -654,7 +663,7 @@ export const ColumnA = styled.a`
   text-decoration: none;
   font-size: 12px;
   font-weight: 400;
-  color: #000000;
+  color: #3E435D;
   position: relative;
   cursor: pointer;
 
@@ -664,7 +673,7 @@ export const ColumnA = styled.a`
     position: absolute;
     bottom: 0;
     left: 0;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #3E435D;
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.3s;
@@ -684,11 +693,11 @@ export const IconsDiv = styled.div`
 export const IconA = styled.a`
   text-decoration: none;
   font-size: 16px;
-  color: #000000;
+  color: #3E435D;
   transition: all 0.4s;
 
   &:hover {
-    color: #6209db;
+    color: #660BE1;
   }
 `;
 
@@ -696,7 +705,7 @@ export const FooterRights = styled.div`
   width: 80%;
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(62, 67, 93, 0.1);
   padding-top: 20px;
   gap: 20px;
 `;
@@ -710,7 +719,7 @@ export const Rights = styled.p`
 
 export const ArticlesSectionContainer = styled.div`
   padding: 40px;
-  background-color: #f5f5f5;
+  background-color: #F4F4F4;
 `;
 
 export const ArticlesTitleText = styled.h2`
@@ -721,7 +730,7 @@ export const ArticlesTitleText = styled.h2`
 
   &::after {
     content: ".";
-    color: #6209db;
+    color: #660BE1;
   }
 `;
 

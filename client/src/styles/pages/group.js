@@ -30,7 +30,7 @@ export const DivGroupCard = styled.div`
   border-radius: 20px;
   width: 350px;
   height: 200px;
-  background-color: #e0e0e0;
+  background-color: #E6E6E6;
   overflow: hidden;
   display: flex;
   flex-direction: column;

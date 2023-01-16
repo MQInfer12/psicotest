@@ -23,12 +23,12 @@ export const DivIcon = styled.i`
 
 export const H2Title = styled.h2`
   font-size: 1.2rem;
-  color: #1a3260;
+  color: #3E435D;
 `;
 
 export const PText = styled.p`
   font-size: 1rem;
-  color: #808291;
+  color: #ADA7A7;
 `;
 
 export const DivButtons = styled.div`

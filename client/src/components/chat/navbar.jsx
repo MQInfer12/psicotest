@@ -8,7 +8,6 @@ const Navbar = () => {
 
   return (
     <NavbarContainer>
-      <span className="logo">UNIFRANZ</span>
       <div className="user">
         <ProfilePic
           width="24px"
@@ -16,6 +15,7 @@ const Navbar = () => {
           perfil={user.perfil}
         />
       </div>
+      <span className="logo">UNIFRANZ</span>
     </NavbarContainer>
   );
 };

@@ -68,7 +68,7 @@ export const InputText = styled.input`
   border-radius: 5px;
   border: 1px solid #D9D9D9;
   outline: none;
-  color: #636161;
+  color: #ADA7A7;
   min-width: 300px;
   width: 100%;
   height: 38px;
@@ -81,7 +81,7 @@ export const InputSelect = styled.select`
   border-radius: 5px;
   border: 1px solid #D9D9D9;
   outline: none;
-  color: #636161;
+  color: #ADA7A7;
   min-width: 300px;
   width: 100%;
   height: 38px;
@@ -91,7 +91,7 @@ export const InputSelect = styled.select`
 export const ErrorCss = styled.p`
   font-size: 0.7rem;
   font-weight: bold;
-  color: #dc3545;
+  color: #D12953;
 `;
 
 export const PurpleButton = styled.button`

@@ -10,7 +10,7 @@ const AnswersReports = ({ setTableRef, respuestas }) => {
 
   const ThStyle = {
     backgroundColor: "#ebf0fa",
-    color: "#464f60"
+    color: "#3E435D"
   }
 
   return (
@@ -54,14 +54,14 @@ const AnswersReports = ({ setTableRef, respuestas }) => {
             <td>
               <p style={{
                 backgroundColor: 
-                  v.estado == 0 ? "#f1f1f1" :
-                  v.estado == 1 ? "#d7dbfd" :
+                  v.estado == 0 ? "#F4F4F4" :
+                  v.estado == 1 ? "#F0F1FA" :
                   v.estado == 0 ? "#d4ffea" :
                   v.estado == 0 && "#fad9e3",
                 color:
-                  v.estado == 0 ? "#5A6376" :
+                  v.estado == 0 ? "#3E435D" :
                   v.estado == 1 ? "#4F5AED" :
-                  v.estado == 0 ? "#14804A" :
+                  v.estado == 0 ? "#179E5B" :
                   v.estado == 0 && "#D12953" 
               }}>
                 {v.estado == 0

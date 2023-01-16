@@ -17,7 +17,7 @@ export const MonthContainer = styled.div`
 `;
 
 export const CalendarMonth = styled.h2`
-  color: #000000;
+  color: #3E435D;
   font-size: 36px;
   font-weight: 600;
 `;
@@ -41,7 +41,7 @@ export const DaysTd = styled.td`
   height: 50px;
   min-width: 50px;
   z-index: 1;
-  color: ${(props) => props.month && "rgba(0, 0, 0, 0.3)"};
+  color: ${(props) => props.month && "rgba(62, 67, 93, 0.3)"};
   color: ${(props) => props.today && "#FFFFFF"};
   cursor: pointer;
 
@@ -240,6 +240,7 @@ export const DivDay = styled.div`
 export const PDay = styled.p`
   color: ${props => props.today && '#660BE1'};
   padding: 1px 10px;
+  color: #3E435D;
 `;
 
 // TASK CARD

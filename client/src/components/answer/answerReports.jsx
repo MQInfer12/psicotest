@@ -9,7 +9,7 @@ const AnswerReports = ({ secciones, respuesta, setTableRef }) => {
 
   const ThStyle = {
     backgroundColor: "#ebf0fa",
-    color: "#464f60"
+    color: "#3E435D"
   }
 
   return (
@@ -90,7 +90,7 @@ const AnswerReports = ({ secciones, respuesta, setTableRef }) => {
                         <p style={{
                           backgroundColor: respuesta.resultados.find(resultado =>
                             puntuacion.id == resultado.id_puntuacion
-                          ) ? "#d7dbfd" : "" 
+                          ) ? "#F0F1FA" : "" 
                         }}>
                           {respuesta.resultados.find(resultado =>
                               puntuacion.id == resultado.id_puntuacion

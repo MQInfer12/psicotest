@@ -149,7 +149,7 @@ export const PCheckbox = styled.p`
 export const PreguntaCreatorContainer = styled.div`
   height: calc(100% - 40px);
   width: 622px;
-  box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 8px 34px rgba(62, 67, 93, 0.1);
   background-color: #EBF0FA;
   border-radius: 10px;
   display: flex;
@@ -166,7 +166,7 @@ export const DeleteContainer = styled.div`
 export const PSelected = styled.p`
   height: max-content;
   font-size: 12px;
-  color: #464F60;
+  color: #3E435D;
 `;
 
   //TABLA
@@ -203,7 +203,7 @@ export const DivButtonsTd = styled.div`
 export const ReactivoCreatorContainer = styled.div`
   height: calc(100% - 40px);
   width: 737px;
-  box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 8px 34px rgba(62, 67, 93, 0.1);
   background-color: #EBF0FA;
   border-radius: 10px;
   display: flex;
@@ -222,7 +222,7 @@ export const HeadContainer = styled.div`
 export const InputNumber = styled.input`
   border: none;
   background-color: ${props => props.blink ? "#660be1" : "transparent"};
-  color: ${props => props.blink ? "#FFFFFF" : "#687182"};
+  color: ${props => props.blink ? "#FFFFFF" : "#ADA7A7"};
   text-align: center;
   width: 40%;
   outline: none;
@@ -240,8 +240,8 @@ export const ThReactivo = styled.th`
   position: relative;
   font-weight: 400;
   transition: all 0.2s;
-  border-left: ${props => props.border && "1px solid #D0D0D0"};
-  border-left: ${props => props.border && "1px solid #D0D0D0"};
+  border-left: ${props => props.border && "1px solid #ADA7A7"};
+  border-left: ${props => props.border && "1px solid #ADA7A7"};
 
   &:hover {
     & > p {
@@ -299,7 +299,7 @@ export const PaginationContainer = styled.div`
 export const PaginationCounter = styled.p`
   font-size: 12px;
   letter-spacing: 0.03em;
-  color: #687182;
+  color: #ADA7A7;
 `;
 
 export const ChangePageContainer = styled.div`
@@ -310,7 +310,7 @@ export const ChangePageContainer = styled.div`
 
 export const RowsPage = styled.p`
   font-size: 12px;
-  color: #687182;
+  color: #ADA7A7;
 `;
 
 export const ButtonPagContainer = styled.div`
@@ -320,14 +320,14 @@ export const ButtonPagContainer = styled.div`
 `;
 
 export const ButtonChange = styled.button`
-  box-shadow: 0px 0px 0px 1px rgba(70, 79, 96, 0.24);
+  box-shadow: 0px 0px 0px 1px rgba(62, 67, 93, 0.24);
   width: 24px;
   height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 7px;
-  color: #868FA0;
+  color: #ADA7A7;
   border: none;
   border-radius: 6px;
   cursor: pointer;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const AnswersContainer = styled.div`
   height: ${props => props.height ? props.height : "100%"};
   max-width: ${props => props.maxw};
-  box-shadow: 0px 8px 34px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 8px 34px rgba(62, 67, 93, 0.1);
   background-color: #ebf0fa;
   border-radius: ${props => !props.noRadius && "10px"};
   display: flex;
@@ -114,7 +114,7 @@ export const TableAnswers = styled.table`
   & > thead {
     height: 40px;
     background-color: #ebf0fa;
-    box-shadow: ${props => props.sticky && "0px 4px 4px rgba(0, 0, 0, 0.1)"};
+    box-shadow: ${props => props.sticky && "0px 4px 4px rgba(62, 67, 93, 0.1)"};
     position: ${props => props.sticky && "sticky"};
     top: ${props => props.sticky && "0"};
     z-index: ${props => props.sticky && "1"};
@@ -127,7 +127,7 @@ export const TableAnswers = styled.table`
 
 export const ThNumberal = styled.th`
   font-size: 11px;
-  color: #171c26;
+  color: #3E435D;
   padding-left: 11px;
   width: 47px;
   text-align: start;
@@ -140,9 +140,9 @@ export const ThAnswer = styled.th`
   font-weight: 600;
   text-transform: uppercase;
   text-align: ${props => props.center ? "center" : "start"};
-  border-left: ${props => props.border && "1px solid #D0D0D0"};
-  border-right: ${props => props.border && "1px solid #D0D0D0"};
-  color: #464f60;
+  border-left: ${props => props.border && "1px solid #ADA7A7"};
+  border-right: ${props => props.border && "1px solid #ADA7A7"};
+  color: #3E435D;
   overflow: hidden;
 `;
 
@@ -150,7 +150,7 @@ export const ThNumber = styled.th`
   border: ${props => props.mini && "1px solid #ebf0fa"};
   font-size: 14px;
   font-weight: 500;
-  color: #171c26;
+  color: #3E435D;
   padding-left: 11px;
   width: 47px;
   text-align: start;
@@ -177,7 +177,7 @@ export const DivCenter = styled.div`
 
 export const PNombre = styled.p`
   font-size: 14px;
-  color: #171c26;
+  color: #3E435D;
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
@@ -185,7 +185,7 @@ export const PNombre = styled.p`
 `;
 
 export const PLight = styled.p`
-  color: #687182;
+  color: #ADA7A7;
   font-size: 12px;
   font-weight: 400;
   white-space: nowrap;
@@ -196,7 +196,7 @@ export const PLight = styled.p`
 export const PLightDouble = styled.p`
   text-align: ${props => props.center ? "center" : "start"};
   padding-right: 10px;
-  color: #687182;
+  color: #ADA7A7;
   font-size: 12px;
   font-weight: 400;
   overflow: hidden;
@@ -209,7 +209,7 @@ export const PLightDouble = styled.p`
 export const PPuntaje = styled.p`
   font-size: 14px;
   font-weight: 400;
-  color: #464f60;
+  color: #3E435D;
   width: 100%;
   text-align: end;
 `;
@@ -217,7 +217,7 @@ export const PPuntaje = styled.p`
 export const PSobre = styled.p`
   font-size: 12px;
   font-weight: 400;
-  color: #687182;
+  color: #ADA7A7;
   width: 100%;
   text-align: end;
 `;

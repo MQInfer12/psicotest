@@ -19,7 +19,7 @@ export const UpContainer = styled.div`
 export const PDetalles = styled.div`
   font-weight: 400;
   font-size: 20px;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(62, 67, 93, 0.5);
 `;
 
 export const DownContainer = styled.div`

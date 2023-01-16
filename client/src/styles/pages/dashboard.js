@@ -336,7 +336,7 @@ export const PhotoContainer = styled.div`
 
 export const ProfilePencil = styled.div`
   opacity: 0;
-  background-color: rgb(0, 0, 0, 0.4);
+  background-color: rgb(62, 67, 93, 0.4);
   position: absolute;
   top: 0;
   right: 0;
@@ -361,7 +361,7 @@ export const UpbarNot = styled.div`
   min-width: 52px;
   height: 52px;
   border-radius: ${props => props.showNots ? "10px 10px 0 0" : "10px"};
-  background-color: #FAFAFA;
+  background-color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -393,7 +393,7 @@ export const NotificationsContainer = styled.div`
   width: 350px;
   min-height: 60px;
   max-height: 300px;
-  background-color: #FAFAFA;
+  background-color: #FFFFFF;
   position: absolute;
   top: 52px;
   right: -82px;
@@ -483,7 +483,7 @@ export const DescripNot = styled.p`
 
 export const LinkSpan = styled.button`
   position: relative;
-  color: #670ce3;
+  color: #660BE1;
   cursor: pointer;
   text-decoration: none;
   background-color: transparent;
@@ -495,7 +495,7 @@ export const LinkSpan = styled.button`
     position: absolute;
     left: 0;
     bottom: 0;
-    border-top: 1px solid #670ce3;
+    border-top: 1px solid #660BE1;
     transition: all 0.2s;
   }
 

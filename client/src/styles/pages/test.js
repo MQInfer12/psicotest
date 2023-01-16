@@ -46,10 +46,10 @@ export const DivNothing = styled.div`
 
 export const Container = styled.div`
   width: 322px;
-  background-color: #fff;
+  background-color: #FFFFFF;
   padding: 28px 32px 32px 32px;
   border-radius: 10px;
-  border-top: 14px solid #670ce3;
+  border-top: 14px solid #660BE1;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -59,7 +59,7 @@ export const H2 = styled.h2`
   height: 60px;
   font-weight: 400;
   font-size: 20px;
-  color: #000000;
+  color: #3E435D;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -72,7 +72,7 @@ export const P = styled.p`
   font-weight: 400;
   font-size: 14px;
   line-height: 24px;
-  color: #000000;
+  color: #3E435D;
   opacity: 0.6;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -83,7 +83,7 @@ export const P = styled.p`
 
 export const Span = styled.span`
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(62, 67, 93, 0.4);
   margin-left: 3px;
 `;
 

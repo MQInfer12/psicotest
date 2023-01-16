@@ -37,10 +37,10 @@ export const ArticleContainer = styled.div`
 export const ArticleCardContainer = styled.div`
   min-width: 322px;
   max-width: 322px;
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 28px 32px 32px 32px;
   border-radius: 10px;
-  border-top: 14px solid #670ce3;
+  border-top: 14px solid #660BE1;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -49,7 +49,7 @@ export const ArticleCardContainer = styled.div`
 export const ArticleCardH2 = styled.h2`
   font-weight: 400;
   font-size: 20px;
-  color: #000000;
+  color: #3E435D;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -61,7 +61,7 @@ export const ArticleCardP = styled.p`
   font-weight: 400;
   font-size: 14px;
   line-height: 24px;
-  color: #000000;
+  color: #3E435D;
   opacity: 0.6;
   overflow: hidden;
   text-overflow: ellipsis;

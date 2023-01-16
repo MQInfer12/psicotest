@@ -19,8 +19,8 @@ export const SidebarContainer = styled.div`
   width: 350px;
   min-width: 350px;
   max-width: 350px;
-  border-right: 1px solid #3d3c61;
-  background-color: #3e3c61;
+  border-right: 1px solid #2F2D52;
+  background-color: #3E3C61;
   overflow-x: hidden;
   z-index: 1;
   display: ${props => props.showSide ? "block" : "none"};
@@ -40,8 +40,8 @@ export const NavbarContainer = styled.div`
   background-color: #2f2d52;
   height: 45px;
   padding: 10px;
-  justify-content: space-between;
-  color: #ddddf7;
+  gap: 10px;
+  color: #EBF0FA;
 
   @media (max-width: 1080px) {
       flex-direction: column;
@@ -62,8 +62,8 @@ export const NavbarContainer = styled.div`
     gap: 10px;
 
     button {
-      background-color: #5d5b8d;
-      color: #ddddf7;
+      background-color: #2F2D52;
+      color: #EBF0FA;
       font-size: 10px;
       border: none;
       cursor: pointer;
@@ -82,7 +82,7 @@ export const ChatsContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
-    color: white;
+    color: #FFFFFF;
     cursor: pointer;
     width: 100%;
 
@@ -100,7 +100,7 @@ export const ChatsContainer = styled.div`
       }
       p {
         font-size: 14px;
-        color: lightgray;
+        color: #F4F4F4;
         overflow: hidden;
         text-overflow: ellipsis;
       }
@@ -112,12 +112,12 @@ export const ChatComContainer = styled.div`
   width: ${(props) => (props.showSide ? "calc(100% - 350px)" : "100%")};
 
   .chatInfo {
-    background-color: #5d5b8d;
+    background-color: #2F2D52;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
-    color: lightgray;
+    color: #F4F4F4;
     height: 45px;
   }
 
@@ -138,7 +138,7 @@ export const ChatComContainer = styled.div`
 `;
 
 export const MessagesContainer = styled.div`
-  background-color: #ddddf7;
+  background-color: #EBF0FA;
   padding: 10px;
   height: calc(100% - 95px);
   overflow-y: scroll;
@@ -146,13 +146,14 @@ export const MessagesContainer = styled.div`
 
 export const MessageContainer = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 10px;
   margin-bottom: 20px;
 
   .messageInfo {
     display: flex;
     flex-direction: column;
-    color: gray;
+    color: #ADA7A7;
+    align-items: center;
     font-weight: 300;
   }
   
@@ -167,7 +168,8 @@ export const MessageContainer = styled.div`
       width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
-      background-color: white;
+      background-color: #FFFFFF;
+      color: #3E435D;
       padding: 10px 20px;
       border-radius: 0px 10px 10px 10px;
     }
@@ -184,8 +186,8 @@ export const MessageContainer = styled.div`
       align-items: flex-end;
 
       p {
-        background-color: #8da4f1;
-        color: white;
+        background-color: #866EFB;
+        color: #FFFFFF;
         border-radius: 10px 0px 10px 10px;
       }
     }
@@ -194,7 +196,7 @@ export const MessageContainer = styled.div`
 
 export const InputComp = styled.div`
   height: 50px;
-  background-color: white;
+  background-color: #FFFFFF;
   padding: 10px;
   display: flex;
   align-items: center;
@@ -208,7 +210,7 @@ export const InputComp = styled.div`
     font-size: 18px;
 
     &::placeholder {
-      color: lightgray;
+      color: #F4F4F4;
     }
   }
   .send {
@@ -224,9 +226,10 @@ export const InputComp = styled.div`
     button {
       border: none;
       padding: 10px 15px;
-      color: white;
-      background-color: #8da4f1;
+      color: #FFFFFF;
+      background-color: #866EFB;
       cursor: pointer;
+      border-radius: 10px;
     }
   }
 `;

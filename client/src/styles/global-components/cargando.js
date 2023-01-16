@@ -36,6 +36,6 @@ export const Loader = styled.div`
 `;
 
 export const SpanLoader = styled.span`
-  color: #1a3260;
+  color: #3E435D;
   text-transform: uppercase;
 `;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const DivPic = styled.div`
   border-radius: ${props => props.border ? "100%" : "10px"};
-  border: ${props => props.border && "2px solid #FFFFFF"};
+  border: ${props => props.border && "2px solid};
   transform: ${props => `translateX(${-15 * props.translation}px)`};
   width: ${(props) => props.width};
   height: ${(props) => props.height};

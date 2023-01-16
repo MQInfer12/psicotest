@@ -123,7 +123,7 @@ const CalendarMini = ({
                 return (
                   <EventCard key={i}
                     v={{...v, fecha: fechaSelected.DMY}}
-                    color={"#14804A"}
+                    color={"#179E5B"}
                     event={"Cita"}
                     rol={user.id_rol}
                     llenarTareas={llenarTareas} 
@@ -134,7 +134,7 @@ const CalendarMini = ({
                   return (
                     <EventCard key={i}
                       v={{...v, fecha: fechaSelected.DMY}}
-                      color={"#817633"}
+                      color={"#B3A449"}
                       event={"Pendientes"}
                       rol={user.id_rol}
                       llenarTareas={llenarTareas}
@@ -144,7 +144,7 @@ const CalendarMini = ({
                   return (
                     <EventCard key={i}
                       v={{...v, fecha: fechaSelected.DMY}}
-                      color={"#817633"}
+                      color={"#B3A449"}
                       event={"Pendiente"}
                       rol={user.id_rol}
                       llenarTareas={llenarTareas}

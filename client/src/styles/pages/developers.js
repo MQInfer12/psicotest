@@ -5,6 +5,7 @@ export const AllContainer = styled.div`
   display: flex;
   justify-content: center;
   overflow: hidden;
+  color: #3E435D;
 
   @media (max-width: 800px) {
     padding-top: 90px;
@@ -31,14 +32,14 @@ export const Column = styled.div`
   height: 100%;
   transition: all 0.5s;
   transform: skewX(-5deg);
-  background-color: #f5f5f5;
+  background-color: #F4F4F4;
   display: grid;
   place-content: center;
   padding: 40px;
 
   &:hover {
     width: calc(100% + 30px);
-    background-color: #6209db;
+    background-color: #660BE1;
 
     & .nombres {
       color: #FFFFFF;
@@ -94,7 +95,7 @@ export const ButtonContact = styled.a`
   text-decoration: none;
   padding: 10px 20px;
   background-color: #FFFFFF;
-  color: #6209db;
+  color: #660BE1;
   font-weight: 500;
   border: none;
   border-radius: 10px;

@@ -21,7 +21,7 @@ export const DivImagelog = styled.div`
   height: 100%;
 
   @media ${device.tablet} {
-    filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
+    filter: drop-shadow(-1px 6px 3px rgba(50, 562, 67, 93.5));
   }
 `;
 
@@ -80,7 +80,7 @@ export const DivContainer = styled.div`
 export const H1Title = styled.h1`
   font-size: 60px;
   font-weight: 700;
-  color: #000000;
+  color: #3E435D;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -90,7 +90,7 @@ export const H1Title = styled.h1`
     content: "";
     width: 96px;
     border-top: 2px solid #7613fd;
-    background-color: #000000;
+    background-color: #3E435D;
     transition: all 0.2s;
   }
 
@@ -125,7 +125,7 @@ export const ButtonSubmit = styled.button`
     filter: grayscale(0.2);
   }
 
-  background: ${props => props.load && "linear-gradient(90deg, rgba(118,19,253,1) 0%, rgba(149,71,255,1) 50%, rgba(118,19,253,1) 100%)"};
+  background: ${props => props.load && "linear-gradient(90deg, rgba(118,19,253,1) 0%, rgba(134, 110, 251,1) 50%, rgba(118,19,253,1) 100%)"};
   animation: animate 1.5s ease infinite;
 
   @keyframes animate {
@@ -154,13 +154,13 @@ export const GoToContainer = styled.div`
 `;
 
 export const GoToDescription = styled.p`
-  color: #000000;
+  color: #3E435D;
   font-size: 12px;
   font-weight: 400;
 `;
 
 export const Instructions = styled.p`
-  color: ${props => props.alert ? "red" : "#000000"};
+  color: ${props => props.alert ? "red" : "#3E435D"};
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 20px;
@@ -195,7 +195,7 @@ export const DivInputBox = styled.div`
 export const InputText = styled.input`
   width: 100%;
   background: transparent;
-  color: #808291;
+  color: #ADA7A7;
   border: none;
   outline: none;
   box-shadow: none;
@@ -206,7 +206,7 @@ export const InputText = styled.input`
 
   &:valid ~ span,
   &:focus ~ span {
-    color: #2196f3;
+    color: #4F5AED;
     transform: translateY(-16px);
     font-size: 0.65em;
   }
@@ -221,7 +221,7 @@ export const SpanText = styled.span`
   position: absolute;
   left: 0;
   padding: 10px 0 5px;
-  color: #808291;
+  color: #ADA7A7;
   pointer-events: none;
   letter-spacing: 0.1em;
   transition: 0.5s;
@@ -233,7 +233,7 @@ export const IInput = styled.i`
   bottom: 0;
   width: 100%;
   height: 2px;
-  background: #808291;
+  background: #ADA7A7;
   overflow: hidden;
   background: ${props => props.mostrarError && "red"};
 
@@ -245,11 +245,11 @@ export const IInput = styled.i`
     height: 100%;
     background: linear-gradient(
       90deg,
-      #ff1b69,
+      #D12953,
       #ff0,
-      #2196f3,
+      #4F5AED,
       #7613fd,
-      #ff1b69
+      #D12953
     );
     animation: animate ${props => props.lento ? "16s" : "2s"} linear infinite;
   }
@@ -297,17 +297,17 @@ justify-content: space-around;
 
 export const DivIcon = styled.i`
 font-size: 100px;
-color: #2196f3;
+color: #4F5AED;
 `;
 
 export const H2Title = styled.h2`
 font-size: 1.2rem;
-color: #1a3260;
+color: #3E435D;
 `;
 
 export const PText = styled.p`
 font-size: 1rem;
-color: #808291;
+color: #ADA7A7;
 `;
 
 export const DivButtons = styled.div`
@@ -325,11 +325,11 @@ padding: 0.8rem 2rem;
 border-radius: 50px;
 font-weight: bold;
 font-size: 1rem;
-background: linear-gradient(to right, #ff512f, #dd2476);
+background: linear-gradient(to right, #D12953, #DC4067);
 box-shadow: 0px 0px 50px 0px rgb(0 0 0 / 10%);
-color: #f8f9fa;
+color: #F4F4F4;
 
 &:hover {
-  background: linear-gradient(to right, #8e2de2, #4a00e0);
+  background: linear-gradient(to right, #7613FD, #660BE1);
 }
 `;

@@ -12,12 +12,12 @@ export const SearchInput = styled.input`
   font-size: 14px;
   padding: 0px 12px 0px 36px;
   border-radius: 6px;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.06), 0px 0px 0px 1px rgba(104, 113, 130, 0.16);
+  box-shadow: 0px 1px 2px rgba(62, 67, 93, 0.06), 0px 0px 0px 1px rgba(173, 167, 167, 0.16);
   outline: none;
   border: none;
 
   &::placeholder {
-    color: #A1A9B8;
+    color: #ADA7A7;
   }
 
   @media (max-width: 900px) {
@@ -30,7 +30,7 @@ export const ISearch = styled.i`
   left: 13px;
   top: 9px;
   font-size: 14px;
-  color: #868FA0;
+  color: #ADA7A7;
 `;
 
 export const SearchSelect = styled.select`
@@ -40,10 +40,10 @@ export const SearchSelect = styled.select`
   font-size: 14px;
   padding: 0px 12px;
   border-radius: 6px;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.06), 0px 0px 0px 1px rgba(104, 113, 130, 0.16);
+  box-shadow: 0px 1px 2px rgba(62, 67, 93, 0.06), 0px 0px 0px 1px rgba(173, 167, 167, 0.16);
   outline: none;
   border: none;
-  color: #A1A9B8;
+  color: #ADA7A7;
 `;
 
   //TABLA
@@ -56,19 +56,19 @@ export const StatusContainer = styled.div`
   font-weight: 500;
   background-color: ${(props) =>
     props.estado == 0
-      ? "#E9EDF5"
+      ? "#F0F1FA"
       : props.estado == 1
       ? "#F0F1FA"
       : props.estado == 2
-      ? "#E1FCEF"
+      ? "#D4FFEA"
       : props.estado == 3 && "#FAF0F3"};
   color: ${(props) =>
     props.estado == 0
-      ? "#5A6376"
+      ? "#3E435D"
       : props.estado == 1
       ? "#4F5AED"
       : props.estado == 2
-      ? "#14804A"
+      ? "#179E5B"
       : props.estado == 3 && "#D12953"};
 `;
 
@@ -85,7 +85,7 @@ export const PaginationContainer = styled.div`
 export const PaginationCounter = styled.p`
   font-size: 12px;
   letter-spacing: 0.03em;
-  color: #687182;
+  color: #ADA7A7;
 `;
 
 export const ChangePageContainer = styled.div`
@@ -96,7 +96,7 @@ export const ChangePageContainer = styled.div`
 
 export const RowsPage = styled.p`
   font-size: 12px;
-  color: #687182;
+  color: #ADA7A7;
 `;
 
 export const ButtonPagContainer = styled.div`
@@ -106,14 +106,14 @@ export const ButtonPagContainer = styled.div`
 `;
 
 export const ButtonChange = styled.button`
-  box-shadow: 0px 0px 0px 1px rgba(70, 79, 96, 0.24);
+  box-shadow: 0px 0px 0px 1px rgba(62, 67, 93, 0.24);
   width: 24px;
   height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 7px;
-  color: #868FA0;
+  color: #ADA7A7;
   border: none;
   border-radius: 6px;
   cursor: pointer;

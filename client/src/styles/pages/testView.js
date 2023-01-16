@@ -14,6 +14,7 @@ export const Paragraph = styled.p`
   font-weight: 300;
   line-height: 175%;
   padding: 0 20px;
+  color: #3E435D;
 
   @media (max-width: 600px) {
     font-size: 16px;
@@ -94,6 +95,7 @@ export const FeatureContainer = styled.div`
   gap: 20px;
   width: 272px;
   overflow: hidden;
+  color: #3E435D;
 
   &:hover > div > .botones {
     transform: translateY(30px);
@@ -173,9 +175,11 @@ export const ResolutionTitle = styled.h1`
   padding-bottom: 16px;
   text-align: center;
   width: fit-content;
+  color: #3E435D;
+
   &::after {
     content: ".";
-    color: #6209db;
+    color: #660BE1;
   }
 
   @media (max-width: 600px) {
@@ -196,7 +200,7 @@ export const StartText = styled.h4`
 export const StartTextPurple = styled.h4`
   font-size: 20px;
   font-weight: 400;
-  color: #6209db;
+  color: #660BE1;
 
   @media (max-width: 600px) {
     font-size: 16px;
@@ -205,7 +209,7 @@ export const StartTextPurple = styled.h4`
 
 export const TestResolveContainer = styled.div`
   margin-top: 40px;
-  background: #6209db;
+  background: #660BE1;
   border-radius: 15px;
   color: #ffffff;
   position: relative;
@@ -281,11 +285,11 @@ export const ReactivoContainer = styled.div`
   font-weight: 500;
   user-select: none;
   cursor: pointer;
-  background-color: #6209db;
+  background-color: #660BE1;
   transition: all 0.2s;
 
   &:hover {
-    background-color: #5a08cc;
+    background-color: #660BE1;
   }
 
   @media (max-width: 1260px) {
@@ -315,7 +319,7 @@ export const CheckContainer = styled.div`
     left: 0;
     -webkit-filter: url("#goo");
     filter: url("#goo");
-    transform: trasnlate3d(0, 0, 0);
+    transform: trasnlate3d(62, 67, 93);
     pointer-events: none;
   }
 
@@ -329,7 +333,7 @@ export const CheckContainer = styled.div`
   }
 
   & svg path {
-    stroke: #fff;
+    stroke: #FFFFFF;
     stroke-width: 3;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -399,7 +403,7 @@ export const SliderContainer = styled.div`
   gap: 15px;
 
   @media (max-width: 1260px) {
-    background-color: #6209db;
+    background-color: #660BE1;
     padding: 17px 20px;
     height: max-content;
     border-top: none;

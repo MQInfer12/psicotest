@@ -34,12 +34,12 @@ export const SearchInput = styled.input`
   font-size: 14px;
   padding: 0px 12px 0px 36px;
   border-radius: 6px;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.06), 0px 0px 0px 1px rgba(104, 113, 130, 0.16);
+  box-shadow: 0px 1px 2px rgba(62, 67, 93, 0.06), 0px 0px 0px 1px rgba(173, 167, 167, 0.16);
   outline: none;
   border: none;
 
   &::placeholder {
-    color: #A1A9B8;
+    color: #ADA7A7;
   }
 `;
 
@@ -48,7 +48,7 @@ export const ISearch = styled.i`
   left: 13px;
   top: 9px;
   font-size: 14px;
-  color: #868FA0;
+  color: #ADA7A7;
 `;
 
 export const SearchSelect = styled.select`
@@ -58,10 +58,10 @@ export const SearchSelect = styled.select`
   font-size: 14px;
   padding: 0px 12px;
   border-radius: 6px;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.06), 0px 0px 0px 1px rgba(104, 113, 130, 0.16);
+  box-shadow: 0px 1px 2px rgba(62, 67, 93, 0.06), 0px 0px 0px 1px rgba(173, 167, 167, 0.16);
   outline: none;
   border: none;
-  color: #A1A9B8;
+  color: #ADA7A7;
 `;
 
 // USER RESPONSE
@@ -81,7 +81,7 @@ export const DivCard = styled.div`
   margin-top: 35px;
   width: 350px;
   background-color: #E6E6E6;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 4px 4px 4px rgba(62, 67, 93, 0.25);
   padding: 20px;
   border-radius: 20px;
   position: relative;
@@ -90,7 +90,7 @@ export const DivCard = styled.div`
     position: absolute;
     top: -50px;
     left: 125px;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 4px 4px 4px rgba(62, 67, 93, 0.25);
   }
 `;
 
@@ -164,7 +164,7 @@ export const DivEstado = styled.div`
   top: 10px;
   left: 15px;
   font-size: 12px;
-  color: ${props => props.estado ? "#40dca0" : "#DC4067"};
+  color: ${props => props.estado ? "#179E5B" : "#DC4067"};
   align-items: center;
   transition: all 0.2s;
 `;
