@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import { theme } from "../globals/themes";
 
 export const AllContainer = styled.div`
   height: ${props => props.height};
   display: flex;
   justify-content: center;
   overflow: hidden;
-  color: #3E435D;
+  color: ${theme.textDark};
 
   @media (max-width: 800px) {
     padding-top: 90px;
@@ -32,17 +33,17 @@ export const Column = styled.div`
   height: 100%;
   transition: all 0.5s;
   transform: skewX(-5deg);
-  background-color: #F4F4F4;
+  background-color: ${theme.backgroundPrincipal};
   display: grid;
   place-content: center;
   padding: 40px;
 
   &:hover {
     width: calc(100% + 30px);
-    background-color: #660BE1;
+    background-color: ${theme.colorPrincipal};
 
     & .nombres {
-      color: #FFFFFF;
+      color: ${theme.principal};
     }
   }
 
@@ -94,8 +95,8 @@ export const DescripcionDevs = styled.h3`
 export const ButtonContact = styled.a`
   text-decoration: none;
   padding: 10px 20px;
-  background-color: #FFFFFF;
-  color: #660BE1;
+  background-color: ${theme.principal};
+  color: ${theme.colorPrincipal};
   font-weight: 500;
   border: none;
   border-radius: 10px;

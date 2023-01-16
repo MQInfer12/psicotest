@@ -19,16 +19,16 @@ export const DivAtras = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgba(62, 67, 93, 0.4);
+  background-color: rgba(${theme.textDarkRGB}, 0.4);
 
   animation-name: transitionBackground;
   animation-duration: 1s;
   @keyframes transitionBackground {
     0% {
-      background-color: rgba(62, 67, 93, 0.1);
+      background-color: rgba(${theme.textDarkRGB}, 0.1);
     }
     100% {
-      background-color: rgba(62, 67, 93, 0.4);
+      background-color: rgba(${theme.textDarkRGB}, 0.4);
     }
   }
 `;
@@ -37,7 +37,7 @@ export const DivChildContainer = styled.div`
   z-index: 1;
   border-radius: 16px;
   min-width: 400px;
-  background-color: #FFFFFF;
+  background-color: ${theme.principal};
 
   animation: move 1s;
   transform: translateY(50px);
@@ -57,13 +57,13 @@ export const DivChildContainer = styled.div`
 export const PTitulo = styled.p`
   font-weight: 600;
   font-size: 14px;
-  color: rgba(62, 67, 93, 0.5);
+  color: rgba(${theme.textDarkRGB}, 0.5);
 `;
 
 export const DivCabecera = styled.div`
   width: 100%;
   padding: 10px 26px;
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid ${theme.textSecondary};
   display: flex;
   justify-content: space-between;
   align-items: center;

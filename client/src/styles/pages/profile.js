@@ -1,15 +1,16 @@
 import styled from "styled-components";
+import { theme } from "../globals/themes";
 
 export const ProfileContainer = styled.div`
   min-height: ${props => props.height};
-  background-color: #ffffff;
+  background-color: ${theme.principal};
   border-radius: 10px;
   position: relative;
 `;
 
 export const UpContainer = styled.div`
   height: 200px;
-  border-bottom: 0.5px solid #ada7a7;
+  border-bottom: 0.5px solid ${theme.textPrincipal};
   padding: 31px 0px 18px 24px;
   display: flex;
   flex-direction: column;
@@ -19,7 +20,7 @@ export const UpContainer = styled.div`
 export const PDetalles = styled.div`
   font-weight: 400;
   font-size: 20px;
-  color: rgba(62, 67, 93, 0.5);
+  color: rgba(${theme.textDarkRGB}, 0.5);
 `;
 
 export const DownContainer = styled.div`
@@ -80,5 +81,5 @@ export const InputFile = styled.input`
 
 export const InfoPhotoExtensions = styled.p`
   font-size: 15px;
-  color: #ada7a7;
+  color: ${theme.textPrincipal};
 `;

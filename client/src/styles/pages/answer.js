@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { theme } from "../globals/themes";
 
 export const AnswerPage = styled.div`
   display: flex;
@@ -9,7 +10,7 @@ export const AnswerPage = styled.div`
 `;
 
 export const DataContainer = styled.div`
-  background-color: #ffffff;
+  background-color: ${theme.principal};
   padding: 24px 64px;
   border-radius: 10px;
   display: flex;
@@ -28,11 +29,11 @@ export const DataRow = styled.div`
 export const DataKey = styled.strong`
   font-weight: 500;
   font-size: 16px;
-  color: #3e435d;
+  color: ${theme.textDark};
 `;
 
 export const DataValue = styled.p`
-  color: #ada7a7;
+  color: ${theme.textPrincipal};
   font-weight: 300;
   font-size: 14px;
   white-space: nowrap;
@@ -50,7 +51,7 @@ export const SeccionContainer = styled.div`
 export const TitleSeccion = styled.span`
   font-size: 24px;
   font-weight: 600;
-  color: #3e435d;
+  color: ${theme.textDark};
   width: 100%;
   text-align: start;
 `;

@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import ImagenLogin from '../../assets/login/imglogin.jpg';
+import ImagenLogin from '../../assets/login/imglogin.png';
 import { Link } from "react-router-dom";
 import { device } from "../globals/devices";
+import { theme } from "../globals/themes";
 
 export const DivPrincipal = styled.div`
   display: flex;
@@ -19,10 +20,6 @@ export const DivPrincipal = styled.div`
 export const DivImagelog = styled.div`
   width: 145%;
   height: 100%;
-
-  @media ${device.tablet} {
-    filter: drop-shadow(-1px 6px 3px rgba(50, 562, 67, 93.5));
-  }
 `;
 
 export const DivItemlog = styled.div`
@@ -30,6 +27,7 @@ export const DivItemlog = styled.div`
   background: url(${ImagenLogin}) no-repeat;
   background-size: cover;
   background-position-y: center;
+  background-color: ${theme.principal};
 
   @media ${device.tablet} {
     background-position-y: top;
@@ -37,7 +35,7 @@ export const DivItemlog = styled.div`
 `;
 
 export const DivFormlog = styled.div`
-  background-color: #FFFFFF;
+  background-color: ${theme.principal};
   width: 100%;
   display: flex;
   justify-content: center;
@@ -45,14 +43,14 @@ export const DivFormlog = styled.div`
   padding-bottom: 2rem;
   overflow: auto;
   overflow-x: hidden;
-  margin-top: 90px;
+  padding-top: 90px;
 
   @media ${device.tablet} {
     padding: 40px;
     max-height: 70vh;
     margin-top: 45px;
     border-radius: 10px;
-    background-color: rgb(255, 255, 255, 0.7);
+    background-color: rgb(${theme.principalRGB}, 0.7);
     backdrop-filter: blur(5px);
     width: max-content;
     position: absolute;
@@ -80,7 +78,7 @@ export const DivContainer = styled.div`
 export const H1Title = styled.h1`
   font-size: 60px;
   font-weight: 700;
-  color: #3E435D;
+  color: ${theme.textDark};
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -89,8 +87,8 @@ export const H1Title = styled.h1`
   &::after {
     content: "";
     width: 96px;
-    border-top: 2px solid #7613fd;
-    background-color: #3E435D;
+    border-top: 2px solid ${theme.colorPrincipalLight};
+    background-color: ${theme.textDark};
     transition: all 0.2s;
   }
 
@@ -110,14 +108,14 @@ export const ButtonSubmit = styled.button`
   height: 54px;
   font-size: 20px;
   font-weight: 600;
-  color: #ffffff;
+  color: ${theme.principal};
   margin-top: 1rem;
 
   text-decoration: none;
   border: none;
   cursor: pointer;
   border-radius: 27px;
-  background: #7613fd;
+  background: ${theme.colorPrincipalLight};
   box-shadow: 0px 0px 50px 0px rgb(0 0 0 / 10%);
   transition: all 0.2s;
 
@@ -125,7 +123,7 @@ export const ButtonSubmit = styled.button`
     filter: grayscale(0.2);
   }
 
-  background: ${props => props.load && "linear-gradient(90deg, rgba(118,19,253,1) 0%, rgba(134, 110, 251,1) 50%, rgba(118,19,253,1) 100%)"};
+  background: ${props => props.load && "linear-gradient(90deg, rgba(" + theme.colorPrincipalLightRGB + ",1) 0%, rgba(" + theme.colorPrincipalLighterRGB + ",1) 50%, rgba(" + theme.colorPrincipalLightRGB + ",1) 100%)"};
   animation: animate 1.5s ease infinite;
 
   @keyframes animate {
@@ -154,20 +152,20 @@ export const GoToContainer = styled.div`
 `;
 
 export const GoToDescription = styled.p`
-  color: #3E435D;
+  color: ${theme.textDark};
   font-size: 12px;
   font-weight: 400;
 `;
 
 export const Instructions = styled.p`
-  color: ${props => props.alert ? "red" : "#3E435D"};
+  color: ${props => props.alert ? "red" : theme.textDark};
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 20px;
 `;
 
 export const GoToText = styled(Link)`
-  color: #7613fd;
+  color: ${theme.colorPrincipalLight};
   font-size: 12px;
   font-weight: 400;
   text-decoration: none;
@@ -195,7 +193,7 @@ export const DivInputBox = styled.div`
 export const InputText = styled.input`
   width: 100%;
   background: transparent;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
   border: none;
   outline: none;
   box-shadow: none;
@@ -206,7 +204,7 @@ export const InputText = styled.input`
 
   &:valid ~ span,
   &:focus ~ span {
-    color: #4F5AED;
+    color: ${theme.textBlue};
     transform: translateY(-16px);
     font-size: 0.65em;
   }
@@ -221,7 +219,7 @@ export const SpanText = styled.span`
   position: absolute;
   left: 0;
   padding: 10px 0 5px;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
   pointer-events: none;
   letter-spacing: 0.1em;
   transition: 0.5s;
@@ -233,7 +231,7 @@ export const IInput = styled.i`
   bottom: 0;
   width: 100%;
   height: 2px;
-  background: #ADA7A7;
+  background: ${theme.textPrincipal};
   overflow: hidden;
   background: ${props => props.mostrarError && "red"};
 
@@ -245,11 +243,11 @@ export const IInput = styled.i`
     height: 100%;
     background: linear-gradient(
       90deg,
-      #D12953,
-      #ff0,
-      #4F5AED,
-      #7613fd,
-      #D12953
+      ${theme.backgroundYellow},
+      ${theme.textRed},
+      ${theme.textBlue},
+      ${theme.colorPrincipalLight},
+      ${theme.backgroundYellow}
     );
     animation: animate ${props => props.lento ? "16s" : "2s"} linear infinite;
   }
@@ -268,10 +266,10 @@ export const InputSelect = styled.select`
   width: 250px;
   padding-left: 18px;
   font-size: 16px;
-  color: #ffffff;
+  color: ${theme.principal};
   font-weight: 400;
   height: 45px;
-  background-color: #7613fd;
+  background-color: ${theme.colorPrincipalLight};
   border-radius: 10px;
   border: none;
   outline: none;
@@ -297,17 +295,17 @@ justify-content: space-around;
 
 export const DivIcon = styled.i`
 font-size: 100px;
-color: #4F5AED;
+color: ${theme.textBlue};
 `;
 
 export const H2Title = styled.h2`
 font-size: 1.2rem;
-color: #3E435D;
+color: ${theme.textDark};
 `;
 
 export const PText = styled.p`
 font-size: 1rem;
-color: #ADA7A7;
+color: ${theme.textPrincipal};
 `;
 
 export const DivButtons = styled.div`
@@ -325,11 +323,11 @@ padding: 0.8rem 2rem;
 border-radius: 50px;
 font-weight: bold;
 font-size: 1rem;
-background: linear-gradient(to right, #D12953, #DC4067);
+background: linear-gradient(to right, ${theme.textError}, ${theme.textRed});
 box-shadow: 0px 0px 50px 0px rgb(0 0 0 / 10%);
-color: #F4F4F4;
+color: ${theme.backgroundPrincipal};
 
 &:hover {
-  background: linear-gradient(to right, #7613FD, #660BE1);
+  background: linear-gradient(to right, ${theme.colorPrincipalLight}, ${theme.colorPrincipal});
 }
 `;

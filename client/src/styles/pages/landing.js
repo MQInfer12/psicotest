@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { device } from "../globals/devices";
+import { theme } from "../globals/themes";
 
 // NAVBAR
 
@@ -15,7 +16,7 @@ export const Nav = styled.nav`
   z-index: 5;
 
   @media ${device.laptop} {
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(${theme.principalRGB}, 0.6);
     backdrop-filter: blur(5px);
   }
 
@@ -42,10 +43,10 @@ export const DisplayButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, #660BE1 0%, #7613FD 100%);
+  background: linear-gradient(180deg, ${theme.colorPrincipal} 0%, ${theme.colorPrincipalLight} 100%);
   border-radius: 6px;
   border: none;
-  color: #FFFFFF;
+  color: ${theme.principal};
   font-weight: 600;
   font-size: 16px;
   padding: 10px 20px;
@@ -60,7 +61,7 @@ export const DisplayButton = styled.button`
 export const TitleLink = styled(Link)`
   text-decoration: none;
   padding: 10px 20px;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(${theme.principalRGB}, 0.6);
   border-radius: 6px;
   backdrop-filter: blur(5px);
 
@@ -73,7 +74,7 @@ export const TitleLink = styled(Link)`
 export const PageTitle = styled.h1`
   font-size: 20px;
   font-weight: 300;
-  color: #3E435D;
+  color: ${theme.textDark};
   display: flex;
   gap: 10px;
   align-items: center;
@@ -106,7 +107,7 @@ export const OptionLink = styled(Link)`
   text-decoration: none;
   font-size: 16px;
   font-weight: 400;
-  color: #3E435D;
+  color: ${theme.textDark};
   position: relative;
 
   &::after {
@@ -115,7 +116,7 @@ export const OptionLink = styled(Link)`
     position: absolute;
     bottom: 0;
     left: 0;
-    border-bottom: 1px solid #3E435D;
+    border-bottom: 1px solid ${theme.textDark};
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.3s;
@@ -130,13 +131,13 @@ export const OptionLink = styled(Link)`
 export const LoginLink = styled(Link)`
   text-decoration: none;
   padding: 10px 20px;
-  background: #FFFFFF;
+  background: ${theme.principal};
   border-radius: 6px;
   font-weight: 600;
   font-size: 16px;
   cursor: pointer;
   transition: all 0.3s;
-  color: #3E435D;
+  color: ${theme.textDark};
 
   &:hover {
     opacity: 0.7;
@@ -150,13 +151,13 @@ export const LoginLink = styled(Link)`
 export const RegisterLink = styled(Link)`
   text-decoration: none;
   padding: 10px 20px;
-  background: linear-gradient(180deg, #660BE1 0%, #7613FD 100%);
+  background: linear-gradient(180deg, ${theme.colorPrincipal} 0%, ${theme.colorPrincipalLight} 100%);
   border-radius: 6px;
   font-weight: 600;
   font-size: 16px;
-  color: #FFFFFF;
   cursor: pointer;
   transition: all 0.3s;
+  color: #FFFFFF;
 
   &:hover {
     filter: grayscale(0.2);
@@ -169,8 +170,8 @@ export const FirstSectionContainer = styled.div`
   width: 100%;
   min-height: 100vh;
   display: flex;
-  background-color: #FFFFFF;
-  color: #3E435D;
+  background-color: ${theme.principal};
+  color: ${theme.textDark};
 
   @media ${device.laptop} {
     flex-direction: column;
@@ -184,7 +185,7 @@ export const LeftContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
+  background-color: ${theme.principal};
 `;
 
 export const InfoContainer = styled.div`
@@ -203,14 +204,14 @@ export const NewContainer = styled.div`
   gap: 10px;
   font-size: 12px;
   font-weight: 400;
-  color: #660BE1;
+  color: ${theme.colorPrincipal};
   padding-bottom: 10px;
 
   &::before {
     content: "Nuevo";
     padding: 4px 6px;
-    color: #ffffff;
-    background: linear-gradient(180deg, #660BE1 0%, #7613fd 100%);
+    color: ${theme.principal};
+    background: linear-gradient(180deg, ${theme.colorPrincipal} 0%, ${theme.colorPrincipalLight} 100%);
     border-radius: 6px;
   }
 `;
@@ -223,7 +224,7 @@ export const BestPlatform = styled.h2`
 
   &::after {
     content: ".";
-    color: #660BE1;
+    color: ${theme.colorPrincipal};
   }
 `;
 
@@ -236,12 +237,13 @@ export const PlatformInfo = styled.h3`
 export const OpenAccountLink = styled(Link)`
   text-decoration: none;
   width: fit-content;
-  background: linear-gradient(180deg, #660BE1 0%, #7613fd 100%);
+  background: linear-gradient(180deg, ${theme.colorPrincipal} 0%, ${theme.colorPrincipalLight} 100%);
   border-radius: 6px;
   padding: 20px;
-  color: #ffffff;
+  color: ${theme.principal};
   font-weight: 300;
   transition: all 0.3s;
+  color: #FFFFFF;
 
   &:hover {
     filter: grayscale(0.2);
@@ -256,7 +258,7 @@ export const RightContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #F4F4F4;
+  background-color: ${theme.backgroundPrincipal};
   border-radius: 0 0 0 50px;
 
   @media ${device.laptop} {
@@ -269,7 +271,7 @@ export const PurpleCircle = styled.div`
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  background: linear-gradient(180deg, #660BE1 0%, #7613fd 100%);
+  background: linear-gradient(180deg, ${theme.colorPrincipal} 0%, ${theme.colorPrincipalLight} 100%);
   position: relative;
 
   @media (max-width: 520px) {
@@ -300,8 +302,8 @@ export const Img = styled.img`
 export const SecondSectionContainer = styled.div`
   padding: 60px 0;
   display: flex;
-  background-color: #FFFFFF;
-  color: #3E435D;
+  background-color: ${theme.principal};
+  color: ${theme.textDark};
 
   @media ${device.laptop} {
     flex-direction: reverse;
@@ -313,7 +315,7 @@ export const ColumnContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #FFFFFF;
+  background-color: ${theme.principal};
   padding: 10px;
 
   @media ${device.laptop} {
@@ -331,7 +333,7 @@ export const PurpleDiv = styled.div`
   padding-top: 40px;
   width: 500px;
   height: 600px;
-  background: linear-gradient(180deg, #660BE1 0%, #7613FD 100%);
+  background: linear-gradient(180deg, ${theme.colorPrincipal} 0%, ${theme.colorPrincipalLight} 100%);
   border-radius: 50px;
   overflow: hidden;
 `;
@@ -340,7 +342,7 @@ export const YouDecide = styled.h2`
   font-size: 60px;
   font-weight: 700;
   line-height: 138.4%;
-  color: #FFFFFF;
+  color: ${theme.principal};
 `;
 
 export const SecondInfoContainer = styled.div`
@@ -361,7 +363,7 @@ export const MakeYourTests = styled.h2`
 
   &::after {
     content: ".";
-    color: #660BE1;
+    color: ${theme.colorPrincipal};
   }
 `;
 
@@ -389,14 +391,14 @@ export const FeatureIndex = styled.h3`
   text-align: center;
   font-size: 20px;
   font-weight: 600;
-  color: #660BE1;
-  background-color: #FFFFFF;
+  color: ${theme.colorPrincipal};
+  background-color: ${theme.principal};
   z-index: 1;
 `;
 
 export const FeatureLine = styled.span`
   height: 60px;
-  border-left: 1px solid #D9D9D9;
+  border-left: 1px solid ${theme.textSecondary};
 `;
 
 export const FeatureTitle = styled.h2`
@@ -418,14 +420,14 @@ export const ThirdSectionContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #FFFFFF;
-  color: #3E435D;
+  background-color: ${theme.principal};
+  color: ${theme.textDark};
 `;
 
 export const GrayDiv = styled.div`
   min-height: 535px;
   width: 1200px;
-  background-color: #F4F4F4;
+  background-color: ${theme.backgroundPrincipal};
   border-radius: 50px;
   padding: 50px 20px;
   display: flex;
@@ -464,7 +466,7 @@ export const SendResponses = styled.h2`
 
   &::after {
     content: ".";
-    color: #660BE1;
+    color: ${theme.colorPrincipal};
   }
 `;
 
@@ -484,7 +486,7 @@ export const ThirdPurpleCircle = styled.div`
   width: 350px;
   height: 350px;
   border-radius: 50%;
-  background: linear-gradient(180deg, #660BE1 0%, #7613FD 100%);
+  background: linear-gradient(180deg, ${theme.colorPrincipal} 0%, ${theme.colorPrincipalLight} 100%);
   position: relative;
 `;
 
@@ -507,11 +509,11 @@ export const FourthSectionContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #FFFFFF;
+  background-color: ${theme.principal};
 `;
 
 export const FourthPurpleDiv = styled.div`
-  background: linear-gradient(180deg, #660BE1 0%, #7613FD 100%);
+  background: linear-gradient(180deg, ${theme.colorPrincipal} 0%, ${theme.colorPrincipalLight} 100%);
   border-radius: 25px;
   width: 100%;
   max-width: 1000px;
@@ -557,24 +559,31 @@ export const Input = styled.input`
   border-radius: 6px 0 0 6px;
   border: none;
   outline: none;
+  background-color: ${theme.principal};
+  color: ${theme.textDark};
+
+  &::placeholder{
+    color: ${theme.textDark};
+  }
 `;
 
 export const DivButtonInput = styled.div`
   border-radius: 0 6px 6px 0;
-  background-color: #FFFFFF;
+  background-color: ${theme.principal};
   padding: 10px;
 `;
 
 export const OpenAccountButton = styled.button`
   border: none;
   width: fit-content;
-  background: linear-gradient(180deg, #660BE1 0%, #7613FD 100%);
+  background: linear-gradient(180deg, ${theme.colorPrincipal} 0%, ${theme.colorPrincipalLight} 100%);
   border-radius: 6px;
   padding: 20px;
-  color: #FFFFFF;
+  color: ${theme.principal};
   font-weight: 300;
   transition: all 0.3s;
   cursor: pointer;
+  color: #FFFFFF;
 
   &:hover {
     filter: grayscale(0.2);
@@ -589,8 +598,8 @@ export const FooterContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #FFFFFF;
-  color: #3E435D;
+  background-color: ${theme.principal};
+  color: ${theme.textDark};
 `;
 
 export const FooterInfo = styled.div`
@@ -637,7 +646,7 @@ export const FooterOptionLink = styled(Link)`
   text-decoration: none;
   font-size: 12px;
   font-weight: 400;
-  color: #3E435D;
+  color: ${theme.textDark};
   position: relative;
 
   &::after {
@@ -646,7 +655,7 @@ export const FooterOptionLink = styled(Link)`
     position: absolute;
     bottom: 0;
     left: 0;
-    border-bottom: 1px solid #3E435D;
+    border-bottom: 1px solid ${theme.textDark};
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.3s;
@@ -663,7 +672,7 @@ export const ColumnA = styled.a`
   text-decoration: none;
   font-size: 12px;
   font-weight: 400;
-  color: #3E435D;
+  color: ${theme.textDark};
   position: relative;
   cursor: pointer;
 
@@ -673,7 +682,7 @@ export const ColumnA = styled.a`
     position: absolute;
     bottom: 0;
     left: 0;
-    border-bottom: 1px solid #3E435D;
+    border-bottom: 1px solid ${theme.textDark};
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.3s;
@@ -693,11 +702,11 @@ export const IconsDiv = styled.div`
 export const IconA = styled.a`
   text-decoration: none;
   font-size: 16px;
-  color: #3E435D;
+  color: ${theme.textDark};
   transition: all 0.4s;
 
   &:hover {
-    color: #660BE1;
+    color: ${theme.colorPrincipal};
   }
 `;
 
@@ -705,7 +714,7 @@ export const FooterRights = styled.div`
   width: 80%;
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid rgba(62, 67, 93, 0.1);
+  border-top: 1px solid rgba(${theme.textDarkRGB}, 0.1);
   padding-top: 20px;
   gap: 20px;
 `;
@@ -719,7 +728,7 @@ export const Rights = styled.p`
 
 export const ArticlesSectionContainer = styled.div`
   padding: 40px;
-  background-color: #F4F4F4;
+  background-color: ${theme.backgroundPrincipal};
 `;
 
 export const ArticlesTitleText = styled.h2`
@@ -730,7 +739,7 @@ export const ArticlesTitleText = styled.h2`
 
   &::after {
     content: ".";
-    color: #660BE1;
+    color: ${theme.colorPrincipal};
   }
 `;
 

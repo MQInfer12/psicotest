@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { theme } from "../globals/themes";
 
 export const DivEntero = styled.div`
   height: ${props => props.height};
@@ -7,7 +8,7 @@ export const DivEntero = styled.div`
   gap: 20px;
   align-items: center;
   justify-content: center;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
   font-size: 16px;
   font-weight: 300;
 `;

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { theme } from "../globals/themes";
 
 export const CargandoContainer = styled.div`
   height: ${props => props.height};
@@ -21,7 +22,7 @@ export const Loader = styled.div`
   display: inline-block;
   position: relative;
   border: 10px solid;
-  border-color: rgba(102, 11, 225, 0.15) rgba(102, 11, 225, 0.25) rgba(102, 11, 225, 0.35) rgba(102, 11, 225, 0.5);
+  border-color: rgba(${theme.colorPrincipalRGB}, 0.15) rgba(${theme.colorPrincipalRGB}, 0.25) rgba(${theme.colorPrincipalRGB}, 0.35) rgba(${theme.colorPrincipalRGB}, 0.5);
   box-sizing: border-box;
   animation: rotation 1s infinite;
 
@@ -36,6 +37,6 @@ export const Loader = styled.div`
 `;
 
 export const SpanLoader = styled.span`
-  color: #3E435D;
+  color: ${theme.textDark};
   text-transform: uppercase;
 `;

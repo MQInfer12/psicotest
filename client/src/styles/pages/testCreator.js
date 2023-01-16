@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import { theme } from "../globals/themes";
 
 export const TestCreatorContainer = styled.div`
   height: ${props => props.height};
   border-radius: 10px;
-  background-color: #FFFFFF;
+  background-color: ${theme.principal};
   display: flex;
   overflow: hidden;
 `;
@@ -47,9 +48,9 @@ export const EmptySeccion = styled.p`
 export const SeccionCreatorDash = styled.div`
   min-width: 263px;
   height: 100%;
-  border-left: ${props => !props.otherBorders && "1px solid #D9D9D9"};
-  border-right: 1px solid #D9D9D9;
-  border-bottom: ${props => props.otherBorders && "1px solid #D9D9D9"};
+  border-left: ${props => !props.otherBorders && "1px solid " + theme.textSecondary};
+  border-right: 1px solid ${theme.textSecondary};
+  border-bottom: ${props => props.otherBorders && "1px solid " + theme.textSecondary};
   display: flex;
   flex-direction: column;
   overflow: auto;
@@ -61,12 +62,12 @@ export const DashPart = styled.div`
   gap: 12px;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #D9D9D9;
+  border-bottom: 1px solid ${theme.textSecondary};
   padding: 12px;
 `;
 
 export const DashTitle = styled.h3`
-  color: #3E435D;
+  color: ${theme.textDark};
   font-size: 18px;
   font-weight: 600;
 `;
@@ -82,15 +83,15 @@ export const PointsContainer = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: #ADA7A7;
+    background: ${theme.textPrincipal};
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #660BE1;
+    background: ${theme.colorPrincipal};
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #660BE1;
+    background: ${theme.colorPrincipal};
   }
 `;
 
@@ -99,18 +100,18 @@ export const Point = styled.button`
   min-width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: ${props => props.colorized && "#660BE1"};
-  border: 1px solid #D9D9D9;
+  background-color: ${props => props.colorized && theme.colorPrincipal};
+  border: 1px solid ${theme.textSecondary};
   cursor: pointer;
   transition: all 0.2s;
   font-size: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${props => props.colorized ? "#660BE1" : "#D9D9D9"};
+  color: ${props => props.colorized ? theme.colorPrincipal : theme.textSecondary};
 
   &:disabled {
-    background-color: ${props => !props.selected && "#D9D9D9"};
+    background-color: ${props => !props.selected && "${theme.textSecondary}"};
     pointer-events: none;
   }
 `;
@@ -135,13 +136,13 @@ export const CheckboxDiv = styled.div`
 `;
 
 export const CheckboxInput = styled.input`
-  accent-color: #660BE1;
+  accent-color: ${theme.colorPrincipal};
 `;
 
 export const PCheckbox = styled.p`
   font-size: 14px;
   font-weight: 300;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
 `;
 
 // PREGUNTA CREATOR
@@ -149,8 +150,8 @@ export const PCheckbox = styled.p`
 export const PreguntaCreatorContainer = styled.div`
   height: calc(100% - 40px);
   width: 622px;
-  box-shadow: 0px 8px 34px rgba(62, 67, 93, 0.1);
-  background-color: #EBF0FA;
+  box-shadow: 0px 8px 34px rgba(${theme.textDarkRGB}, 0.1);
+  background-color: ${theme.backgroundTable};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -166,7 +167,7 @@ export const DeleteContainer = styled.div`
 export const PSelected = styled.p`
   height: max-content;
   font-size: 12px;
-  color: #3E435D;
+  color: ${theme.textDark};
 `;
 
   //TABLA
@@ -178,7 +179,7 @@ export const TrCargando = styled.tr`
 `;
 
 export const TdCargando = styled.td`
-  background-color: #FFFFFF;
+  background-color: ${theme.principal};
   display: flex;
   width: 622px;
 `;
@@ -203,8 +204,8 @@ export const DivButtonsTd = styled.div`
 export const ReactivoCreatorContainer = styled.div`
   height: calc(100% - 40px);
   width: 737px;
-  box-shadow: 0px 8px 34px rgba(62, 67, 93, 0.1);
-  background-color: #EBF0FA;
+  box-shadow: 0px 8px 34px rgba(${theme.textDarkRGB}, 0.1);
+  background-color: ${theme.backgroundTable};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -221,8 +222,8 @@ export const HeadContainer = styled.div`
 
 export const InputNumber = styled.input`
   border: none;
-  background-color: ${props => props.blink ? "#660be1" : "transparent"};
-  color: ${props => props.blink ? "#FFFFFF" : "#ADA7A7"};
+  background-color: ${props => props.blink ? theme.colorPrincipal : "transparent"};
+  color: ${props => props.blink ? theme.principal : theme.textPrincipal};
   text-align: center;
   width: 40%;
   outline: none;
@@ -240,13 +241,13 @@ export const ThReactivo = styled.th`
   position: relative;
   font-weight: 400;
   transition: all 0.2s;
-  border-left: ${props => props.border && "1px solid #ADA7A7"};
-  border-left: ${props => props.border && "1px solid #ADA7A7"};
+  border-left: ${props => props.border && "1px solid " + theme.textPrincipal};
+  border-left: ${props => props.border && "1px solid " + theme.textPrincipal};
 
   &:hover {
     & > p {
-      background-color: #FFFFFF;
-      color: ${props => !props.noWhite && "#FFFFFF"};
+      background-color: ${theme.principal};
+      color: ${props => !props.noWhite && theme.principal};
     }
 
     & > div {
@@ -266,9 +267,10 @@ export const PText = styled.p`
   justify-content: center;
   width: 100%;
   height: 100%;
-  background-color: #EBF0FA;
+  background-color: ${theme.backgroundTable};
   z-index: 1;
   transition: all 0.3s;
+  color: ${theme.textDark}
 `;
 
 export const DivReactivoButtonsTd = styled.div`
@@ -299,7 +301,7 @@ export const PaginationContainer = styled.div`
 export const PaginationCounter = styled.p`
   font-size: 12px;
   letter-spacing: 0.03em;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
 `;
 
 export const ChangePageContainer = styled.div`
@@ -310,7 +312,7 @@ export const ChangePageContainer = styled.div`
 
 export const RowsPage = styled.p`
   font-size: 12px;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
 `;
 
 export const ButtonPagContainer = styled.div`
@@ -320,14 +322,14 @@ export const ButtonPagContainer = styled.div`
 `;
 
 export const ButtonChange = styled.button`
-  box-shadow: 0px 0px 0px 1px rgba(62, 67, 93, 0.24);
+  box-shadow: 0px 0px 0px 1px rgba(${theme.textDarkRGB}, 0.24);
   width: 24px;
   height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 7px;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -346,15 +348,15 @@ export const DashIndex = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: #ADA7A7;
+    background: ${theme.textPrincipal};
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #660BE1;
+    background: ${theme.colorPrincipal};
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #660BE1;
+    background: ${theme.colorPrincipal};
   }
 `;
 
@@ -367,11 +369,11 @@ export const Details = styled.details`
   width: 100%;
   text-align: start;
   user-select: none;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
   position: relative;
 
   &:hover summary {
-    background-color: #EBF0FA;
+    background-color: ${theme.backgroundTable};
   }
 
   & summary {
@@ -381,7 +383,7 @@ export const Details = styled.details`
     padding: 0 15px;
     height: 42px;
     cursor: pointer;
-    border-bottom: 1px solid #EBF0FA;
+    border-bottom: 1px solid ${theme.backgroundTable};
     transition: all 0.2s;
     
     pointer-events: ${props => props.movible && "none"};
@@ -397,11 +399,11 @@ export const PreguntasList = styled.ul`
 
   & li {
     padding: 4px 40px;
-    border-bottom: 1px solid #EBF0FA;
+    border-bottom: 1px solid ${theme.backgroundTable};
     transition: all 0.2s;
 
     &:hover {
-      background-color: #EBF0FA;
+      background-color: ${theme.backgroundTable};
     }
   }
 `;

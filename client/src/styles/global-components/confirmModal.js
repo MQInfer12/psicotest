@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { theme } from "../globals/themes";
 
 export const DivAlerta = styled.div`
   display: flex;
@@ -18,17 +19,17 @@ export const DivAlertaText = styled.div`
 
 export const DivIcon = styled.i`
   font-size: 100px;
-  color: #660BE1;
+  color: ${theme.colorPrincipal};
 `;
 
 export const H2Title = styled.h2`
   font-size: 1.2rem;
-  color: #3E435D;
+  color: ${theme.textDark};
 `;
 
 export const PText = styled.p`
   font-size: 1rem;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
 `;
 
 export const DivButtons = styled.div`

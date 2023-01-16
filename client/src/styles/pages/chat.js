@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { theme } from "../globals/themes";
 
 export const Home = styled.div`
   width: ${props => props.isInTestView && "80%"};
@@ -19,8 +20,8 @@ export const SidebarContainer = styled.div`
   width: 350px;
   min-width: 350px;
   max-width: 350px;
-  border-right: 1px solid #2F2D52;
-  background-color: #3E3C61;
+  border-right: 1px solid ${theme.backgroundChatDark};
+  background-color: ${theme.backgroundChat};
   overflow-x: hidden;
   z-index: 1;
   display: ${props => props.showSide ? "block" : "none"};
@@ -37,11 +38,11 @@ export const SidebarContainer = styled.div`
 export const NavbarContainer = styled.div`
   display: flex;
   align-items: center;
-  background-color: #2f2d52;
+  background-color: ${theme.backgroundChatDark};
   height: 45px;
   padding: 10px;
   gap: 10px;
-  color: #EBF0FA;
+  color: ${theme.backgroundTable};
 
   @media (max-width: 1080px) {
       flex-direction: column;
@@ -62,8 +63,8 @@ export const NavbarContainer = styled.div`
     gap: 10px;
 
     button {
-      background-color: #2F2D52;
-      color: #EBF0FA;
+      background-color: ${theme.backgroundChatDark};
+      color: ${theme.backgroundTable};
       font-size: 10px;
       border: none;
       cursor: pointer;
@@ -82,7 +83,7 @@ export const ChatsContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #FFFFFF;
+    color: ${theme.principal};
     cursor: pointer;
     width: 100%;
 
@@ -90,7 +91,7 @@ export const ChatsContainer = styled.div`
       min-width: 50px;
     }
     &:hover {
-      background-color: #2f2d52;
+      background-color: ${theme.backgroundChatDark};
     }
 
     .userChatInfo {
@@ -100,7 +101,7 @@ export const ChatsContainer = styled.div`
       }
       p {
         font-size: 14px;
-        color: #F4F4F4;
+        color: ${theme.backgroundPrincipal};
         overflow: hidden;
         text-overflow: ellipsis;
       }
@@ -112,12 +113,12 @@ export const ChatComContainer = styled.div`
   width: ${(props) => (props.showSide ? "calc(100% - 350px)" : "100%")};
 
   .chatInfo {
-    background-color: #2F2D52;
+    background-color: ${theme.backgroundChatDark};
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
-    color: #F4F4F4;
+    color: ${theme.backgroundPrincipal};
     height: 45px;
   }
 
@@ -138,7 +139,7 @@ export const ChatComContainer = styled.div`
 `;
 
 export const MessagesContainer = styled.div`
-  background-color: #EBF0FA;
+  background-color: ${theme.backgroundTable};
   padding: 10px;
   height: calc(100% - 95px);
   overflow-y: scroll;
@@ -152,7 +153,7 @@ export const MessageContainer = styled.div`
   .messageInfo {
     display: flex;
     flex-direction: column;
-    color: #ADA7A7;
+    color: ${theme.textPrincipal};
     align-items: center;
     font-weight: 300;
   }
@@ -168,8 +169,8 @@ export const MessageContainer = styled.div`
       width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
-      background-color: #FFFFFF;
-      color: #3E435D;
+      background-color: ${theme.principal};
+      color: ${theme.textDark};
       padding: 10px 20px;
       border-radius: 0px 10px 10px 10px;
     }
@@ -186,8 +187,8 @@ export const MessageContainer = styled.div`
       align-items: flex-end;
 
       p {
-        background-color: #866EFB;
-        color: #FFFFFF;
+        background-color: ${theme.colorPrincipalLighter};
+        color: ${theme.principal};
         border-radius: 10px 0px 10px 10px;
       }
     }
@@ -196,7 +197,7 @@ export const MessageContainer = styled.div`
 
 export const InputComp = styled.div`
   height: 50px;
-  background-color: #FFFFFF;
+  background-color: ${theme.principal};
   padding: 10px;
   display: flex;
   align-items: center;
@@ -206,11 +207,12 @@ export const InputComp = styled.div`
     width: 100%;
     border: none;
     outline: none;
-    color: #2f2d52;
+    color: ${theme.textPrincipal};
     font-size: 18px;
+    background-color: ${theme.principal};
 
     &::placeholder {
-      color: #F4F4F4;
+      color: ${theme.textPrincipal};
     }
   }
   .send {
@@ -226,8 +228,8 @@ export const InputComp = styled.div`
     button {
       border: none;
       padding: 10px 15px;
-      color: #FFFFFF;
-      background-color: #866EFB;
+      color: ${theme.principal};
+      background-color: ${theme.colorPrincipalLighter};
       cursor: pointer;
       border-radius: 10px;
     }

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { theme } from "../globals/themes";
 
 export const AllContainer = styled.div`
   display: flex;
@@ -14,7 +15,7 @@ export const Paragraph = styled.p`
   font-weight: 300;
   line-height: 175%;
   padding: 0 20px;
-  color: #3E435D;
+  color: ${theme.textDark};
 
   @media (max-width: 600px) {
     font-size: 16px;
@@ -38,7 +39,7 @@ export const TestTitle = styled.h2`
   align-items: center;
   font-size: 20px;
   font-weight: 600;
-  color: #660be1;
+  color: ${theme.colorPrincipal};
 
   @media (max-width: 600px) {
     font-size: 18px;
@@ -50,7 +51,7 @@ export const TestContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #FFFFFF;
+  background-color: ${theme.principal};
   padding: 40px;
   gap: 40px;
 
@@ -74,7 +75,7 @@ export const TestInfoContainer = styled.div`
 export const TestInfoTitle = styled.p`
   font-size: 20px;
   font-weight: 600;
-  color: #660BE1;
+  color: ${theme.colorPrincipal};
 
   @media (max-width: 600px) {
     font-size: 18px;
@@ -95,7 +96,7 @@ export const FeatureContainer = styled.div`
   gap: 20px;
   width: 272px;
   overflow: hidden;
-  color: #3E435D;
+  color: ${theme.textDark};
 
   &:hover > div > .botones {
     transform: translateY(30px);
@@ -116,8 +117,8 @@ export const FeatureIndex = styled.h3`
   text-align: center;
   font-size: 20px;
   font-weight: 600;
-  color: #660BE1;
-  background-color: #FFFFFF;
+  color: ${theme.colorPrincipal};
+  background-color: ${theme.principal};
   z-index: 1;
 
   @media (max-width: 600px) {
@@ -127,7 +128,7 @@ export const FeatureIndex = styled.h3`
 
 export const FeatureLine = styled.span`
   height: 60px;
-  border-left: 1px solid #D9D9D9;
+  border-left: 1px solid ${theme.textSecondary};
 `;
 
 export const FeatureTitle = styled.h2`
@@ -163,7 +164,7 @@ export const ButtonContainer = styled.div`
 // TEST RESOLUTION
 
 export const TestResolutionContainer = styled.div`
-  background-color: #ffffff;
+  background-color: ${theme.principal};
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -175,11 +176,11 @@ export const ResolutionTitle = styled.h1`
   padding-bottom: 16px;
   text-align: center;
   width: fit-content;
-  color: #3E435D;
+  color: ${theme.textDark};
 
   &::after {
     content: ".";
-    color: #660BE1;
+    color: ${theme.colorPrincipal};
   }
 
   @media (max-width: 600px) {
@@ -200,7 +201,7 @@ export const StartText = styled.h4`
 export const StartTextPurple = styled.h4`
   font-size: 20px;
   font-weight: 400;
-  color: #660BE1;
+  color: ${theme.colorPrincipal};
 
   @media (max-width: 600px) {
     font-size: 16px;
@@ -209,9 +210,9 @@ export const StartTextPurple = styled.h4`
 
 export const TestResolveContainer = styled.div`
   margin-top: 40px;
-  background: #660BE1;
+  background: ${theme.colorPrincipal};
   border-radius: 15px;
-  color: #ffffff;
+  color: #EAEAEA;
   position: relative;
   overflow: hidden;
 `;
@@ -279,17 +280,17 @@ export const ReactivoContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 30px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid ${theme.textSecondary};
   border-radius: 10px;
   font-size: 18px;
   font-weight: 500;
   user-select: none;
   cursor: pointer;
-  background-color: #660BE1;
+  background-color: ${theme.colorPrincipal};
   transition: all 0.2s;
 
   &:hover {
-    background-color: #660BE1;
+    background-color: ${theme.colorPrincipal};
   }
 
   @media (max-width: 1260px) {
@@ -319,7 +320,7 @@ export const CheckContainer = styled.div`
     left: 0;
     -webkit-filter: url("#goo");
     filter: url("#goo");
-    transform: trasnlate3d(62, 67, 93);
+    transform: translate3d(${theme.textDarkRGB});
     pointer-events: none;
   }
 
@@ -333,7 +334,7 @@ export const CheckContainer = styled.div`
   }
 
   & svg path {
-    stroke: #FFFFFF;
+    stroke: ${theme.principal};
     stroke-width: 3;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -372,15 +373,15 @@ export const Checkbox = styled.input`
   @keyframes splash {
     40% {
       box-shadow: 
-        0 -18px 0 -8px rgb(134, 110, 251, 0.7), 
-        16px -8px 0 -8px rgb(134, 110, 251, 0.7), 
-        16px 8px 0 -8px rgb(134, 110, 251, 0.7), 
-        0 18px 0 -8px rgb(134, 110, 251, 0.7), 
-        -16px 8px 0 -8px rgb(134, 110, 251, 0.7), 
-        -16px -8px 0 -8px rgb(134, 110, 251, 0.7);
+        0 -18px 0 -8px rgb(${theme.colorPrincipalLighterRGB}, 0.7), 
+        16px -8px 0 -8px rgb(${theme.colorPrincipalLighterRGB}, 0.7), 
+        16px 8px 0 -8px rgb(${theme.colorPrincipalLighterRGB}, 0.7), 
+        0 18px 0 -8px rgb(${theme.colorPrincipalLighterRGB}, 0.7), 
+        -16px 8px 0 -8px rgb(${theme.colorPrincipalLighterRGB}, 0.7), 
+        -16px -8px 0 -8px rgb(${theme.colorPrincipalLighterRGB}, 0.7);
     }
     100% {
-      background: #866efb;
+      background: ${theme.colorPrincipalLighter};
       box-shadow: 
         0 -36px 0 -10px transparent, 
         32px -16px 0 -10px transparent, 
@@ -399,11 +400,11 @@ export const SliderContainer = styled.div`
   align-items: center;
   padding: 17px 40px;
   justify-content: space-between;
-  border-top: 1px solid #d9d9d9;
+  border-top: 1px solid ${theme.textSecondary};
   gap: 15px;
 
   @media (max-width: 1260px) {
-    background-color: #660BE1;
+    background-color: ${theme.colorPrincipal};
     padding: 17px 20px;
     height: max-content;
     border-top: none;
@@ -415,8 +416,8 @@ export const SliderContainer = styled.div`
 `;
 
 export const ButtonTransparent = styled.button`
-  background-color: #866EFB;
-  border: 1px solid #d9d9d9;
+  background-color: ${theme.colorPrincipalLighter};
+  border: 1px solid ${theme.textSecondary};
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -439,13 +440,13 @@ export const ButtonTransparent = styled.button`
 
 export const IconButton = styled.div`
   font-size: 18px;
-  color: #d9d9d9;
+  color: ${theme.textSecondary};
 `;
 
 export const PButton = styled.div`
   font-size: 20px;
   font-weight: 600;
-  color: #d9d9d9;
+  color: ${theme.textSecondary};
 
   @media (max-width: 1260px) {
     display: none;
@@ -457,7 +458,7 @@ export const PButton = styled.div`
 export const TestViewChatContainer = styled.div`
   width: 100%;
   padding: 0 40px 40px;
-  background-color: #FFFFFF;
+  background-color: ${theme.principal};
   display: flex;
   flex-direction: column;
   align-items: center;

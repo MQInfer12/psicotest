@@ -8,6 +8,7 @@ import { CalendarMiniContainer, CalendarMonth, CalendarTable,
   DaysTd, DaysThMini, EventsDiv, 
   EventsTitle, MonthButton, MonthContainer 
 } from "../../styles/pages/calendar";
+import { theme } from "../../styles/globals/themes";
 
 const CalendarMini = ({
   horarios, citas, user,
@@ -110,7 +111,7 @@ const CalendarMini = ({
             horarios.filter(horario => horario.fecha === fechaSelected.DMY).map((v, i) => (
               <EventCard key={i}
                 v={{...v, fecha: fechaSelected.DMY}}
-                color={"#660be1"}
+                color={theme.colorPrincipal}
                 event={"Libre"}
                 rol={user.id_rol}
                 llenarTareas={llenarTareas} 
@@ -123,7 +124,7 @@ const CalendarMini = ({
                 return (
                   <EventCard key={i}
                     v={{...v, fecha: fechaSelected.DMY}}
-                    color={"#179E5B"}
+                    color={theme.textGreen}
                     event={"Cita"}
                     rol={user.id_rol}
                     llenarTareas={llenarTareas} 
@@ -134,7 +135,7 @@ const CalendarMini = ({
                   return (
                     <EventCard key={i}
                       v={{...v, fecha: fechaSelected.DMY}}
-                      color={"#B3A449"}
+                      color={theme.textYellow}
                       event={"Pendientes"}
                       rol={user.id_rol}
                       llenarTareas={llenarTareas}
@@ -144,7 +145,7 @@ const CalendarMini = ({
                   return (
                     <EventCard key={i}
                       v={{...v, fecha: fechaSelected.DMY}}
-                      color={"#B3A449"}
+                      color={theme.textYellow}
                       event={"Pendiente"}
                       rol={user.id_rol}
                       llenarTareas={llenarTareas}

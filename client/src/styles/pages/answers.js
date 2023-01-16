@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { theme } from "../globals/themes";
 
 export const SearchDiv = styled.div`
   position: relative;
@@ -12,12 +13,14 @@ export const SearchInput = styled.input`
   font-size: 14px;
   padding: 0px 12px 0px 36px;
   border-radius: 6px;
-  box-shadow: 0px 1px 2px rgba(62, 67, 93, 0.06), 0px 0px 0px 1px rgba(173, 167, 167, 0.16);
+  box-shadow: 0px 1px 2px rgba(${theme.textDarkRGB}, 0.06), 0px 0px 0px 1px rgba(${theme.textPrincipalRGB}, 0.16);
   outline: none;
   border: none;
+  background-color: ${theme.principal};
+  color: ${theme.textPrincipal};
 
   &::placeholder {
-    color: #ADA7A7;
+    color: ${theme.textPrincipal};
   }
 
   @media (max-width: 900px) {
@@ -30,7 +33,7 @@ export const ISearch = styled.i`
   left: 13px;
   top: 9px;
   font-size: 14px;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
 `;
 
 export const SearchSelect = styled.select`
@@ -40,10 +43,11 @@ export const SearchSelect = styled.select`
   font-size: 14px;
   padding: 0px 12px;
   border-radius: 6px;
-  box-shadow: 0px 1px 2px rgba(62, 67, 93, 0.06), 0px 0px 0px 1px rgba(173, 167, 167, 0.16);
+  box-shadow: 0px 1px 2px rgba(${theme.textDarkRGB}, 0.06), 0px 0px 0px 1px rgba(${theme.textPrincipalRGB}, 0.16);
   outline: none;
   border: none;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
+  background-color: ${theme.principal};
 `;
 
   //TABLA
@@ -56,20 +60,20 @@ export const StatusContainer = styled.div`
   font-weight: 500;
   background-color: ${(props) =>
     props.estado == 0
-      ? "#F0F1FA"
+      ? theme.backgroundBlue
       : props.estado == 1
-      ? "#F0F1FA"
+      ? theme.backgroundBlue
       : props.estado == 2
-      ? "#D4FFEA"
-      : props.estado == 3 && "#FAF0F3"};
+      ? theme.backgroundGreen
+      : props.estado == 3 && theme.backgroundRed};
   color: ${(props) =>
     props.estado == 0
-      ? "#3E435D"
+      ? theme.textDark
       : props.estado == 1
-      ? "#4F5AED"
+      ? theme.textBlue
       : props.estado == 2
-      ? "#179E5B"
-      : props.estado == 3 && "#D12953"};
+      ? theme.textGreen
+      : props.estado == 3 && theme.textError};
 `;
 
 // PAGINATION
@@ -85,7 +89,7 @@ export const PaginationContainer = styled.div`
 export const PaginationCounter = styled.p`
   font-size: 12px;
   letter-spacing: 0.03em;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
 `;
 
 export const ChangePageContainer = styled.div`
@@ -96,7 +100,7 @@ export const ChangePageContainer = styled.div`
 
 export const RowsPage = styled.p`
   font-size: 12px;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
 `;
 
 export const ButtonPagContainer = styled.div`
@@ -106,14 +110,14 @@ export const ButtonPagContainer = styled.div`
 `;
 
 export const ButtonChange = styled.button`
-  box-shadow: 0px 0px 0px 1px rgba(62, 67, 93, 0.24);
+  box-shadow: 0px 0px 0px 1px rgba(${theme.textDarkRGB}, 0.24);
   width: 24px;
   height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 7px;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
   border: none;
   border-radius: 6px;
   cursor: pointer;

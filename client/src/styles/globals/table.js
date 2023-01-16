@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import { theme } from "./themes";
 
 export const AnswersContainer = styled.div`
   height: ${props => props.height ? props.height : "100%"};
   max-width: ${props => props.maxw};
-  box-shadow: 0px 8px 34px rgba(62, 67, 93, 0.1);
-  background-color: #ebf0fa;
+  box-shadow: 0px 8px 34px rgba(${theme.textDarkRGB}, 0.1);
+  background-color: ${theme.backgroundTable};
   border-radius: ${props => !props.noRadius && "10px"};
   display: flex;
   flex-direction: column;
@@ -31,15 +32,15 @@ export const ControlsContainer = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: #ADA7A7;
+    background: ${theme.textPrincipal};
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #660BE1;
+    background: ${theme.colorPrincipal};
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #660BE1;
+    background: ${theme.colorPrincipal};
   }
 `;
 
@@ -64,15 +65,15 @@ export const TableContainer = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: #ADA7A7;
+    background: ${theme.textPrincipal};
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #660BE1;
+    background: ${theme.colorPrincipal};
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #660BE1;
+    background: ${theme.colorPrincipal};
   }
 `;
 
@@ -93,15 +94,15 @@ export const TBodyScrollable = styled.tbody`
   }
 
   &::-webkit-scrollbar-track {
-    background: #ADA7A7;
+    background: ${theme.textPrincipal};
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #660BE1;
+    background: ${theme.colorPrincipal};
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #660BE1;
+    background: ${theme.colorPrincipal};
   }
 `;
 
@@ -113,8 +114,8 @@ export const TableAnswers = styled.table`
 
   & > thead {
     height: 40px;
-    background-color: #ebf0fa;
-    box-shadow: ${props => props.sticky && "0px 4px 4px rgba(62, 67, 93, 0.1)"};
+    background-color: ${theme.backgroundTable};
+    box-shadow: ${props => props.sticky && "0px 4px 4px rgba(" + theme.textDarkRGB + ", 0.1)"};
     position: ${props => props.sticky && "sticky"};
     top: ${props => props.sticky && "0"};
     z-index: ${props => props.sticky && "1"};
@@ -127,7 +128,7 @@ export const TableAnswers = styled.table`
 
 export const ThNumberal = styled.th`
   font-size: 11px;
-  color: #3E435D;
+  color: ${theme.textDark};
   padding-left: 11px;
   width: 47px;
   text-align: start;
@@ -140,17 +141,17 @@ export const ThAnswer = styled.th`
   font-weight: 600;
   text-transform: uppercase;
   text-align: ${props => props.center ? "center" : "start"};
-  border-left: ${props => props.border && "1px solid #ADA7A7"};
-  border-right: ${props => props.border && "1px solid #ADA7A7"};
-  color: #3E435D;
+  border-left: ${props => props.border && "1px solid " + theme.textPrincipal};
+  border-right: ${props => props.border && "1px solid " + theme.textPrincipal};
+  color: ${theme.textDark};
   overflow: hidden;
 `;
 
 export const ThNumber = styled.th`
-  border: ${props => props.mini && "1px solid #ebf0fa"};
+  border: ${props => props.mini && "1px solid " + theme.backgroundTable};
   font-size: 14px;
   font-weight: 500;
-  color: #3E435D;
+  color: ${theme.textDark};
   padding-left: 11px;
   width: 47px;
   text-align: start;
@@ -177,7 +178,7 @@ export const DivCenter = styled.div`
 
 export const PNombre = styled.p`
   font-size: 14px;
-  color: #3E435D;
+  color: ${theme.textDark};
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
@@ -185,7 +186,7 @@ export const PNombre = styled.p`
 `;
 
 export const PLight = styled.p`
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
   font-size: 12px;
   font-weight: 400;
   white-space: nowrap;
@@ -196,7 +197,7 @@ export const PLight = styled.p`
 export const PLightDouble = styled.p`
   text-align: ${props => props.center ? "center" : "start"};
   padding-right: 10px;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
   font-size: 12px;
   font-weight: 400;
   overflow: hidden;
@@ -209,7 +210,7 @@ export const PLightDouble = styled.p`
 export const PPuntaje = styled.p`
   font-size: 14px;
   font-weight: 400;
-  color: #3E435D;
+  color: ${theme.textDark};
   width: 100%;
   text-align: end;
 `;
@@ -217,7 +218,7 @@ export const PPuntaje = styled.p`
 export const PSobre = styled.p`
   font-size: 12px;
   font-weight: 400;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
   width: 100%;
   text-align: end;
 `;
@@ -229,12 +230,12 @@ export const ResponsiveTr = styled.tr.attrs(props => ({
   }))`
   height: 56px;
   max-width: 622px;
-  background-color: #ffffff;
+  background-color: ${theme.principal};
   position: relative;
   text-align: center;
 
   &:nth-child(2n) {
-    background-color: #ebf0fa;
+    background-color: ${theme.backgroundTable};
   }
 
   filter: ${props => props.selectedPregunta && "opacity(0.5)"};

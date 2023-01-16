@@ -2,6 +2,7 @@ import React from 'react';
 import { useModal } from '../../../hooks/useModal';
 import { addHorario } from '../../../services/horario';
 import { WhiteIconButton } from '../../../styles/globals/formularios';
+import { theme } from '../../../styles/globals/themes';
 import { DivDay, DivTd, PDay, TdDay } from '../../../styles/pages/calendar';
 import ModalHorario from '../modalHorario';
 import TaskCard from './taskCard';
@@ -47,8 +48,8 @@ const DayCard = ({
           horarios.filter(v => v.fecha == day.format("DD/MM/YYYY")).map((v, i) => (
             <TaskCard key={i}
               v={{...v, fecha: day.format("DD/MM/YYYY")}}
-              background="#F0F1FA"
-              textcolor="#4F5AED"
+              background={theme.backgroundBlue}
+              textcolor={theme.textBlue}
               event="Libre"
               rol={user.id_rol}
               llenarTareas={llenarTareas}
@@ -61,8 +62,8 @@ const DayCard = ({
               return (
                 <TaskCard key={i}
                   v={{...v, fecha: day.format("DD/MM/YYYY")}}
-                  background="#D4FFEA"
-                  textcolor="#179E5B"
+                  background={theme.backgroundGreen}
+                  textcolor={theme.textGreen}
                   event="Cita"
                   rol={user.id_rol}
                   llenarTareas={llenarTareas}
@@ -73,8 +74,8 @@ const DayCard = ({
                 return (
                   <TaskCard key={i}
                     v={{...v, fecha: day.format("DD/MM/YYYY")}}
-                    background="#faea8e"
-                    textcolor="#B3A449"
+                    background={theme.backgroundYellow}
+                    textcolor={theme.textYellow}
                     event="Pendientes"
                     rol={user.id_rol}
                     llenarTareas={llenarTareas}
@@ -84,8 +85,8 @@ const DayCard = ({
                 return (
                   <TaskCard key={i}
                     v={{...v, fecha: day.format("DD/MM/YYYY")}}
-                    background="#faea8e"
-                    textcolor="#B3A449"
+                    background={theme.backgroundYellow}
+                    textcolor={theme.textYellow}
                     event="Pendiente"
                     rol={user.id_rol}
                     llenarTareas={llenarTareas}

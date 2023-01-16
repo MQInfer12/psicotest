@@ -1,6 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { device } from "../globals/devices";
+import { theme } from "../globals/themes";
 
 export const DashboardContainer = styled.div`
   min-height: ${props => props.height};
@@ -19,7 +20,7 @@ export const DashboardContainer = styled.div`
 
 export const SideBarContainer = styled.nav`
   z-index: 5;
-  background-color: #FFFFFF;
+  background-color: ${theme.principal};
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -43,7 +44,7 @@ export const SideBarLogo = styled.img`
   object-fit: cover;
   width: 170px;
   height: 38px;
-  background-color: #D9D9D9;
+  background-color: ${theme.textSecondary};
   margin-bottom: 88px;
 `;
 
@@ -54,15 +55,15 @@ export const SideBarList = styled.ul`
   gap: 5px;
 
   .active {
-    background-color: #660BE1; 
+    background-color: ${theme.colorPrincipal}; 
   }
   .active:hover {
-    color: #D9D9D9;
+    color: ${theme.textSecondary};
   }
 `;
 
 export const SideBarLink = styled(NavLink)`
-  color: #D9D9D9;
+  color: ${theme.textSecondary};
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -73,7 +74,7 @@ export const SideBarLink = styled(NavLink)`
   height: 47px;
 
   &:hover {
-    color: #660BE1;
+    color: ${theme.colorPrincipal};
   }
 `;
 
@@ -94,7 +95,7 @@ export const SideBarButton = styled.button`
   background-color: inherit;
   border: none;
   cursor: pointer;
-  color: #d9d9d9;
+  color: ${theme.textSecondary};
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -105,7 +106,7 @@ export const SideBarButton = styled.button`
   height: 47px;
 
   &:hover {
-    color: #660be1;
+    color: ${theme.colorPrincipal};
   }
 `;
 
@@ -114,7 +115,7 @@ export const SideBarButton = styled.button`
 export const CenterContainer = styled.div`
   padding-left: 263px;
   padding-right: ${props => props.calendar && "433px"};
-  background-color: #F4F4F4;
+  background-color: ${theme.backgroundPrincipal};
   width: 100%; 
   display: flex;
   flex-direction: column;
@@ -134,7 +135,7 @@ export const UpbarContainer = styled.div`
   padding: 0 40px;
   gap: 20px;
   height: 157px;
-  background-color: #F4F4F4;
+  background-color: ${theme.backgroundPrincipal};
   align-items: center;
 
   @media (max-height: 750px) {
@@ -154,7 +155,7 @@ export const UpbarContainer = styled.div`
 `;
 
 export const OpenButton = styled.button`
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
   font-size: 20px;
   border: none;
   background-color: transparent;
@@ -164,7 +165,7 @@ export const OpenButton = styled.button`
   display: none;
 
   &:hover {
-    color: #3E435D;
+    color: ${theme.textDark};
   }
 
   @media ${device.tablet} {
@@ -187,7 +188,7 @@ export const ActualPage = styled.span`
   //margin-top: 7px;
   font-weight: 300;
   font-size: 16px;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
   display: flex;
   gap: 5px;
   white-space: nowrap;
@@ -196,21 +197,21 @@ export const ActualPage = styled.span`
 export const TitlePage = styled.span`
   font-size: 24px;
   font-weight: 600;
-  color: #3E435D;
+  color: ${theme.textDark};
   white-space: nowrap;
 `;
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
   font-size: 16px;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
   display: flex;
   flex-direction: column;
 
   &::after {
     content: "";
     width: 0%;
-    border-top: 1px solid #ADA7A7;
+    border-top: 1px solid ${theme.textPrincipal};
     transition: all 0.2s;
   }
 
@@ -231,15 +232,15 @@ export const OutletContainerStyled = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: #ADA7A7;
+    background: ${theme.textPrincipal};
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #660BE1;
+    background: ${theme.colorPrincipal};
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #660BE1;
+    background: ${theme.colorPrincipal};
   }
 
   @media (max-width: 1135px) {
@@ -263,7 +264,7 @@ export const OutletContainerStyled = styled.div`
 // RIGHTBAR
 
 export const RightContainer = styled.aside`
-  background-color: ${props => props.calendar ? "#FFFFFF" : "transparent"};
+  background-color: ${props => props.calendar ? theme.principal : "transparent"};
   position: ${props => props.calendar ? "fixed" : "absolute"};
   height: ${props => props.calendar && props.height};
   right: 0;
@@ -314,7 +315,7 @@ export const UpbarName = styled.p`
   text-align: center;
   font-weight: 300;
   font-size: 16px;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -336,7 +337,7 @@ export const PhotoContainer = styled.div`
 
 export const ProfilePencil = styled.div`
   opacity: 0;
-  background-color: rgb(62, 67, 93, 0.4);
+  background-color: rgb(${theme.textDarkRGB}, 0.4);
   position: absolute;
   top: 0;
   right: 0;
@@ -347,7 +348,7 @@ export const ProfilePencil = styled.div`
   display: grid;
   place-content: center;
   font-size: 32px;
-  color: #FFFFFF;
+  color: ${theme.principal};
   cursor: pointer;
 `;
 
@@ -361,11 +362,11 @@ export const UpbarNot = styled.div`
   min-width: 52px;
   height: 52px;
   border-radius: ${props => props.showNots ? "10px 10px 0 0" : "10px"};
-  background-color: #FFFFFF;
+  background-color: ${theme.principal};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #D9D9D9;
+  color: ${theme.textSecondary};
   font-size: 18px;
   cursor: pointer;
   transition: all 0.2s;
@@ -380,9 +381,9 @@ export const NotNumber = styled.div`
   position: absolute;
   top: 5px;
   right: 5px;
-  background-color: #660BE1;
+  background-color: ${theme.colorPrincipal};
   font-size: 10px;
-  color: #FFFFFF;
+  color: ${theme.principal};
   display: grid;
   place-content: center;
 `;
@@ -393,7 +394,7 @@ export const NotificationsContainer = styled.div`
   width: 350px;
   min-height: 60px;
   max-height: 300px;
-  background-color: #FFFFFF;
+  background-color: ${theme.principal};
   position: absolute;
   top: 52px;
   right: -82px;
@@ -408,13 +409,13 @@ export const NotificationsContainer = styled.div`
     width: 8px;
   }
   &::-webkit-scrollbar-track {
-    background: #ADA7A7;
+    background: ${theme.textPrincipal};
   }
   &::-webkit-scrollbar-thumb {
-    background: #660BE1;
+    background: ${theme.colorPrincipal};
   }
   &::-webkit-scrollbar-thumb:hover {
-    background: #660BE1;
+    background: ${theme.colorPrincipal};
   }
 
   @keyframes appear {
@@ -442,7 +443,7 @@ export const LeftDiv = styled.div`
   width: 32px;
   height: 100%;
   font-size: 20px;
-  color: #D9D9D9;
+  color: ${theme.textSecondary};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -452,7 +453,7 @@ export const LeftDiv = styled.div`
 export const Line = styled.div`
   width: 0;
   height: 15px;
-  border-left: 1px solid rgb(217, 217, 217, 0.4);
+  border-left: 1px solid rgb(${theme.textSecondaryRGB}, 0.4);
 `;
 
 export const RightDiv = styled.div`
@@ -467,7 +468,7 @@ export const TitleNot = styled.h5`
   width: 100%;
   font-size: 16px;
   font-weight: 600;
-  color: #3E435D;
+  color: ${theme.textDark};
   user-select: none;
   white-space: nowrap;
   overflow: hidden;
@@ -477,13 +478,13 @@ export const TitleNot = styled.h5`
 export const DescripNot = styled.p`  
   font-size: 14px;
   font-weight: 400;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
   user-select: none;
 `;
 
 export const LinkSpan = styled.button`
   position: relative;
-  color: #660BE1;
+  color: ${theme.colorPrincipal};
   cursor: pointer;
   text-decoration: none;
   background-color: transparent;
@@ -495,7 +496,7 @@ export const LinkSpan = styled.button`
     position: absolute;
     left: 0;
     bottom: 0;
-    border-top: 1px solid #660BE1;
+    border-top: 1px solid ${theme.colorPrincipal};
     transition: all 0.2s;
   }
 

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { theme } from "../globals/themes";
 
 export const DivUsersPage = styled.div`
   display: flex;
@@ -34,12 +35,14 @@ export const SearchInput = styled.input`
   font-size: 14px;
   padding: 0px 12px 0px 36px;
   border-radius: 6px;
-  box-shadow: 0px 1px 2px rgba(62, 67, 93, 0.06), 0px 0px 0px 1px rgba(173, 167, 167, 0.16);
+  box-shadow: 0px 1px 2px rgba(${theme.textDarkRGB}, 0.06), 0px 0px 0px 1px rgba(${theme.textPrincipalRGB}, 0.16);
   outline: none;
   border: none;
+  color: ${theme.textPrincipal};
+  background-color: ${theme.principal};
 
   &::placeholder {
-    color: #ADA7A7;
+    color: ${theme.textPrincipal};
   }
 `;
 
@@ -48,7 +51,7 @@ export const ISearch = styled.i`
   left: 13px;
   top: 9px;
   font-size: 14px;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
 `;
 
 export const SearchSelect = styled.select`
@@ -58,10 +61,11 @@ export const SearchSelect = styled.select`
   font-size: 14px;
   padding: 0px 12px;
   border-radius: 6px;
-  box-shadow: 0px 1px 2px rgba(62, 67, 93, 0.06), 0px 0px 0px 1px rgba(173, 167, 167, 0.16);
+  box-shadow: 0px 1px 2px rgba(${theme.textDarkRGB}, 0.06), 0px 0px 0px 1px rgba(${theme.textPrincipalRGB}, 0.16);
   outline: none;
   border: none;
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
+  background-color: ${theme.principal};
 `;
 
 // USER RESPONSE
@@ -80,8 +84,8 @@ export const DivUsersContainer = styled.div`
 export const DivCard = styled.div`
   margin-top: 35px;
   width: 350px;
-  background-color: #E6E6E6;
-  box-shadow: 4px 4px 4px rgba(62, 67, 93, 0.25);
+  background-color: ${theme.backgroundCard};
+  box-shadow: 4px 4px 4px rgba(${theme.textDarkRGB}, 0.25);
   padding: 20px;
   border-radius: 20px;
   position: relative;
@@ -90,7 +94,7 @@ export const DivCard = styled.div`
     position: absolute;
     top: -50px;
     left: 125px;
-    box-shadow: 4px 4px 4px rgba(62, 67, 93, 0.25);
+    box-shadow: 4px 4px 4px rgba(${theme.textDarkRGB}, 0.25);
   }
 `;
 
@@ -102,7 +106,7 @@ export const DivCardText = styled.div`
 `;
 
 export const PNombre = styled.p`
-  color: #3E435D;
+  color: ${theme.textDark};
   font-size: 22px;
   font-weight: 600;
   white-space: nowrap;
@@ -111,7 +115,7 @@ export const PNombre = styled.p`
 `;
 
 export const PRol = styled.p`
-  color: #ADA7A7;
+  color: ${theme.textPrincipal};
   font-size: 16px;
   font-weight: 300;
   text-transform: capitalize;
@@ -131,7 +135,7 @@ export const DivColumns = styled.div`
 `;
 
 export const PText = styled.p`
-  color: #3E435D;
+  color: ${theme.textDark};
   font-size: 14px;
   font-weight: 400;
   width: 110%;
@@ -145,7 +149,7 @@ export const PGenero = styled.p`
   align-items: center;
   gap: 10px;
   text-transform: capitalize;
-  color: #3E435D;
+  color: ${theme.textDark};
   font-size: 14px;
   font-weight: 400;
 `;
@@ -164,7 +168,7 @@ export const DivEstado = styled.div`
   top: 10px;
   left: 15px;
   font-size: 12px;
-  color: ${props => props.estado ? "#179E5B" : "#DC4067"};
+  color: ${props => props.estado ? theme.textGreen : theme.textRed};
   align-items: center;
   transition: all 0.2s;
 `;
