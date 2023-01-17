@@ -45,17 +45,20 @@ class TestController extends Controller
         $test->escalas = $escalas;
 
         $dimensiones = DB::select("SELECT * FROM dimensions WHERE id_test='$id' ORDER BY id");
-        $idDimensiones = array_column($dimensiones, 'id');
-        $preguntasPorDimension = DB::select(
-            "SELECT id_pregunta, id_dimension FROM pregunta_dimensions WHERE id_dimension IN (".implode(',', $idDimensiones).")"
-        );
-        foreach($dimensiones as $dimension) {
-            $dimension->preguntas = array_column($this->array_filter_column($preguntasPorDimension, 'id_dimension', $dimension->id), 'id_pregunta');
-
-            //CALCULAR ESCALA NATURAL DE CADA DIMENSION
-            $naturales = $this->getPuntuacionNatural($dimension->id);
-            $dimension->valores = $naturales;
+        if(count($dimensiones)) {
+            $idDimensiones = array_column($dimensiones, 'id');
+            $preguntasPorDimension = DB::select(
+                "SELECT id_pregunta, id_dimension FROM pregunta_dimensions WHERE id_dimension IN (".implode(',', $idDimensiones).")"
+            );
+            foreach($dimensiones as $dimension) {
+                $dimension->preguntas = array_column($this->array_filter_column($preguntasPorDimension, 'id_dimension', $dimension->id), 'id_pregunta');
+    
+                //CALCULAR ESCALA NATURAL DE CADA DIMENSION
+                $naturales = $this->getPuntuacionNatural($dimension->id);
+                $dimension->valores = $naturales;
+            }
         }
+        
         $test->dimensiones = $dimensiones;
 
         $secciones = DB::select(

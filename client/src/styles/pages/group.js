@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { theme } from "../globals/themes";
 
 export const DivGroupsPage = styled.div`
   width: 100%;
@@ -31,7 +30,7 @@ export const DivGroupCard = styled.div`
   border-radius: 20px;
   width: 350px;
   height: 200px;
-  background-color: ${theme.backgroundCard};
+  background-color: ${props => props.theme.backgroundCard};
   overflow: hidden;
   display: flex;
   flex-direction: column;

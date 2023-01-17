@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { theme } from "../globals/themes";
 
 export const Home = styled.div`
   width: ${props => props.isInTestView && "80%"};
   box-shadow: ${props => props.isInTestView && "4px 1px 16px -7px rgba(0,0,0,0.6)"};
+  box-shadow: 0px 8px 34px rgba(${props => props.theme.textDarkRGB}, 0.15);
   height: ${(props) => props.height};
   z-index: 3;
   border-radius: 10px;
@@ -20,8 +20,8 @@ export const SidebarContainer = styled.div`
   width: 350px;
   min-width: 350px;
   max-width: 350px;
-  border-right: 1px solid ${theme.backgroundChatDark};
-  background-color: ${theme.backgroundChat};
+  border-right: 1px solid ${props => props.theme.backgroundChatDark};
+  background-color: ${props => props.theme.backgroundChat};
   overflow-x: hidden;
   z-index: 1;
   display: ${props => props.showSide ? "block" : "none"};
@@ -38,11 +38,11 @@ export const SidebarContainer = styled.div`
 export const NavbarContainer = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${theme.backgroundChatDark};
+  background-color: ${props => props.theme.backgroundChatDark};
   height: 45px;
   padding: 10px;
   gap: 10px;
-  color: ${theme.backgroundTable};
+  color: #FFFFFF;
 
   @media (max-width: 1080px) {
       flex-direction: column;
@@ -63,8 +63,8 @@ export const NavbarContainer = styled.div`
     gap: 10px;
 
     button {
-      background-color: ${theme.backgroundChatDark};
-      color: ${theme.backgroundTable};
+      background-color: ${props => props.theme.backgroundChatDark};
+      color: ${props => props.theme.backgroundTable};
       font-size: 10px;
       border: none;
       cursor: pointer;
@@ -83,7 +83,7 @@ export const ChatsContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
-    color: ${theme.principal};
+    color: #FFFFFF;
     cursor: pointer;
     width: 100%;
 
@@ -91,7 +91,7 @@ export const ChatsContainer = styled.div`
       min-width: 50px;
     }
     &:hover {
-      background-color: ${theme.backgroundChatDark};
+      background-color: ${props => props.theme.backgroundChatDark};
     }
 
     .userChatInfo {
@@ -101,7 +101,7 @@ export const ChatsContainer = styled.div`
       }
       p {
         font-size: 14px;
-        color: ${theme.backgroundPrincipal};
+        color: #FFFFFF;
         overflow: hidden;
         text-overflow: ellipsis;
       }
@@ -113,12 +113,12 @@ export const ChatComContainer = styled.div`
   width: ${(props) => (props.showSide ? "calc(100% - 350px)" : "100%")};
 
   .chatInfo {
-    background-color: ${theme.backgroundChatDark};
+    background-color: ${props => props.theme.backgroundChatDark};
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
-    color: ${theme.backgroundPrincipal};
+    color: #FFFFFF;
     height: 45px;
   }
 
@@ -139,7 +139,7 @@ export const ChatComContainer = styled.div`
 `;
 
 export const MessagesContainer = styled.div`
-  background-color: ${theme.backgroundTable};
+  background-color: ${props => props.theme.backgroundTable};
   padding: 10px;
   height: calc(100% - 95px);
   overflow-y: scroll;
@@ -153,7 +153,7 @@ export const MessageContainer = styled.div`
   .messageInfo {
     display: flex;
     flex-direction: column;
-    color: ${theme.textPrincipal};
+    color: ${props => props.theme.textPrincipal};
     align-items: center;
     font-weight: 300;
   }
@@ -169,8 +169,8 @@ export const MessageContainer = styled.div`
       width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
-      background-color: ${theme.principal};
-      color: ${theme.textDark};
+      background-color: ${props => props.theme.principal};
+      color: ${props => props.theme.textDark};
       padding: 10px 20px;
       border-radius: 0px 10px 10px 10px;
     }
@@ -187,8 +187,8 @@ export const MessageContainer = styled.div`
       align-items: flex-end;
 
       p {
-        background-color: ${theme.colorPrincipalLighter};
-        color: ${theme.principal};
+        background-color: ${props => props.theme.colorPrincipalLighter};
+        color: ${props => props.theme.principal};
         border-radius: 10px 0px 10px 10px;
       }
     }
@@ -197,7 +197,7 @@ export const MessageContainer = styled.div`
 
 export const InputComp = styled.div`
   height: 50px;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
   padding: 10px;
   display: flex;
   align-items: center;
@@ -207,14 +207,15 @@ export const InputComp = styled.div`
     width: 100%;
     border: none;
     outline: none;
-    color: ${theme.textPrincipal};
+    color: ${props => props.theme.textPrincipal};
     font-size: 18px;
-    background-color: ${theme.principal};
+    background-color: ${props => props.theme.principal};
 
     &::placeholder {
-      color: ${theme.textPrincipal};
+      color: ${props => props.theme.textPrincipal};
     }
   }
+  
   .send {
     display: flex;
     align-items: center;
@@ -228,8 +229,8 @@ export const InputComp = styled.div`
     button {
       border: none;
       padding: 10px 15px;
-      color: ${theme.principal};
-      background-color: ${theme.colorPrincipalLighter};
+      color: #FFFFFF;
+      background-color: ${props => props.theme.colorPrincipalLighter};
       cursor: pointer;
       border-radius: 10px;
     }

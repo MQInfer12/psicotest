@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { theme } from "../globals/themes";
 
 export const TestCreatorContainer = styled.div`
   height: ${props => props.height};
   border-radius: 10px;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
   display: flex;
   overflow: hidden;
 `;
@@ -48,9 +47,9 @@ export const EmptySeccion = styled.p`
 export const SeccionCreatorDash = styled.div`
   min-width: 263px;
   height: 100%;
-  border-left: ${props => !props.otherBorders && "1px solid " + theme.textSecondary};
-  border-right: 1px solid ${theme.textSecondary};
-  border-bottom: ${props => props.otherBorders && "1px solid " + theme.textSecondary};
+  border-left: ${props => !props.otherBorders && "1px solid " + props.theme.borders};
+  border-right: 1px solid ${props => props.theme.borders};
+  border-bottom: ${props => props.otherBorders && "1px solid " + props.theme.borders};
   display: flex;
   flex-direction: column;
   overflow: auto;
@@ -62,12 +61,12 @@ export const DashPart = styled.div`
   gap: 12px;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid ${theme.textSecondary};
+  border-bottom: 1px solid ${props => props.theme.borders};
   padding: 12px;
 `;
 
 export const DashTitle = styled.h3`
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
   font-size: 18px;
   font-weight: 600;
 `;
@@ -83,15 +82,15 @@ export const PointsContainer = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: ${theme.textPrincipal};
+    background: ${props => props.theme.textPrincipal};
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 `;
 
@@ -100,18 +99,18 @@ export const Point = styled.button`
   min-width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: ${props => props.colorized && theme.colorPrincipal};
-  border: 1px solid ${theme.textSecondary};
+  background-color: ${props => props.colorized && props.theme.colorPrincipal};
+  border: 1px solid ${props => props.theme.borders};
   cursor: pointer;
   transition: all 0.2s;
   font-size: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${props => props.colorized ? theme.colorPrincipal : theme.textSecondary};
+  color: ${props => props.colorized ? props.theme.colorPrincipal : props.theme.borders};
 
   &:disabled {
-    background-color: ${props => !props.selected && "${theme.textSecondary}"};
+    background-color: ${props => !props.selected && "${props => props.theme.textSecondary}"};
     pointer-events: none;
   }
 `;
@@ -136,13 +135,13 @@ export const CheckboxDiv = styled.div`
 `;
 
 export const CheckboxInput = styled.input`
-  accent-color: ${theme.colorPrincipal};
+  accent-color: ${props => props.theme.colorPrincipal};
 `;
 
 export const PCheckbox = styled.p`
   font-size: 14px;
   font-weight: 300;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
 `;
 
 // PREGUNTA CREATOR
@@ -150,8 +149,8 @@ export const PCheckbox = styled.p`
 export const PreguntaCreatorContainer = styled.div`
   height: calc(100% - 40px);
   width: 622px;
-  box-shadow: 0px 8px 34px rgba(${theme.textDarkRGB}, 0.1);
-  background-color: ${theme.backgroundTable};
+  box-shadow: 0px 8px 34px rgba(${props => props.theme.textDarkRGB}, 0.1);
+  background-color: ${props => props.theme.backgroundTable};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -167,7 +166,7 @@ export const DeleteContainer = styled.div`
 export const PSelected = styled.p`
   height: max-content;
   font-size: 12px;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
 `;
 
   //TABLA
@@ -179,7 +178,7 @@ export const TrCargando = styled.tr`
 `;
 
 export const TdCargando = styled.td`
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
   display: flex;
   width: 622px;
 `;
@@ -204,8 +203,8 @@ export const DivButtonsTd = styled.div`
 export const ReactivoCreatorContainer = styled.div`
   height: calc(100% - 40px);
   width: 737px;
-  box-shadow: 0px 8px 34px rgba(${theme.textDarkRGB}, 0.1);
-  background-color: ${theme.backgroundTable};
+  box-shadow: 0px 8px 34px rgba(${props => props.theme.textDarkRGB}, 0.1);
+  background-color: ${props => props.theme.backgroundTable};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -222,8 +221,8 @@ export const HeadContainer = styled.div`
 
 export const InputNumber = styled.input`
   border: none;
-  background-color: ${props => props.blink ? theme.colorPrincipal : "transparent"};
-  color: ${props => props.blink ? theme.principal : theme.textPrincipal};
+  background-color: ${props => props.blink ? props.theme.colorPrincipal : "transparent"};
+  color: ${props => props.blink ? props.theme.principal : props.theme.textPrincipal};
   text-align: center;
   width: 40%;
   outline: none;
@@ -241,13 +240,13 @@ export const ThReactivo = styled.th`
   position: relative;
   font-weight: 400;
   transition: all 0.2s;
-  border-left: ${props => props.border && "1px solid " + theme.textPrincipal};
-  border-left: ${props => props.border && "1px solid " + theme.textPrincipal};
+  border-left: ${props => props.border && "1px solid " + props.theme.textPrincipal};
+  border-left: ${props => props.border && "1px solid " + props.theme.textPrincipal};
 
   &:hover {
     & > p {
-      background-color: ${theme.principal};
-      color: ${props => !props.noWhite && theme.principal};
+      background-color: ${props => props.theme.principal};
+      color: ${props => !props.noWhite && props.theme.principal};
     }
 
     & > div {
@@ -267,10 +266,10 @@ export const PText = styled.p`
   justify-content: center;
   width: 100%;
   height: 100%;
-  background-color: ${theme.backgroundTable};
+  background-color: ${props => props.theme.backgroundTable};
   z-index: 1;
   transition: all 0.3s;
-  color: ${theme.textDark}
+  color: ${props => props.theme.textDark}
 `;
 
 export const DivReactivoButtonsTd = styled.div`
@@ -301,7 +300,7 @@ export const PaginationContainer = styled.div`
 export const PaginationCounter = styled.p`
   font-size: 12px;
   letter-spacing: 0.03em;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
 `;
 
 export const ChangePageContainer = styled.div`
@@ -312,7 +311,7 @@ export const ChangePageContainer = styled.div`
 
 export const RowsPage = styled.p`
   font-size: 12px;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
 `;
 
 export const ButtonPagContainer = styled.div`
@@ -322,14 +321,14 @@ export const ButtonPagContainer = styled.div`
 `;
 
 export const ButtonChange = styled.button`
-  box-shadow: 0px 0px 0px 1px rgba(${theme.textDarkRGB}, 0.24);
+  box-shadow: 0px 0px 0px 1px rgba(${props => props.theme.textDarkRGB}, 0.24);
   width: 24px;
   height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 7px;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -348,15 +347,15 @@ export const DashIndex = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: ${theme.textPrincipal};
+    background: ${props => props.theme.textPrincipal};
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 `;
 
@@ -369,11 +368,11 @@ export const Details = styled.details`
   width: 100%;
   text-align: start;
   user-select: none;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   position: relative;
 
   &:hover summary {
-    background-color: ${theme.backgroundTable};
+    background-color: ${props => props.theme.backgroundTable};
   }
 
   & summary {
@@ -383,7 +382,7 @@ export const Details = styled.details`
     padding: 0 15px;
     height: 42px;
     cursor: pointer;
-    border-bottom: 1px solid ${theme.backgroundTable};
+    border-bottom: 1px solid ${props => props.theme.backgroundTable};
     transition: all 0.2s;
     
     pointer-events: ${props => props.movible && "none"};
@@ -399,11 +398,11 @@ export const PreguntasList = styled.ul`
 
   & li {
     padding: 4px 40px;
-    border-bottom: 1px solid ${theme.backgroundTable};
+    border-bottom: 1px solid ${props => props.theme.backgroundTable};
     transition: all 0.2s;
 
     &:hover {
-      background-color: ${theme.backgroundTable};
+      background-color: ${props => props.theme.backgroundTable};
     }
   }
 `;

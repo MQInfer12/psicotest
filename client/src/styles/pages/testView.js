@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { theme } from "../globals/themes";
 
 export const AllContainer = styled.div`
   display: flex;
@@ -15,7 +14,7 @@ export const Paragraph = styled.p`
   font-weight: 300;
   line-height: 175%;
   padding: 0 20px;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
 
   @media (max-width: 600px) {
     font-size: 16px;
@@ -39,7 +38,7 @@ export const TestTitle = styled.h2`
   align-items: center;
   font-size: 20px;
   font-weight: 600;
-  color: ${theme.colorPrincipal};
+  color: ${props => props.theme.colorPrincipal};
 
   @media (max-width: 600px) {
     font-size: 18px;
@@ -51,7 +50,7 @@ export const TestContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
   padding: 40px;
   gap: 40px;
 
@@ -75,7 +74,7 @@ export const TestInfoContainer = styled.div`
 export const TestInfoTitle = styled.p`
   font-size: 20px;
   font-weight: 600;
-  color: ${theme.colorPrincipal};
+  color: ${props => props.theme.colorPrincipal};
 
   @media (max-width: 600px) {
     font-size: 18px;
@@ -96,7 +95,7 @@ export const FeatureContainer = styled.div`
   gap: 20px;
   width: 272px;
   overflow: hidden;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
 
   &:hover > div > .botones {
     transform: translateY(30px);
@@ -117,8 +116,8 @@ export const FeatureIndex = styled.h3`
   text-align: center;
   font-size: 20px;
   font-weight: 600;
-  color: ${theme.colorPrincipal};
-  background-color: ${theme.principal};
+  color: ${props => props.theme.colorPrincipal};
+  background-color: ${props => props.theme.principal};
   z-index: 1;
 
   @media (max-width: 600px) {
@@ -128,7 +127,7 @@ export const FeatureIndex = styled.h3`
 
 export const FeatureLine = styled.span`
   height: 60px;
-  border-left: 1px solid ${theme.textSecondary};
+  border-left: 1px solid ${props => props.theme.textSecondary};
 `;
 
 export const FeatureTitle = styled.h2`
@@ -164,7 +163,7 @@ export const ButtonContainer = styled.div`
 // TEST RESOLUTION
 
 export const TestResolutionContainer = styled.div`
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -176,11 +175,11 @@ export const ResolutionTitle = styled.h1`
   padding-bottom: 16px;
   text-align: center;
   width: fit-content;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
 
   &::after {
     content: ".";
-    color: ${theme.colorPrincipal};
+    color: ${props => props.theme.colorPrincipal};
   }
 
   @media (max-width: 600px) {
@@ -190,6 +189,7 @@ export const ResolutionTitle = styled.h1`
 `;
 
 export const StartText = styled.h4`
+  color: ${props => props.theme.textDark};
   font-size: 20px;
   font-weight: 400;
 
@@ -201,7 +201,7 @@ export const StartText = styled.h4`
 export const StartTextPurple = styled.h4`
   font-size: 20px;
   font-weight: 400;
-  color: ${theme.colorPrincipal};
+  color: ${props => props.theme.colorPrincipal};
 
   @media (max-width: 600px) {
     font-size: 16px;
@@ -210,7 +210,7 @@ export const StartTextPurple = styled.h4`
 
 export const TestResolveContainer = styled.div`
   margin-top: 40px;
-  background: ${theme.colorPrincipal};
+  background: ${props => props.theme.colorPrincipal};
   border-radius: 15px;
   color: #EAEAEA;
   position: relative;
@@ -280,17 +280,17 @@ export const ReactivoContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 30px;
-  border: 1px solid ${theme.textSecondary};
+  border: 1px solid ${props => props.theme.textSecondary};
   border-radius: 10px;
   font-size: 18px;
   font-weight: 500;
   user-select: none;
   cursor: pointer;
-  background-color: ${theme.colorPrincipal};
+  background-color: ${props => props.theme.colorPrincipal};
   transition: all 0.2s;
 
   &:hover {
-    background-color: ${theme.colorPrincipal};
+    background-color: ${props => props.theme.colorPrincipal};
   }
 
   @media (max-width: 1260px) {
@@ -320,7 +320,7 @@ export const CheckContainer = styled.div`
     left: 0;
     -webkit-filter: url("#goo");
     filter: url("#goo");
-    transform: translate3d(${theme.textDarkRGB});
+    transform: translate3d(${props => props.theme.textDarkRGB});
     pointer-events: none;
   }
 
@@ -334,7 +334,7 @@ export const CheckContainer = styled.div`
   }
 
   & svg path {
-    stroke: ${theme.principal};
+    stroke: #FFFFFF;
     stroke-width: 3;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -373,15 +373,15 @@ export const Checkbox = styled.input`
   @keyframes splash {
     40% {
       box-shadow: 
-        0 -18px 0 -8px rgb(${theme.colorPrincipalLighterRGB}, 0.7), 
-        16px -8px 0 -8px rgb(${theme.colorPrincipalLighterRGB}, 0.7), 
-        16px 8px 0 -8px rgb(${theme.colorPrincipalLighterRGB}, 0.7), 
-        0 18px 0 -8px rgb(${theme.colorPrincipalLighterRGB}, 0.7), 
-        -16px 8px 0 -8px rgb(${theme.colorPrincipalLighterRGB}, 0.7), 
-        -16px -8px 0 -8px rgb(${theme.colorPrincipalLighterRGB}, 0.7);
+        0 -18px 0 -8px rgb(${props => props.theme.colorPrincipalLighterRGB}, 0.7), 
+        16px -8px 0 -8px rgb(${props => props.theme.colorPrincipalLighterRGB}, 0.7), 
+        16px 8px 0 -8px rgb(${props => props.theme.colorPrincipalLighterRGB}, 0.7), 
+        0 18px 0 -8px rgb(${props => props.theme.colorPrincipalLighterRGB}, 0.7), 
+        -16px 8px 0 -8px rgb(${props => props.theme.colorPrincipalLighterRGB}, 0.7), 
+        -16px -8px 0 -8px rgb(${props => props.theme.colorPrincipalLighterRGB}, 0.7);
     }
     100% {
-      background: ${theme.colorPrincipalLighter};
+      background: ${props => props.theme.colorPrincipalLighter};
       box-shadow: 
         0 -36px 0 -10px transparent, 
         32px -16px 0 -10px transparent, 
@@ -400,11 +400,11 @@ export const SliderContainer = styled.div`
   align-items: center;
   padding: 17px 40px;
   justify-content: space-between;
-  border-top: 1px solid ${theme.textSecondary};
+  border-top: 1px solid ${props => props.theme.textSecondary};
   gap: 15px;
 
   @media (max-width: 1260px) {
-    background-color: ${theme.colorPrincipal};
+    background-color: ${props => props.theme.colorPrincipal};
     padding: 17px 20px;
     height: max-content;
     border-top: none;
@@ -416,8 +416,8 @@ export const SliderContainer = styled.div`
 `;
 
 export const ButtonTransparent = styled.button`
-  background-color: ${theme.colorPrincipalLighter};
-  border: 1px solid ${theme.textSecondary};
+  background-color: ${props => props.theme.colorPrincipalLighter};
+  border: 1px solid ${props => props.theme.textSecondary};
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -440,13 +440,13 @@ export const ButtonTransparent = styled.button`
 
 export const IconButton = styled.div`
   font-size: 18px;
-  color: ${theme.textSecondary};
+  color: ${props => props.theme.textSecondary};
 `;
 
 export const PButton = styled.div`
   font-size: 20px;
   font-weight: 600;
-  color: ${theme.textSecondary};
+  color: ${props => props.theme.textSecondary};
 
   @media (max-width: 1260px) {
     display: none;
@@ -458,11 +458,12 @@ export const PButton = styled.div`
 export const TestViewChatContainer = styled.div`
   width: 100%;
   padding: 0 40px 40px;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  color: ${props => props.theme.textDark};
 
   @media (max-width: 500px) {
     padding: 0px 20px 40px;

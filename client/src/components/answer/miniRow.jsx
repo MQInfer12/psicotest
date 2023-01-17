@@ -1,5 +1,6 @@
 import React from 'react';
 import { DivDouble, PLight, PLightDouble, ResponsiveTr, ThNumber } from '../../styles/globals/table';
+import { RadioCheck } from '../../styles/pages/answer';
 
 const MiniRow = ({index, pregunta, respuesta, cantReactivos, multimarcado}) => {
   return (
@@ -21,7 +22,8 @@ const MiniRow = ({index, pregunta, respuesta, cantReactivos, multimarcado}) => {
         {
           pregunta.puntuaciones.map((puntuacion, k) => (
             <td key={k}>
-              <input
+              <RadioCheck
+                multimarcado={multimarcado}
                 type={multimarcado ? "checkbox" : "radio"}
                 name={pregunta.id}
                 value={puntuacion.id}

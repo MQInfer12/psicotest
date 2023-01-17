@@ -5,6 +5,7 @@ import { ModalContextProvider } from '../context/modalContext';
 import { ThanksContextProvider } from '../context/thanksContext';
 import { UserContextProvider } from '../context/userContext';
 import { UserFirebaseContextProvider } from '../context/userFirebaseContext';
+import { ThemeContextProvider } from '../context/themeContext';
 
 const Contexts = ({ children }) => {
   return (
@@ -14,7 +15,9 @@ const Contexts = ({ children }) => {
           <ThanksContextProvider>
             <ModalContextProvider>
               <GetContextProvider>
-                { children }
+                <ThemeContextProvider>
+                  { children }
+                </ThemeContextProvider>
               </GetContextProvider>
             </ModalContextProvider>
           </ThanksContextProvider>

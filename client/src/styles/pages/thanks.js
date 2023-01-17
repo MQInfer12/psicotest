@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { theme } from "../globals/themes";
 
 export const DivEntero = styled.div`
   height: ${props => props.height};
@@ -8,14 +7,14 @@ export const DivEntero = styled.div`
   gap: 20px;
   align-items: center;
   justify-content: center;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   font-size: 16px;
   font-weight: 300;
 `;
 
 export const PurpleIcon = styled.i`
   font-size: 100px;
-  color: ${theme.colorPrincipal};
+  color: ${props => props.theme.colorPrincipal};
   animation: appear 2s ease;
 
   @keyframes appear {

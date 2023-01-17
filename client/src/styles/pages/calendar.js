@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { theme } from "../globals/themes";
 
 // CALENDAR MINI
 
@@ -18,7 +17,7 @@ export const MonthContainer = styled.div`
 `;
 
 export const CalendarMonth = styled.h2`
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
   font-size: 36px;
   font-weight: 600;
 `;
@@ -30,7 +29,7 @@ export const CalendarTable = styled.table`
 `;
 
 export const DaysThMini = styled.th`
-  color: ${theme.colorPrincipal};
+  color: ${props => props.theme.colorPrincipal};
   height: 45px;
   min-width: 45px;
 `;
@@ -42,8 +41,8 @@ export const DaysTd = styled.td`
   height: 50px;
   min-width: 50px;
   z-index: 1;
-  color: ${(props) => props.month && "rgba(" + theme.textDarkRGB + ", 0.3)"};
-  color: ${(props) => props.today && theme.principal};
+  color: ${(props) => props.month && "rgba(" + props.theme.textDarkRGB + ", 0.3)"};
+  color: ${(props) => props.today && props.theme.principal};
   cursor: pointer;
 
   &::before {
@@ -55,7 +54,7 @@ export const DaysTd = styled.td`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: ${theme.colorPrincipal};
+    background-color: ${props => props.theme.colorPrincipal};
     border-radius: 50%;
     transform: scale(0.8);
   }
@@ -63,7 +62,7 @@ export const DaysTd = styled.td`
   &::after {
     content: "";
     opacity: ${props => props.hayEventos ? "1" : "0"};
-    background-color: ${(props) => props.today ? theme.principal : theme.colorPrincipal};
+    background-color: ${(props) => props.today ? props.theme.principal : props.theme.colorPrincipal};
     position: absolute;
     width: 6px;
     height: 6px;
@@ -77,7 +76,7 @@ export const DaysTd = styled.td`
 export const MonthButton = styled.button`
   width: 30px;
   height: 30px;
-  border: 1.5px solid ${theme.textSecondary};
+  border: 1.5px solid ${props => props.theme.textSecondary};
   background-color: transparent;
   font-size: 14px;
   border-radius: 50%;
@@ -88,8 +87,8 @@ export const MonthButton = styled.button`
   justify-content: center;
 
   &:hover {
-    color: ${theme.textSecondary};
-    background-color: ${theme.colorPrincipal};
+    color: ${props => props.theme.textSecondary};
+    background-color: ${props => props.theme.colorPrincipal};
   }
 `;
 
@@ -112,7 +111,7 @@ export const EventsTitle = styled.h3`
 export const EventCardContainer = styled.div`
   height: 70px;
   border-radius: 14px;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
   display: flex;
   align-items: center;
   padding: 8px 30px;
@@ -168,26 +167,26 @@ export const DivControls = styled.div`
 export const TableCalendar = styled.table`
   height: 100%;
   width: 100%;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
   border-radius: 10px;
   table-layout: fixed;
   border-collapse: collapse;
   overflow: hidden;
-  border: 1px solid ${theme.textSecondary};
+  border: 1px solid ${props => props.theme.textSecondary};
 `;
 
 export const DaysThBig = styled.th`
   height: 40px;
   font-size: 18px;
-  color: ${theme.colorPrincipal};
-  border: 1px solid ${theme.textSecondary};
+  color: ${props => props.theme.colorPrincipal};
+  border: 1px solid ${props => props.theme.textSecondary};
 `;
 
 // DAY CARD
 
 export const TdDay = styled.td`
   opacity: ${props => props.month? 0.5 : 1};
-  border: 1px solid ${theme.textSecondary};
+  border: 1px solid ${props => props.theme.textSecondary};
 `;
 
 export const DivTd = styled.div`
@@ -212,15 +211,15 @@ export const DivTd = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: ${theme.textSecondary};
+    background: ${props => props.theme.textSecondary};
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 `;
 
@@ -239,9 +238,9 @@ export const DivDay = styled.div`
 `;
 
 export const PDay = styled.p`
-  color: ${props => props.today && theme.colorPrincipal};
+  color: ${props => props.today && props.theme.colorPrincipal};
   padding: 1px 10px;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
 `;
 
 // TASK CARD
@@ -277,7 +276,7 @@ export const DivUser = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
 `;
 
 // MODAL HORARIO

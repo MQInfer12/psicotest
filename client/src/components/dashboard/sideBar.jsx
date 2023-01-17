@@ -1,12 +1,14 @@
 import React from "react";
 import LogoutButton from "./logoutButton";
 import { useWindowHeight } from "../../hooks/useWindowHeight";
-import { SideBarContainer, SideBarIcon, SideBarLink, SideBarList, SideBarOptionText } from "../../styles/pages/dashboard";
+import { SideBarContainer, SideBarIcon, SideBarLink, SideBarList, SideBarOptionText, ThemeChangerButton, ThemeChangerContainer } from "../../styles/pages/dashboard";
 import { PageTitle } from "../../styles/pages/landing";
 import Logo from "../../assets/logo/logo.png"
+import { useThemeContext } from "../../context/themeContext";
 
 const SideBar = ({ rol, setUser, openNav, setOpenNav }) => {
   const windowHeight = useWindowHeight();
+  const { theme, setTheme } = useThemeContext();
 
   const handleChangePage = () => {
     window.scroll(0, 0);
@@ -92,6 +94,10 @@ const SideBar = ({ rol, setUser, openNav, setOpenNav }) => {
         }
         <LogoutButton setUser={setUser}/>
       </SideBarList>
+      <ThemeChangerContainer>
+        <ThemeChangerButton bg="#660BE1" act={theme === "original"} onClick={() => setTheme("original")} />
+        <ThemeChangerButton bg="#121212" act={theme === "dark"} onClick={() => setTheme("dark")} />
+      </ThemeChangerContainer>
     </SideBarContainer>
   )
 }

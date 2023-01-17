@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { theme } from "../globals/themes";
 
 export const DivModalContainer = styled.div`
   width: 100%;
@@ -19,16 +18,16 @@ export const DivAtras = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgba(${theme.textDarkRGB}, 0.4);
+  background-color: rgba(${props => props.theme.textDarkRGB}, 0.4);
 
   animation-name: transitionBackground;
   animation-duration: 1s;
   @keyframes transitionBackground {
     0% {
-      background-color: rgba(${theme.textDarkRGB}, 0.1);
+      background-color: rgba(${props => props.theme.textDarkRGB}, 0.1);
     }
     100% {
-      background-color: rgba(${theme.textDarkRGB}, 0.4);
+      background-color: rgba(${props => props.theme.textDarkRGB}, 0.4);
     }
   }
 `;
@@ -37,7 +36,7 @@ export const DivChildContainer = styled.div`
   z-index: 1;
   border-radius: 16px;
   min-width: 400px;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
 
   animation: move 1s;
   transform: translateY(50px);
@@ -57,13 +56,13 @@ export const DivChildContainer = styled.div`
 export const PTitulo = styled.p`
   font-weight: 600;
   font-size: 14px;
-  color: rgba(${theme.textDarkRGB}, 0.5);
+  color: rgba(${props => props.theme.textDarkRGB}, 0.5);
 `;
 
 export const DivCabecera = styled.div`
   width: 100%;
   padding: 10px 26px;
-  border-bottom: 1px solid ${theme.textSecondary};
+  border-bottom: 1px solid ${props => props.theme.textSecondary};
   display: flex;
   justify-content: space-between;
   align-items: center;

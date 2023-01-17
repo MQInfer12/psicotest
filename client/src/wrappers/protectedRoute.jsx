@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUserContext } from "../context/userContext";
 import Cargando from "../components/globals/cargando";
-import { theme } from "../styles/globals/themes";
 
 const ProtectedRoute = ({ children }) => {
   const location = useLocation();
@@ -40,5 +39,5 @@ export default ProtectedRoute;
 
 const TodaLaPantalla = styled.div`
   height: 100vh;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
 `;

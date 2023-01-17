@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import { theme } from "./themes";
 
 export const AnswersContainer = styled.div`
   height: ${props => props.height ? props.height : "100%"};
   max-width: ${props => props.maxw};
-  box-shadow: 0px 8px 34px rgba(${theme.textDarkRGB}, 0.1);
-  background-color: ${theme.backgroundTable};
+  box-shadow: 0px 8px 34px rgba(${props => props.theme.textDarkRGB}, 0.15);
+  background-color: ${props => props.theme.backgroundTable};
   border-radius: ${props => !props.noRadius && "10px"};
   display: flex;
   flex-direction: column;
@@ -32,15 +31,15 @@ export const ControlsContainer = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: ${theme.textPrincipal};
+    background: ${props => props.theme.textPrincipal};
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 `;
 
@@ -65,15 +64,15 @@ export const TableContainer = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: ${theme.textPrincipal};
+    background: ${props => props.theme.textPrincipal};
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 `;
 
@@ -94,15 +93,15 @@ export const TBodyScrollable = styled.tbody`
   }
 
   &::-webkit-scrollbar-track {
-    background: ${theme.textPrincipal};
+    background: ${props => props.theme.textPrincipal};
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 `;
 
@@ -114,8 +113,8 @@ export const TableAnswers = styled.table`
 
   & > thead {
     height: 40px;
-    background-color: ${theme.backgroundTable};
-    box-shadow: ${props => props.sticky && "0px 4px 4px rgba(" + theme.textDarkRGB + ", 0.1)"};
+    background-color: ${props => props.theme.backgroundTable};
+    box-shadow: ${props => props.sticky && "0px 4px 4px rgba(" + props.theme.textDarkRGB + ", 0.1)"};
     position: ${props => props.sticky && "sticky"};
     top: ${props => props.sticky && "0"};
     z-index: ${props => props.sticky && "1"};
@@ -128,7 +127,7 @@ export const TableAnswers = styled.table`
 
 export const ThNumberal = styled.th`
   font-size: 11px;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
   padding-left: 11px;
   width: 47px;
   text-align: start;
@@ -141,17 +140,17 @@ export const ThAnswer = styled.th`
   font-weight: 600;
   text-transform: uppercase;
   text-align: ${props => props.center ? "center" : "start"};
-  border-left: ${props => props.border && "1px solid " + theme.textPrincipal};
-  border-right: ${props => props.border && "1px solid " + theme.textPrincipal};
-  color: ${theme.textDark};
+  border-left: ${props => props.border && "1px solid " + props.theme.textPrincipal};
+  border-right: ${props => props.border && "1px solid " + props.theme.textPrincipal};
+  color: ${props => props.theme.textDark};
   overflow: hidden;
 `;
 
 export const ThNumber = styled.th`
-  border: ${props => props.mini && "1px solid " + theme.backgroundTable};
+  border: ${props => props.mini && "1px solid " + props.theme.backgroundTable};
   font-size: 14px;
   font-weight: 500;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
   padding-left: 11px;
   width: 47px;
   text-align: start;
@@ -178,7 +177,7 @@ export const DivCenter = styled.div`
 
 export const PNombre = styled.p`
   font-size: 14px;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
@@ -186,7 +185,7 @@ export const PNombre = styled.p`
 `;
 
 export const PLight = styled.p`
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   font-size: 12px;
   font-weight: 400;
   white-space: nowrap;
@@ -197,7 +196,7 @@ export const PLight = styled.p`
 export const PLightDouble = styled.p`
   text-align: ${props => props.center ? "center" : "start"};
   padding-right: 10px;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   font-size: 12px;
   font-weight: 400;
   overflow: hidden;
@@ -210,7 +209,7 @@ export const PLightDouble = styled.p`
 export const PPuntaje = styled.p`
   font-size: 14px;
   font-weight: 400;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
   width: 100%;
   text-align: end;
 `;
@@ -218,7 +217,7 @@ export const PPuntaje = styled.p`
 export const PSobre = styled.p`
   font-size: 12px;
   font-weight: 400;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   width: 100%;
   text-align: end;
 `;
@@ -230,12 +229,12 @@ export const ResponsiveTr = styled.tr.attrs(props => ({
   }))`
   height: 56px;
   max-width: 622px;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
   position: relative;
   text-align: center;
 
   &:nth-child(2n) {
-    background-color: ${theme.backgroundTable};
+    background-color: ${props => props.theme.backgroundTable};
   }
 
   filter: ${props => props.selectedPregunta && "opacity(0.5)"};

@@ -1,8 +1,8 @@
 import React from 'react';
+import { useThemeContext } from '../../../context/themeContext';
 import { useModal } from '../../../hooks/useModal';
 import { addHorario } from '../../../services/horario';
 import { WhiteIconButton } from '../../../styles/globals/formularios';
-import { theme } from '../../../styles/globals/themes';
 import { DivDay, DivTd, PDay, TdDay } from '../../../styles/pages/calendar';
 import ModalHorario from '../modalHorario';
 import TaskCard from './taskCard';
@@ -10,6 +10,8 @@ import TaskCard from './taskCard';
 const DayCard = ({ 
   day, comprobarDiaActual, comprobarMesActual, user, horarios, citas, llenarTareas
 }) => {
+  const { actualTheme } = useThemeContext();
+
   const { openModal, closeModal } = useModal(
     "Añadir horario",
     <ModalHorario 
@@ -48,8 +50,8 @@ const DayCard = ({
           horarios.filter(v => v.fecha == day.format("DD/MM/YYYY")).map((v, i) => (
             <TaskCard key={i}
               v={{...v, fecha: day.format("DD/MM/YYYY")}}
-              background={theme.backgroundBlue}
-              textcolor={theme.textBlue}
+              background={actualTheme.backgroundBlue}
+              textcolor={actualTheme.textBlue}
               event="Libre"
               rol={user.id_rol}
               llenarTareas={llenarTareas}
@@ -62,8 +64,8 @@ const DayCard = ({
               return (
                 <TaskCard key={i}
                   v={{...v, fecha: day.format("DD/MM/YYYY")}}
-                  background={theme.backgroundGreen}
-                  textcolor={theme.textGreen}
+                  background={actualTheme.backgroundGreen}
+                  textcolor={actualTheme.textGreen}
                   event="Cita"
                   rol={user.id_rol}
                   llenarTareas={llenarTareas}
@@ -74,8 +76,8 @@ const DayCard = ({
                 return (
                   <TaskCard key={i}
                     v={{...v, fecha: day.format("DD/MM/YYYY")}}
-                    background={theme.backgroundYellow}
-                    textcolor={theme.textYellow}
+                    background={actualTheme.backgroundYellow}
+                    textcolor={actualTheme.textYellow}
                     event="Pendientes"
                     rol={user.id_rol}
                     llenarTareas={llenarTareas}
@@ -85,8 +87,8 @@ const DayCard = ({
                 return (
                   <TaskCard key={i}
                     v={{...v, fecha: day.format("DD/MM/YYYY")}}
-                    background={theme.backgroundYellow}
-                    textcolor={theme.textYellow}
+                    background={actualTheme.backgroundYellow}
+                    textcolor={actualTheme.textYellow}
                     event="Pendiente"
                     rol={user.id_rol}
                     llenarTareas={llenarTareas}

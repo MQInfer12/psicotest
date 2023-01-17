@@ -1,6 +1,6 @@
-const actual = "original";
+const actual = "dark";
 
-const themes = {
+export const themes = {
   original: {
     principal: "#FFFFFF",
     principalRGB: "255, 255, 255",
@@ -15,6 +15,7 @@ const themes = {
     textPrincipalRGB: "173, 167, 167",
     textSecondary: "#D9D9D9", //#D9D9D9
     textSecondaryRGB: "217, 217, 217",
+    borders: "#D9D9D9",
     backgroundCard: "#E6E6E6",
     textDark: "#3E435D", //#3E435D //#1E212E
     textDarkRGB: "62, 67, 93",
@@ -45,6 +46,7 @@ const themes = {
     textPrincipalRGB: "249, 249, 249",
     textSecondary: "#eaeaea",
     textSecondaryRGB: "234, 234, 234",
+    borders: "#4d4d4d",
     backgroundCard: "#101010",
     textDark: "#f1f2f4",
     textDarkRGB: "241, 242, 244",
@@ -55,12 +57,10 @@ const themes = {
     backgroundTable: "#181819",
     backgroundBlue: "#606064",
     textBlue: "#A7ADF6",
-    backgroundChat: "#8B8AA0",
-    backgroundChatDark: "#828197",
+    backgroundChat: "#3E3C61",
+    backgroundChatDark: "#2F2D52",
     textError: "#E37F98",
     textRed: "#E36685",
     backgroundRed: "#646061",
   }
 }
-
-export const theme = themes[actual];

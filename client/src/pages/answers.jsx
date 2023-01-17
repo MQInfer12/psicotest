@@ -10,12 +10,15 @@ import { useTableHeight } from "../hooks/useTableHeight";
 import useGet from "../hooks/useGet";
 import AnswersTable from "../components/answers/answersTable";
 import AnswersFilter from "../components/answers/answersFilter";
+import { useOutletContext } from "react-router-dom";
+import { useEffect } from "react";
 
 const Answers = () => {
   const windowHeight = useWindowHeight(true, true);
   const { user } = useUserContext();
   const [tableRef, setTableRef] = useState(null);
   const [page, setPage] = useState(0);
+  const { makeVisibleY } = useOutletContext();
 
   const { tableHeightRef, tableRows, rowHeight } = useTableHeight();
 
@@ -28,6 +31,10 @@ const Answers = () => {
   });
 
   const [ filtered, setFiltered ] = useState([]);
+
+  useEffect(() => {
+    return makeVisibleY();
+  }, []);
 
   return (
     <AnswersContainer height={windowHeight}>

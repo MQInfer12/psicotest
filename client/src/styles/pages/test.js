@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { theme } from "../globals/themes";
 
 export const ButtonContainer = styled.div`
   width: 100%;
@@ -27,7 +26,7 @@ export const TestContainer = styled.div`
 export const TitleSeccion = styled.span`
   font-size: 24px;
   font-weight: 600;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
   padding-left: 10px;
 `;
 
@@ -38,7 +37,7 @@ export const DivNothing = styled.div`
   align-items: center;
   justify-content: center;
   gap: 20px;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   font-size: 16px;
   font-weight: 300;
 `;
@@ -47,10 +46,10 @@ export const DivNothing = styled.div`
 
 export const Container = styled.div`
   width: 322px;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
   padding: 28px 32px 32px 32px;
   border-radius: 10px;
-  border-top: 14px solid ${theme.colorPrincipal};
+  border-top: 14px solid ${props => props.theme.colorPrincipal};
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -60,7 +59,7 @@ export const H2 = styled.h2`
   height: 60px;
   font-weight: 400;
   font-size: 20px;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -73,7 +72,7 @@ export const P = styled.p`
   font-weight: 400;
   font-size: 14px;
   line-height: 24px;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
   opacity: 0.6;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -84,12 +83,12 @@ export const P = styled.p`
 
 export const Span = styled.span`
   font-size: 14px;
-  color: rgba(${theme.textDarkRGB}, 0.4);
+  color: rgba(${props => props.theme.textDarkRGB}, 0.4);
   margin-left: 3px;
 `;
 
 export const ContainerIcon = styled.div`
-  color: ${theme.textSecondary};
+  color: ${props => props.theme.textSecondary};
   display: flex;
   align-items: center;
   gap: 8px;
@@ -114,7 +113,7 @@ export const CardButtonContainer = styled.div`
 // MODALS
 
 export const DivModal = styled.div`
-  background-color: ${theme.backgroundPrincipal};
+  background-color: ${props => props.theme.backgroundPrincipal};
   max-width: 400px;
   height: 150px;
   max-height: 250px;
@@ -133,7 +132,7 @@ export const DivPersonas = styled.div`
 export const DivPersona = styled.div`
   font-size: 14px;
   font-weight: 400;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   height: 30px;
   border-radius: 15px;
   display: flex;
@@ -141,7 +140,7 @@ export const DivPersona = styled.div`
   justify-content: center;
   gap: 5px;
   padding: 1px 5px;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
 `;
 
 export const ModalDivButtons = styled.div`

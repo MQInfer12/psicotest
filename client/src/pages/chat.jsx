@@ -1,4 +1,6 @@
 import React, { useContext, useState } from "react";
+import { useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
 import ChatCom from "../components/chat/chatCom";
 import Sidebar from "../components/chat/sidebar";
 import { ChatContext } from "../context/chatContext";
@@ -9,6 +11,13 @@ const Chat = ({ isInTestView = false, email_docente }) => {
   const windowHeight = useWindowHeight(true, true);
   const [showSide, setShowSide] = useState(isInTestView ? false : true);
   const { data } = useContext(ChatContext);
+  const { makeVisibleY } = useOutletContext();
+
+  useEffect(() => {
+    if(!isInTestView) {
+      return makeVisibleY();
+    }
+  }, []);
 
   return (
     <Home isInTestView={isInTestView} height={isInTestView ? "400px" : windowHeight}>

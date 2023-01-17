@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { theme } from "../globals/themes";
 
 export const SearchDiv = styled.div`
   position: relative;
@@ -13,14 +12,13 @@ export const SearchInput = styled.input`
   font-size: 14px;
   padding: 0px 12px 0px 36px;
   border-radius: 6px;
-  box-shadow: 0px 1px 2px rgba(${theme.textDarkRGB}, 0.06), 0px 0px 0px 1px rgba(${theme.textPrincipalRGB}, 0.16);
   outline: none;
-  border: none;
-  background-color: ${theme.principal};
-  color: ${theme.textPrincipal};
+  border: 1px solid ${props => props.theme.borders};
+  background-color: ${props => props.theme.principal};
+  color: ${props => props.theme.textPrincipal};
 
   &::placeholder {
-    color: ${theme.textPrincipal};
+    color: ${props => props.theme.textPrincipal};
   }
 
   @media (max-width: 900px) {
@@ -33,7 +31,7 @@ export const ISearch = styled.i`
   left: 13px;
   top: 9px;
   font-size: 14px;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
 `;
 
 export const SearchSelect = styled.select`
@@ -43,11 +41,10 @@ export const SearchSelect = styled.select`
   font-size: 14px;
   padding: 0px 12px;
   border-radius: 6px;
-  box-shadow: 0px 1px 2px rgba(${theme.textDarkRGB}, 0.06), 0px 0px 0px 1px rgba(${theme.textPrincipalRGB}, 0.16);
   outline: none;
-  border: none;
-  color: ${theme.textPrincipal};
-  background-color: ${theme.principal};
+  border: 1px solid ${props => props.theme.borders};
+  color: ${props => props.theme.textPrincipal};
+  background-color: ${props => props.theme.principal};
 `;
 
   //TABLA
@@ -60,20 +57,20 @@ export const StatusContainer = styled.div`
   font-weight: 500;
   background-color: ${(props) =>
     props.estado == 0
-      ? theme.backgroundBlue
+      ? props.theme.backgroundBlue
       : props.estado == 1
-      ? theme.backgroundBlue
+      ? props.theme.backgroundBlue
       : props.estado == 2
-      ? theme.backgroundGreen
-      : props.estado == 3 && theme.backgroundRed};
+      ? props.theme.backgroundGreen
+      : props.estado == 3 && props.theme.backgroundRed};
   color: ${(props) =>
     props.estado == 0
-      ? theme.textDark
+      ? props.theme.textDark
       : props.estado == 1
-      ? theme.textBlue
+      ? props.theme.textBlue
       : props.estado == 2
-      ? theme.textGreen
-      : props.estado == 3 && theme.textError};
+      ? props.theme.textGreen
+      : props.estado == 3 && props.theme.textError};
 `;
 
 // PAGINATION
@@ -89,7 +86,7 @@ export const PaginationContainer = styled.div`
 export const PaginationCounter = styled.p`
   font-size: 12px;
   letter-spacing: 0.03em;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
 `;
 
 export const ChangePageContainer = styled.div`
@@ -100,7 +97,7 @@ export const ChangePageContainer = styled.div`
 
 export const RowsPage = styled.p`
   font-size: 12px;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
 `;
 
 export const ButtonPagContainer = styled.div`
@@ -110,14 +107,14 @@ export const ButtonPagContainer = styled.div`
 `;
 
 export const ButtonChange = styled.button`
-  box-shadow: 0px 0px 0px 1px rgba(${theme.textDarkRGB}, 0.24);
+  box-shadow: 0px 0px 0px 1px rgba(${props => props.theme.textDarkRGB}, 0.24);
   width: 24px;
   height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 7px;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   border: none;
   border-radius: 6px;
   cursor: pointer;

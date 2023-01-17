@@ -148,7 +148,7 @@ class RespuestaController extends Controller
         $dimensiones = DB::select("SELECT * FROM dimensions WHERE id_test='$test->id'");
         foreach($dimensiones as $dimension) {
             $nat = DB::select(
-                "SELECT SUM(pu.asignado) as nat
+                "SELECT COALESCE(SUM(pu.asignado), 0) as nat
                 FROM resultados as r, puntuacions as pu, preguntas as pr, pregunta_dimensions as pd, dimensions as d
                 WHERE r.id_respuesta='$respuesta->id' AND r.id_puntuacion=pu.id AND pu.id_pregunta=pr.id
                 AND pd.id_pregunta=pr.id AND pd.id_dimension=d.id AND d.id='$dimension->id'"

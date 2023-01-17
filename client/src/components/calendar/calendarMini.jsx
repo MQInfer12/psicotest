@@ -8,7 +8,7 @@ import { CalendarMiniContainer, CalendarMonth, CalendarTable,
   DaysTd, DaysThMini, EventsDiv, 
   EventsTitle, MonthButton, MonthContainer 
 } from "../../styles/pages/calendar";
-import { theme } from "../../styles/globals/themes";
+import { useThemeContext } from "../../context/themeContext";
 
 const CalendarMini = ({
   horarios, citas, user,
@@ -18,6 +18,8 @@ const CalendarMini = ({
   comprobarDiaActual, comprobarMesActual,
   nextMonth, lastMonth
 }) => {
+  const { actualTheme } = useThemeContext();
+
   const comprobarHorariosEseDia = (day) => {
     let flag = false;
     horarios.forEach(horario => {
@@ -111,7 +113,7 @@ const CalendarMini = ({
             horarios.filter(horario => horario.fecha === fechaSelected.DMY).map((v, i) => (
               <EventCard key={i}
                 v={{...v, fecha: fechaSelected.DMY}}
-                color={theme.colorPrincipal}
+                color={actualTheme.colorPrincipal}
                 event={"Libre"}
                 rol={user.id_rol}
                 llenarTareas={llenarTareas} 
@@ -124,7 +126,7 @@ const CalendarMini = ({
                 return (
                   <EventCard key={i}
                     v={{...v, fecha: fechaSelected.DMY}}
-                    color={theme.textGreen}
+                    color={actualTheme.textGreen}
                     event={"Cita"}
                     rol={user.id_rol}
                     llenarTareas={llenarTareas} 
@@ -135,7 +137,7 @@ const CalendarMini = ({
                   return (
                     <EventCard key={i}
                       v={{...v, fecha: fechaSelected.DMY}}
-                      color={theme.textYellow}
+                      color={actualTheme.textYellow}
                       event={"Pendientes"}
                       rol={user.id_rol}
                       llenarTareas={llenarTareas}
@@ -145,7 +147,7 @@ const CalendarMini = ({
                   return (
                     <EventCard key={i}
                       v={{...v, fecha: fechaSelected.DMY}}
-                      color={theme.textYellow}
+                      color={actualTheme.textYellow}
                       event={"Pendiente"}
                       rol={user.id_rol}
                       llenarTareas={llenarTareas}

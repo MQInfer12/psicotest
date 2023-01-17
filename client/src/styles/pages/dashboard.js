@@ -1,7 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { device } from "../globals/devices";
-import { theme } from "../globals/themes";
 
 export const DashboardContainer = styled.div`
   min-height: ${props => props.height};
@@ -13,6 +12,8 @@ export const DashboardContainer = styled.div`
   }
 `;
 
+
+
 // SIDEBAR
 
 //ae2d68, c05299, ea698b, 9c5ad0, b5179e, 8e2de2
@@ -20,7 +21,7 @@ export const DashboardContainer = styled.div`
 
 export const SideBarContainer = styled.nav`
   z-index: 5;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -31,12 +32,38 @@ export const SideBarContainer = styled.nav`
   transform-origin: left;
   position: fixed;
   width: 263px;
-  gap: 54px;
+  gap: 27px;
 
   /* LO CONVIERTE EN OCULTABLE */
   @media ${device.tablet} {
     transform: scaleX(${props => props.openNav? "1" : "0"});
-    box-shadow: 4px 1px 16px -7px rgba(0,0,0,0.6);
+    box-shadow: 1px 1px 12px -7px rgba(${props => props.theme.textDarkRGB},0.6);
+  }
+`;
+
+export const ThemeChangerContainer = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+export const ThemeChangerButton = styled.button`
+  border: 1px solid ${props => props.theme.borders};
+  background-color: ${props => props.bg};
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: ${props => props.act && "3px solid white"};
+    border-radius: 50%;
   }
 `;
 
@@ -44,7 +71,7 @@ export const SideBarLogo = styled.img`
   object-fit: cover;
   width: 170px;
   height: 38px;
-  background-color: ${theme.textSecondary};
+  background-color: ${props => props.theme.textSecondary};
   margin-bottom: 88px;
 `;
 
@@ -55,15 +82,15 @@ export const SideBarList = styled.ul`
   gap: 5px;
 
   .active {
-    background-color: ${theme.colorPrincipal}; 
+    background-color: ${props => props.theme.colorPrincipal}; 
   }
   .active:hover {
-    color: ${theme.textSecondary};
+    color: ${props => props.theme.textSecondary};
   }
 `;
 
 export const SideBarLink = styled(NavLink)`
-  color: ${theme.textSecondary};
+  color: ${props => props.theme.textSecondary};
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -74,7 +101,7 @@ export const SideBarLink = styled(NavLink)`
   height: 47px;
 
   &:hover {
-    color: ${theme.colorPrincipal};
+    color: ${props => props.theme.colorPrincipal};
   }
 `;
 
@@ -95,7 +122,7 @@ export const SideBarButton = styled.button`
   background-color: inherit;
   border: none;
   cursor: pointer;
-  color: ${theme.textSecondary};
+  color: ${props => props.theme.textSecondary};
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -106,7 +133,7 @@ export const SideBarButton = styled.button`
   height: 47px;
 
   &:hover {
-    color: ${theme.colorPrincipal};
+    color: ${props => props.theme.colorPrincipal};
   }
 `;
 
@@ -115,7 +142,7 @@ export const SideBarButton = styled.button`
 export const CenterContainer = styled.div`
   padding-left: 263px;
   padding-right: ${props => props.calendar && "433px"};
-  background-color: ${theme.backgroundPrincipal};
+  background-color: ${props => props.theme.backgroundPrincipal};
   width: 100%; 
   display: flex;
   flex-direction: column;
@@ -135,7 +162,7 @@ export const UpbarContainer = styled.div`
   padding: 0 40px;
   gap: 20px;
   height: 157px;
-  background-color: ${theme.backgroundPrincipal};
+  background-color: ${props => props.theme.backgroundPrincipal};
   align-items: center;
 
   @media (max-height: 750px) {
@@ -155,7 +182,7 @@ export const UpbarContainer = styled.div`
 `;
 
 export const OpenButton = styled.button`
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   font-size: 20px;
   border: none;
   background-color: transparent;
@@ -165,7 +192,7 @@ export const OpenButton = styled.button`
   display: none;
 
   &:hover {
-    color: ${theme.textDark};
+    color: ${props => props.theme.textDark};
   }
 
   @media ${device.tablet} {
@@ -188,7 +215,7 @@ export const ActualPage = styled.span`
   //margin-top: 7px;
   font-weight: 300;
   font-size: 16px;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   display: flex;
   gap: 5px;
   white-space: nowrap;
@@ -197,21 +224,21 @@ export const ActualPage = styled.span`
 export const TitlePage = styled.span`
   font-size: 24px;
   font-weight: 600;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
   white-space: nowrap;
 `;
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
   font-size: 16px;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   display: flex;
   flex-direction: column;
 
   &::after {
     content: "";
     width: 0%;
-    border-top: 1px solid ${theme.textPrincipal};
+    border-top: 1px solid ${props => props.theme.textPrincipal};
     transition: all 0.2s;
   }
 
@@ -224,7 +251,7 @@ export const StyledLink = styled(Link)`
 
 export const OutletContainerStyled = styled.div`
   height: ${props => props.height};
-  overflow-y: auto;
+  overflow-y: ${props => props.overflowY ? "auto" : "visible"};
   padding: 0px 40px 40px;
 
   &::-webkit-scrollbar {
@@ -232,15 +259,15 @@ export const OutletContainerStyled = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: ${theme.textPrincipal};
+    background: ${props => props.theme.textPrincipal};
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 
   @media (max-width: 1135px) {
@@ -264,7 +291,7 @@ export const OutletContainerStyled = styled.div`
 // RIGHTBAR
 
 export const RightContainer = styled.aside`
-  background-color: ${props => props.calendar ? theme.principal : "transparent"};
+  background-color: ${props => props.calendar ? props.theme.principal : "transparent"};
   position: ${props => props.calendar ? "fixed" : "absolute"};
   height: ${props => props.calendar && props.height};
   right: 0;
@@ -315,7 +342,7 @@ export const UpbarName = styled.p`
   text-align: center;
   font-weight: 300;
   font-size: 16px;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -337,7 +364,7 @@ export const PhotoContainer = styled.div`
 
 export const ProfilePencil = styled.div`
   opacity: 0;
-  background-color: rgb(${theme.textDarkRGB}, 0.4);
+  background-color: rgb(${props => props.theme.textDarkRGB}, 0.4);
   position: absolute;
   top: 0;
   right: 0;
@@ -348,7 +375,7 @@ export const ProfilePencil = styled.div`
   display: grid;
   place-content: center;
   font-size: 32px;
-  color: ${theme.principal};
+  color: ${props => props.theme.principal};
   cursor: pointer;
 `;
 
@@ -362,11 +389,11 @@ export const UpbarNot = styled.div`
   min-width: 52px;
   height: 52px;
   border-radius: ${props => props.showNots ? "10px 10px 0 0" : "10px"};
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${theme.textSecondary};
+  color: ${props => props.theme.textSecondary};
   font-size: 18px;
   cursor: pointer;
   transition: all 0.2s;
@@ -381,9 +408,9 @@ export const NotNumber = styled.div`
   position: absolute;
   top: 5px;
   right: 5px;
-  background-color: ${theme.colorPrincipal};
+  background-color: ${props => props.theme.colorPrincipal};
   font-size: 10px;
-  color: ${theme.principal};
+  color: ${props => props.theme.principal};
   display: grid;
   place-content: center;
 `;
@@ -394,7 +421,7 @@ export const NotificationsContainer = styled.div`
   width: 350px;
   min-height: 60px;
   max-height: 300px;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
   position: absolute;
   top: 52px;
   right: -82px;
@@ -409,13 +436,13 @@ export const NotificationsContainer = styled.div`
     width: 8px;
   }
   &::-webkit-scrollbar-track {
-    background: ${theme.textPrincipal};
+    background: ${props => props.theme.textPrincipal};
   }
   &::-webkit-scrollbar-thumb {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
   &::-webkit-scrollbar-thumb:hover {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 
   @keyframes appear {
@@ -443,7 +470,7 @@ export const LeftDiv = styled.div`
   width: 32px;
   height: 100%;
   font-size: 20px;
-  color: ${theme.textSecondary};
+  color: ${props => props.theme.textSecondary};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -453,7 +480,7 @@ export const LeftDiv = styled.div`
 export const Line = styled.div`
   width: 0;
   height: 15px;
-  border-left: 1px solid rgb(${theme.textSecondaryRGB}, 0.4);
+  border-left: 1px solid rgb(${props => props.theme.textSecondaryRGB}, 0.4);
 `;
 
 export const RightDiv = styled.div`
@@ -468,7 +495,7 @@ export const TitleNot = styled.h5`
   width: 100%;
   font-size: 16px;
   font-weight: 600;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
   user-select: none;
   white-space: nowrap;
   overflow: hidden;
@@ -478,13 +505,13 @@ export const TitleNot = styled.h5`
 export const DescripNot = styled.p`  
   font-size: 14px;
   font-weight: 400;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   user-select: none;
 `;
 
 export const LinkSpan = styled.button`
   position: relative;
-  color: ${theme.colorPrincipal};
+  color: ${props => props.theme.colorPrincipal};
   cursor: pointer;
   text-decoration: none;
   background-color: transparent;
@@ -496,7 +523,7 @@ export const LinkSpan = styled.button`
     position: absolute;
     left: 0;
     bottom: 0;
-    border-top: 1px solid ${theme.colorPrincipal};
+    border-top: 1px solid ${props => props.theme.colorPrincipal};
     transition: all 0.2s;
   }
 

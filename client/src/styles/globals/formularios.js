@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import { theme } from "./themes";
 
 export const FormContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  color: ${theme.textPrincipal}
+  color: ${props => props.theme.textPrincipal};
 `;
 
 export const DivInput = styled.div`
@@ -22,15 +21,15 @@ export const DivInput = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: ${theme.textPrincipal};
+    background: ${props => props.theme.textPrincipal};
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: ${theme.colorPrincipal};
+    background: ${props => props.theme.colorPrincipal};
   }
 `;
 
@@ -50,7 +49,7 @@ export const PText = styled.p`
   max-width: 300px;
   text-transform: uppercase;
   font-size: ${props => props.titulo ? "14px" : "12px"};
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   font-weight: ${props => props.titulo ? "700" : "500"};
   white-space: nowrap;
   overflow: hidden;
@@ -68,42 +67,42 @@ export const InputText = styled.input`
   text-align: ${props => props.center ? "center" : "start"};
   font-size: 13px;
   border-radius: 5px;
-  border: 1px solid ${theme.textSecondary};
+  border: 1px solid ${props => props.theme.borders};
   outline: none;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   min-width: 300px;
   width: 100%;
   height: 38px;
   padding-left: 10px;
   padding-right: 10px;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
 
   &:disabled {
-    background-color: ${theme.backgroundPrincipal};
+    background-color: ${props => props.theme.backgroundPrincipal};
   }
 `;
 
 export const InputSelect = styled.select`
   font-size: 13px;
   border-radius: 5px;
-  border: 1px solid ${theme.textSecondary};
+  border: 1px solid ${props => props.theme.borders};
   outline: none;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   min-width: 300px;
   width: 100%;
   height: 38px;
   padding-left: 6px;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
 
   &:disabled {
-    background-color: ${theme.backgroundPrincipal};
+    background-color: ${props => props.theme.backgroundPrincipal};
   }
 `;
 
 export const ErrorCss = styled.p`
   font-size: 0.7rem;
   font-weight: bold;
-  color: ${theme.textError};
+  color: ${props => props.theme.textError};
 `;
 
 export const PurpleButton = styled.button`
@@ -113,11 +112,11 @@ export const PurpleButton = styled.button`
   gap: 20px;
   min-height: 42px;
   width: ${props => props.width};
-  border: 1px solid ${theme.textSecondary};
+  border: 1px solid ${props => props.theme.colorPrincipal};
   padding: 8px 26px 8px 26px;
-  background-color: ${theme.colorPrincipal};
+  background-color: ${props => props.theme.colorPrincipal};
   border-radius: 8px;
-  color: ${theme.textSecondary};
+  color: ${props => props.theme.textSecondary};
   text-align: center;
   font-size: 14px;
   cursor: pointer;
@@ -130,9 +129,9 @@ export const PurpleButton = styled.button`
 
   &:disabled {
     pointer-events: none;
-    background-color: ${theme.textPrincipal};
-    color: ${theme.textSecondary};
-    border: 1px solid ${theme.textPrincipal};
+    background-color: ${props => props.theme.textPrincipal};
+    color: ${props => props.theme.textSecondary};
+    border: 1px solid ${props => props.theme.textPrincipal};
   }
 `;
 
@@ -142,11 +141,11 @@ export const WhiteButton = styled.button`
   justify-content: center;
   gap: 20px;
   min-height: 42px;
-  border: 1px solid ${theme.textSecondary};
+  border: 1px solid ${props => props.theme.borders};
   padding: 8px 26px 8px 26px;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
   border-radius: 8px;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   text-align: center;
   font-size: 14px;
   cursor: pointer;
@@ -155,46 +154,46 @@ export const WhiteButton = styled.button`
   width: ${props => props.width};
 
   &:hover {
-    color: ${theme.textSecondary};
-    background-color: ${theme.colorPrincipal};
-    border: 1px solid ${theme.colorPrincipal};
+    color: ${props => props.theme.textSecondary};
+    background-color: ${props => props.theme.colorPrincipal};
+    border: 1px solid ${props => props.theme.colorPrincipal};
   }
 
-  color: ${props => props.active && theme.textSecondary};
-  background-color: ${props => props.active && theme.colorPrincipal};
-  border: ${props => props.active && "1px solid " + theme.colorPrincipal};
+  color: ${props => props.active && props.theme.textSecondary};
+  background-color: ${props => props.active && props.theme.colorPrincipal};
+  border: ${props => props.active && "1px solid " + props.theme.colorPrincipal};
 
   &:disabled {
     pointer-events: none;
-    border: 1px solid ${theme.textPrincipal};
-    background-color: ${theme.textPrincipal};
-    color: ${theme.textSecondary};
+    border: 1px solid ${props => props.theme.textPrincipal};
+    background-color: ${props => props.theme.textPrincipal};
+    color: ${props => props.theme.textSecondary};
   }
 `;
 
 export const DangerButton = styled.button`
   min-height: 42px;
-  border: 1px solid ${theme.textSecondary};
+  border: 1px solid ${props => props.theme.borders};
   padding: 8px 20px 8px 20px;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
   border-radius: 8px;
-  color: ${theme.textRed};
+  color: ${props => props.theme.textRed};
   text-align: center;
   font-size: 14px;
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
-    color: ${theme.principal};
-    background-color: ${theme.textRed};
-    border: 1px solid ${theme.textRed};
+    color: ${props => props.theme.principal};
+    background-color: ${props => props.theme.textRed};
+    border: 1px solid ${props => props.theme.textRed};
   }
 
   &:disabled {
     pointer-events: none;
-    border: 1px solid ${theme.textPrincipal};
-    background-color: ${theme.textPrincipal};
-    color: ${theme.textSecondary};
+    border: 1px solid ${props => props.theme.textPrincipal};
+    background-color: ${props => props.theme.textPrincipal};
+    color: ${props => props.theme.textSecondary};
   }
 `;
 
@@ -205,9 +204,9 @@ export const PurpleIconButton = styled.button`
   height: 32px;
   width: 40px;
   border: none;
-  background-color: ${theme.colorPrincipal};
+  background-color: ${props => props.theme.colorPrincipal};
   border-radius: 10px;
-  color: ${theme.textSecondary};
+  color: ${props => props.theme.textSecondary};
   text-align: center;
   font-size: 16px;
   cursor: pointer;
@@ -219,9 +218,9 @@ export const PurpleIconButton = styled.button`
 
   &:disabled {
     pointer-events: none;
-    border: 1px solid ${theme.textPrincipal};
-    background-color: ${theme.textPrincipal};
-    color: ${theme.textSecondary};
+    border: 1px solid ${props => props.theme.textPrincipal};
+    background-color: ${props => props.theme.textPrincipal};
+    color: ${props => props.theme.textSecondary};
   }
 `;
 
@@ -231,10 +230,10 @@ export const WhiteIconButton = styled.button`
   justify-content: center;
   height: 32px;
   width: 40px;
-  border: 1px solid ${theme.textSecondary};
-  background-color: ${theme.principal};
+  border: 1px solid ${props => props.theme.borders};
+  background-color: ${props => props.theme.principal};
   border-radius: 10px;
-  color: ${theme.textPrincipal};
+  color: ${props => props.theme.textPrincipal};
   text-align: center;
   font-size: 16px;
   cursor: pointer;
@@ -242,20 +241,20 @@ export const WhiteIconButton = styled.button`
   min-width: ${props => props.minwidth};
 
   &:hover {
-    color: ${theme.textSecondary};
-    background-color: ${theme.colorPrincipal};
-    border: 1px solid ${theme.colorPrincipal};
+    color: ${props => props.theme.textSecondary};
+    background-color: ${props => props.theme.colorPrincipal};
+    border: 1px solid ${props => props.theme.colorPrincipal};
   }
 
-  color: ${props => props.active && theme.textSecondary};
-  background-color: ${props => props.active && theme.colorPrincipal};
-  border: ${props => props.active && "1px solid " + theme.colorPrincipal};
+  color: ${props => props.active && props.theme.textSecondary};
+  background-color: ${props => props.active && props.theme.colorPrincipal};
+  border: ${props => props.active && "1px solid " + props.theme.colorPrincipal};
 
   &:disabled {
     pointer-events: none;
-    border: 1px solid ${theme.textPrincipal};
-    background-color: ${theme.textPrincipal};
-    color: ${theme.textSecondary};
+    border: 1px solid ${props => props.theme.textPrincipal};
+    background-color: ${props => props.theme.textPrincipal};
+    color: ${props => props.theme.textSecondary};
   }
 `;
 
@@ -266,24 +265,24 @@ export const DangerIconButton = styled.button`
   font-size: 16px;
   height: 32px;
   width: 40px;
-  border: 1px solid ${theme.textSecondary};
-  background-color: ${theme.principal};
+  border: 1px solid ${props => props.theme.borders};
+  background-color: ${props => props.theme.principal};
   border-radius: 10px;
-  color: ${theme.textRed};
+  color: ${props => props.theme.textRed};
   text-align: center;
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
-    color: ${theme.principal};
-    background-color: ${theme.textRed};
-    border: 1px solid ${theme.textRed};
+    color: ${props => props.theme.principal};
+    background-color: ${props => props.theme.textRed};
+    border: 1px solid ${props => props.theme.textRed};
   }
 
   &:disabled {
     pointer-events: none;
-    border: 1px solid ${theme.textPrincipal};
-    background-color: ${theme.textPrincipal};
-    color: ${theme.textSecondary};
+    border: 1px solid ${props => props.theme.textPrincipal};
+    background-color: ${props => props.theme.textPrincipal};
+    color: ${props => props.theme.textSecondary};
   }
 `;

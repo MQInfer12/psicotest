@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { theme } from "../globals/themes";
 
 export const AllContainer = styled.div`
   display: flex;
@@ -11,7 +10,7 @@ export const AllContainer = styled.div`
 export const TitleSeccion = styled.span`
   font-size: 24px;
   font-weight: 600;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
   padding-left: 10px;
 `;
 
@@ -38,10 +37,10 @@ export const ArticleContainer = styled.div`
 export const ArticleCardContainer = styled.div`
   min-width: 322px;
   max-width: 322px;
-  background-color: ${theme.principal};
+  background-color: ${props => props.theme.principal};
   padding: 28px 32px 32px 32px;
   border-radius: 10px;
-  border-top: 14px solid ${theme.colorPrincipal};
+  border-top: 14px solid ${props => props.theme.colorPrincipal};
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -50,7 +49,7 @@ export const ArticleCardContainer = styled.div`
 export const ArticleCardH2 = styled.h2`
   font-weight: 400;
   font-size: 20px;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -62,7 +61,7 @@ export const ArticleCardP = styled.p`
   font-weight: 400;
   font-size: 14px;
   line-height: 24px;
-  color: ${theme.textDark};
+  color: ${props => props.theme.textDark};
   opacity: 0.6;
   overflow: hidden;
   text-overflow: ellipsis;
