@@ -1,7 +1,7 @@
 import React from 'react'
 import { WhiteIconButton } from '../../../styles/globals/formularios';
 
-const DownloadQRButton = ({ nombreTest }) => {
+const DownloadQRButton = ({ nombreTest, destinatarios }) => {
   function downloadSVGAsPNG(e){
     const canvas = document.createElement("canvas");
     const svg = document.getElementById("QRCode");
@@ -22,7 +22,7 @@ const DownloadQRButton = ({ nombreTest }) => {
       } else {
         const a = document.createElement('a');
         const my_evt = new MouseEvent('click');
-        a.download = `${nombreTest.replaceAll(" ", "_")}_QR.png`;
+        a.download = `${nombreTest.replaceAll(" ", "_")}_${destinatarios}_QR.png`;
         a.href = dataURL;
         a.dispatchEvent(my_evt);
       }

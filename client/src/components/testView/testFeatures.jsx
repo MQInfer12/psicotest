@@ -30,7 +30,7 @@ const TestFeatures = ({ idTest, caracteristicas }) => {
     (features.length != 0 || user.id_rol === 3) && 
     <TestInfoContainer>
       <TestInfoTitle>Características</TestInfoTitle>
-      { user.id_rol === 3 && <WhiteButton onClick={openAdd}>Añadir</WhiteButton> }
+      { user.id_rol != 1 && <WhiteButton onClick={openAdd}>Añadir</WhiteButton> }
       <Features>
         {
           features.map((v, i) => (

@@ -334,7 +334,7 @@ export const CheckContainer = styled.div`
   }
 
   & svg path {
-    stroke: #FFFFFF;
+    stroke: ${props => props.theme.textColorPrincipal};
     stroke-width: 3;
     stroke-linecap: round;
     stroke-linejoin: round;

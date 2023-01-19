@@ -107,7 +107,7 @@ export const ButtonSubmit = styled.button`
   height: 54px;
   font-size: 20px;
   font-weight: 600;
-  color: #FFFFFF;
+  color: ${props => props.theme.textColorPrincipal};
   margin-top: 1rem;
 
   text-decoration: none;

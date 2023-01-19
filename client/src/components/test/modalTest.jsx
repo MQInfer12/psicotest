@@ -3,20 +3,23 @@ import { FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import { initialForm, validationsForm } from "../../validations/test";
 import { UseForm } from "../../hooks/useForm";
 import FormInputsText from "../globals/formInputsText";
+import { useUserContext } from "../../context/userContext";
 
 const ModalTest = ({ funcion, call, actualizar, test }) => {
+  const { user } = useUserContext();
+
   const { form, errors, handleChange, handleSubmit} = UseForm(
     test ? {
       nombre: test.nombre,
       descripcion: test.descripcion,
-      autor: "Admin",
       tiempo: test.tiempo
     } : initialForm, 
     validationsForm,
     call,
     actualizar,
-    test?.id
-  )
+    test?.id_test,
+    user.id
+  );
 
   const data = [
     {
@@ -36,17 +39,9 @@ const ModalTest = ({ funcion, call, actualizar, test }) => {
       disabled: false
     }, 
     {
-      name: "autor",
-      value: form.autor,
-      placeholder: "Autor",
-      error: errors.autor,
-      tipo: "text",
-      disabled: true
-    },
-    {
       name: "tiempo",
       value: form.tiempo,
-      placeholder: "Tiempo",
+      placeholder: "Tiempo aproximado",
       error: errors.tiempo,
       tipo: "text",
       disabled: false

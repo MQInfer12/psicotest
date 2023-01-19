@@ -12,10 +12,10 @@ import QRCode from "react-qr-code";
 import DownloadQRButton from "./modalLink/downloadQRButton";
 import { DivCenter, ModalDivButtons } from "../../styles/pages/test";
 
-const ModalLink = ({ id, nombreTest }) => {
+const ModalLink = ({ id, nombreTest, route, destinatarios }) => {
   let stringInd = id.toString();
   let idCode = codeId(stringInd);
-  const link = window.location.href + "/share/" + idCode;
+  const link = window.location.href + route + idCode;
   const [option, setOption] = useState("link");
 
   const handleCopy = () => {
@@ -37,14 +37,14 @@ const ModalLink = ({ id, nombreTest }) => {
           option === "link" ? (
             <DivCenter>
               <DivText>
-                <PText>¡Comparte este enlace a tus beneficiarios!</PText>
+                <PText>¡Comparte este enlace a tus {destinatarios}!</PText>
               </DivText>
               <InputText type="text" value={link} readOnly />
             </DivCenter>
           ) : option === "QR" && (
             <DivCenter>
               <DivText>
-                <PText>¡Comparte este QR a tus beneficiarios!</PText>
+                <PText>¡Comparte este QR a tus {destinatarios}!</PText>
               </DivText>
               <QRCode id="QRCode" value={link} size={128} />
             </DivCenter>
@@ -57,7 +57,7 @@ const ModalLink = ({ id, nombreTest }) => {
               <i className="fa-regular fa-copy"></i>
             </WhiteIconButton>
           ) : option === "QR" && (
-            <DownloadQRButton nombreTest={nombreTest} />
+            <DownloadQRButton nombreTest={nombreTest} destinatarios={destinatarios} />
           )
         }
       </ModalDivButtons>

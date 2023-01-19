@@ -29,6 +29,7 @@ import Blog from "./pages/blog";
 import { StyledLink } from "./styles/pages/dashboard";
 import { TestCreatorContextProvider } from "./context/testCreatorContext";
 import Recover from "./pages/recover";
+import Collaborate from "./pages/collaborate";
 
 function App() {
   return (
@@ -93,7 +94,7 @@ function App() {
             <Route
               path="tests/:idTest"
               element={
-                <ProtectedRole roles={[3]}>
+                <ProtectedRole roles={[2, 3]}>
                   <OutletContext
                     titlePage="Creación de Test"
                     calendar={false}
@@ -142,6 +143,24 @@ function App() {
                     }
                   >
                     <TestShare />
+                  </OutletContext>
+                </ProtectedRole>
+              }
+            />
+            <Route
+              path="tests/collab/:idTest"
+              element={
+                <ProtectedRole roles={[2, 3]}>
+                  <OutletContext
+                    titlePage="Colaborar"
+                    calendar={false}
+                    links={
+                      <>
+                        <StyledLink to="/dashboard/tests">Tests</StyledLink>/
+                      </>
+                    }
+                  >
+                    <Collaborate />
                   </OutletContext>
                 </ProtectedRole>
               }

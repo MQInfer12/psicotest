@@ -18,46 +18,39 @@ const Test = () => {
 
   return (
     <AllContainer height={windowHeight} load={loading}>
-      {idRole === 3 && (
-        <AddTestButton llenarTests={llenarTests} />
-      )}
-      {idRole === 1 && <TitleSeccion>Pendientes</TitleSeccion>}
+      <AddTestButton llenarTests={llenarTests} />
+      <TitleSeccion>{idRole === 1 ? "Pendientes" : "Mis tests"}</TitleSeccion>
       {
-        tests.filter(v => idRole != 1 || v.estado === 0).length == 0 ? (
-          <DivNothing>
-            {
-              idRole === 1 ? "No tienes tests pendientes." :
-              idRole === 2 ? "No te asignaron tests aún." :
-              "¡Crea un test!"
-            }
-          </DivNothing>
+        tests.filter(v => (idRole === 1 && v.estado === 0) || (idRole != 1 && v.id_autor === user.id)).length == 0 ? (
+          <DivNothing>{idRole === 1 ? "No tienes tests pendientes." : "¡Crea un test!"}</DivNothing>
         ) : (
           <TestContainer>
-            {idRole === 1 ?
-              tests.filter(v => v.estado === 0).map((v, i) => <TestCard key={i} {...v} idRole={idRole} llenarTests={llenarTests}/>) :
-              tests.map((v, i) => <TestCard key={i} {...v} idRole={idRole} llenarTests={llenarTests} />)
+            {
+              tests
+                .filter(v => (idRole === 1 && v.estado === 0) || (idRole != 1 && v.id_autor === user.id))
+                .map((v, i) => 
+                  <TestCard key={i} {...v} idRole={idRole} llenarTests={llenarTests}/>
+                )
             }
           </TestContainer>
         )
       }
-      {idRole === 1 && (
-        <>
-          <TitleSeccion>Realizados</TitleSeccion>
-          {
-            tests.filter(v => v.estado === 1).length === 0 ? (
-              <DivNothing>No realizaste ningún test aún.</DivNothing>
-            ) : (
-              <TestContainer>
-                {
-                  tests.filter(v => v.estado === 1).map((v, i) => (
-                    <TestCard key={i} {...v} idRole={idRole}/>
-                  ))
-                }
-              </TestContainer>
-            )
-          }
-        </>
-      )}
+      <TitleSeccion>{idRole === 1 ? "Realizados" : "Tests compartidos"}</TitleSeccion>
+      {
+        tests.filter(v => (idRole === 1 && v.estado === 1) || (idRole != 1 && v.id_autor != user.id)).length === 0 ? (
+          <DivNothing>{idRole === 1 ? "No realizaste ningún test aún." : "No tienes tests compartidos"}</DivNothing>
+        ) : (
+          <TestContainer>
+            {
+              tests
+                .filter(v => (idRole === 1 && v.estado === 1) || (idRole != 1 && v.id_autor != user.id))
+                .map((v, i) => 
+                  <TestCard key={i} {...v} idRole={idRole} llenarTests={llenarTests}/>
+                )
+            }
+          </TestContainer>
+        )
+      }
     </AllContainer>
   );
 };

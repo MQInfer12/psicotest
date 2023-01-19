@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Conversion;
-use App\Models\PreguntaDimension;
+use App\Models\DocenteTest;
 use App\Models\Test;
 use App\Traits\PuntuacionesNaturales;
 use Illuminate\Http\Request;
@@ -18,15 +17,21 @@ class TestController extends Controller
         $request->validate([
             'nombre' => 'required',
             'descripcion' => 'required',
+            'autor' => 'required',
             'tiempo' => 'required',
         ]);
 
         $test = new Test();
         $test->nombre = $request->nombre;
         $test->descripcion = $request->descripcion;
-        $test->autor = "Admin";
+        $test->autor = $request->autor;
         $test->tiempo = $request->tiempo;
         $test->save();
+
+        $assignMyself = new DocenteTest();
+        $assignMyself->id_docente = $request->autor;
+        $assignMyself->id_test = $test->id;
+        $assignMyself->save();
 
         return response()->json(["mensaje" => "se guardo correctamente"], 201);
     }
@@ -106,7 +111,6 @@ class TestController extends Controller
         $test = Test::findOrFail($id);
         $test->nombre = $request->nombre;
         $test->descripcion = $request->descripcion;
-        $test->autor = "Admin";
         $test->tiempo = $request->tiempo;
         $test->save();
 
@@ -174,9 +178,9 @@ class TestController extends Controller
                 $respuestas = DB::select("SELECT * FROM respuestas WHERE email_user='$email'");
 
                 foreach($respuestas as $respuesta) {
-                    $docente_test = DB::select("SELECT t.id, t.nombre, t.descripcion, t.autor, t.tiempo, u.nombre as nombre_docente
-                                                FROM tests as t, users as u, docente_tests as dt
-                                                WHERE t.id=dt.id_test AND u.id=dt.id_docente AND dt.id='$respuesta->id_docente_test'");
+                    $docente_test = DB::select("SELECT t.id, t.nombre, t.descripcion, a.nombre as autor, t.tiempo, u.nombre as nombre_docente
+                                                FROM tests as t, users as u, docente_tests as dt, users as a
+                                                WHERE t.id=dt.id_test AND u.id=dt.id_docente AND dt.id='$respuesta->id_docente_test' AND t.autor=a.id");
                     $respuesta->nombre_docente = $docente_test[0]->nombre_docente;
                     $respuesta->id_test = $docente_test[0]->id;
                     $respuesta->nombre_test = $docente_test[0]->nombre;
@@ -187,9 +191,10 @@ class TestController extends Controller
 
                 return $respuestas;
             case 2:
-                $tests = DB::select("SELECT dt.id, dt.id_docente, dt.id_test, t.nombre, t.tiempo, t.descripcion, t.autor
-                             from docente_tests as dt, tests as t 
-                             where dt.id_docente=$id and dt.id_test=t.id");
+            case 3:
+                $tests = DB::select("SELECT dt.id, dt.id_docente, dt.id_test, t.nombre, t.tiempo, t.descripcion, u.nombre as autor, t.autor as id_autor
+                                     from docente_tests as dt, tests as t, users as u
+                                     where dt.id_docente=$id and dt.id_test=t.id AND t.autor=u.id");
 
                 foreach($tests as $test) {
                     $id_dt = $test->id;
@@ -199,21 +204,6 @@ class TestController extends Controller
                                             LIMIT 10");
                     $test->usuarios = $usuarios;
                 }  
-
-                return response()->json($tests);
-            case 3:
-                $tests = DB::select("SELECT *
-                             FROM tests
-                             ORDER BY id");
-
-                foreach($tests as $test) {
-                    $id_test = $test->id;
-                    $usuarios = DB::select("SELECT u.id, u.nombre, u.perfil
-                                            FROM users as u, docente_tests as dt
-                                            WHERE dt.id_test = '$id_test' AND dt.id_docente = u.id
-                                            LIMIT 10");
-                    $test->usuarios = $usuarios;
-                }        
 
                 return response()->json($tests);
         }

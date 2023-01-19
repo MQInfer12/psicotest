@@ -42,7 +42,7 @@ export const NavbarContainer = styled.div`
   height: 45px;
   padding: 10px;
   gap: 10px;
-  color: #FFFFFF;
+  color: ${props => props.theme.textColorPrincipal};
 
   @media (max-width: 1080px) {
       flex-direction: column;
@@ -83,7 +83,7 @@ export const ChatsContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #FFFFFF;
+    color: ${props => props.theme.textColorPrincipal};
     cursor: pointer;
     width: 100%;
 
@@ -101,7 +101,7 @@ export const ChatsContainer = styled.div`
       }
       p {
         font-size: 14px;
-        color: #FFFFFF;
+        color: ${props => props.theme.textColorPrincipal};
         overflow: hidden;
         text-overflow: ellipsis;
       }
@@ -118,7 +118,7 @@ export const ChatComContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 10px;
-    color: #FFFFFF;
+    color: ${props => props.theme.textColorPrincipal};
     height: 45px;
   }
 
@@ -229,7 +229,7 @@ export const InputComp = styled.div`
     button {
       border: none;
       padding: 10px 15px;
-      color: #FFFFFF;
+      color: ${props => props.theme.textColorPrincipal};
       background-color: ${props => props.theme.colorPrincipalLighter};
       cursor: pointer;
       border-radius: 10px;

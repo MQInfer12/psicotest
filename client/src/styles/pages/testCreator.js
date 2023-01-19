@@ -40,6 +40,7 @@ export const EmptySeccion = styled.p`
   font-weight: 500;
   opacity: 0.6;
   text-align: center;
+  color: ${props => props.theme.textDark};
 `;
 
 // SECCION SIDEBAR

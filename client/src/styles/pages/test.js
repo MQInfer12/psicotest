@@ -107,26 +107,49 @@ export const ContainerImg = styled.div`
 
 export const CardButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+
+  & > div {
+    display: flex;
+    gap: 10px;
+  }
 `;
 
 // MODALS
 
-export const DivModal = styled.div`
+export const DivChecks = styled.div`
   background-color: ${props => props.theme.backgroundPrincipal};
   max-width: 400px;
-  height: 150px;
+  height: 250px;
   max-height: 250px;
   padding: 10px;
   border-radius: 10px;
-  overflow: scroll;
-  overflow-x: hidden;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${props => props.theme.textPrincipal};
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${props => props.theme.colorPrincipal};
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: ${props => props.theme.colorPrincipal};
+  }
 `;
 
 export const DivPersonas = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  overflow: hidden;
 `;
 
 export const DivPersona = styled.div`
@@ -141,6 +164,10 @@ export const DivPersona = styled.div`
   gap: 5px;
   padding: 1px 5px;
   background-color: ${props => props.theme.principal};
+`;
+
+export const CheckboxInput = styled.input`
+  accent-color: ${props => props.theme.colorPrincipal};
 `;
 
 export const ModalDivButtons = styled.div`

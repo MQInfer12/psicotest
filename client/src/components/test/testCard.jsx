@@ -10,26 +10,20 @@ const TestCard = (props) => {
       <P>{props.idRole === 1 ? props.descripcion_test : props.descripcion}</P>
 
       <ContainerIcon>
-        <div>
-          <i className="fa-solid fa-user"></i>
-        </div>
+        <div><i title="Autor" className="fa-solid fa-user"></i></div>
         <Span>{props.idRole === 1 ? props.autor_test : props.autor}</Span>
       </ContainerIcon>
 
       {
         props.idRole === 1 &&
         <ContainerIcon>
-          <div>
-            <i className="fa-solid fa-graduation-cap"></i>
-          </div>
+          <div><i title="Mi psicólogo" className="fa-solid fa-graduation-cap"></i></div>
           <Span>{props.nombre_docente}</Span>
         </ContainerIcon>
       }
 
       <ContainerIcon>
-        <div>
-          <i className="fa-solid fa-clock"></i>
-        </div>
+        <div><i title="Tiempo estimado" className="fa-solid fa-clock"></i></div>
         <Span>{props.idRole === 1 ? props.tiempo_test : props.tiempo}</Span>
       </ContainerIcon>
 
@@ -37,7 +31,7 @@ const TestCard = (props) => {
         props.idRole != 1 &&
         <ContainerImg>
           {props.usuarios.length == 0 && (
-            <Span>{props.idRole === 3 ? "¡Asigna psicólogos a este Test!" : "¡Asigna beneficiarios a este Test!"}</Span>
+            <Span>¡Asigna beneficiarios a este Test!</Span>
           )}
           {props.usuarios.map((v, i) => (
             <div key={i}>

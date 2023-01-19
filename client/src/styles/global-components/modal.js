@@ -62,7 +62,7 @@ export const PTitulo = styled.p`
 export const DivCabecera = styled.div`
   width: 100%;
   padding: 10px 26px;
-  border-bottom: 1px solid ${props => props.theme.textSecondary};
+  border-bottom: 1px solid ${props => props.theme.borders};
   display: flex;
   justify-content: space-between;
   align-items: center;

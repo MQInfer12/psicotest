@@ -1,7 +1,6 @@
 export const initialForm = {
   nombre: "",
   descripcion: "",
-  autor: "Admin",
   tiempo: "",
 };
   
@@ -13,9 +12,6 @@ export const validationsForm = (form) => {
   }
   if (!form.descripcion.trim()) {
     errors.descripcion = "'Descripcion' es requerido";
-  }
-  if (!form.autor.trim()) {
-    errors.autor = "'Autor' es requerido";
   }
   if (!form.tiempo.trim()) {
     errors.tiempo = "'Tiempo' es requerido";

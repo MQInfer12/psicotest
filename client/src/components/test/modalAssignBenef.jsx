@@ -1,46 +1,23 @@
 import React, { useState } from "react";
 import { addBenefToTest } from "../../services/test";
-import ProfilePic from "../globals/profilePic";
 import { FormContainer, PurpleButton } from "../../styles/globals/formularios";
 import Cargando from "../globals/cargando";
 import { useUserContext } from "../../context/userContext";
 import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import useGet from "../../hooks/useGet";
-import { DivModal, DivPersona, DivPersonas } from "../../styles/pages/test";
+import { useEffect } from "react";
+import ChecksArea from "./modalAssign/checksArea";
 
 const ModalAssignBenef = ({ id, actualizar }) => {
-  const { resJson: data, loading } = useGet(`test/benefNoAssigning/${id}`, { alwaysLoading: true });
+  const { resJson: data, loading } = useGet(`test/assignBenef/${id}`, { alwaysLoading: true });
 
   const { user } = useUserContext();
   const [idsSelected, setIdsSelected] = useState([]);
-  const [checSelected, setChecSelected] = useState([]);
-
-  const handleChangeCheck = (e) => {
-    var aux = null;
-    var auxIds = null;
-
-    if (checSelected.includes(e.target.value)) {
-      //If the value is there we remove it.
-      aux = checSelected.filter((ele) => ele !== e.target.value);
-    } else {
-      aux = checSelected.concat(e.target.value);
-    }
-
-    if(idsSelected.includes(e.target.name)) {
-      auxIds = idsSelected.filter((ele) => ele !== e.target.name);
-    } else {
-      auxIds = idsSelected.concat(e.target.name);
-    }
-
-    setChecSelected(aux);
-    setIdsSelected(auxIds);
-  };
+  const [selecteds, setSelecteds] = useState([]);
 
   const saveData = async () => {
-    const obj = Object.assign({}, checSelected);
-    const res = await addBenefToTest(obj, id);
-    const resJson = await res?.json();
+    const res = await addBenefToTest(selecteds, id);
 
     idsSelected.forEach(async (val) => {
       const combinedId =
@@ -70,44 +47,33 @@ const ModalAssignBenef = ({ id, actualizar }) => {
       } catch (error) {
         console.log(error);
       }
-    })
+    });
 
-    if (resJson.mensaje === "se guardo correctamente") {
+    if (res.ok) {
       actualizar();
     } 
   };
 
+  useEffect(() => {
+    if(data.emails) {
+      setSelecteds(data.emails);
+    }
+  }, [data]);
+
   return (
     <FormContainer>
-      <DivModal>
-        {
-          loading ? (
-            <Cargando />
-          ) : (
-            <DivPersonas>
-            {data.map((v, i) => (
-              <DivPersona key={i}>
-                <ProfilePic 
-                  width="20px" 
-                  height="20px" 
-                  perfil={v.perfil} 
-                />
-                {v.nombre_usuario}
-                <input 
-                  type="checkbox" 
-                  name={v.id}
-                  value={v.email} 
-                  onChange={handleChangeCheck}
-                />
-              </DivPersona>
-            ))}
-            </DivPersonas>
-          )
-        }
-      </DivModal>
-      <PurpleButton disabled={checSelected.length ? false : true} onClick={saveData}>
-        Guardar
-      </PurpleButton>
+      {
+        loading ? (
+          <Cargando />
+        ) : (
+          <ChecksArea
+            users={data.users}
+            selectedsState={{selecteds, setSelecteds}}
+            idsSelectedState={{idsSelected, setIdsSelected}}
+          />
+        )
+      }
+      <PurpleButton onClick={saveData}>Guardar</PurpleButton>
     </FormContainer>
   );
 };

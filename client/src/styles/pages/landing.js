@@ -156,7 +156,7 @@ export const RegisterLink = styled(Link)`
   font-size: 16px;
   cursor: pointer;
   transition: all 0.3s;
-  color: #FFFFFF;
+  color: ${props => props.theme.textColorPrincipal};
 
   &:hover {
     filter: grayscale(0.2);
@@ -209,7 +209,7 @@ export const NewContainer = styled.div`
   &::before {
     content: "Nuevo";
     padding: 4px 6px;
-    color: ${props => props.theme.principal};
+    color: ${props => props.theme.textColorPrincipal};
     background: linear-gradient(180deg, ${props => props.theme.colorPrincipal} 0%, ${props => props.theme.colorPrincipalLight} 100%);
     border-radius: 6px;
   }
@@ -242,7 +242,7 @@ export const OpenAccountLink = styled(Link)`
   color: ${props => props.theme.principal};
   font-weight: 300;
   transition: all 0.3s;
-  color: #FFFFFF;
+  color: ${props => props.theme.textColorPrincipal};
 
   &:hover {
     filter: grayscale(0.2);
@@ -341,7 +341,7 @@ export const YouDecide = styled.h2`
   font-size: 60px;
   font-weight: 700;
   line-height: 138.4%;
-  color: ${props => props.theme.principal};
+  color: ${props => props.theme.textColorPrincipal};
 `;
 
 export const SecondInfoContainer = styled.div`
@@ -537,13 +537,13 @@ export const OpenYourAccount = styled.h2`
   font-size: 60px;
   font-weight: 700;
   line-height: 138.4%;
-  color: #FFFFFF;
+  color: ${props => props.theme.textColorPrincipal};
 `;
 
 export const OpenP = styled.p`
   font-size: 20px;
   font-weight: 400;
-  color: #FFFFFF;
+  color: ${props => props.theme.textColorPrincipal};
 `;
 
 export const InputDiv = styled.div`
@@ -582,7 +582,7 @@ export const OpenAccountButton = styled.button`
   font-weight: 300;
   transition: all 0.3s;
   cursor: pointer;
-  color: #FFFFFF;
+  color: ${props => props.theme.textColorPrincipal};
 
   &:hover {
     filter: grayscale(0.2);

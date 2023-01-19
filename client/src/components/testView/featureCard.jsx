@@ -42,7 +42,7 @@ const FeatureCard = ({ index, v, llenarCaracteristicas, user }) => {
         <FeatureIndex>{index < 10 ? "0" + (index + 1) : index + 1}</FeatureIndex>
         <FeatureLine></FeatureLine>
         {
-          user.id_rol == 3 &&
+          user.id_rol != 1 &&
           <ButtonContainer className='botones'>
             <WhiteIconButton 
               title="Editar característica" 

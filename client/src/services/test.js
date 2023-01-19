@@ -1,6 +1,6 @@
 import { http } from "./htpp";
 
-export const addTest = async (form) => {
+export const addTest = async (form, id) => {
   try {
     const response = await fetch(`${http}test`, {
       method: "POST",
@@ -11,6 +11,7 @@ export const addTest = async (form) => {
       body: JSON.stringify({
         nombre: form.nombre,
         descripcion: form.descripcion,
+        autor: id,
         tiempo: form.tiempo,
       }),
     });
@@ -74,29 +75,6 @@ export const deleteTest = async (id) => {
   }
 };
 
-export const deleteProfessorAssigned = async (vec, id) => {
-  try {
-    const response = await fetch(`${http}test/deleteprofessorAssigning`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        objeto: vec,
-        id_test: id,
-      }),
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      return result;
-    }
-  } catch (err) {
-    console.error(err);
-  }
-};
-
 /* ======================= DOCENTETESTS ============= */
 
 // ESTE GET SE USA PARA OBTENER DATOS DEL DOCENTE TEST EN TESTSHARE
@@ -112,11 +90,24 @@ export const getDocenteTest = async (id) => {
   }
 }
 
+export const addCollaborator = async (form, id_test) => {
+  try {
+    const response = await fetch(`${http}test/collab/${id_test}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(form)
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 /* ======================= BENEFICIARY ============== */
 
 export const addBenefToTest = async (obj, id_docente_test) => {
   try {
-    const response = await fetch(`${http}test/AssigningVariosBenef`, {
+    const response = await fetch(`${http}test/assigning/benef`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -130,27 +121,5 @@ export const addBenefToTest = async (obj, id_docente_test) => {
     return response;
   } catch (error) {
     console.log(error);
-  }
-};
-
-export const deleteBenefAssigned = async (obj, id) => {
-  try {
-    const response = await fetch(`${http}test/deleteBenefAssigning`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        objeto: obj,
-        id_docente_test: id,
-      }),
-    });
-    if (response.ok) {
-      const result = await response.json();
-      return result;
-    }
-  } catch (err) {
-    console.error(err);
   }
 };

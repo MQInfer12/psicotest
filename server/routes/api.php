@@ -53,16 +53,10 @@ Route::group(['middleware' => 'api'], function(){
     Route::get("test/user/{id}", [TestController::class, 'getTestsForUser']);
     Route::get("test/edit/{id}", [TestController::class, 'getTestToEdit']);
     Route::get("test/full/{idUser}/{idRespuestaTest}", [TestController::class, 'getFullTest']);
-    Route::post("test/assignateProfessor", [DocenteTestController::class, 'store']);
-    Route::get("test/professor/{id}", [DocenteTestController::class, 'index']);
     Route::get("test/ids/{id}", [DocenteTestController::class, 'show']);
-    Route::get("test/professorNotAssigning/{id}", [DocenteTestController::class, 'getProfessorNotAssigning']);
-    Route::get("test/professorAssigning/{id}", [DocenteTestController::class, 'getProfessorAssigning']);
-    Route::post("test/deleteprofessorAssigning", [DocenteTestController::class, 'deleteProfessorAssigning']);
-    Route::get("test/benefAssigning/{id}", [BeneficiarioDocenteController::class, 'getBenefAssigning']);
-    Route::get("test/benefNoAssigning/{id}", [BeneficiarioDocenteController::class, 'getBenefNotAssigning']);
-    Route::post("test/AssigningVariosBenef", [BeneficiarioDocenteController::class, 'assignBenefToTest']);
-    Route::post("test/deleteBenefAssigning", [BeneficiarioDocenteController::class, 'deleteBenefAssigning']);
+    Route::get("test/assignBenef/{id}", [BeneficiarioDocenteController::class, 'getBenefToAssign']);
+    Route::post("test/assigning/benef", [BeneficiarioDocenteController::class, 'assignBenefToTest']);
+    Route::post("test/collab/{idTest}", [DocenteTestController::class, 'store']);
 
     //CARACTERISTICAS ROUTES
     Route::apiResource("caracteristica", CaracteristicaController::class);
