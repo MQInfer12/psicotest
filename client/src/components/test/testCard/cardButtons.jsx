@@ -97,20 +97,22 @@ const CardButtons = ({ props }) => {
         {
           idRole != 1 &&
           <>
-          <WhiteIconButton title="Modificar test" onClick={handleTestCreator}>
-            <i className="fa-solid fa-pen-to-square"></i>
-          </WhiteIconButton>
-          <WhiteIconButton title="Añadir colaboradores" onClick={openMiniLink}>
-            <i className="fa-solid fa-users-gear"></i>
-          </WhiteIconButton>
-          <WhiteIconButton title="Editar información del test" onClick={openEdit}>
-            <i className="fa-solid fa-pencil"></i>
-          </WhiteIconButton>
           {
             user.id === props.id_autor &&
+            <>
+            <WhiteIconButton title="Modificar test" onClick={handleTestCreator}>
+              <i className="fa-solid fa-pen-to-square"></i>
+            </WhiteIconButton>
+            <WhiteIconButton title="Añadir colaboradores" onClick={openMiniLink}>
+              <i className="fa-solid fa-users-gear"></i>
+            </WhiteIconButton>
+            <WhiteIconButton title="Editar información del test" onClick={openEdit}>
+              <i className="fa-solid fa-pencil"></i>
+            </WhiteIconButton>
             <DangerIconButton title="Eliminar test" onClick={openDelete}>
               <i className="fa-solid fa-trash-can"></i>
             </DangerIconButton>
+            </>
           }
           </>
         }

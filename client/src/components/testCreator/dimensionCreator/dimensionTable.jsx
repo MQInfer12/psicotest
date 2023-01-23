@@ -7,7 +7,7 @@ import EliminarEscalaButton from '../buttons/eliminarEscalaButton';
 import InputMapper from './inputMapper';
 
 const DimensionTable = ({ tableHeightRef, valores, setValores }) => {
-  const { escalas } = useTestCreatorContext();
+  const { escalas, dimension } = useTestCreatorContext();
 
   return (
     <TableContainer>
@@ -17,7 +17,7 @@ const DimensionTable = ({ tableHeightRef, valores, setValores }) => {
             {
               escalas.map((escala, i) => (
                 <ThReactivo noWhite={i === 0} key={i}>
-                  <PText>{escala.descripcion}</PText>
+                  <PText>{escala.descripcion} {dimension.constante != 0 ? dimension.constante > 0 ? `(+${dimension.constante})` : `(${dimension.constante})` : ""}</PText>
                   {
                     i != 0 &&
                     <DivReactivoButtonsTd>

@@ -19,9 +19,8 @@ export const DivAtras = styled.div`
   top: 0;
   left: 0;
   background-color: rgba(${props => props.theme.textDarkRGB}, 0.4);
+  animation: transitionBackground 1s;
 
-  animation-name: transitionBackground;
-  animation-duration: 1s;
   @keyframes transitionBackground {
     0% {
       background-color: rgba(${props => props.theme.textDarkRGB}, 0.1);

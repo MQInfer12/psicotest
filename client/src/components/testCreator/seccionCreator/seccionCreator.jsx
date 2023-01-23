@@ -15,7 +15,7 @@ const SeccionCreator = ({ test }) => {
   const { seccion } = useTestCreatorContext();
 
   return (
-    <SeccionContainer>
+    <SeccionContainer className="seccion-creator">
       <SeccionSidebar 
         loading={loadingNewSection}
         setLoading={setLoadingNewSection}

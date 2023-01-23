@@ -1,12 +1,11 @@
 import React from 'react'
 import { UseForm } from '../../../hooks/useForm'
-import { changePredeterminado } from '../../../services/reactivo'
+import { changeConstante } from '../../../services/dimension'
 import { FormContainer, PurpleButton } from '../../../styles/globals/formularios'
-import { validationsForm } from '../../../validations/puntuacion'
+import { validationsForm } from '../../../validations/dimension'
 import FormInputsText from '../../globals/formInputsText'
 
-const ModalPuntuacion = ({ actualizar, reactivo }) => {
-
+const ModalConstante = ({ dimension, actualizar }) => {
   const {
     form,
     errors,
@@ -14,20 +13,20 @@ const ModalPuntuacion = ({ actualizar, reactivo }) => {
     handleSubmit
   } = UseForm(
     {
-      predeterminado: reactivo.predeterminado
+      constante: String(dimension.constante)
     }, 
     validationsForm, 
-    changePredeterminado, 
+    changeConstante, 
     actualizar,
-    reactivo.id
+    dimension.id
   )
 
   const data = [
     {
-      name: "predeterminado",
-      placeholder: "Predeterminado",
-      error: errors.predeterminado,
-      value: form.predeterminado,
+      name: "constante",
+      placeholder: "Constante",
+      error: errors.constante,
+      value: form.constante,
       tipo: "number",
       disabled: false,
       center: true
@@ -45,4 +44,4 @@ const ModalPuntuacion = ({ actualizar, reactivo }) => {
   )
 }
 
-export default ModalPuntuacion
+export default ModalConstante

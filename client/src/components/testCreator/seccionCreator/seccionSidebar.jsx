@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useTestCreatorContext } from "../../../context/testCreatorContext";
+import { useUserContext } from "../../../context/userContext";
 import { WhiteButton } from "../../../styles/globals/formularios";
 import { DashPart, DashTitle, SeccionCreatorDash } from "../../../styles/pages/testCreator";
 import SeccionCheckboxes from "./seccionCheckboxes";

@@ -19,12 +19,13 @@ trait PuntuacionesNaturales {
 
     public function getPuntuacionNatural($id) {
         $select = DB::select(
-            "SELECT p.id, s.vacio, s.multimarcado, pu.asignado
+            "SELECT p.id, s.vacio, s.multimarcado, pu.asignado, d.constante
             FROM seccions as s, preguntas as p, pregunta_dimensions as pd, dimensions as d, puntuacions as pu
             WHERE p.id_seccion=s.id AND pu.id_pregunta=p.id
             AND pd.id_pregunta=p.id AND pd.id_dimension=d.id AND d.id=$id"
         );
         $preguntas = array_unique(array_column($select, 'id'));
+        $constante = $select[0]->constante;
         $naturales = [];
         if(count($preguntas)) {
             $arrayDeArrays = [];
@@ -45,7 +46,7 @@ trait PuntuacionesNaturales {
             $posibilidades = $this->calcularPosibilidad($arrayDeArrays, 0);
             sort($posibilidades);
             foreach($posibilidades as $posibilidad) {
-                $naturales[] = $posibilidad;
+                $naturales[] = $posibilidad + $constante;
             }
         }
 
@@ -57,8 +58,9 @@ trait PuntuacionesNaturales {
             AND c.id_escala_dimension=ed.id 
             AND d.id='$id'"
         );
-        $idsEscalaDimension = array_unique(array_column($conversiones, 'id_escala_dimension'));
-        $idsEscala = array_unique(array_column($conversiones, 'id_escala'));
+        $ids = DB::select("SELECT id as id_escala_dimension, id_escala FROM escala_dimensions WHERE id_dimension='$id'");
+        $idsEscalaDimension = array_unique(array_column($ids, 'id_escala_dimension'));
+        $idsEscala = array_unique(array_column($ids, 'id_escala'));
         $newNaturales = [];
         foreach($naturales as $natural) {
             $conversionesPorNatural = [];
@@ -84,6 +86,7 @@ trait PuntuacionesNaturales {
                 "conversiones" => $conversionesPorNatural
             );
         }
+
         return $newNaturales;
     }
 

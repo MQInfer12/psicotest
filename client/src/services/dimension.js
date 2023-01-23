@@ -69,3 +69,21 @@ export const updatePreguntaDimensions = async (preguntas, id) => {
     console.log(error);
   }
 }
+
+export const changeConstante = async (form, id) => {
+  try {
+    const response = await fetch(`${http}dimension/constante/${id}`, {
+      method: "PUT",
+      headers: { 
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        constante: form.constante
+      }),
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

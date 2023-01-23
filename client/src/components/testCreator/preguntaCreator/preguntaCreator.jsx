@@ -17,6 +17,8 @@ const PreguntaCreator = ({ pageState }) => {
       <PreguntaControls 
         selecteds={selecteds} 
         setSelecteds={setSelecteds} 
+        tableRows={tableRows}
+        setPage={setPreguntasPage}
       />
       <PreguntaTable 
         selecteds={selecteds}

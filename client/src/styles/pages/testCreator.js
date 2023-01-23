@@ -149,7 +149,7 @@ export const PCheckbox = styled.p`
 
 export const PreguntaCreatorContainer = styled.div`
   height: calc(100% - 40px);
-  width: 622px;
+  width: 737px;
   box-shadow: 0px 8px 34px rgba(${props => props.theme.textDarkRGB}, 0.1);
   background-color: ${props => props.theme.backgroundTable};
   border-radius: 10px;

@@ -80,12 +80,12 @@ export const TBodyScrollable = styled.tbody`
   display: block;
   overflow-y: scroll;
   height: ${props => props.alto};
-  width: 622px;
+  width: 737px;
 
   & > tr {
+    width: 100%;
     display: table;
     table-layout: fixed;
-    width: 100%;
   }
 
   &::-webkit-scrollbar {
@@ -228,7 +228,7 @@ export const ResponsiveTr = styled.tr.attrs(props => ({
     }
   }))`
   height: 56px;
-  max-width: 622px;
+  max-width: 737px;
   background-color: ${props => props.theme.principal};
   position: relative;
   text-align: center;
@@ -248,7 +248,9 @@ export const ResponsiveTr = styled.tr.attrs(props => ({
   }
 
   &:hover .buttons {
-    transform: translateX(-56px);
+    display: flex;
+    gap: 8px;
+    transform: translateX(-104px);
   }
 `;
 

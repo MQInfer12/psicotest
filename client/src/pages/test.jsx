@@ -16,6 +16,8 @@ const Test = () => {
   
   if(loading) return (<Cargando container windowHeight={windowHeight} />);
 
+  console.log(`test/user/${user.id}`);
+
   return (
     <AllContainer height={windowHeight} load={loading}>
       <AddTestButton llenarTests={llenarTests} />

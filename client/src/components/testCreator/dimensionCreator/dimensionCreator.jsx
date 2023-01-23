@@ -39,7 +39,7 @@ const DimensionCreator = () => {
   }, [dimension, dimensiones]);
 
   return (
-    <PreguntaCreatorContainer hidden ref={tableHeightRef}>
+    <PreguntaCreatorContainer inDimension hidden ref={tableHeightRef}>
       <DimensionControls valores={valores} />
       {
         dimension &&

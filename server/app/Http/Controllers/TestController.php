@@ -79,7 +79,7 @@ class TestController extends Controller
             ORDER BY p.id"
         );
         $reactivosPorSecciones = DB::select(
-            "SELECT r.id, r.id_seccion, r.descripcion 
+            "SELECT r.id, r.id_seccion, r.descripcion, r.predeterminado
             FROM reactivos as r, seccions as s 
             WHERE r.id_seccion=s.id AND s.id_test='$id'
             ORDER BY r.id"
@@ -195,7 +195,6 @@ class TestController extends Controller
                 $tests = DB::select("SELECT dt.id, dt.id_docente, dt.id_test, t.nombre, t.tiempo, t.descripcion, u.nombre as autor, t.autor as id_autor
                                      from docente_tests as dt, tests as t, users as u
                                      where dt.id_docente=$id and dt.id_test=t.id AND t.autor=u.id");
-
                 foreach($tests as $test) {
                     $id_dt = $test->id;
                     $usuarios = DB::select("SELECT u.id, u.nombre, u.perfil
@@ -205,7 +204,7 @@ class TestController extends Controller
                     $test->usuarios = $usuarios;
                 }  
 
-                return response()->json($tests);
+                return $tests;
         }
     }
 }

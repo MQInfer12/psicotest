@@ -1,13 +1,12 @@
 import React from 'react'
 import { useTestCreatorContext } from '../../../context/testCreatorContext';
-import { turnPuntuaciones } from '../../../services/puntuacion';
 import { WhiteIconButton } from '../../../styles/globals/formularios';
 
-const VoltearPuntuacionesButton = ({ id, setPuntuaciones }) => {
+const InvertirPuntuacionesButton = ({ id, setPuntuaciones }) => {
   const { updateSeccion } = useTestCreatorContext();
 
   const handleTurn = async () => {
-    const res = await turnPuntuaciones(id);
+    /* const res = await turnPuntuaciones(id);
     if(res.ok) {
       const resJson = await res?.json();
       updateSeccion(seccion => {
@@ -21,17 +20,17 @@ const VoltearPuntuacionesButton = ({ id, setPuntuaciones }) => {
         setPuntuaciones(newPuntuaciones);
         return seccion;
       });
-    }
+    } */
   }
 
   return (
     <WhiteIconButton 
-      title="Voltear puntuaciones" 
+      title="Invertir puntuaciones" 
       onClick={handleTurn}
     >
-      <i className="fa-solid fa-arrow-right-arrow-left"></i>
+      <i className="fa-solid fa-plus-minus"></i>
     </WhiteIconButton>
   )
 }
 
-export default VoltearPuntuacionesButton
+export default InvertirPuntuacionesButton

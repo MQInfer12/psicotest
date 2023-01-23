@@ -5,7 +5,7 @@ import { addPregunta } from '../../../services/pregunta';
 import { WhiteIconButton } from '../../../styles/globals/formularios'
 import ModalPregunta from '../preguntaCreator/modalPregunta';
 
-const AñadirPreguntaButton = () => {
+const AñadirPreguntaButton = ({ tableRows, setPage }) => {
   const { seccion, updateSeccion } = useTestCreatorContext();
 
   const { openModal: openAdd, closeModal: closeAdd } = useModal(
@@ -16,6 +16,9 @@ const AñadirPreguntaButton = () => {
         updateSeccion(seccion => {
           const newSeccion = {...seccion};
           newSeccion.preguntas = [...newSeccion.preguntas, res.data.pregunta];
+          if(newSeccion.preguntas.length % tableRows === 1 ) {
+            setPage(page => page + 1);
+          }
           newSeccion.puntuaciones = [...newSeccion.puntuaciones, ...res.data.puntuaciones];
           return newSeccion;
         });

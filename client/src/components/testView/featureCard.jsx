@@ -6,7 +6,7 @@ import { ButtonContainer, FeatureContainer, FeatureDescription, FeatureIndex, Fe
 import SureModal from '../globals/sureModal';
 import ModalFeature from './modalFeature';
 
-const FeatureCard = ({ index, v, llenarCaracteristicas, user }) => {
+const FeatureCard = ({ index, v, llenarCaracteristicas, user, autor }) => {
   const borrarCaracteristica = async () => {
     const res = await deleteCaracteristica(v.id);
     const resJson = await res?.json();
@@ -42,7 +42,7 @@ const FeatureCard = ({ index, v, llenarCaracteristicas, user }) => {
         <FeatureIndex>{index < 10 ? "0" + (index + 1) : index + 1}</FeatureIndex>
         <FeatureLine></FeatureLine>
         {
-          user.id_rol != 1 &&
+          (user.id_rol != 1 && autor === user.id) &&
           <ButtonContainer className='botones'>
             <WhiteIconButton 
               title="Editar característica" 

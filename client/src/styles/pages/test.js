@@ -103,6 +103,7 @@ export const ContainerImg = styled.div`
   height: 43px;
   display: flex;
   align-items: center;
+  width: fit-content;
 `;
 
 export const CardButtonContainer = styled.div`

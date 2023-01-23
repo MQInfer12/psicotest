@@ -4,10 +4,10 @@ import { DeleteContainer, PSelected } from '../../../styles/pages/testCreator'
 import AñadirPreguntaButton from '../buttons/añadirPreguntaButton'
 import EliminarPreguntasButton from '../buttons/eliminarPreguntasButton'
 
-const PreguntaControls = ({ selecteds, setSelecteds }) => {
+const PreguntaControls = ({ selecteds, setSelecteds, tableRows, setPage }) => {
   return (
     <ControlsContainer spaceBetween>
-      <AñadirPreguntaButton  />
+      <AñadirPreguntaButton tableRows={tableRows} setPage={setPage} />
       <DeleteContainer>
         <PSelected>{selecteds.length} seleccionadas</PSelected>
         {/* FIXME: BOTON AL CAMBIAR DE SECCION CON PREGUNTAS SELECCIONADAS */}

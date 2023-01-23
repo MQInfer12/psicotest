@@ -153,6 +153,7 @@ class RespuestaController extends Controller
                 WHERE r.id_respuesta='$respuesta->id' AND r.id_puntuacion=pu.id AND pu.id_pregunta=pr.id
                 AND pd.id_pregunta=pr.id AND pd.id_dimension=d.id AND d.id='$dimension->id'"
             )[0]->nat;
+            $nat = $nat + $dimension->constante;
             $puntuacionesPorDimension = [$nat];
             $totales = DB::select(
                 "SELECT co.convertido, e.id as id_escala

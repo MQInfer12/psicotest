@@ -70,4 +70,9 @@ class PuntuacionController extends Controller
         }
         return response()->json(["mensaje" => "se guardo correctamente", "data" => $puntuaciones], 201);
     }
+
+    public function invertirPuntuaciones($idPregunta)
+    {
+        
+    }
 }

@@ -9,6 +9,7 @@ import AñadirEscalaButton from '../buttons/añadirEscalaButton'
 import EditarConversionesButton from '../buttons/editarConversionesButton'
 import EditarDimensionButton from '../buttons/editarDimensionButton'
 import EliminarDimensionButton from '../buttons/eliminarDimensionButton'
+import ModificarConstanteButton from '../buttons/modificarConstanteButton'
 import Points from '../points'
 
 const DimensionControls = ({ valores }) => {
@@ -53,6 +54,7 @@ const DimensionControls = ({ valores }) => {
           )
         }
         <AsignarPreguntasButton dimension={dimension} />
+        <ModificarConstanteButton dimension={dimension} />
         <EditarDimensionButton dimension={dimension} />
         <EliminarDimensionButton dimension={dimension} />
       </div>

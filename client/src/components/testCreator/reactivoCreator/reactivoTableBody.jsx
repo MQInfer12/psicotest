@@ -2,12 +2,12 @@ import React from 'react'
 import { useState } from 'react';
 import { useTestCreatorContext } from '../../../context/testCreatorContext';
 import { ButtonReactivosTr, ResponsiveTr, ThNumber } from '../../../styles/globals/table';
+import InvertirPuntuacionesButton from '../buttons/invertirPuntuacionesButton';
 import VoltearPuntuacionesButton from '../buttons/voltearPuntuacionesButton';
 import PuntuacionInput from './puntuacionInput';
 
 const ReactivoTableBody = ({ reactivosPage, tableRows, rowHeight, puntuaciones, setPuntuaciones, setSave }) => {
   const { seccion } = useTestCreatorContext();
-  const [blink, setBlink] = useState(false);
 
   return (
     <tbody>
@@ -17,7 +17,8 @@ const ReactivoTableBody = ({ reactivosPage, tableRows, rowHeight, puntuaciones, 
             <ThNumber>
               {((reactivosPage - 1) * tableRows) + (i + 1)}
               <ButtonReactivosTr className="buttons">
-                <VoltearPuntuacionesButton id={v.id} setBlink={setBlink} setPuntuaciones={setPuntuaciones} />
+                <VoltearPuntuacionesButton id={v.id} setPuntuaciones={setPuntuaciones} />
+                {/* <InvertirPuntuacionesButton id={v.id} setPuntuaciones={setPuntuaciones} /> */}
               </ButtonReactivosTr>
             </ThNumber>
             {
@@ -27,7 +28,6 @@ const ReactivoTableBody = ({ reactivosPage, tableRows, rowHeight, puntuaciones, 
                   <PuntuacionInput 
                     id={va.id}
                     value={va.asignado}
-                    blink={blink}
                     puntuaciones={puntuaciones}
                     setPuntuaciones={setPuntuaciones}
                     setSave={setSave}

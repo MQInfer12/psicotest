@@ -6,7 +6,7 @@ import ModificarPredeterminadoButton from "../buttons/modificarPredeterminadoBut
 
 const ReactivoCard = (props) => {
   return (
-    <ThReactivo>
+    <ThReactivo border>
       <PText>{props.descripcion}</PText>
       <DivReactivoButtonsTd>
         <EditarReactivoButton {...props} />
