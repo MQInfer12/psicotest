@@ -45,7 +45,7 @@ export const DisplayButton = styled.button`
   background: linear-gradient(180deg, ${props => props.theme.colorPrincipal} 0%, ${props => props.theme.colorPrincipalLight} 100%);
   border-radius: 6px;
   border: none;
-  color: ${props => props.theme.principal};
+  color: ${props => props.theme.textColorPrincipal};
   font-weight: 600;
   font-size: 16px;
   padding: 10px 20px;

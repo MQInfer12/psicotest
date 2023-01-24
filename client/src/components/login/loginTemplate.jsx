@@ -1,17 +1,35 @@
 import React from 'react'
 import { useWindowHeight } from '../../hooks/useWindowHeight';
-import { ButtonSubmit, DivContainer, DivFormlog, DivImagelog, DivItemlog, DivPrincipal, GoToContainer, GoToDescription, GoToDiv, GoToText, H1Title, Instructions } from '../../styles/pages/login';
+import { 
+  ButtonSubmit, DivContainer, DivFormlog, 
+  DivPrincipal, GoToContainer, GoToDescription, GoToDiv, 
+  GoToText, H1Title, ImagenStyled, Instructions 
+} from '../../styles/pages/login';
 import Navbar from '../landing/navbar';
+import { useThemeContext } from '../../context/themeContext';
+import { Image, Transformation } from 'cloudinary-react';
+import ImagenLogin from '../../assets/login/imglogin.png';
 
 const LoginTemplate = ({ children, title, submitButton, handleSubmit, toLogin, toRegister, toRecover, goTo, loading, responseMessage }) => {
   const windowHeight = useWindowHeight();
+  const { actualTheme } = useThemeContext();
+
+  const imageStyle = {
+    width: "145%",
+    height: "100%",
+    objectFit: "cover",
+    objectPosition: "50% 50%",
+    backgroundColor: actualTheme.principal
+  };
+
   return (
     <>
       <Navbar />
       <DivPrincipal height={windowHeight}>
-        <DivImagelog>
-          <DivItemlog></DivItemlog>
-        </DivImagelog>
+        {/* <Image cloudName="dcy47gguk" publicId="assets/imglogin_iqvyar.png" style={imageStyle} >
+          <Transformation quality="65" width="1440" crop="scale" />
+        </Image> */}
+        <ImagenStyled src={ImagenLogin} />
         <DivFormlog>
           <DivContainer>
             <H1Title>{title}</H1Title>

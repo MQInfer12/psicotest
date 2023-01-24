@@ -73,6 +73,12 @@ class PuntuacionController extends Controller
 
     public function invertirPuntuaciones($idPregunta)
     {
+        DB::update("UPDATE puntuacions SET asignado=asignado*-1 WHERE id_pregunta='$idPregunta'");
+        $puntuaciones = DB::select("SELECT * FROM puntuacions WHERE id_pregunta='$idPregunta';");
+        $dimensiones = DB::select("SELECT id_dimension as id FROM pregunta_dimensions WHERE id_pregunta='$idPregunta'");
+
+        $naturales = $this->getPuntuacionesNaturales($dimensiones);
         
+        return response()->json(["mensaje" => "se guardo correctamente", "data" => ["puntuaciones" => $puntuaciones, "dimensiones" => $naturales]], 201);
     }
 }

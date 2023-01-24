@@ -11,26 +11,18 @@ export const DivPrincipal = styled.div`
 
   position: relative;
 
-  @media ${device.tablet} {
+  @media ${device.laptop} {
     flex-direction: column;
   }
 `;
 
-export const DivImagelog = styled.div`
+export const ImagenStyled = styled.img`
   width: 145%;
   height: 100%;
-`;
-
-export const DivItemlog = styled.div`
-  height: 100%;
-  background: url(${ImagenLogin}) no-repeat;
-  background-size: cover;
-  background-position-y: center;
+  object-fit: cover;
+  object-position: 50% 50%;
   background-color: ${props => props.theme.principal};
-
-  @media ${device.tablet} {
-    background-position-y: top;
-  }
+  z-index: -1;
 `;
 
 export const DivFormlog = styled.div`
@@ -44,7 +36,7 @@ export const DivFormlog = styled.div`
   overflow-x: hidden;
   padding-top: 90px;
 
-  @media ${device.tablet} {
+  @media ${device.laptop} {
     padding: 40px;
     max-height: 70vh;
     margin-top: 45px;
@@ -95,7 +87,7 @@ export const H1Title = styled.h1`
     width: 150px;
   }
 
-  @media ${device.tablet} {
+  @media ${device.laptop} {
     height: max-content;
     padding-bottom: 25px;
     justify-content: center;

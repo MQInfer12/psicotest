@@ -32,3 +32,18 @@ export const turnPuntuaciones = async (idPregunta) => {
     console.log(error);
   }
 }
+
+export const inversePuntuaciones = async (idPregunta) => {
+  try {
+    const response = await fetch(`${http}puntuacion/invertir/${idPregunta}`, {
+      method: "PUT",
+      headers: { 
+        "Content-Type": "application/json",
+        "accept": "application/json", 
+      }
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

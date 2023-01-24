@@ -22,6 +22,7 @@ class DimensionController extends Controller
         $dimension = new Dimension();
         $dimension->id_test = $request->id_test;
         $dimension->descripcion = $request->descripcion;
+        $dimension->constante = 0;
         $dimension->save();
         $dimension->preguntas = [];
         $dimension->valores = [];

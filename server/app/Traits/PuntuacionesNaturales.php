@@ -25,9 +25,9 @@ trait PuntuacionesNaturales {
             AND pd.id_pregunta=p.id AND pd.id_dimension=d.id AND d.id=$id"
         );
         $preguntas = array_unique(array_column($select, 'id'));
-        $constante = $select[0]->constante;
         $naturales = [];
         if(count($preguntas)) {
+            $constante = $select[0]->constante;
             $arrayDeArrays = [];
             foreach($preguntas as $pregunta) {
                 $new = $this->array_filter_column($select, 'id', $pregunta);

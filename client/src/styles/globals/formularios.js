@@ -286,3 +286,37 @@ export const DangerIconButton = styled.button`
     color: ${props => props.theme.textSecondary};
   }
 `;
+
+export const MiniWhiteIconButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  width: 20px;
+  border: 1px solid ${props => props.theme.borders};
+  background-color: ${props => props.theme.principal};
+  border-radius: 10px;
+  color: ${props => props.theme.textPrincipal};
+  text-align: center;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: ${props => props.minwidth};
+
+  &:hover {
+    color: ${props => props.theme.textSecondary};
+    background-color: ${props => props.theme.colorPrincipal};
+    border: 1px solid ${props => props.theme.colorPrincipal};
+  }
+
+  color: ${props => props.active && props.theme.textSecondary};
+  background-color: ${props => props.active && props.theme.colorPrincipal};
+  border: ${props => props.active && "1px solid " + props.theme.colorPrincipal};
+
+  &:disabled {
+    pointer-events: none;
+    border: 1px solid ${props => props.theme.textPrincipal};
+    background-color: ${props => props.theme.textPrincipal};
+    color: ${props => props.theme.textSecondary};
+  }
+`;

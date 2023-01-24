@@ -18,7 +18,7 @@ const ReactivoTableBody = ({ reactivosPage, tableRows, rowHeight, puntuaciones, 
               {((reactivosPage - 1) * tableRows) + (i + 1)}
               <ButtonReactivosTr className="buttons">
                 <VoltearPuntuacionesButton id={v.id} setPuntuaciones={setPuntuaciones} />
-                {/* <InvertirPuntuacionesButton id={v.id} setPuntuaciones={setPuntuaciones} /> */}
+                <InvertirPuntuacionesButton id={v.id} setPuntuaciones={setPuntuaciones} />
               </ButtonReactivosTr>
             </ThNumber>
             {

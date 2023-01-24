@@ -248,20 +248,28 @@ export const ResponsiveTr = styled.tr.attrs(props => ({
   }
 
   &:hover .buttons {
-    display: flex;
-    gap: 8px;
-    transform: translateX(-104px);
+    /* transform: translateX(-32px); */
+    z-index: 2;
+    background-color: ${props => props.theme.principal};
+  }
+  
+  &:hover:nth-child(2n) .buttons {
+    background-color: ${props => props.theme.backgroundTable};
   }
 `;
 
 export const ButtonReactivosTr = styled.div`
   height: 100%;
+  width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 8px;
+  justify-content: center;
+  padding: 2px;
+  gap: 8px;
   position: absolute;
   top: 0px;
   left: 0;
   z-index: -1;
-  transition: all 0.2s;
+  transition: all 0s;
 `

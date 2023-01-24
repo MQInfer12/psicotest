@@ -32,7 +32,7 @@ class PreguntaDimensionController extends Controller
         foreach($preguntasExistentes as $idPregunta) {
             DB::delete("DELETE FROM pregunta_dimensions WHERE id_pregunta='$idPregunta' AND id_dimension='$id'");
         }
-        
+
         $preguntas = PreguntaDimension::where('id_dimension',$id)->pluck('id_pregunta')->toArray();
         $natural = $this->getPuntuacionNatural($id);
 
