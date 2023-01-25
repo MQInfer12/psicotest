@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 export const Home = styled.div`
-  width: ${props => props.isInTestView && "80%"};
-  box-shadow: ${props => props.isInTestView && "4px 1px 16px -7px rgba(0,0,0,0.6)"};
   box-shadow: 0px 8px 34px rgba(${props => props.theme.textDarkRGB}, 0.15);
   height: ${(props) => props.height};
   z-index: 3;
@@ -10,10 +8,6 @@ export const Home = styled.div`
   display: flex;
   overflow: hidden;
   position: relative;
-
-  @media (max-width: 950px) {
-    width: ${props => props.isInTestView && "100%"};
-  }
 `;
 
 export const SidebarContainer = styled.div`
@@ -143,6 +137,22 @@ export const MessagesContainer = styled.div`
   padding: 10px;
   height: calc(100% - 95px);
   overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${props => props.theme.principal};
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${props => props.theme.colorPrincipal};
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: ${props => props.theme.colorPrincipal};
+  }
 `;
 
 export const MessageContainer = styled.div`

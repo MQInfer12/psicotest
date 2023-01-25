@@ -11,10 +11,11 @@ const Chat = ({ isInTestView = false, email_docente }) => {
   const windowHeight = useWindowHeight(true, true);
   const [showSide, setShowSide] = useState(isInTestView ? false : true);
   const { data } = useContext(ChatContext);
-  const { makeVisibleY } = useOutletContext();
+  const outletContext = useOutletContext();
 
   useEffect(() => {
-    if(!isInTestView) {
+    if(!isInTestView && outletContext) {
+      const { makeVisibleY } = outletContext;
       return makeVisibleY();
     }
   }, []);

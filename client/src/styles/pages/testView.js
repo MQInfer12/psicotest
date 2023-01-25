@@ -31,6 +31,27 @@ export const TestTextContainer = styled.div`
   padding-bottom: 50px;
 `;
 
+export const ButtonChat = styled.button`
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: ${props => props.theme.principal};
+  box-shadow: 0px 8px 34px rgba(${props => props.theme.textDarkRGB}, 0.15);
+  border: none;
+  color: ${props => props.theme.textDark};
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+    color: ${props => props.theme.colorPrincipal};
+  }
+`;
+
 export const TestTitle = styled.h2`
   height: 30px;
   gap: 4px;
@@ -456,16 +477,10 @@ export const PButton = styled.div`
 // TESTVIEW CHAT
 
 export const TestViewChatContainer = styled.div`
-  width: 100%;
-  padding: 0 40px 40px;
-  background-color: ${props => props.theme.principal};
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
   color: ${props => props.theme.textDark};
-
-  @media (max-width: 500px) {
-    padding: 0px 20px 40px;
-  }
+  background-color: ${props => props.theme.principal};
 `;

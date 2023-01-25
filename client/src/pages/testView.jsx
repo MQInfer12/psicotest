@@ -8,7 +8,7 @@ import { useOutletContext } from "react-router-dom";
 import TestChat from "../components/testView/testViewChat";
 import Cargando from "../components/globals/cargando";
 import { useWindowHeight } from "../hooks/useWindowHeight";
-import { AllContainer, Paragraph, TestContainer, TestTextContainer, TestTitle } from "../styles/pages/testView";
+import { AllContainer, ButtonChat, Paragraph, TestContainer, TestTextContainer, TestTitle } from "../styles/pages/testView";
 import useGet from "../hooks/useGet";
 import { useUserContext } from "../context/userContext";
 

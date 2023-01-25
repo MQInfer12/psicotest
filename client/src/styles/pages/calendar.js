@@ -41,8 +41,9 @@ export const DaysTd = styled.td`
   height: 50px;
   min-width: 50px;
   z-index: 1;
+  color: ${(props) => props.theme.textDark};
   color: ${(props) => props.month && "rgba(" + props.theme.textDarkRGB + ", 0.3)"};
-  color: ${(props) => props.today && props.theme.principal};
+  color: ${(props) => props.today && props.theme.textColorPrincipal};
   cursor: pointer;
 
   &::before {
@@ -62,7 +63,7 @@ export const DaysTd = styled.td`
   &::after {
     content: "";
     opacity: ${props => props.hayEventos ? "1" : "0"};
-    background-color: ${(props) => props.today ? props.theme.principal : props.theme.colorPrincipal};
+    background-color: ${(props) => props.today ? props.theme.textColorPrincipal : props.theme.colorPrincipal};
     position: absolute;
     width: 6px;
     height: 6px;
@@ -76,7 +77,7 @@ export const DaysTd = styled.td`
 export const MonthButton = styled.button`
   width: 30px;
   height: 30px;
-  border: 1.5px solid ${props => props.theme.textSecondary};
+  border: 1.5px solid ${props => props.theme.borders};
   background-color: transparent;
   font-size: 14px;
   border-radius: 50%;
@@ -85,9 +86,9 @@ export const MonthButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  color: ${props => props.theme.textPrincipal};
 
   &:hover {
-    color: ${props => props.theme.textSecondary};
     background-color: ${props => props.theme.colorPrincipal};
   }
 `;
@@ -104,6 +105,7 @@ export const EventsDiv = styled.div`
 export const EventsTitle = styled.h3`
   font-weight: 600;
   font-size: 20px;
+  color: ${props => props.theme.textDark};
 `;
 
 // EVENT CARD
@@ -112,6 +114,7 @@ export const EventCardContainer = styled.div`
   height: 70px;
   border-radius: 14px;
   background-color: ${props => props.theme.principal};
+  color: ${props => props.theme.textDark};
   display: flex;
   align-items: center;
   padding: 8px 30px;

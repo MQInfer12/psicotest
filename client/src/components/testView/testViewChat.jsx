@@ -1,14 +1,18 @@
 import React from "react";
-import Chat from "../../pages/chat";
-import { FeatureDescription, TestInfoTitle, TestViewChatContainer } from "../../styles/pages/testView";
+import { useModal } from "../../hooks/useModal";
+import { ButtonChat } from "../../styles/pages/testView";
+import ModalChat from "./modalChat";
 
-const TestViewChat = ({email_docente}) => {
+const TestViewChat = ({ email_docente }) => {
+  const { openModal } = useModal(
+    "Resuelve dudas",
+    <ModalChat email_docente={email_docente} />
+  )
+
   return (
-    <TestViewChatContainer>
-      <TestInfoTitle>¿Tienes dudas?</TestInfoTitle>
-      <FeatureDescription>¡Consulta a tu docente aquí!</FeatureDescription>
-      <Chat email_docente={email_docente} isInTestView={true} />
-    </TestViewChatContainer>
+    <ButtonChat onClick={openModal}>
+      <i className="fa-solid fa-comment"></i>
+    </ButtonChat>
   );
 };
 
