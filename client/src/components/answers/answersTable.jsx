@@ -76,7 +76,7 @@ const AnswersTable = ({ loading, tableHeightRef, respuestas, page, tableRows, ro
                   <td>
                     <DivDouble>
                       <PPuntaje>{v.puntuacion}</PPuntaje>
-                      <PSobre>/{v.total}</PSobre>
+                      <PSobre>{v.minimo} a {v.total}</PSobre>
                     </DivDouble>
                   </td>
                   <td>

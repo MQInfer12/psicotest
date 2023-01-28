@@ -17,7 +17,15 @@ const DimensionTable = ({ tableHeightRef, valores, setValores }) => {
             {
               escalas.map((escala, i) => (
                 <ThReactivo noWhite={i === 0} key={i}>
-                  <PText>{escala.descripcion} {dimension.constante != 0 ? dimension.constante > 0 ? `(+${dimension.constante})` : `(${dimension.constante})` : ""}</PText>
+                  <PText>
+                    {escala.descripcion} 
+                    {(i === 0 &&  dimension.constante != 0) ? 
+                      dimension.constante > 0 ? 
+                        ` (+${dimension.constante})` 
+                        : ` (${dimension.constante})` 
+                      : ""
+                    }
+                  </PText>
                   {
                     i != 0 &&
                     <DivReactivoButtonsTd>

@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { updateRespuesta } from "../../services/respuesta";
 import ConfirmModal from "../globals/confirmModal";
-import RadioButton from "./radioButton";
 import PageSlider from "./pageSlider";
 import { useContext } from 'react';
 import { ThanksContext } from '../../context/thanksContext';
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../hooks/useModal";
-import { Pregunta, PreguntaContainer, PreguntaIndex, 
-  PreguntasContainer, ReactivosContainer, ResolutionTitle, StartText, 
-  StartTextPurple, TestResolutionContainer, TestResolveContainer, UnaPreguntaContainer 
+import { 
+  PreguntasContainer, ResolutionTitle, StartText, 
+  StartTextPurple, TestResolutionContainer, TestResolveContainer
 } from "../../styles/pages/testView";
+import SeccionMapper from "./seccionMapper";
 
 const TestResolution = ({
   nombreTest,
@@ -68,39 +68,17 @@ const TestResolution = ({
           <StartTextPurple>¡{infoSend}!</StartTextPurple>
         )
       }
-
       <TestResolveContainer>
         <PreguntasContainer>
-          {secciones.map((seccion, i) => 
-            seccion.preguntas.map((pregunta, j) => {
-              cont++;
-              preguntas.push({seccion, pregunta});
-              return (
-                <UnaPreguntaContainer key={j} translate={indexPregunta}>
-                  <PreguntaContainer>
-                    <PreguntaIndex>
-                      P{cont}: {cont}/{preguntasTotales}
-                    </PreguntaIndex>
-                    <Pregunta>{pregunta.descripcion}</Pregunta>
-                  </PreguntaContainer>
-                  <ReactivosContainer>
-                    {seccion.reactivos.map((reactivo, k) => (
-                      <RadioButton 
-                        key={k} 
-                        indice={cont}
-                        setResultados={setResultados}
-                        valor={pregunta.puntuaciones.find(puntuacion => puntuacion.id_reactivo == reactivo.id).id}
-                        descripcion={reactivo.descripcion}
-                        multimarcado={seccion.multimarcado}
-                      />
-                    ))}
-                  </ReactivosContainer>
-                </UnaPreguntaContainer>
-              );
-            })
-          )}
+          <SeccionMapper 
+            cont={cont}
+            indexPregunta={indexPregunta}
+            preguntas={preguntas}
+            preguntasTotales={preguntasTotales}
+            secciones={secciones}
+            setResultados={setResultados}
+          />
         </PreguntasContainer>
-
         <PageSlider
           resultados={resultados}
           indexPregunta={indexPregunta}

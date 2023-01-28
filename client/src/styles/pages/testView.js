@@ -245,8 +245,12 @@ export const PreguntasContainer = styled.div`
   overflow: hidden;
 `;
 
-export const UnaPreguntaContainer = styled.div`
-  transform: translateX(${(props) => props.translate * -100}%);
+export const UnaPreguntaContainer = styled.div.attrs(props => ({
+  style: {
+    transform: "translateX(" + props.translate * -100 + "%)"
+  }
+}))`
+  
   min-width: 100%;
   padding: 40px;
   gap: 36px;
@@ -268,13 +272,33 @@ export const PreguntaContainer = styled.div`
 `;
 
 export const PreguntaIndex = styled.h2`
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-weight: 600;
   font-size: 24px;
+`;
+
+export const SeccionInfo = styled.button`
+  background-color: ${props => props.active ? props.theme.colorPrincipalLighter : "transparent"};
+  color: ${props => props.theme.textColorPrincipal};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid ${props => props.theme.textColorPrincipal};
+  cursor: help;
+  position: relative;
+  transition: all 0.3s;
 `;
 
 export const Pregunta = styled.h3`
   font-weight: 600;
   font-size: 24px;
+  animation: appear 0.4s;
 
   @media (max-width: 1260px) {
     font-size: 18px;
@@ -282,6 +306,63 @@ export const Pregunta = styled.h3`
 
   @media (max-width: 600px) {
     font-size: 16px;
+  }
+
+  @keyframes appear {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+`;
+
+export const Instructions = styled.h3`
+  padding: 20px;
+  font-weight: 600;
+  font-size: 24px;
+  background-color: ${props => props.theme.colorPrincipalLighter};
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  animation: appear 0.4s;
+
+  @media (max-width: 1260px) {
+    font-size: 18px;
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  @keyframes appear {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+`;
+
+export const EntendidoButton = styled.button`
+  background-color: transparent;
+  color: ${props => props.theme.textColorPrincipal};
+  padding: 6px 12px;
+  border: 1px solid ${props => props.theme.textColorPrincipal};
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: ${props => props.theme.colorPrincipal};
   }
 `;
 

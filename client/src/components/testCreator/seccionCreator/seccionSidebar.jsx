@@ -15,7 +15,7 @@ const SeccionSidebar = ({ test, editState, loading, setLoading }) => {
   return (
     <SeccionCreatorDash>
       <DashPart>
-        <DashTitle>{test.nombre}</DashTitle>
+        <DashTitle center><span>{test.nombre}</span></DashTitle>
       </DashPart>
       <SeccionOptions
         test={test}

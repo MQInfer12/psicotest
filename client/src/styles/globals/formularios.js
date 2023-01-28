@@ -272,11 +272,13 @@ export const DangerIconButton = styled.button`
   text-align: center;
   cursor: pointer;
   transition: all 0.2s;
+  animation: ${props => props.blink && "blink 4s linear infinite"};
 
   &:hover {
     color: ${props => props.theme.principal};
     background-color: ${props => props.theme.textRed};
     border: 1px solid ${props => props.theme.textRed};
+    animation: none;
   }
 
   &:disabled {
@@ -284,6 +286,30 @@ export const DangerIconButton = styled.button`
     border: 1px solid ${props => props.theme.textPrincipal};
     background-color: ${props => props.theme.textPrincipal};
     color: ${props => props.theme.textSecondary};
+    animation: none;
+  }
+
+  @keyframes blink {
+    60% {
+      background-color: ${props => props.theme.principal};
+      color: ${props => props.theme.textRed};
+    }
+    70% {
+      background-color: ${props => props.theme.textRed};
+      color: ${props => props.theme.principal};
+    }
+    80% {
+      background-color: ${props => props.theme.principal};
+      color: ${props => props.theme.textRed};
+    }
+    90% {
+      background-color: ${props => props.theme.textRed};
+      color: ${props => props.theme.principal};
+    }
+    100% {
+      background-color: ${props => props.theme.principal};
+      color: ${props => props.theme.textRed};
+    }
   }
 `;
 
@@ -292,7 +318,7 @@ export const MiniWhiteIconButton = styled.button`
   align-items: center;
   justify-content: center;
   height: 20px;
-  width: 20px;
+  min-width: 20px;
   border: 1px solid ${props => props.theme.borders};
   background-color: ${props => props.theme.principal};
   border-radius: 10px;

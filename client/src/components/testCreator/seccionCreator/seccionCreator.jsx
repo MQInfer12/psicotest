@@ -31,7 +31,7 @@ const SeccionCreator = ({ test }) => {
                   {
                     loadingNewSection ? 
                     <Cargando /> :
-                    <EmptySeccion>Añade una nueva sección para comenzar a editar preguntas y reactivos.</EmptySeccion>
+                    <EmptySeccion>Añade una nueva sección.</EmptySeccion>
                   }
                 </FullScreen>
               ))

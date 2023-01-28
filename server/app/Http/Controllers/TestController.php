@@ -149,7 +149,7 @@ class TestController extends Controller
             $test->estado = $respuesta[0]->estado;
         }
 
-        $secciones = DB::select("SELECT id, multimarcado, vacio FROM seccions WHERE id_test='$idTest' ORDER BY orden");
+        $secciones = DB::select("SELECT id, multimarcado, vacio, instruccion FROM seccions WHERE id_test='$idTest' ORDER BY orden");
         foreach($secciones as $seccion) {
             $id_seccion = $seccion->id;
             $preguntas =DB::select("SELECT id, descripcion FROM preguntas WHERE id_seccion='$id_seccion' ORDER BY id");

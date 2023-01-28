@@ -43,7 +43,7 @@ const AnswersFilter = ({ respuestas, setFiltered }) => {
       <ISearch className="fa-solid fa-magnifying-glass"></ISearch>
     </SearchDiv>
     <SearchSelect onChange={(e) => setEstado(e.target.value)}>
-      <option value="todos">Todos</option>
+      <option value="todos">Estado</option>
       <option value="pendiente">Pendiente</option>
       <option value="recibido">Recibido</option>
     </SearchSelect>

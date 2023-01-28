@@ -37,6 +37,7 @@ const EditarConversionesButton = ({ dimension, valores }) => {
       title="Guardar conversiones" 
       onClick={handleSave}
       disabled={!saveConversiones}
+      blink
     >
       <i className="fa-solid fa-floppy-disk"></i>
     </DangerIconButton>

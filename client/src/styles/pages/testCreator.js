@@ -67,9 +67,20 @@ export const DashPart = styled.div`
 `;
 
 export const DashTitle = styled.h3`
-  color: ${props => props.theme.textDark};
-  font-size: 18px;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  justify-content: ${props => props.center ? "center" : "space-between"};
+
+  & > span {
+    color: ${props => props.theme.textDark};
+    font-size: 18px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 export const PointsContainer = styled.div`

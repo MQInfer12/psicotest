@@ -15,6 +15,22 @@ export const addSeccion = async (idTest) => {
   }
 }
 
+export const updateSeccion = async (form, id) => {
+  try {
+    const response = await fetch(`${http}seccion/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nombre: form.nombre,
+        instruccion: form.instruccion
+      }),
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const deleteSeccion = async (id) => {
   try {
     const response = await fetch(`${http}seccion/${id}`, {

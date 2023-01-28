@@ -40,7 +40,7 @@ class RespuestaController extends Controller
         
         foreach ($respuestas as $respuesta) {
             $query = DB::select(
-                "SELECT primer.total, segundo.puntuacion
+                "SELECT primer.total, segundo.puntuacion, tercer.minimo
                 FROM (
                     SELECT COALESCE(SUM(tabla.sumas), 0) as total
                     FROM (
@@ -64,10 +64,19 @@ class RespuestaController extends Controller
                     SELECT COALESCE(SUM(p.asignado), 0) as puntuacion
                     FROM resultados as r, puntuacions as p
                     WHERE r.id_respuesta='$respuesta->id' AND r.id_puntuacion=p.id
-                ) as segundo"
+                ) as segundo, (
+                    SELECT SUM(pregunta.punt) as minimo
+                    FROM (
+                        SELECT MIN(pu.asignado) as punt
+                        FROM puntuacions as pu, seccions as s, preguntas as pr
+                        WHERE s.id_test='$respuesta->id_test' AND pr.id_seccion=s.id AND pu.id_pregunta=pr.id AND s.multimarcado=false
+                        GROUP BY pr.id
+                    ) as pregunta
+                ) as tercer"
             )[0];
             $respuesta->total = $query->total;
             $respuesta->puntuacion = $query->puntuacion;
+            $respuesta->minimo = $query->minimo;
         }
 
         return $respuestas;

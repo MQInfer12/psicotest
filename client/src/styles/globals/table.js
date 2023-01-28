@@ -195,8 +195,8 @@ export const PLight = styled.p`
 
 export const PLightDouble = styled.p`
   text-align: ${props => props.center ? "center" : "start"};
-  padding-right: 10px;
-  color: ${props => props.theme.textPrincipal};
+  padding-right: ${props => props.noPadding ? "0" : "10px"};
+  color: ${props => props.red ? props.theme.textRed : props.theme.textPrincipal};
   font-size: 12px;
   font-weight: 400;
   overflow: hidden;
@@ -204,6 +204,7 @@ export const PLightDouble = styled.p`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  min-height: ${props => props.minHeight};
 `;
 
 export const PPuntaje = styled.p`

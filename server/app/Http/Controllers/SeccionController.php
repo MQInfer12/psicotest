@@ -39,6 +39,7 @@ class SeccionController extends Controller
         ]);
 
         $seccion = new Seccion();
+        $seccion->instruccion = "";
         $seccion->id_test = $request->id_test;
 
         $ultimoOrden = DB::select("SELECT MAX(orden) FROM seccions WHERE id_test='$request->id_test'")[0]->max + 1;
@@ -48,6 +49,24 @@ class SeccionController extends Controller
         $seccion->save();
 
         $seccion = $this->getFullSeccion($seccion->id);
+
+        return response()->json(["mensaje" => "se guardo correctamente", "data" => $seccion], 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nombre' => 'required'
+        ]);
+
+        $seccion = Seccion::findOrFail($id);
+        $seccion->nombre = $request->nombre;
+        if($request->instruccion) {
+            $seccion->instruccion = $request->instruccion;
+        } else {
+            $seccion->instruccion = "";
+        }
+        $seccion->save();
 
         return response()->json(["mensaje" => "se guardo correctamente", "data" => $seccion], 201);
     }
