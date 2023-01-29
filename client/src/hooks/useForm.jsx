@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { uploadImage } from "../services/cloudinary";
+import { cloudinaryHttp } from "../services/htpp";
 import { validarInputFile } from "../utilities/validarInputFile";
 
 export const UseForm = (
@@ -11,8 +11,30 @@ export const UseForm = (
   foreignId
 ) => {
   const [form, setForm] = useState(initialForm);
+  const [progress, setProgress] = useState(0);
   const [errors, setErrors] = useState({ reseted: true });
   const [loading, setLoading] = useState(false);
+  
+  const sendCloudinary = async (val) => {
+    return new Promise((resolve, reject) => {
+      const formData = new FormData();
+      formData.append("file", val);
+      formData.append("upload_preset", "la8fhiin");
+  
+      const req = new XMLHttpRequest();
+      req.open('POST', `${cloudinaryHttp}upload`);
+      req.upload.addEventListener('progress', (e) => {
+        const percentage = (e.loaded / e.total) * 100;
+        setProgress(percentage);
+      });
+  
+      req.addEventListener('load', () => {
+        resolve(req.response);
+      });
+  
+      req.send(formData);
+    })
+  }
 
   //ENVIAR PETICION
   const handleSend = async (form) => {
@@ -21,14 +43,9 @@ export const UseForm = (
     try {
       for(let key in form) {
         if(form[key]?.type === "image/jpeg" || form[key]?.type === "image/png") {
-          const formData = new FormData();
-          formData.append("file", form[key]);
-          formData.append("upload_preset", "la8fhiin");
-          const res = await uploadImage(formData);
-          if(res.ok) {
-            const resJson = await res?.json();
-            form[key] = resJson.public_id;
-          }
+          const resCloudinary = await sendCloudinary(form[key]);
+          const resJsonCloudinary = JSON.parse(resCloudinary);
+          form[key] = resJsonCloudinary.public_id;
         }
       }
 
@@ -47,6 +64,7 @@ export const UseForm = (
       if (res.status == 201) {
         //ESTADO DE GUARDADO O EDITADO
         console.log("¡Petición correcta!");
+        setProgress(100);
         const resJson = await res?.json();
         success(resJson);
       } else if (res.status == 200) {
@@ -67,6 +85,7 @@ export const UseForm = (
       }
 
       setLoading(false);
+      setProgress(0);
     } catch (err) {
       console.log(err);
     }
@@ -127,6 +146,7 @@ export const UseForm = (
     form,
     errors,
     loading,
+    progress,
     handleChange,
     handleSubmit,
     handleReset,

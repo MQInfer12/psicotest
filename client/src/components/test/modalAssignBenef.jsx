@@ -24,10 +24,13 @@ const ModalAssignBenef = ({ id, actualizar }) => {
         Number(val) > Number(user.id)
           ? String(val) + String(user.id)
           : String(user.id) + String(val);
+      console.log(combinedId);
 
       try {
         const resChat = await getDoc(doc(db, "chats", combinedId));
+        console.log("llega");
         if (!resChat.exists()) {
+          console.log("llega");
           await setDoc(doc(db, "chats", combinedId), { messages: [] });
 
           await updateDoc(doc(db, "userChats", String(val)), {

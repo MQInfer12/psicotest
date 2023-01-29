@@ -12,6 +12,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { useWindowHeight } from "../hooks/useWindowHeight";
 import Photo from "../components/profile/photo";
 import { DivButtonsDown, DownContainer, InputsContainer, PDetalles, ProfileContainer, UpContainer } from "../styles/pages/profile";
+import ProgressBar from "../components/globals/progressBar";
 
 const Profile = () => {
   const windowHeight = useWindowHeight(true, true);
@@ -29,6 +30,8 @@ const Profile = () => {
   const {
     form,
     errors,
+    loading,
+    progress,
     handleChange,
     handleSubmit,
     handleReset,
@@ -156,6 +159,7 @@ const Profile = () => {
           handleChange={handleChange}
           handleResetImg={handleResetImg}
         />
+        {(loading && progress) && <ProgressBar value={progress} />}
       </UpContainer>
       <DownContainer>
         <InputsContainer>
@@ -200,8 +204,8 @@ const Profile = () => {
         <DivButtonsDown>
           {editable ? (
             <>
-              <PurpleButton onClick={handleSubmit}>
-                Guardar cambios
+              <PurpleButton disabled={loading} width="181px" onClick={handleSubmit}>
+                {loading ? "Subiendo..." : "Guardar cambios"}
               </PurpleButton>
               <WhiteButton
                 onClick={() => {

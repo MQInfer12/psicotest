@@ -25,3 +25,31 @@ export const pdfIndividual = async (id) => {
   anchor.click();
   window.URL.revokeObjectURL(url);
 };
+
+export const changeDestacado = async (id) => {
+  try {
+    const response = await fetch(`${http}articulo/destacado/${id}`, {
+      method: "PUT",
+      headers: {
+        "Accept": "application/json",
+      }
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const deleteArticulo = async (id) => {
+  try {
+    const response = await fetch(`${http}articulo/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Accept": "application/json",
+      }
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

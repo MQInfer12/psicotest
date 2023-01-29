@@ -13,9 +13,9 @@ const Landing = () => {
       <Navbar />
       <FirstSection />
       <SecondSection />
-      {/* <ArticlesSection /> */}
       <ThirdSection />
       <FourthSection />
+      <ArticlesSection />
       <Footer />
     </>
   );

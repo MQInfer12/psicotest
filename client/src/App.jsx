@@ -64,11 +64,9 @@ function App() {
             <Route
               path="chat"
               element={
-                <ProtectedRole roles={[2, 1]}>
-                  <OutletContext titlePage="Chat">
-                    <Chat />
-                  </OutletContext>
-                </ProtectedRole>
+                <OutletContext titlePage="Chat">
+                  <Chat />
+                </OutletContext>
               }
             />
             <Route
@@ -222,11 +220,9 @@ function App() {
             <Route
               path="calendar"
               element={
-                <ProtectedRole roles={[2, 1]}>
-                  <OutletContext titlePage="Calendario" calendar={false}>
-                    <Calendar />
-                  </OutletContext>
-                </ProtectedRole>
+                <OutletContext titlePage="Calendario" calendar={false}>
+                  <Calendar />
+                </OutletContext>
               }
             />
             <Route

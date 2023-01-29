@@ -5,9 +5,9 @@ import ArticleResponse from '../blog/articleResponse'
 const ArticlesSection = () => {
   return (
     <ArticlesSectionContainer>
-      <ArticlesTitleText>Mira unos cuantos artículos</ArticlesTitleText>
+      <ArticlesTitleText>Artículos destacados</ArticlesTitleText>
       <ArticleContainer>
-        <ArticleResponse fwrap={false} />
+        <ArticleResponse inLanding />
       </ArticleContainer>
     </ArticlesSectionContainer>
   )

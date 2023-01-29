@@ -198,7 +198,7 @@ export const MessageContainer = styled.div`
 
       p {
         background-color: ${props => props.theme.colorPrincipalLighter};
-        color: ${props => props.theme.principal};
+        color: ${props => props.theme.textColorPrincipal};
         border-radius: 10px 0px 10px 10px;
       }
     }

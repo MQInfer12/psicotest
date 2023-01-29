@@ -53,6 +53,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  box-shadow: 0px 4px 16px rgba(${props => props.theme.textDarkRGB}, 0.05);
 `;
 
 export const H2 = styled.h2`

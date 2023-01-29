@@ -10,7 +10,7 @@ const TestCard = (props) => {
       <P>{props.idRole === 1 ? props.descripcion_test : props.descripcion}</P>
 
       <ContainerIcon>
-        <div><i title="Autor" className="fa-solid fa-user"></i></div>
+        <ProfilePic title="Autor" width="25px" height="25px" border perfil={props.perfil}/>
         <Span>{props.idRole === 1 ? props.autor_test : props.autor}</Span>
       </ContainerIcon>
 

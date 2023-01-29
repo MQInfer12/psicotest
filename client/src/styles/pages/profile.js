@@ -14,6 +14,7 @@ export const UpContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  position: relative;
 `;
 
 export const PDetalles = styled.div`

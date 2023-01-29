@@ -11,8 +11,13 @@ class UserController extends Controller
     public function index() //PEDIR USUARIOS PARA LA PAGINA USERS DEL ADMINISTRADOR
     {
         $showUser = DB::select("SELECT u.id, u.nombre as nombre_user, u.email, u.genero, u.perfil, 
-                                u.edad, u.id_sede, u.id_rol, u.estado, r.nombre as nombre_rol, 
-                                s.nombre as nombre_sede 
+                                u.edad, u.id_sede, u.id_rol, u.estado,
+                                s.nombre as nombre_sede,
+                                CASE 
+                                    WHEN r.id=1 THEN 'beneficiario' 
+                                    WHEN r.id=2 THEN 'psicólogo' 
+                                    WHEN r.id=3 THEN 'administrador' 
+                                END as nombre_rol
                                 from users u, rols r, sedes s 
                                 where u.id_rol=r.id 
                                 and u.id_sede=s.id

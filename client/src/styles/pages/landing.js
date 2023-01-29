@@ -735,14 +735,36 @@ export const ArticlesTitleText = styled.h2`
   font-weight: 700;
   line-height: 138.4%;
   padding-bottom: 30px;
+  color: ${props => props.theme.textDark};
 
   &::after {
     content: ".";
     color: ${props => props.theme.colorPrincipal};
   }
+
+  @media ${device.laptop} {
+    font-size: 48px;
+  }
 `;
 
 export const ArticleContainer = styled.div`
   overflow: auto;
-  padding: 20px;
+  padding: 20px 0;
+  
+  &::-webkit-scrollbar {
+    width: 2px;
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${props => props.theme.textPrincipal};
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${props => props.theme.colorPrincipal};
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: ${props => props.theme.colorPrincipal};
+  }
 `;

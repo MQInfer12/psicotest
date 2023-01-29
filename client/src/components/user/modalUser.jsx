@@ -154,7 +154,7 @@ const ModalUser = ({ call, actualizar, funcion, user }) => {
             value: 1,
           },
           {
-            nombre: "Docente",
+            nombre: "Psicólogo",
             value: 2,
           },
         ],

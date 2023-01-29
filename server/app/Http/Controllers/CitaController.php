@@ -139,7 +139,7 @@ class CitaController extends Controller
                 "citas" => $appointments
             );
             return $tasks;
-        } else if($rol == 2) {
+        } else if($rol == 2 || $rol == 3) {
             // HORARIOS PARA DOCENTES
             $horarios = DB::select("SELECT h.id, h.fecha, h.hora_inicio, h.hora_final, h.disponible, u.email, u.nombre 
                                     from horarios h, users u 

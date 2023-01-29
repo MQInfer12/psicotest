@@ -5,7 +5,7 @@ import ModalHorario from "./modalHorario";
 import { useModal } from "../../hooks/useModal";
 import EventCard from "./calendarMini/eventCard";
 import { CalendarMiniContainer, CalendarMonth, CalendarTable, 
-  DaysTd, DaysThMini, EventsDiv, 
+  DaysTd, DaysThMini, DivNothing, EventsDiv, 
   EventsTitle, MonthButton, MonthContainer 
 } from "../../styles/pages/calendar";
 import { useThemeContext } from "../../context/themeContext";
@@ -109,54 +109,62 @@ const CalendarMini = ({
       }
       <EventsDiv>
         <EventsTitle>Eventos</EventsTitle>
-          {
-            horarios.filter(horario => horario.fecha === fechaSelected.DMY).map((v, i) => (
-              <EventCard key={i}
-                v={{...v, fecha: fechaSelected.DMY}}
-                color={actualTheme.colorPrincipal}
-                event={"Libre"}
-                rol={user.id_rol}
-                llenarTareas={llenarTareas} 
-              />
-            ))
-          }
-          {
-            citas.filter(cita => cita.fecha === fechaSelected.DMY).map((v, i) => {
-              if(v.aceptado) {
+        {
+          (
+            horarios.filter(horario => horario.fecha === fechaSelected.DMY).length === 0 
+            && 
+            citas.filter(cita => cita.fecha === fechaSelected.DMY).length === 0
+          ) &&
+          <DivNothing>No tienes eventos este día</DivNothing>
+        }
+        {
+          horarios.filter(horario => horario.fecha === fechaSelected.DMY).map((v, i) => (
+            <EventCard key={i}
+              v={{...v, fecha: fechaSelected.DMY}}
+              color={actualTheme.colorPrincipal}
+              event={"Libre"}
+              rol={user.id_rol}
+              llenarTareas={llenarTareas} 
+            />
+          ))
+        }
+        {
+          citas.filter(cita => cita.fecha === fechaSelected.DMY).map((v, i) => {
+            if(v.aceptado) {
+              return (
+                <EventCard key={i}
+                  v={{...v, fecha: fechaSelected.DMY}}
+                  color={actualTheme.textGreen}
+                  event={"Cita"}
+                  rol={user.id_rol}
+                  llenarTareas={llenarTareas} 
+                />
+              )
+            } else {
+              if(user.id_rol != 1) {
                 return (
                   <EventCard key={i}
                     v={{...v, fecha: fechaSelected.DMY}}
-                    color={actualTheme.textGreen}
-                    event={"Cita"}
+                    color={actualTheme.textYellow}
+                    event={"Pendientes"}
                     rol={user.id_rol}
-                    llenarTareas={llenarTareas} 
+                    llenarTareas={llenarTareas}
                   />
                 )
               } else {
-                if(user.id_rol != 1) {
-                  return (
-                    <EventCard key={i}
-                      v={{...v, fecha: fechaSelected.DMY}}
-                      color={actualTheme.textYellow}
-                      event={"Pendientes"}
-                      rol={user.id_rol}
-                      llenarTareas={llenarTareas}
-                    />
-                  )
-                } else {
-                  return (
-                    <EventCard key={i}
-                      v={{...v, fecha: fechaSelected.DMY}}
-                      color={actualTheme.textYellow}
-                      event={"Pendiente"}
-                      rol={user.id_rol}
-                      llenarTareas={llenarTareas}
-                    />
-                  )
-                }
+                return (
+                  <EventCard key={i}
+                    v={{...v, fecha: fechaSelected.DMY}}
+                    color={actualTheme.textYellow}
+                    event={"Pendiente"}
+                    rol={user.id_rol}
+                    llenarTareas={llenarTareas}
+                  />
+                )
               }
-            })
-          }
+            }
+          })
+        }
       </EventsDiv>
     </CalendarMiniContainer>
   )

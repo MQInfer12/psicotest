@@ -178,21 +178,24 @@ class TestController extends Controller
                 $respuestas = DB::select("SELECT * FROM respuestas WHERE email_user='$email'");
 
                 foreach($respuestas as $respuesta) {
-                    $docente_test = DB::select("SELECT t.id, t.nombre, t.descripcion, a.nombre as autor, t.tiempo, u.nombre as nombre_docente
-                                                FROM tests as t, users as u, docente_tests as dt, users as a
-                                                WHERE t.id=dt.id_test AND u.id=dt.id_docente AND dt.id='$respuesta->id_docente_test' AND t.autor=a.id");
+                    $docente_test = DB::select(
+                        "SELECT t.id, t.nombre, t.descripcion, a.nombre as autor, a.perfil, t.tiempo, u.nombre as nombre_docente
+                        FROM tests as t, users as u, docente_tests as dt, users as a
+                        WHERE t.id=dt.id_test AND u.id=dt.id_docente AND dt.id='$respuesta->id_docente_test' AND t.autor=a.id"
+                    );
                     $respuesta->nombre_docente = $docente_test[0]->nombre_docente;
                     $respuesta->id_test = $docente_test[0]->id;
                     $respuesta->nombre_test = $docente_test[0]->nombre;
                     $respuesta->descripcion_test = $docente_test[0]->descripcion;
                     $respuesta->autor_test = $docente_test[0]->autor;
                     $respuesta->tiempo_test = $docente_test[0]->tiempo;
+                    $respuesta->perfil = $docente_test[0]->perfil;
                 }
 
                 return $respuestas;
             case 2:
             case 3:
-                $tests = DB::select("SELECT dt.id, dt.id_docente, dt.id_test, t.nombre, t.tiempo, t.descripcion, u.nombre as autor, t.autor as id_autor
+                $tests = DB::select("SELECT dt.id, dt.id_docente, dt.id_test, t.nombre, t.tiempo, t.descripcion, u.nombre as autor, u.perfil, t.autor as id_autor
                                      from docente_tests as dt, tests as t, users as u
                                      where dt.id_docente=$id and dt.id_test=t.id AND t.autor=u.id");
                 foreach($tests as $test) {

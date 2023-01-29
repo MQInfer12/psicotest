@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 import { addArticulo } from '../../services/articulo'
 import { DivFile, InputFile } from '../../styles/pages/blog'
 
-const ModalBlog = ({ funcion, call, actualizar, blog }) => {
+const ModalBlog = ({ funcion, actualizar, blog }) => {
   const { user } = useUserContext();
   const [errors, setErrors] = useState({ reseted: true });
 
@@ -20,7 +20,7 @@ const ModalBlog = ({ funcion, call, actualizar, blog }) => {
       documento: blog.documento
     } : initialForm,
     validationsForm,
-    call,
+    () => {},
     actualizar,
     blog?.id,
     user.id

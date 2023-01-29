@@ -108,6 +108,18 @@ export const EventsTitle = styled.h3`
   color: ${props => props.theme.textDark};
 `;
 
+export const DivNothing = styled.div`
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  color: ${props => props.theme.textPrincipal};
+  font-size: 16px;
+  font-weight: 300;
+`;
+
 // EVENT CARD
 
 export const EventCardContainer = styled.div`
@@ -176,6 +188,7 @@ export const TableCalendar = styled.table`
   border-collapse: collapse;
   overflow: hidden;
   border: 1px solid ${props => props.theme.textSecondary};
+  box-shadow: 0px 8px 34px rgba(${props => props.theme.textDarkRGB}, 0.15);
 `;
 
 export const DaysThBig = styled.th`
