@@ -119,6 +119,7 @@ Route::group(['middleware' => 'api'], function(){
     Route::get('articulo/documento/{id}', [ArticuloController::class, 'getArticlePdf']);
     Route::get('articulo/landing/destacados', [ArticuloController::class, 'getArticlesDestacados']);
     Route::put('articulo/destacado/{id}', [ArticuloController::class, 'changeDestacado']);
+    Route::post('articulo/update/{id}', [ArticuloController::class, 'update']);
 
     //CHANGECOLUMNS
     /* Route::get('change', [SeccionController::class, 'change']); */

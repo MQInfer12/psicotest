@@ -93,6 +93,13 @@ export const UseForm = (
 
   //IR CAMBIANDO EL FORM
   const handleChange = async (e) => {
+    if(e instanceof File) {
+      setForm({
+        ...form,
+        documento: e
+      })
+      return;
+    }
     //SI EL INPUT ES DE TIPO FILE VALIDAR Y CONVERTIR A BASE64
     if (e.target.type == "file") {
       if (validarInputFile(e)) return;

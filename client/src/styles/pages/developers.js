@@ -42,7 +42,7 @@ export const Column = styled.div`
     background-color: ${props => props.theme.colorPrincipal};
 
     & .nombres {
-      color: ${props => props.theme.principal};
+      color: ${props => props.theme.textColorPrincipal}
     }
   }
 
@@ -104,5 +104,6 @@ export const ButtonContact = styled.a`
 
   &:hover {
     opacity: 0.8;
+    color: ${props => props.theme.textColorPrincipal}
   }
 `;

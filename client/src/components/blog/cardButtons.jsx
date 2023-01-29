@@ -5,6 +5,7 @@ import { changeDestacado, deleteArticulo } from '../../services/articulo';
 import { DangerIconButton, WhiteIconButton } from '../../styles/globals/formularios';
 import { CardButtonContainer } from '../../styles/pages/blog';
 import SureModal from '../globals/sureModal';
+import ModalBlog from './modalBlog';
 
 const CardButtons = ({ article, llenarArticulos }) => {
   const { user } = useUserContext();
@@ -22,6 +23,18 @@ const CardButtons = ({ article, llenarArticulos }) => {
       llenarArticulos();
     }
   }
+
+  const { openModal: openEdit , closeModal: closeEdit } = useModal(
+    "Editar artículo",
+    <ModalBlog 
+      actualizar={() => {
+        llenarArticulos();
+        closeEdit();
+      }}
+      blog={article}
+      funcion="Editar"
+    />
+  )
 
   const { openModal, closeModal } = useModal(
     "Eliminar artículo",
@@ -44,7 +57,7 @@ const CardButtons = ({ article, llenarArticulos }) => {
         {
           article.id_docente === user.id &&
           <>
-            <WhiteIconButton>
+            <WhiteIconButton onClick={openEdit}>
               <i className="fa-solid fa-pencil"></i>
             </WhiteIconButton>
             <DangerIconButton onClick={openModal}>

@@ -1,23 +1,25 @@
 import React from 'react'
 import { useUserContext } from '../../context/userContext'
 import { UseForm } from '../../hooks/useForm'
-import { ErrorCss, FormContainer, PurpleButton } from '../../styles/globals/formularios'
+import { FormContainer, PurpleButton } from '../../styles/globals/formularios'
 import { initialForm, validationsForm } from '../../validations/blog'
 import FormInputsText from '../globals/formInputsText'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { addArticulo } from '../../services/articulo'
-import { DivFile, InputFile } from '../../styles/pages/blog'
+import InputFileDragDrop from '../globals/inputFileDragDrop'
+import { http } from '../../services/htpp'
+import ProgressBar from '../globals/progressBar'
 
 const ModalBlog = ({ funcion, actualizar, blog }) => {
   const { user } = useUserContext();
   const [errors, setErrors] = useState({ reseted: true });
+  const [progress, setProgress] = useState(0);
 
   const { form, handleChange } = UseForm(
     blog ? {
       titulo: blog.titulo,
       descripcion: blog.descripcion,
-      documento: blog.documento
+      documento: null
     } : initialForm,
     validationsForm,
     () => {},
@@ -49,14 +51,38 @@ const ModalBlog = ({ funcion, actualizar, blog }) => {
     setErrors(validationsForm(form))
   }
 
-  const handleSend = async (formulario) => {
-    const formData = new FormData();
-    formData.append("id_docente", user.id);
-    formData.append("titulo", formulario.titulo);
-    formData.append("descripcion", formulario.descripcion);
-    formData.append("documento", formulario.documento);
-    const res = await addArticulo(formData);
-    if(res.ok) {
+  const sendArticulo = async () => {
+    return new Promise((resolve, reject) => {
+      const formData = new FormData();
+      if(!blog) {
+        formData.append("id_docente", user.id);
+      }
+      formData.append("titulo", form.titulo);
+      formData.append("descripcion", form.descripcion);
+      formData.append("documento", form.documento);
+  
+      const req = new XMLHttpRequest();
+      if(blog) {
+        req.open("POST", `${http}articulo/update/${blog.id}`);
+      } else {
+        req.open('POST', `${http}articulo`);
+      }
+      req.upload.addEventListener('progress', (e) => {
+        const percentage = (e.loaded / e.total) * 100;
+        setProgress(percentage);
+      });
+  
+      req.addEventListener('load', () => {
+        resolve(req.status);
+      });
+  
+      req.send(formData);
+    })
+  }
+
+  const handleSend = async () => {
+    const res = await sendArticulo();
+    if(res === 201) {
       actualizar();
     }
   }
@@ -68,23 +94,24 @@ const ModalBlog = ({ funcion, actualizar, blog }) => {
   }, [errors])
 
   return (
-    <FormContainer>
-      <FormInputsText 
-        data={data}
-        handleChange={handleChange}
-      />
-      {errors.documento && <ErrorCss>{errors.documento}</ErrorCss>}
-      <DivFile>
-        <InputFile 
-          accept=".pdf"
-          type="file"
-          name="documento"
-          onChange={handleChange}
+    <>
+      <FormContainer>
+        <FormInputsText 
+          data={data}
+          handleChange={handleChange}
         />
-        <PurpleButton>Subir documento</PurpleButton>
-      </DivFile>
-      <PurpleButton onClick={handleSubmit}>{funcion}</PurpleButton>
-    </FormContainer>
+        <InputFileDragDrop
+          handleChange={handleChange}
+          name="documento"
+          types={["PDF"]}
+          namePrev={form.documento?.name}
+          error={errors.documento}
+          text={blog && "Arrastra un archivo para sobrescribir el anterior"}
+        />
+        <PurpleButton onClick={handleSubmit}>{funcion}</PurpleButton>
+      </FormContainer>
+      <ProgressBar value={progress} />
+    </>
   )
 }
 

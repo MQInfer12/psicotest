@@ -27,6 +27,31 @@ class ArticuloController extends Controller
         return response()->json(["message" => "Se guardo correctamente"], 201);
     }
 
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            "titulo" => "required",
+            "descripcion" => "required"
+        ]);
+
+        $article = Articulo::findOrFail($id);
+        $article->titulo = $request->titulo;
+        $article->descripcion = $request->descripcion;
+        
+        if($request->documento) {
+            Storage::delete("public/".$article->documento);
+            $file = $request->documento;
+            $randomName = $this->generateRandomString();
+            $name = $randomName.'.'.$file->extension();
+            $file->storeAs('', $name, 'public');
+            $article->documento = $name;
+        }
+
+        $article->save();
+
+        return response()->json(["message" => "Se guardo correctamente"], 201);
+    }
+
     function generateRandomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);

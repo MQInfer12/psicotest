@@ -36,6 +36,7 @@ export const DivChildContainer = styled.div`
   border-radius: 16px;
   min-width: 400px;
   background-color: ${props => props.theme.principal};
+  overflow: hidden;
 
   animation: move 1s;
   transform: translateY(50px);
@@ -69,4 +70,5 @@ export const DivCabecera = styled.div`
 
 export const DivBody = styled.div`
   padding: 26px;
+  position: relative;
 `;
