@@ -199,16 +199,6 @@ function App() {
                 </ProtectedThanks>
               }
             />
-            {/* <Route
-              path="groups"
-              element={
-                <ProtectedRole roles={[2]}>
-                  <OutletContext titlePage="Grupos" calendar={false}>
-                    <Group />
-                  </OutletContext>
-                </ProtectedRole>
-              }
-            /> */}
             <Route
               path="profile"
               element={
@@ -238,11 +228,9 @@ function App() {
             <Route
               path="blogs"
               element={
-                <ProtectedRole roles={[3, 2]}>
-                  <OutletContext titlePage="Blogs" calendar={false}>
-                    <Blog />
-                  </OutletContext>
-                </ProtectedRole>
+                <OutletContext titlePage="Blogs" calendar={false}>
+                  <Blog />
+                </OutletContext>
               }
             />
             <Route

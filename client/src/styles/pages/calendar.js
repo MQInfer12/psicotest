@@ -195,14 +195,14 @@ export const DaysThBig = styled.th`
   height: 40px;
   font-size: 18px;
   color: ${props => props.theme.colorPrincipal};
-  border: 1px solid ${props => props.theme.textSecondary};
+  border: 1px solid ${props => props.theme.borders};
 `;
 
 // DAY CARD
 
 export const TdDay = styled.td`
   opacity: ${props => props.month? 0.5 : 1};
-  border: 1px solid ${props => props.theme.textSecondary};
+  border: 1px solid ${props => props.theme.borders};
 `;
 
 export const DivTd = styled.div`

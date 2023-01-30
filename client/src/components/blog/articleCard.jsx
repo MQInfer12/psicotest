@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
+import { useUserContext } from "../../context/userContext";
 import { pdfIndividual } from "../../services/articulo";
 import { PurpleButton } from "../../styles/globals/formularios";
 import { ArticleCardContainer, ArticleCardH2, ArticleCardP, CardButtonContainer, VerMasButton } from "../../styles/pages/blog";
@@ -13,6 +14,7 @@ const LINE_HEIGHT = 24;
 
 const ArticleCard = ({ article, inLanding, llenarArticulos }) => {
   const PTextRef = useRef();
+  const { user } = useUserContext();
   const [lines, setLines] = useState(0);
   const [viewMore, setViewMore] = useState(false);
 
@@ -21,7 +23,7 @@ const ArticleCard = ({ article, inLanding, llenarArticulos }) => {
   }, [PTextRef]);
 
   return (
-    <ArticleCardContainer viewMore={viewMore} inLanding={inLanding}>
+    <ArticleCardContainer viewMore={viewMore} inLanding={inLanding || user.id_rol === 1}>
       <div>
         <ArticleCardH2 title={article.titulo}>{article.titulo}</ArticleCardH2>
         <ContainerIcon>
@@ -51,7 +53,7 @@ const ArticleCard = ({ article, inLanding, llenarArticulos }) => {
       <div>
         <PurpleButton onClick={() => pdfIndividual(article.id)}>Ver documento<i className="fa-solid fa-file-pdf"></i></PurpleButton>
         {
-          !inLanding &&
+          ((!inLanding && article.id_docente === user.id) || user.id_rol === 3) &&
           <CardButtons 
             article={article}
             llenarArticulos={llenarArticulos}

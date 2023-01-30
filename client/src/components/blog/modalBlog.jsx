@@ -59,7 +59,9 @@ const ModalBlog = ({ funcion, actualizar, blog }) => {
       }
       formData.append("titulo", form.titulo);
       formData.append("descripcion", form.descripcion);
-      formData.append("documento", form.documento);
+      if(form.documento) {
+        formData.append("documento", form.documento);
+      }
   
       const req = new XMLHttpRequest();
       if(blog) {

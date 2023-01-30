@@ -26,6 +26,7 @@ const AnswersReports = ({ setTableRef, respuestas }) => {
           <th style={ThStyle}>Email docente</th>
           <th style={ThStyle}>Estado</th>
           <th style={ThStyle}>Puntuación</th>
+          <th style={ThStyle}>Mínimo</th>
           <th style={ThStyle}>Máximo</th>
         </tr>
       </thead>
@@ -75,6 +76,9 @@ const AnswersReports = ({ setTableRef, respuestas }) => {
             </td>
             <td>
               <p>{v.puntuacion}</p>
+            </td>
+            <td>
+              <p>{v.minimo}</p>
             </td>
             <td>
               <p>{v.total}</p>

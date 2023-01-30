@@ -50,20 +50,21 @@ const CardButtons = ({ article, llenarArticulos }) => {
       <div>
         {
           user.id_rol === 3 && 
-          <WhiteIconButton onClick={destacar}>
+          <WhiteIconButton title={article.destacado ? "Quitar artículo de destacados" : "Destacar artículo"} onClick={destacar}>
             {article.destacado ? <i className="fa-solid fa-star"></i> : <i className="fa-regular fa-star"></i>}
           </WhiteIconButton>
         }
         {
           article.id_docente === user.id &&
-          <>
-            <WhiteIconButton onClick={openEdit}>
-              <i className="fa-solid fa-pencil"></i>
-            </WhiteIconButton>
-            <DangerIconButton onClick={openModal}>
-              <i className="fa-solid fa-trash-can"></i>
-            </DangerIconButton>
-          </>
+          <WhiteIconButton title="Editar artículo" onClick={openEdit}>
+            <i className="fa-solid fa-pencil"></i>
+          </WhiteIconButton>
+        }
+        {
+          (user.id_rol !== 1 && article.id_docente === user.id) &&
+          <DangerIconButton title="Eliminar artículo" onClick={openModal}>
+            <i className="fa-solid fa-trash-can"></i>
+          </DangerIconButton>
         }
       </div>
     </CardButtonContainer>

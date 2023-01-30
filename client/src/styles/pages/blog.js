@@ -64,8 +64,8 @@ export const SearchSelect = styled.select`
 export const ArticleCardContainer = styled.div`
   min-width: 322px;
   max-width: 322px;
-  min-height: ${props => !props.inLanding ? "378.33px" : "334.33px"};
-  max-height: ${props => !props.viewMore && (!props.inLanding ? "378.33px" : "334.33px")};
+  min-height: 334.33px;
+  height: max-content;
   background-color: ${props => props.theme.principal};
   padding: 28px 32px 32px 32px;
   border-radius: 10px;

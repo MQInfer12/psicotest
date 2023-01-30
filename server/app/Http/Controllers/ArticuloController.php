@@ -75,7 +75,7 @@ class ArticuloController extends Controller
             $articles = DB::select(
                 "SELECT a.id, a.titulo, a.descripcion, a.documento, a.id_docente, a.destacado, d.nombre as nombre_autor, d.perfil
                 FROM articulos as a, users as d 
-                WHERE d.id=a.id_docente AND id_docente='$id_docente' ORDER BY id"
+                WHERE d.id=a.id_docente AND (a.id_docente='$id_docente' OR a.destacado=true) ORDER BY id"
             );
         }
         return $articles;

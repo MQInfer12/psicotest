@@ -17,7 +17,7 @@ const SideBar = ({ rol, setUser, openNav, setOpenNav }) => {
 
   const linksData = [
     {
-      roles: [3,2,1],
+      roles: [1, 2, 3],
       select: "tests",
       title: "Tests",
       goTo: "./tests",
@@ -38,18 +38,18 @@ const SideBar = ({ rol, setUser, openNav, setOpenNav }) => {
       icon: "fa-solid fa-comments",
     },
     {
-      roles: [2, 3],
-      select: "blogs",
-      title: "Blogs",
-      goTo: "./blogs",
-      icon: "fa-solid fa-newspaper",
-    },
-    {
       roles: [1, 2, 3],
       select: "calendar",
       title: "Calendario",
       goTo: "./calendar",
       icon: "fa-solid fa-calendar-days",
+    },
+    {
+      roles: [1, 2, 3],
+      select: "blogs",
+      title: "Blogs",
+      goTo: "./blogs",
+      icon: "fa-solid fa-newspaper",
     },
     {
       roles: [3],
@@ -58,13 +58,6 @@ const SideBar = ({ rol, setUser, openNav, setOpenNav }) => {
       goTo: "./users",
       icon: "fa-solid fa-user-group",
     },
-    /* {
-      roles: [2],
-      select: "groups",
-      title: "Grupos",
-      goTo: "./groups",
-      icon: "fa-solid fa-users-line",
-    }, */
     {
       roles: [1, 2, 3],
       select: "profile",

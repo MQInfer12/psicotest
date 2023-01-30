@@ -13,7 +13,10 @@ const ArticleResponse = ({ inLanding = false }) => {
   const { user } = useUserContext();
   const [filter, setFilter] = useState("mis");
 
-  const { resJson: articles, loading, callAPI: llenarArticulos } = useGet(user.id ? `articulo/docente/${user.id}` : `articulo/landing/destacados`);
+  const { resJson: articles, loading, callAPI: llenarArticulos } = useGet(
+    (!user.isLogged || user.id_rol === 1) ? 
+    `articulo/landing/destacados` : `articulo/docente/${user.id}`
+  );
 
   const { openModal, closeModal } = useModal(
     "Añadir blog",
@@ -30,7 +33,7 @@ const ArticleResponse = ({ inLanding = false }) => {
 
   const filterArticles = () => {
     let newArticles = articles;
-    if(user.isLogged) {
+    if(user.isLogged && user.id_rol !== 1) {
       if(filter === "mis") {
         newArticles = articles.filter(articulo => articulo.id_docente === user.id);
       }
@@ -50,16 +53,16 @@ const ArticleResponse = ({ inLanding = false }) => {
         </ButtonContainer>
       }
       {
-        (!inLanding && user.id_rol === 3) &&
+        (!inLanding && user.id_rol != 1) &&
         <SearchSelect onChange={(e) => setFilter(e.target.value)}>
           <option value="mis">Mis artículos</option>
-          <option value="todos">Todos</option>
+          {user.id_rol === 3 && <option value="todos">Todos</option>}
           <option value="destacados">Destacados</option>
         </SearchSelect>
       }
       <ArticleContainer inLanding={inLanding}>
         {
-          (inLanding && filterArticles().length === 0) ?
+          ((inLanding || user.id_rol === 1) && filterArticles().length === 0) ?
           <DivNothing>No hay artículos destacados en este momento.</DivNothing> :
           (filter === "mis" && filterArticles().length === 0) ?
           <DivNothing>No tienes artículos aún.</DivNothing> :
