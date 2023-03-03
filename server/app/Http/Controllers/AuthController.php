@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Tymon\JWTAuth\Facades\JWTAuth;
+/* use Tymon\JWTAuth\Facades\JWTAuth; */
 
 class AuthController extends Controller
 {
@@ -90,7 +90,7 @@ class AuthController extends Controller
         return implode($pass); //turn the array into a string
     }
 
-    public function googleLogin(Request $request) 
+    /* public function googleLogin(Request $request) 
     {
         $email = $request->email;
         $user = User::where('email', $email)->first();
@@ -98,7 +98,6 @@ class AuthController extends Controller
             $token = JWTAuth::fromUser($user);
             return response()->json(["token" => $token, "newUser" => false]);
         }
-        //CREAR USUARIO CON ESTE EMAIL DE GOOGLE
         $newPassword = $this->randomPassword();
         $user = new User();
         $user->nombre = $request->name;
@@ -114,5 +113,5 @@ class AuthController extends Controller
         $credentials = ["email" => $user->email, "password" => $newPassword];
         $token = auth()->attempt($credentials);
         return response()->json(["token" => $token, "newUser" => true, "user" => $user]);
-    }
+    } */
 }
