@@ -41,6 +41,10 @@ class DatabaseSeeder extends Seeder
             'nombre' => 'Santa Cruz',
             'habilitado' => '1',
         ]);
+        DB::table('sedes')->insert([
+            'nombre' => 'Sin definir',
+            'habilitado' => '1',
+        ]);
         DB::table('rols')->insert([
             'nombre' => 'beneficiario',
         ]);
@@ -54,7 +58,7 @@ class DatabaseSeeder extends Seeder
             'nombre' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('123456'),
-            'genero' => 'no definido',
+            'genero' => 'sin definir',
             'edad' => '100',
             'id_sede' => '1',
             'id_rol' => '3',

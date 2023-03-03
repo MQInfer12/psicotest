@@ -18,7 +18,7 @@ const Test = () => {
 
   return (
     <AllContainer height={windowHeight} load={loading}>
-      <AddTestButton llenarTests={llenarTests} />
+      {idRole >= 2 && <AddTestButton llenarTests={llenarTests} />}
       <TitleSeccion>{idRole === 1 ? "Pendientes" : "Mis tests"}</TitleSeccion>
       {
         tests.filter(v => (idRole === 1 && v.estado === 0) || (idRole != 1 && v.id_autor === user.id)).length == 0 ? (

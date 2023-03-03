@@ -8,12 +8,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'googleLogin']]);
     }
 
     public function login()
@@ -35,7 +36,7 @@ class AuthController extends Controller
         return response()->json(["token" => $token]);
     }
 
-    public function me(Request $request)
+    public function me()
     {
         return response()->json(auth()->user());
     }
@@ -77,5 +78,42 @@ class AuthController extends Controller
             'message' => '¡Registro correcto!',
             'user' => $user
         ], 209);
+    }
+
+    function randomPassword() {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
+    }
+
+    public function googleLogin(Request $request) 
+    {
+        $email = $request->email;
+        $user = User::where('email', $email)->first();
+        if ($user) {
+            $token = JWTAuth::fromUser($user);
+            return response()->json(["token" => $token, "newUser" => false]);
+        }
+        //CREAR USUARIO CON ESTE EMAIL DE GOOGLE
+        $newPassword = $this->randomPassword();
+        $user = new User();
+        $user->nombre = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($newPassword);
+        $user->perfil = $request->perfil;
+        $user->genero = "sin definir";
+        $user->edad = 0;
+        $user->id_sede = 5;
+        $user->id_rol = 1;
+        $user->estado = 1;
+        $user->save();
+        $credentials = ["email" => $user->email, "password" => $newPassword];
+        $token = auth()->attempt($credentials);
+        return response()->json(["token" => $token, "newUser" => true, "user" => $user]);
     }
 }

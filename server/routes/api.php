@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('auth/register', [AuthController::class, 'register']);
 Route::post('auth/login', [AuthController::class, 'login']);
+Route::post('auth/login/google', [AuthController::class, 'googleLogin']);
 Route::apiResource('recover', RecuperarController::class);
 Route::put('recover/new/{id}', [RecuperarController::class, 'changeContrasena']);
 

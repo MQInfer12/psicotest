@@ -5,11 +5,10 @@ import { signUp } from "../services/auth";
 import { initialForm, validationsForm } from "../validations/register";
 import { ErrorCss } from "../styles/globals/formularios";
 import ModalRegister from "../components/login/modalRegister";
-import { db } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
 import { useModal } from "../hooks/useModal";
 import LoginTemplate from "../components/login/loginTemplate";
 import { DivInputBox, DivInputs, IInput, InputSelect, InputText, SpanText } from "../styles/pages/login";
+import { createFirebaseUser } from "../services/auth";
 
 const Register = () => {
   const { goTo, userEmail } = useParams();
@@ -121,22 +120,6 @@ const Register = () => {
       error: errors.sede,
     },
   ];
-
-  const createFirebaseUser = async (nuevoUsuario) => {
-    const { email, nombre, id } = nuevoUsuario;
-
-    await setDoc(doc(db, "users", String(id)), {
-      uid: id,
-      name: nombre,
-      email: email,
-      rol: "1",
-      perfil: null,
-    });
-    await setDoc(doc(db, "userChats", String(id)), {});
-    await setDoc(doc(db, "notifications", String(id)), {
-      notification: [],
-    });
-  }
   
   const { openModal, closeModal } = useModal(
     "",

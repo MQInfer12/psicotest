@@ -6,24 +6,28 @@ import { ThanksContextProvider } from '../context/thanksContext';
 import { UserContextProvider } from '../context/userContext';
 import { UserFirebaseContextProvider } from '../context/userFirebaseContext';
 import { ThemeContextProvider } from '../context/themeContext';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { OAuthId } from '../env';
 
 const Contexts = ({ children }) => {
   return (
-    <UserContextProvider>
-      <UserFirebaseContextProvider>
-        <ChatContextProvider>
-          <ThanksContextProvider>
-            <ModalContextProvider>
-              <GetContextProvider>
-                <ThemeContextProvider>
-                  { children }
-                </ThemeContextProvider>
-              </GetContextProvider>
-            </ModalContextProvider>
-          </ThanksContextProvider>
-        </ChatContextProvider>
-      </UserFirebaseContextProvider>
-    </UserContextProvider>
+    <GoogleOAuthProvider clientId={OAuthId}>
+      <UserContextProvider>
+        <UserFirebaseContextProvider>
+          <ChatContextProvider>
+            <ThanksContextProvider>
+              <ModalContextProvider>
+                <GetContextProvider>
+                  <ThemeContextProvider>
+                    { children }
+                  </ThemeContextProvider>
+                </GetContextProvider>
+              </ModalContextProvider>
+            </ThanksContextProvider>
+          </ChatContextProvider>
+        </UserFirebaseContextProvider>
+      </UserContextProvider>
+    </GoogleOAuthProvider>
   )
 }
 

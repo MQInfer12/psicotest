@@ -7,28 +7,30 @@ import {
 } from '../../styles/pages/login';
 import Navbar from '../landing/navbar';
 import { useThemeContext } from '../../context/themeContext';
-import { Image, Transformation } from 'cloudinary-react';
 import ImagenLogin from '../../assets/login/imglogin.png';
+import { GoogleLogin } from '@react-oauth/google';
+import { signInWithGoogle } from '../../services/auth';
 
-const LoginTemplate = ({ children, title, submitButton, handleSubmit, toLogin, toRegister, toRecover, goTo, loading, responseMessage }) => {
+const LoginTemplate = ({ 
+  children, title, submitButton, 
+  handleSubmit, toLogin, toRegister, toRecover, 
+  goTo, loading, responseMessage, otherMethods, obtenerPerfil
+}) => {
   const windowHeight = useWindowHeight();
   const { actualTheme } = useThemeContext();
 
-  const imageStyle = {
-    width: "145%",
-    height: "100%",
-    objectFit: "cover",
-    objectPosition: "50% 50%",
-    backgroundColor: actualTheme.principal
-  };
+  const getGoogleUser = async (res) => {
+    const user = await (await fetch(`https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${res.credential}`)).json();
+    const response = await signInWithGoogle(user);
+    if(response.ok) {
+      obtenerPerfil();
+    }
+  }
 
   return (
     <>
       <Navbar />
       <DivPrincipal height={windowHeight}>
-        {/* <Image cloudName="dcy47gguk" publicId="assets/imglogin_iqvyar.png" style={imageStyle} >
-          <Transformation quality="65" width="1440" crop="scale" />
-        </Image> */}
         <ImagenStyled src={ImagenLogin} />
         <DivFormlog>
           <DivContainer>
@@ -38,6 +40,14 @@ const LoginTemplate = ({ children, title, submitButton, handleSubmit, toLogin, t
               { responseMessage && <Instructions alert>{responseMessage}</Instructions>}
               <ButtonSubmit load={loading} onClick={handleSubmit}>{ loading ? "CARGANDO..." : submitButton}</ButtonSubmit>
             </form>
+            {
+              otherMethods &&
+              <GoogleLogin 
+                onSuccess={res => getGoogleUser(res)}
+                shape="circle"
+                size='medium'
+              />
+            }
             <GoToDiv>
               {
                 toLogin &&

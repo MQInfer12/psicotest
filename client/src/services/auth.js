@@ -1,4 +1,22 @@
+import { doc, setDoc } from "firebase/firestore";
 import { http } from "../env";
+import { db } from "../firebase";
+
+export const createFirebaseUser = async (nuevoUsuario) => {
+  const { email, nombre, id, perfil } = nuevoUsuario;
+
+  await setDoc(doc(db, "users", String(id)), {
+    uid: id,
+    name: nombre,
+    email: email,
+    rol: "1",
+    perfil: perfil ? perfil : null,
+  });
+  await setDoc(doc(db, "userChats", String(id)), {});
+  await setDoc(doc(db, "notifications", String(id)), {
+    notification: [],
+  });
+}
 
 export const signIn = async (form) => {
   try {
@@ -9,7 +27,6 @@ export const signIn = async (form) => {
         "Content-Type": "application/json",
         accept: "application/json",
       },
-      credentials: "include",
       body: JSON.stringify({
         email: form.email,
         password: form.contrasenia,
@@ -19,6 +36,37 @@ export const signIn = async (form) => {
     const res = await response.json();
     if (res.token) {
       document.cookie = `token=${res.token}; max-age=86400; path=/; samesite=stric`;
+    }
+
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const signInWithGoogle = async (user) => {
+  try {
+    const response = await fetch(`${http}auth/login/google`, {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify({
+        email: user.email,
+        name: user.name,
+        perfil: user.picture
+      }),
+    });
+
+    const res = await response.json();
+    if (res.token) {
+      document.cookie = `token=${res.token}; max-age=86400; path=/; samesite=stric`;
+    }
+    console.log(res);
+    if(res.newUser) {
+      createFirebaseUser(res.user);
     }
 
     return response;
@@ -55,6 +103,7 @@ export const signUp = async (form) => {
 
 export const getProfile = async () => {
   try {
+    document.cookie = "g_state=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     const token = document.cookie.replace("token=", "");
     const response = await fetch(`${http}auth/me`, {
       method: "POST",
@@ -69,6 +118,7 @@ export const getProfile = async () => {
 
 export const logOut = async () => {
   try {
+    document.cookie = "g_state=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     const token = document.cookie.replace("token=", "");
     const response = await fetch(`${http}auth/logout`, {
       method: "POST",

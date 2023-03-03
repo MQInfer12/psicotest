@@ -40,6 +40,7 @@ const UserCard = (props) => {
 
       await deleteDoc(doc(db, "users", String(newUserObj.uid)));
       await deleteDoc(doc(db, "userChats", String(newUserObj.uid)));
+      await deleteDoc(doc(db, "notifications", String(newUserObj.uid)));
 
       //TODO: FALTA BORRAR LOS CHATS QUE INCLUYEN A ESTE USUARIO
 

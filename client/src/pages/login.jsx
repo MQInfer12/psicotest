@@ -13,16 +13,18 @@ const Login = () => {
   const { setUser } = useUserContext();
   const navigate = useNavigate();
 
+  const obtenerPerfil = async () => {
+    const profile = await getProfile();
+    const resJson = await profile?.json();
+    setUser({ ...resJson, isLogged: true });
+    navigate(goTo ? goTo.replaceAll("_47slash_", "/") : "/dashboard/tests");
+  }
+
   const { form, errors, loading, handleChange, handleSubmit } = UseForm(
     initialForm,
     validationsForm,
     signIn,
-    async () => {
-      const profile = await getProfile();
-      const resJson = await profile?.json();
-      setUser({ ...resJson, isLogged: true });
-      navigate(goTo ? goTo.replaceAll("_47slash_", "/") : "/dashboard/tests");
-    }
+    obtenerPerfil
   );
 
   let data = [
@@ -47,6 +49,8 @@ const Login = () => {
       loading={loading}
       submitButton="INICIA SESIÓN"
       handleSubmit={handleSubmit}
+      otherMethods
+      obtenerPerfil={obtenerPerfil}
       toRegister
       toRecover
     >
