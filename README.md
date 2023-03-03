@@ -30,7 +30,7 @@ Los programas necesarios son:
 
 1. Se ingresa a la carpeta `client`
 2. Se abre una terminal en la que se ejecuta el comando `npm install` o `npm i`
-3. Contactar con el creador para el archivo `github.js` ubicado en la carpeta `src`
+3. Contactar con el creador para el archivo `env.js` ubicado en la carpeta `src`
 4. Para iniciar el servidor ejecutar `npm run dev`
 
 <h3>Backend</h4>
