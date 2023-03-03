@@ -11,7 +11,6 @@ node_modules
 dist
 dist-ssr
 *.local
-env.js
 
 # Editor directories and files
 .vscode/*
@@ -23,3 +22,6 @@ env.js
 *.njsproj
 *.sln
 *.sw?
+
+# Custom files
+env.js
