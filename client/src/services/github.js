@@ -1,4 +1,4 @@
-import { Authorization } from "../github";
+import { githubAuthorization } from "../env";
 
 export const getCommits = async () => {
   try {
@@ -8,7 +8,7 @@ export const getCommits = async () => {
         method: "GET",
         headers: {
           Accept: "application/vnd.github+json",
-          Authorization: Authorization,
+          Authorization: githubAuthorization,
         },
       }
     );

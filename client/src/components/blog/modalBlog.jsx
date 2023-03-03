@@ -7,8 +7,8 @@ import FormInputsText from '../globals/formInputsText'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import InputFileDragDrop from '../globals/inputFileDragDrop'
-import { http } from '../../services/htpp'
 import ProgressBar from '../globals/progressBar'
+import { http } from '../../env'
 
 const ModalBlog = ({ funcion, actualizar, blog }) => {
   const { user } = useUserContext();

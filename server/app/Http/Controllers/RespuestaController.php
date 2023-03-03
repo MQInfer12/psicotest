@@ -154,7 +154,7 @@ class RespuestaController extends Controller
         $idEscalas = array_column($escalas, 'id');
         $test->escalas = $escalas;
 
-        $dimensiones = DB::select("SELECT * FROM dimensions WHERE id_test='$test->id'");
+        $dimensiones = DB::select("SELECT * FROM dimensions WHERE id_test='$test->id' ORDER BY id");
         foreach($dimensiones as $dimension) {
             $nat = DB::select(
                 "SELECT COALESCE(SUM(pu.asignado), 0) as nat

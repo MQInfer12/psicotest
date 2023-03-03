@@ -1,4 +1,4 @@
-import { http } from './htpp';
+import { http } from "../env";
 
 export const addPregunta = async (form, idSeccion) => {
   try {

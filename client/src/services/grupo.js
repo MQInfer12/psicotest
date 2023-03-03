@@ -1,4 +1,4 @@
-import { http } from "./htpp";
+import { http } from "../env";
 
 export const addGrupo = async (form, id_docente) => {
   try {

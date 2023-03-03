@@ -1,4 +1,4 @@
-import { http } from "./htpp";
+import { http } from "../env";
 
 export const updateConversiones = async (array) => {
   try {

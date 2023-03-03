@@ -1,4 +1,4 @@
-import { http } from "./htpp";
+import { http } from "../env";
 
 export const addDimension = async (form, idTest) => {
   try {

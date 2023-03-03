@@ -15,14 +15,20 @@ const Footer = () => {
         </FooterColumn>
         <FooterColumn>
           <FooterLinks>
-            <ColumnTitle>Empresa</ColumnTitle>
-            <FooterOptionLink to="/developers">Desarrolladores</FooterOptionLink>
+            <ColumnTitle>Funcionalidades</ColumnTitle>
+            <FooterOptionLink to="/dashboard/tests">Tests psicológicos</FooterOptionLink>
+            <FooterOptionLink to="/dashboard/blogs">Blogs y artículos</FooterOptionLink>
+            <FooterOptionLink to="/dashboard/calendar">Realiza citas</FooterOptionLink>
+            <FooterOptionLink to="/dashboard/chat">Chat</FooterOptionLink>
           </FooterLinks>
         </FooterColumn>
         <FooterColumn>
           <FooterLinks>
             <ColumnTitle>Productos</ColumnTitle>
             <FooterOptionLink to="#">Psicotest</FooterOptionLink>
+            <ColumnA href="https://cochabamba-turismo.web.app/#/">
+              Turismo Cochabamba
+            </ColumnA>
           </FooterLinks>
         </FooterColumn>
         <FooterColumn>

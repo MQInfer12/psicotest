@@ -32,7 +32,6 @@ class AuthController extends Controller
             return response()->json(['error' => 'Correo o contraseña incorrectos'], 401);
         }
 
-        //  return $this->respondWithToken($token);
         return response()->json(["token" => $token]);
     }
 
@@ -44,9 +43,7 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
-        //$cookie = Cookie::forget('jwt');
-       // return response()->json(['message' => 'Successfully logged out'])->withCookie($cookie);
-       return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Successfully logged out']);
     }
 
     public function refresh()
@@ -54,14 +51,6 @@ class AuthController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
 
- /*    protected function respondWithToken($token)
-    {
-        $cookie = cookie('jwt', $token, 60 * 24);
-        return response()->json([
-            'message' => "Logged succesfully",
-        ])->withCookie($cookie);
-    } 
- */
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [

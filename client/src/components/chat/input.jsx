@@ -1,6 +1,4 @@
 import React, { useContext, useState } from "react";
-import Img from "../../assets/msg/img.png";
-import Attach from "../../assets/msg/attach.png";
 import { UserFirebaseContext } from "../../context/userFirebaseContext";
 import { ChatContext } from "../../context/chatContext";
 import {
@@ -91,10 +89,6 @@ const Input = () => {
         onKeyPress={handleKeyPress}
       />
       <div className="send">
-        {/* <input type="file" style={{ display: "none" }} id="file" />
-        <label htmlFor="file">
-          <img src={Img} alt="" />
-        </label> */}
         <button onClick={handleSend}>Enviar</button>
       </div>
     </InputComp>

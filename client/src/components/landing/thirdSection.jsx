@@ -1,5 +1,5 @@
 import React from 'react';
-import StatsPhone2 from '../../assets/landing/statsPhone2.png'
+import StatsPhone2 from '../../assets/landing/statsPhone3.png'
 import { GrayDiv, LeftDiv, LeftInfo, OpenAccountLink, RightDiv, SendResponses, ThirdImgClip, ThirdPurpleCircle, ThirdSectionContainer } from '../../styles/pages/landing';
 
 const ThirdSection = () => {
@@ -7,8 +7,8 @@ const ThirdSection = () => {
     <ThirdSectionContainer>
       <GrayDiv>
         <LeftDiv>
-          <SendResponses>Manda y recibe tus respuestas al instante</SendResponses>
-          <LeftInfo>Tus respuestas serán revisadas por tus psicólogos, puedes acceder a las funcionalidades directamente desde tu computadora o celular.</LeftInfo>
+          <SendResponses>Lee artículos de nuestros psicólogos</SendResponses>
+          <LeftInfo>Nuestros psicólogos se esfuerzan realizando artículos interesantes que podemos leer y disfrutar para conocer más acerca de lo que nos rodea.</LeftInfo>
           <OpenAccountLink to="/register">Registra tu cuenta hoy</OpenAccountLink>
         </LeftDiv>
         <RightDiv>

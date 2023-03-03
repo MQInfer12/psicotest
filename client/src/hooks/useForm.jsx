@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { cloudinaryHttp } from "../services/htpp";
+import { cloudinaryEnvironment } from "../env";
 import { validarInputFile } from "../utilities/validarInputFile";
 
 export const UseForm = (
@@ -22,7 +22,7 @@ export const UseForm = (
       formData.append("upload_preset", "la8fhiin");
   
       const req = new XMLHttpRequest();
-      req.open('POST', `${cloudinaryHttp}upload`);
+      req.open('POST', `${cloudinaryEnvironment}upload`);
       req.upload.addEventListener('progress', (e) => {
         const percentage = (e.loaded / e.total) * 100;
         setProgress(percentage);

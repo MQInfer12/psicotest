@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useState } from 'react'
 import { useGetContext } from '../context/getContext';
-import { http } from '../services/htpp';
+import { http } from '../env';
 
 const useGet = (url, opt = { initialValue: [], alwaysLoading: false, trigger: [], callback: () => {} }) => {
   const initialOpt = { initialValue: [], alwaysLoading: false, trigger: [], callback: () => {} };

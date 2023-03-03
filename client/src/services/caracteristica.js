@@ -1,4 +1,4 @@
-import { http } from "./htpp";
+import { http } from "../env";
 
 export const addCaracteristica = async (form, id_test) => {
   try {
