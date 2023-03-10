@@ -60,5 +60,5 @@ Los programas necesarios son:
 <a href="https://styled-components.com/" target="_blank"><img src="https://raw.githubusercontent.com/styled-components/brand/master/styled-components.png" width="80">
 <a href="https://firebase.google.com/" target="_blank"><img src="https://www.gstatic.com/devrel-devsite/prod/v4f875a1b81b7f452d4ad95ddc2e0847267daa183c4980c794500a8a63318384d/firebase/images/touchicon-180.png" width="80"></a>
 <a href="https://cloudinary.com/" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzpJaptrp_3sQ5g6QVNziD-0yfHDhiYN_DEW83NcIWRW_hKQgxiZLihSeorqKN6jZLoMU&usqp=CAU" width="80"></a>
-<a href="https://railway.app/" target="_blank"><img src="https://railway.app/brand/logo-dark.svg" width="80"></a>
+<!--<a href="https://railway.app/" target="_blank"><img src="https://railway.app/brand/logo-dark.svg" width="80"></a>-->
 </p>
