@@ -44,9 +44,9 @@ Los programas necesarios son:
 
 <h2 align="center">Servidores en la nube</h2>
 
-<p align="center">Ingresa a la aplicación <a href="https://chat-6f082.web.app/" target="_blank">Psicotest</a> hosteado en <a href="https://firebase.google.com/" target="_blank">Firebase</a></p>
+<p align="center">Ingresa a la aplicación <a href="https://psicotest-production.web.app/#/" target="_blank">Psicotest</a> hosteado en <a href="https://firebase.google.com/" target="_blank">Firebase</a></p>
 
-<p align="center">Ingresa al servidor <a href="https://laravel-production-b355.up.railway.app/" target="_blank">Backend</a> hosteado en <a href="https://railway.app/" target="_blank">Railway</a></p>
+<p align="center">Ingresa al servidor <a href="https://psicotest-production.up.railway.app/" target="_blank">Backend</a> hosteado en <a href="https://railway.app/" target="_blank">Railway</a></p>
 
 <h2>Tecnologías y herramientas</h2>
 <p align="center">
