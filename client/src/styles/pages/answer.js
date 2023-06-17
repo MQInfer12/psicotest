@@ -38,6 +38,13 @@ export const DataValue = styled.p`
   white-space: nowrap;
 `;
 
+export const InterpretationMessage = styled.p`
+  color: ${props => props.theme.textPrincipal};
+  font-weight: 300;
+  font-size: 14px;
+  width: 350px;
+`;
+
 export const SeccionContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -52,7 +59,7 @@ export const TitleSeccion = styled.span`
   font-weight: 600;
   color: ${props => props.theme.textDark};
   width: 100%;
-  text-align: start;
+  text-align: ${props => props.center ? "center" : "start"};
 `;
 
 export const RadioCheck = styled.input`

@@ -6,6 +6,7 @@ use App\Models\Respuesta;
 use App\Models\Resultado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Orhanerday\OpenAi\OpenAi;
 
 class RespuestaController extends Controller
 {
@@ -138,7 +139,7 @@ class RespuestaController extends Controller
     public function show($id)
     {
         $respuesta = DB::select(
-            "SELECT r.email_user, r.estado, r.id, r.id_docente_test, 
+            "SELECT r.email_user, r.estado, r.id, r.id_docente_test, r.interpretation, 
             u.nombre as nombre_user, u.edad, u.genero,
             t.nombre as nombre_test, t.id as id_test
             FROM respuestas r, users u, docente_tests dt, tests t
@@ -248,5 +249,27 @@ class RespuestaController extends Controller
     public function destroy($id)
     {
         return Respuesta::destroy($id);
+    }
+
+    public function generateInterpretation($id, Request $request) {
+        $open_ai_key = env("OPENAI_API_KEY");
+        $open_ai = new OpenAi($open_ai_key);
+        
+        $complete = $open_ai->chat([
+            'model' => 'gpt-3.5-turbo',
+            'messages' => [[
+                "role" => "user",
+                "content" => $request->text
+            ]],
+            'temperature' => 1,
+            'max_tokens' => 2000,
+            'frequency_penalty' => 0,
+            'presence_penalty' => 0
+        ]);
+
+        $response = json_decode($complete, true);
+        $text = $response['choices'][0]['message']['content'];
+        
+        return response()->json(["mensaje" => "la interpretacion se genero correctamente", "data" => $text], 201);
     }
 }

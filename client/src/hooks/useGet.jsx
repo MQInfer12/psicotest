@@ -44,6 +44,7 @@ const useGet = (url, opt = { initialValue: [], alwaysLoading: false, trigger: []
 
   return {
     callAPI,
+    setResJson,
     resJson,
     loading,
   }

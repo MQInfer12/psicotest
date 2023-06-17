@@ -43,3 +43,21 @@ export const getFullRespuesta = async ({ id }) => {
     console.log(error);
   }
 }
+
+export const generateInterpretation = async (id, text) => {
+  try {
+    const response = await fetch(`${http}respuesta/interpretation/${id}`, {
+      method: "PATCH",
+      headers: { 
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        text: text
+      })
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

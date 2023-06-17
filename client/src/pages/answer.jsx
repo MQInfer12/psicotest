@@ -5,13 +5,14 @@ import { useDownloadExcel } from "react-export-table-to-excel";
 import decipherId from "../utilities/decipher";
 import AnswerReports from "../components/answer/answerReports";
 import { WhiteButton } from "../styles/globals/formularios";
-import { AnswersContainer, TableContainer, TableAnswers, ThNumberal, ThAnswer } from "../styles/globals/table";
+import { AnswersContainer, TableContainer, TableAnswers, ThNumberal, ThAnswer, PLight } from "../styles/globals/table";
 import BigRow from "../components/answer/bigRow";
 import MiniRow from "../components/answer/miniRow";
 import { useWindowHeight } from "../hooks/useWindowHeight";
 import useGet from "../hooks/useGet";
-import { AnswerPage, DataContainer, DataKey, DataRow, DataValue, SeccionContainer, TitleSeccion } from "../styles/pages/answer";
+import { AnswerPage, DataContainer, DataKey, DataRow, DataValue, InterpretationMessage, SeccionContainer, TitleSeccion } from "../styles/pages/answer";
 import Totals from "../components/answer/totals";
+import { generateInterpretation } from "../services/respuesta";
 
 const Answer = () => {
   const windowHeight = useWindowHeight(true, true);
@@ -19,14 +20,28 @@ const Answer = () => {
   const idRespuesta = Number(decipherId(idCode));
   const [tableRef, setTableRef] = useState(null);
   const [screen, setScreen] = useState(window.innerWidth);
+  const [loadingIA, setLoadingIA] = useState(false);
 
-  const { resJson: respuesta, loading } = useGet(`respuesta/${idRespuesta}`);
+  const { resJson: respuesta, setResJson, loading } = useGet(`respuesta/${idRespuesta}`);
 
   const { onDownload } = useDownloadExcel({
     filename: "Respuesta" + respuesta.nombre_user?.replaceAll(' ', '') + respuesta.nombre_test?.replaceAll(' ', ''),
     sheet:"Respuesta",
     currentTableRef: tableRef?.current
   });
+
+  const handleIA = async () => {
+    setLoadingIA(true);
+    let string = "En un test de psicologia llamado " + respuesta.nombre_test + " mi paciente sacó siguientes puntuaciones naturales en las dimensiones: ";
+    respuesta.test.dimensiones.forEach(dimension => {
+      string += dimension.descripcion + " " + dimension.puntuaciones[0] + ", ";
+    });
+    string += "que rasgos de la personalidad sugieres de él? sin enumerar y en términos generales y no técnicos";
+    const res = await generateInterpretation(respuesta.id, string);
+    const resJson = await res.json();
+    setResJson(old => ({...old, interpretation: resJson.data }));
+    setLoadingIA(false);
+  }
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -62,7 +77,7 @@ const Answer = () => {
 
   return (
     <AnswerPage>
-      <WhiteButton onClick={onDownload}><i className="fa-regular fa-file-excel"></i> Exportar a excel</WhiteButton>
+      <WhiteButton onClick={onDownload}><i className="fa-regular fa-file-excel"></i>Exportar a excel</WhiteButton>
       <DataContainer>
         {data.map((v, i) => (
           <DataRow key={i}>
@@ -76,6 +91,26 @@ const Answer = () => {
         respuesta={respuesta} 
         setTableRef={setTableRef} 
       />
+      <SeccionContainer>
+        <TitleSeccion center>Interpretación de IA</TitleSeccion>
+        {
+          respuesta.interpretation &&
+          <DataContainer>
+            <InterpretationMessage>{respuesta.interpretation}</InterpretationMessage>
+          </DataContainer>
+        }
+        <WhiteButton 
+          disabled={respuesta.estado === 0 || loadingIA}
+          onClick={handleIA}
+        >
+          {
+            respuesta.estado === 0 ? "Aún no se realizó el test" : 
+            loadingIA ? "Cargando..." :
+            respuesta.interpretation ? "Volver a generar" : "Generar"
+          }
+        </WhiteButton>
+        
+      </SeccionContainer>
       {
         respuesta.test.dimensiones.length != 0 &&
         <Totals test={respuesta.test} />
