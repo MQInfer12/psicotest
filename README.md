@@ -44,9 +44,9 @@ Los programas necesarios son:
 
 <h2 align="center">Servidores en la nube</h2>
 
-<p align="center">Ingresa a la aplicación <a href="https://chat-6f082.web.app/" target="_blank">Psicotest</a> hosteado en <a href="https://firebase.google.com/" target="_blank">Firebase</a></p>
+<p align="center">Ingresa a la aplicación <a href="https://psicotest-production.web.app/#/" target="_blank">Psicotest</a> hosteado en <a href="https://firebase.google.com/" target="_blank">Firebase</a></p>
 
-<p align="center">Ingresa al servidor <a href="https://laravel-production-b355.up.railway.app/" target="_blank">Backend</a> hosteado en <a href="https://railway.app/" target="_blank">Railway</a></p>
+<p align="center">Ingresa al servidor <a href="https://psicotest-production.up.railway.app/" target="_blank">Backend</a> hosteado en <a href="https://railway.app/" target="_blank">Railway</a></p>
 
 <h2>Tecnologías y herramientas</h2>
 <p align="center">
@@ -60,5 +60,5 @@ Los programas necesarios son:
 <a href="https://styled-components.com/" target="_blank"><img src="https://raw.githubusercontent.com/styled-components/brand/master/styled-components.png" width="80">
 <a href="https://firebase.google.com/" target="_blank"><img src="https://www.gstatic.com/devrel-devsite/prod/v4f875a1b81b7f452d4ad95ddc2e0847267daa183c4980c794500a8a63318384d/firebase/images/touchicon-180.png" width="80"></a>
 <a href="https://cloudinary.com/" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzpJaptrp_3sQ5g6QVNziD-0yfHDhiYN_DEW83NcIWRW_hKQgxiZLihSeorqKN6jZLoMU&usqp=CAU" width="80"></a>
-<a href="https://railway.app/" target="_blank"><img src="https://railway.app/brand/logo-dark.svg" width="80"></a>
+<!--<a href="https://railway.app/" target="_blank"><img src="https://railway.app/brand/logo-dark.svg" width="80"></a>-->
 </p>
