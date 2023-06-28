@@ -2,10 +2,11 @@ import React from "react";
 import { useState } from "react";
 import { useTestCreatorContext } from "../../../context/testCreatorContext";
 import { WhiteButton } from "../../../styles/globals/formularios";
-import { DashPart, DashTitle, SeccionCreatorDash } from "../../../styles/pages/testCreator";
+import { DashPart, DashTitle, SeccionCreatorDash, Selector } from "../../../styles/pages/testCreator";
 import SeccionCheckboxes from "./seccionCheckboxes";
 import SeccionIndex from "./seccionIndex";
 import SeccionOptions from "./seccionOptions";
+import IAsettings from "./IAsettings";
 
 const SeccionSidebar = ({ test, editState, loading, setLoading }) => {
   const [option, setOption] = useState(0);
@@ -45,6 +46,7 @@ const SeccionSidebar = ({ test, editState, loading, setLoading }) => {
                 >Reactivos</WhiteButton>
               </DashPart>
               <SeccionCheckboxes />
+              <IAsettings test={test} />
             </>
           )
         )

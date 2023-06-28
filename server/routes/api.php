@@ -58,6 +58,7 @@ Route::group(['middleware' => 'api'], function(){
     Route::get("test/assignBenef/{id}", [BeneficiarioDocenteController::class, 'getBenefToAssign']);
     Route::post("test/assigning/benef", [BeneficiarioDocenteController::class, 'assignBenefToTest']);
     Route::post("test/collab/{idTest}", [DocenteTestController::class, 'store']);
+    Route::patch("test/tipo/{id}", [TestController::class, 'cambiarTipo']);
 
     //CARACTERISTICAS ROUTES
     Route::apiResource("caracteristica", CaracteristicaController::class);

@@ -22,7 +22,9 @@ const Answer = () => {
   const [screen, setScreen] = useState(window.innerWidth);
   const [loadingIA, setLoadingIA] = useState(false);
 
-  const { resJson: respuesta, setResJson, loading } = useGet(`respuesta/${idRespuesta}`);
+  const { resJson: respuesta, setResJson, loading } = useGet(`respuesta/${idRespuesta}`, {
+    alwaysLoading: true
+  });
 
   const { onDownload } = useDownloadExcel({
     filename: "Respuesta" + respuesta.nombre_user?.replaceAll(' ', '') + respuesta.nombre_test?.replaceAll(' ', ''),
@@ -32,11 +34,15 @@ const Answer = () => {
 
   const handleIA = async () => {
     setLoadingIA(true);
-    let string = "En un test de psicologia llamado " + respuesta.nombre_test + " mi paciente sacó siguientes puntuaciones naturales en las dimensiones: ";
+    let string = `En un test psicológico ${respuesta.tipo_test ? `${respuesta.tipo_test} ` : ""}llamado `;
+    string += respuesta.nombre_test;
+    string += " mi paciente " + respuesta.nombre_user.split(" ")[0] + " sacó siguientes puntuaciones naturales en las dimensiones: ";
     respuesta.test.dimensiones.forEach(dimension => {
       string += dimension.descripcion + " " + dimension.puntuaciones[0] + ", ";
     });
-    string += "que rasgos de la personalidad sugieres de él? sin enumerar y en términos generales y no técnicos";
+    string += "que puedes sugerir de él? sin enumerar, en términos generales y no técnicos";
+    /* string += "que rasgos de la personalidad sugieres de él? sin enumerar y en términos generales y no técnicos"; */
+    console.log(string);
     const res = await generateInterpretation(respuesta.id, string);
     const resJson = await res.json();
     setResJson(old => ({...old, interpretation: resJson.data }));

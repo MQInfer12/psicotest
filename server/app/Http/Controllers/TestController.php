@@ -210,4 +210,15 @@ class TestController extends Controller
                 return $tests;
         }
     }
+
+    public function cambiarTipo(Request $request, $id) {
+        $nuevoTipo = $request->tipo;
+        if($nuevoTipo == "sin seleccionar") {
+            DB::update("UPDATE tests SET type=NULL WHERE id=$id");
+        } else {
+            DB::update("UPDATE tests SET type='$nuevoTipo' WHERE id=$id");
+        }
+
+        return response()->json(["mensaje" => "se actualizó correctamente"], 201);
+    }
 }

@@ -418,3 +418,15 @@ export const PreguntasList = styled.ul`
     }
   }
 `;
+
+export const Selector = styled.select`
+  height: 32px;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 0px 12px;
+  border-radius: 6px;
+  outline: none;
+  border: 1px solid ${props => props.theme.borders};
+  color: ${props => props.theme.textPrincipal};
+  background-color: ${props => props.theme.principal};
+`;

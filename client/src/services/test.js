@@ -75,6 +75,24 @@ export const deleteTest = async (id) => {
   }
 };
 
+export const cambiarTipo = async (tipo, id) => {
+  try {
+    const response = await fetch(`${http}test/tipo/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify({
+        tipo: tipo
+      }),
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 /* ======================= DOCENTETESTS ============= */
 
 // ESTE GET SE USA PARA OBTENER DATOS DEL DOCENTE TEST EN TESTSHARE

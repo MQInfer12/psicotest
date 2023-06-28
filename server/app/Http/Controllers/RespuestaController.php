@@ -141,7 +141,7 @@ class RespuestaController extends Controller
         $respuesta = DB::select(
             "SELECT r.email_user, r.estado, r.id, r.id_docente_test, r.interpretation, 
             u.nombre as nombre_user, u.edad, u.genero,
-            t.nombre as nombre_test, t.id as id_test
+            t.nombre as nombre_test, t.id as id_test, t.type as tipo_test
             FROM respuestas r, users u, docente_tests dt, tests t
             WHERE r.id='$id' 
             AND r.email_user=u.email AND r.id_docente_test=dt.id AND dt.id_test=t.id"
@@ -269,7 +269,9 @@ class RespuestaController extends Controller
 
         $response = json_decode($complete, true);
         $text = $response['choices'][0]['message']['content'];
-        
+
+        DB::update("UPDATE respuestas SET interpretation='$text' WHERE id=$id");
+
         return response()->json(["mensaje" => "la interpretacion se genero correctamente", "data" => $text], 201);
     }
 }
