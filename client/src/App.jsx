@@ -1,5 +1,5 @@
 import "./App.css";
-import { HashRouter, Route, Routes, Link } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import Contexts from "./wrappers/contexts";
 import OutletContext from "./wrappers/outletContext";
 import ProtectedRoute from "./wrappers/protectedRoute";
@@ -8,7 +8,6 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
 import User from "./pages/user";
-import Group from "./pages/group";
 import Profile from "./pages/profile";
 import Home from "./pages/home";
 import Calendar from "./pages/calendar";

@@ -17,6 +17,13 @@ const ArticleCard = ({ article, inLanding, llenarArticulos }) => {
   const { user } = useUserContext();
   const [lines, setLines] = useState(0);
   const [viewMore, setViewMore] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleViewDoc = async (id) => {
+    setLoading(true);
+    await pdfIndividual(id);
+    setLoading(false);
+  }
 
   useEffect(() => {
     setLines(PTextRef.current.scrollHeight / LINE_HEIGHT);
@@ -51,7 +58,10 @@ const ArticleCard = ({ article, inLanding, llenarArticulos }) => {
         }
       </div>
       <div>
-        <PurpleButton onClick={() => pdfIndividual(article.id)}>Ver documento<i className="fa-solid fa-file-pdf"></i></PurpleButton>
+        <PurpleButton 
+          disabled={loading} 
+          onClick={() => handleViewDoc(article.id)}
+        >{loading ? "Descargando..." : "Ver adjunto" }<i className="fa-solid fa-file-pdf"></i></PurpleButton>
         {
           ((!inLanding && article.id_docente === user.id) || user.id_rol === 3) &&
           <CardButtons 

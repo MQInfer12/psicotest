@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ButtonContainer, DisplayButton, LoginLink, Nav, OptionLink, OptionList, PageTitle, RegisterLink, TitleLink } from '../../styles/pages/landing';
-import Logo from '../../assets/logo/logo.png'
+import PsicotestLogo from '../globals/psicotestLogo';
 
 const Navbar = () => {
   const [displayOptions, setDisplayOptions] = useState(false);
@@ -9,7 +9,7 @@ const Navbar = () => {
     <Nav>
       <ButtonContainer>
         <TitleLink to="/">
-          <PageTitle><img alt="psicotest-logo" src={Logo}/><div><span>Psico</span>test</div></PageTitle>
+          <PsicotestLogo />
         </TitleLink>
         <DisplayButton onClick={() => setDisplayOptions(!displayOptions)}>
           {

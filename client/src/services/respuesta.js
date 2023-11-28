@@ -61,3 +61,21 @@ export const generateInterpretation = async (id, text) => {
     console.log(error);
   }
 }
+
+export const saveInterpretation = async (id, text) => {
+  try {
+    const response = await fetch(`${http}respuesta/interpretation/save/${id}`, {
+      method: "PATCH",
+      headers: { 
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        interpretation: text
+      })
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -5,13 +5,13 @@ import { ChatContext } from "../../context/chatContext";
 import { logOut } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import { SideBarButton, SideBarIcon, SideBarOptionText } from "../../styles/pages/dashboard";
+import { useVTNavigate } from "../../hooks/useVTNavigate";
 
 const LogoutButton = () => {
   const { setUser } = useUserContext();
   const { setCurrentUser } = useContext(UserFirebaseContext);
   const { dispatch } = useContext(ChatContext);
-
-  const navigate = useNavigate();
+  const navigate = useVTNavigate();
 
   const handleLogout = async () => {
     const resout = await logOut();

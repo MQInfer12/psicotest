@@ -274,4 +274,10 @@ class RespuestaController extends Controller
 
         return response()->json(["mensaje" => "la interpretacion se genero correctamente", "data" => $text], 201);
     }
+
+    public function saveInterpretation($id, Request $request) {
+        DB::update("UPDATE respuestas SET interpretation='$request->interpretation' WHERE id=$id");
+
+        return response()->json(["mensaje" => "la interpretacion se guardó correctamente", "data" => $request->interpretation], 201);
+    }
 }

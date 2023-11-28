@@ -62,7 +62,8 @@ export const DataValue = styled.p`
 `;
 
 export const InterpretationMessage = styled.p`
-  color: ${props => props.theme.textPrincipal};
+  color: ${props => props.theme.textDark};
+  opacity: 0.7;
   font-weight: 300;
   font-size: 14px;
   margin: 0 20px;
@@ -75,6 +76,12 @@ export const SeccionContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 16px;
+`;
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  gap: 12px;
+  align-items: center;
 `;
 
   //TABLA

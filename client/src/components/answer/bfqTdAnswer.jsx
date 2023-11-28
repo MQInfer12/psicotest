@@ -7,7 +7,7 @@ const BfqTdAnswer = ({ mid, selected }) => {
   return (
     <BFQTd>
       <div>
-        {values.map(value => <div className={value === selected ? "active" : ""} />)}
+        {values.map((value, i) => <div key={i} className={value === selected ? "active" : ""} />)}
       </div>
     </BFQTd>
   )

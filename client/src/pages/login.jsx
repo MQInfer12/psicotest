@@ -7,11 +7,12 @@ import { getProfile, signIn } from "../services/auth";
 import { ErrorCss } from "../styles/globals/formularios";
 import LoginTemplate from "../components/login/loginTemplate";
 import { DivInputBox, DivInputs, IInput, InputText, SpanText } from "../styles/pages/login";
+import { useVTNavigate } from "../hooks/useVTNavigate";
 
 const Login = () => {
   const { goTo } = useParams();
   const { setUser } = useUserContext();
-  const navigate = useNavigate();
+  const navigate = useVTNavigate();
 
   const obtenerPerfil = async () => {
     const profile = await getProfile();

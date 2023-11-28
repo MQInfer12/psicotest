@@ -77,13 +77,21 @@ export const PageTitle = styled.h1`
   display: flex;
   gap: 10px;
   align-items: center;
-
   & img {
     height: 35px;
   }
-
+  & small {
+    font-size: 10px;
+    margin-top: -8px;
+    align-self: flex-end;
+    opacity: 0.8;
+  }
   & span {
     font-weight: 600;
+  }
+  & > div {
+    display: flex;
+    flex-direction: column;
   }
 `;
 
