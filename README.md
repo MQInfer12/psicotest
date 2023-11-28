@@ -42,11 +42,9 @@ Los programas necesarios son:
 3. Ejecutar el comando `php artisan migrate` para crear las tablas en la base de datos
 4. Para iniciar el servidor ejecutar `php artisan serve`
 
-<h2 align="center">Servidores en la nube</h2>
+<h2 align="center">Servidor de producción</h2>
 
-<p align="center">Ingresa a la aplicación <a href="https://psicotest-production.web.app/#/" target="_blank">Psicotest</a> hosteado en <a href="https://firebase.google.com/" target="_blank">Firebase</a></p>
-
-<p align="center">Ingresa al servidor <a href="https://psicotest-production.up.railway.app/" target="_blank">Backend</a> hosteado en <a href="https://railway.app/" target="_blank">Railway</a></p>
+<p align="center">Ingresa a la aplicación <a href="https://psicotest.cidtec-uc.com/#/" target="_blank">Psicotest</a></p>
 
 <h2>Tecnologías y herramientas</h2>
 <p align="center">
