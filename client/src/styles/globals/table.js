@@ -110,6 +110,7 @@ export const TableAnswers = styled.table`
   border-collapse: collapse;
   width: 100%;
   overflow: scroll;
+  position: relative;
 
   & > thead {
     height: 40px;
@@ -223,6 +224,38 @@ export const PSobre = styled.p`
   text-align: end;
 `;
 
+export const Tr = styled.tr`
+  height: 36px;
+  transition: opacity 0.3s;
+
+  &:nth-child(2n) {
+    background-color: ${props => props.theme.backgroundTable};
+  }
+`;
+
+export const TrBorder = styled.tr`
+  border-bottom: 1px solid ${props => props.theme.textPrincipal};
+`;
+
+export const Th = styled.th`
+  padding: 0 8px;
+  width: ${(props) => props.w};
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: ${props => props.center ? "center" : "start"};
+  border-left: ${props => props.border && "1px solid " + props.theme.textPrincipal};
+  border-right: ${props => props.border && "1px solid " + props.theme.textPrincipal};
+  color: ${props => props.theme.textDark};
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  &.mini {
+    width: 100px;
+  }
+`;
+
 export const ResponsiveTr = styled.tr.attrs(props => ({
     style: {
       height: props.rowHeight
@@ -273,4 +306,4 @@ export const ButtonReactivosTr = styled.div`
   left: 0;
   z-index: -1;
   transition: all 0s;
-`
+`;

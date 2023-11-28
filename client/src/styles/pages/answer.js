@@ -29,6 +29,18 @@ export const InterpretationContainer = styled.div`
   margin: 0 20px;
 `
 
+export const TableBFQContainer = styled.div`
+  background-color: ${props => props.theme.principal};
+  padding: 8px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  margin: 0 20px;
+  max-width: 1200px;
+`;
+
 export const DataRow = styled.div`
   display: flex;
   justify-content: space-between;
@@ -93,6 +105,29 @@ export const RadioCheck = styled.input`
     &::after {
       background-color: ${props => props.theme.colorPrincipalLighter};
       border: 1px solid ${props => props.theme.principal};
+    }
+  }
+`;
+
+export const BFQTd = styled.td`
+  & > div {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    & > div {
+      width: 4px;
+      height: 4px;
+      border: 1px solid ${props => props.theme.textPrincipal};
+      border-radius: 50%;
+      &.active {
+        background-color: ${props => props.theme.colorPrincipal};
+        width: 8px;
+        height: 8px;
+      }
+    }
+    & > div:nth-child(5) {
+      width: 8px;
+      height: 8px;
     }
   }
 `;

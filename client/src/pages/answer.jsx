@@ -13,6 +13,7 @@ import useGet from "../hooks/useGet";
 import { AnswerPage, DataContainer, DataKey, DataRow, DataValue, InterpretationContainer, InterpretationMessage, SeccionContainer, TitleSeccion } from "../styles/pages/answer";
 import Totals from "../components/answer/totals";
 import { generateInterpretation } from "../services/respuesta";
+import BfqGraph from "../components/answer/bfqGraph";
 
 const Answer = () => {
   const windowHeight = useWindowHeight(true, true);
@@ -95,6 +96,10 @@ const Answer = () => {
         respuesta={respuesta} 
         setTableRef={setTableRef} 
       />
+      {
+        respuesta.test.dimensiones.length != 0 &&
+        <Totals test={respuesta.test} />
+      }
       <SeccionContainer>
         <TitleSeccion center>Interpretación de IA</TitleSeccion>
         {
@@ -113,11 +118,14 @@ const Answer = () => {
             respuesta.interpretation ? "Volver a generar" : "Generar"
           }
         </WhiteButton>
-        
       </SeccionContainer>
+      {/*TODO: HARDCODED*/}
       {
-        respuesta.test.dimensiones.length != 0 &&
-        <Totals test={respuesta.test} />
+        respuesta.nombre_test === "BIG FIVE" &&
+        <SeccionContainer>
+          <TitleSeccion center>Gráfico de BFQ</TitleSeccion>
+          <BfqGraph test={respuesta.test} />
+        </SeccionContainer>
       }
       {respuesta.test.secciones.map((seccion, i) => (
         <SeccionContainer key={i}>
