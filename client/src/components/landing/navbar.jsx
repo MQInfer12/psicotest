@@ -9,7 +9,7 @@ const Navbar = () => {
     <Nav>
       <ButtonContainer>
         <TitleLink to="/">
-          <PageTitle><img src={Logo}/><div><span>Psico</span>test</div></PageTitle>
+          <PageTitle><img alt="psicotest-logo" src={Logo}/><div><span>Psico</span>test</div></PageTitle>
         </TitleLink>
         <DisplayButton onClick={() => setDisplayOptions(!displayOptions)}>
           {

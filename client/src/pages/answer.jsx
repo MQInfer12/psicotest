@@ -41,8 +41,6 @@ const Answer = () => {
       string += dimension.descripcion + " " + dimension.puntuaciones[0] + ", ";
     });
     string += "que puedes sugerir de él? sin enumerar, en términos generales y no técnicos";
-    /* string += "que rasgos de la personalidad sugieres de él? sin enumerar y en términos generales y no técnicos"; */
-    console.log(string);
     const res = await generateInterpretation(respuesta.id, string);
     const resJson = await res.json();
     setResJson(old => ({...old, interpretation: resJson.data }));
