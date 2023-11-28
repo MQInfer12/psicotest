@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useUserContext } from '../../../context/userContext';
 import { useModal } from '../../../hooks/useModal';
 import { deleteTest, updateTest } from '../../../services/test';
 import { DangerIconButton, WhiteIconButton } from '../../../styles/globals/formularios';
-import { CardButtonContainer } from '../../../styles/pages/test';
+import { CardButtonContainer, Dots } from '../../../styles/pages/test';
 import code from '../../../utilities/code';
 import SureModal from '../../globals/sureModal';
 import ModalAssignBenef from '../modalAssignBenef';
@@ -17,6 +17,7 @@ const CardButtons = ({ props }) => {
   const { user } = useUserContext();
   const { id_rol: idRole } = user;
   const idCode = code(idRole === 1 ? props.id.toString() : props.id_test.toString());
+  const [showMore, setShowMore] = useState(false);
 
   const handleTestCreator = () => {
     navigate(`./${idCode}`);
@@ -89,6 +90,12 @@ const CardButtons = ({ props }) => {
   );
 
   return (
+    <>
+    <Dots className={showMore ? " active" : ""} onClick={() => setShowMore(!showMore)}>
+      <i 
+        className="fa-solid fa-ellipsis"
+      ></i>
+    </Dots>
     <CardButtonContainer>
       <div>
         <WhiteIconButton title="Ver test" onClick={handleTestView}>
@@ -103,34 +110,53 @@ const CardButtons = ({ props }) => {
             <WhiteIconButton title="Modificar test" onClick={handleTestCreator}>
               <i className="fa-solid fa-pen-to-square"></i>
             </WhiteIconButton>
-            <WhiteIconButton title="Añadir colaboradores" onClick={openMiniLink}>
-              <i className="fa-solid fa-users-gear"></i>
-            </WhiteIconButton>
-            <WhiteIconButton title="Editar información del test" onClick={openEdit}>
-              <i className="fa-solid fa-pencil"></i>
-            </WhiteIconButton>
-            <DangerIconButton title="Eliminar test" onClick={openDelete}>
-              <i className="fa-solid fa-trash-can"></i>
-            </DangerIconButton>
             </>
           }
           </>
         }
-      </div>
-      <div>
         {
           idRole >= 2 &&
           <>
-          <WhiteIconButton title="Asignar beneficiarios" onClick={openAddBenef}>
-            <i className="fa-solid fa-user-group"></i>
-          </WhiteIconButton>
-          <WhiteIconButton title="Compartir" onClick={openLink}>
+          <WhiteIconButton title="Compartir enlace a beneficiarios" onClick={openLink}>
             <i className="fa-solid fa-share-nodes"></i>
           </WhiteIconButton>
           </>
         }
       </div>
+      {
+        showMore &&
+        <div>
+          {
+            (idRole != 1 && user.id === props.id_autor) &&
+            <>
+            <WhiteIconButton title="Editar información del test" onClick={openEdit}>
+              <i className="fa-solid fa-pencil"></i>
+            </WhiteIconButton>
+            <WhiteIconButton title="Añadir colaboradores" onClick={openMiniLink}>
+              <i className="fa-solid fa-users-gear"></i>
+            </WhiteIconButton>
+            </>
+          }
+          {
+            idRole >= 2 &&
+            <>
+            <WhiteIconButton title="Asignar beneficiarios manualmente" onClick={openAddBenef}>
+              <i className="fa-solid fa-user-group"></i>
+            </WhiteIconButton>
+            </>
+          }
+          {
+            (idRole != 1 && user.id === props.id_autor) &&
+            <>
+            <DangerIconButton title="Eliminar test" onClick={openDelete}>
+              <i className="fa-solid fa-trash-can"></i>
+            </DangerIconButton>
+            </>
+          }
+        </div>
+      }
     </CardButtonContainer>
+    </>
   )
 }
 

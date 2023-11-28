@@ -54,6 +54,7 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 12px;
   box-shadow: 0px 4px 16px rgba(${props => props.theme.textDarkRGB}, 0.05);
+  position: relative;
 `;
 
 export const H2 = styled.h2`
@@ -116,6 +117,26 @@ export const CardButtonContainer = styled.div`
   & > div {
     display: flex;
     gap: 10px;
+  }
+`;
+
+export const Dots = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background-color: transparent;
+  color: ${props => props.theme.textDark};
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    opacity: 0.8;
+  }
+  &.active {
+    transform: rotate(-90deg);
   }
 `;
 

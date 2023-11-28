@@ -8,12 +8,10 @@ const TestCard = (props) => {
     <Container>
       <H2>{props.idRole === 1 ? props.nombre_test : props.nombre}</H2>
       <P>{props.idRole === 1 ? props.descripcion_test : props.descripcion}</P>
-
       <ContainerIcon>
         <ProfilePic title="Autor" width="25px" height="25px" border perfil={props.perfil}/>
         <Span>{props.idRole === 1 ? props.autor_test : props.autor}</Span>
       </ContainerIcon>
-
       {
         props.idRole === 1 &&
         <ContainerIcon>
@@ -21,12 +19,10 @@ const TestCard = (props) => {
           <Span>{props.nombre_docente}</Span>
         </ContainerIcon>
       }
-
       <ContainerIcon>
         <div><i title="Tiempo estimado" className="fa-solid fa-clock"></i></div>
         <Span>{props.idRole === 1 ? props.tiempo_test : props.tiempo}</Span>
       </ContainerIcon>
-
       {
         props.idRole != 1 &&
         <ContainerImg>
@@ -46,7 +42,6 @@ const TestCard = (props) => {
           ))}
         </ContainerImg>
       }
-      
       <CardButtons 
         props={props}
       />
