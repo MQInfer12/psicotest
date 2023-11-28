@@ -10,7 +10,7 @@ import BigRow from "../components/answer/bigRow";
 import MiniRow from "../components/answer/miniRow";
 import { useWindowHeight } from "../hooks/useWindowHeight";
 import useGet from "../hooks/useGet";
-import { AnswerPage, DataContainer, DataKey, DataRow, DataValue, InterpretationMessage, SeccionContainer, TitleSeccion } from "../styles/pages/answer";
+import { AnswerPage, DataContainer, DataKey, DataRow, DataValue, InterpretationContainer, InterpretationMessage, SeccionContainer, TitleSeccion } from "../styles/pages/answer";
 import Totals from "../components/answer/totals";
 import { generateInterpretation } from "../services/respuesta";
 
@@ -101,9 +101,9 @@ const Answer = () => {
         <TitleSeccion center>Interpretación de IA</TitleSeccion>
         {
           respuesta.interpretation &&
-          <DataContainer>
+          <InterpretationContainer>
             <InterpretationMessage>{respuesta.interpretation}</InterpretationMessage>
-          </DataContainer>
+          </InterpretationContainer>
         }
         <WhiteButton 
           disabled={respuesta.estado === 0 || loadingIA}

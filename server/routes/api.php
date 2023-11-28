@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\APIController;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BeneficiarioDocenteController;
@@ -126,4 +127,8 @@ Route::group(['middleware' => 'api'], function(){
 
     //CHANGECOLUMNS
     /* Route::get('change', [SeccionController::class, 'change']); */
+
+    //API ROUTES
+    
+    Route::get("rest/test/{idTest}", [APIController::class, 'getTestToShow']);
 });

@@ -18,6 +18,17 @@ export const DataContainer = styled.div`
   gap: 22px;
 `;
 
+export const InterpretationContainer = styled.div`
+  background-color: ${props => props.theme.principal};
+  padding: 24px 24px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  margin: 0 20px;
+`
+
 export const DataRow = styled.div`
   display: flex;
   justify-content: space-between;
@@ -42,7 +53,9 @@ export const InterpretationMessage = styled.p`
   color: ${props => props.theme.textPrincipal};
   font-weight: 300;
   font-size: 14px;
-  width: 350px;
+  margin: 0 20px;
+  line-height: 28px;
+  max-width: 840px;
 `;
 
 export const SeccionContainer = styled.div`
