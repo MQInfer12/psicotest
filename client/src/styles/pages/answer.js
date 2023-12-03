@@ -39,6 +39,7 @@ export const TableBFQContainer = styled.div`
   gap: 22px;
   margin: 0 20px;
   max-width: 1200px;
+  position: relative;
 `;
 
 export const DataRow = styled.div`
@@ -126,7 +127,7 @@ export const BFQTd = styled.td`
       height: 4px;
       border: 1px solid ${props => props.theme.textPrincipal};
       border-radius: 50%;
-      &.active {
+      &.active-circle-bfq {
         background-color: ${props => props.theme.colorPrincipal};
         width: 8px;
         height: 8px;

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\RecuperarController;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +21,5 @@ Route::get('/', function () {
 });
 
 Route::get('/foo', function () {
-    Artisan::call('storage:link');
+    DB::update("UPDATE respuestas SET estado = 2 WHERE interpretation IS NOT NULL");
 });

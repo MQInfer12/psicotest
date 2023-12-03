@@ -32,6 +32,21 @@ export const addRespuesta = async (form) => {
   }
 }
 
+export const getFullRespuestas = async (ids) => {
+  try {
+    const response = await fetch(`${http}respuesta/test/filtered`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ids
+      })
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const getFullRespuesta = async ({ id }) => {
   try {
     const response = await fetch(`${http}respuesta/full/${id}`, {
@@ -44,17 +59,14 @@ export const getFullRespuesta = async ({ id }) => {
   }
 }
 
-export const generateInterpretation = async (id, text) => {
+export const generateInterpretation = async (id) => {
   try {
     const response = await fetch(`${http}respuesta/interpretation/${id}`, {
       method: "PATCH",
       headers: { 
         "Content-Type": "application/json",
         "Accept": "application/json"
-      },
-      body: JSON.stringify({
-        text: text
-      })
+      }
     });
     return response;
   } catch (error) {

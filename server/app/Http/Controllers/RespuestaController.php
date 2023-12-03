@@ -6,6 +6,7 @@ use App\Models\Respuesta;
 use App\Models\Resultado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Orhanerday\OpenAi\OpenAi;
 
 class RespuestaController extends Controller
@@ -17,7 +18,7 @@ class RespuestaController extends Controller
 
         if($rol == 3) {
             $respuestas = DB::select(
-                "SELECT r.id, r.email_user, r.id_docente_test, r.estado,
+                "SELECT r.id, r.email_user, r.id_docente_test, r.estado, r.interpretation,
                         u.nombre as nombre_user,
                         d.nombre as nombre_docente, d.email as email_docente,
                         t.id as id_test, t.nombre as nombre_test, t.descripcion,
@@ -28,7 +29,7 @@ class RespuestaController extends Controller
             );
         } else {
             $respuestas = DB::select(
-                "SELECT r.id, r.email_user, r.id_docente_test, r.estado,
+                "SELECT r.id, r.email_user, r.id_docente_test, r.estado, r.interpretation,
                         u.nombre as nombre_user,
                         d.nombre as nombre_docente, d.email as email_docente,
                         t.id as id_test, t.nombre as nombre_test, t.descripcion,
@@ -134,6 +135,16 @@ class RespuestaController extends Controller
         }
 
         return response()->json(["mensaje" => "se guardo correctamente"], 201);
+    }
+
+    public function showAll(Request $request) {
+        $idRespuestas = $request->ids;
+        $fullRespuestas = [];
+        foreach($idRespuestas as $id) {
+            $newRespuesta = $this->show($id);
+            array_push($fullRespuestas, $newRespuesta);
+        }
+        return $fullRespuestas;
     }
 
     public function show($id)
@@ -251,32 +262,112 @@ class RespuestaController extends Controller
         return Respuesta::destroy($id);
     }
 
-    public function generateInterpretation($id, Request $request) {
+    public function interpretateTestResponses($idTest) {
+        $respuestas = DB::select("SELECT r.* 
+            FROM respuestas as r, docente_tests as dt
+            WHERE r.id_docente_test=dt.id AND dt.id_test='$idTest' AND r.estado = 1 AND r.interpretation IS NULL
+        ");
+        foreach($respuestas as $respuesta) {
+            $this->interpretate($respuesta->id);
+        }
+        return response()->json(["mensaje" => "las interpretaciones se generaron correctamente", "data" => null], 201);
+    }
+
+    public function generateInterpretation($id) {
+        $text = $this->interpretate($id);
+        return response()->json(["mensaje" => "la interpretacion se genero correctamente", "data" => $text], 201);
+    }
+
+    public function interpretate($id) {
+        $test = DB::select("SELECT t.*
+            FROM tests as t, docente_tests as dt, respuestas as r
+            WHERE dt.id_test = t.id AND dt.id = r.id_docente_test AND r.id = $id
+        ")[0];
+        $paciente = DB::select("SELECT u.* 
+            FROM users as u, respuestas as r
+            WHERE r.email_user = u.email AND r.id = $id
+        ")[0];
+        $escalas = DB::select("SELECT * FROM escalas WHERE id_test='$test->id' ORDER BY id");
+        $idEscalas = array_column($escalas, 'id');
+        $dimensiones = DB::select("SELECT * FROM dimensions WHERE id_test='$test->id' ORDER BY id");
+        foreach($dimensiones as $dimension) {
+            $nat = DB::select(
+                "SELECT COALESCE(SUM(pu.asignado), 0) as nat
+                FROM resultados as r, puntuacions as pu, preguntas as pr, pregunta_dimensions as pd, dimensions as d
+                WHERE r.id_respuesta='$id' AND r.id_puntuacion=pu.id AND pu.id_pregunta=pr.id
+                AND pd.id_pregunta=pr.id AND pd.id_dimension=d.id AND d.id='$dimension->id'"
+            )[0]->nat;
+            $nat = $nat + $dimension->constante;
+            $puntuacionesPorDimension = [$nat];
+            $totales = DB::select(
+                "SELECT co.convertido, e.id as id_escala
+                FROM conversions as co, escala_dimensions as ed, dimensions as d, escalas as e
+                WHERE co.id_escala_dimension=ed.id AND ed.id_dimension=d.id AND ed.id_escala=e.id 
+                AND d.id='$dimension->id' AND co.natural='$nat'
+                ORDER BY e.id"    
+            );
+            $idEscalasInTotales = array_column($totales, 'id_escala');
+            $convertidos = array_column($totales, 'convertido');
+            foreach($idEscalas as $idEscala) {
+                if(in_array($idEscala, $idEscalasInTotales)) {
+                    $index = array_search($idEscala, $idEscalasInTotales);
+                    $puntuacionesPorDimension[] = $convertidos[$index];
+                } else {
+                    $puntuacionesPorDimension[] = "N/A";
+                }
+            }
+            $dimension->puntuaciones = $puntuacionesPorDimension;
+        }
+
+        $string = "Ayúdame a evaluar este test psicológico: \n En el test psicológico";
+        if($test->type != null) {
+            $string = $string.$test->type." ";
+        }
+        $string = $string."llamado ".$test->nombre;
+        $string = $string." mi paciente ".explode(" ", $paciente->nombre)[0];
+        $string = $string." sacó siguientes puntuaciones naturales en las dimensiones de la personalidad: ";
+        foreach($dimensiones as $dimension) {
+            $string = $string.$dimension->descripcion." ".$dimension->puntuaciones[0].", ";
+        }
+        $string = $string."\n¿Qué puedes sugerir de él/ella (rasgos de personalidad, respuesta a las distintas dimensiones, gustos, aspectos relevantes de su vida, preferencias de profesión)? intenta no enumerar tu respuesta, escríbeme en términos generales y no técnicos";
+
+        /*$response = Http::post("https://mauriciomolina12.pythonanywhere.com/interpretation", [
+            "prompt" => utf8_encode($string)
+        ]);
+        $data = $response->json();
+        if($data["status"] === 0) {
+            return [
+                "error" => $data["message"]
+            ];
+        }
+        $text = $data["message"];*/
+
         $open_ai_key = env("OPENAI_API_KEY");
         $open_ai = new OpenAi($open_ai_key);
-        
         $complete = $open_ai->chat([
             'model' => 'gpt-3.5-turbo',
             'messages' => [[
+                "role" => "system",
+                "content" => "Eres un psicólogo especializado en el análisis de tests psicológicos de cualquier tipo de paciente"
+            ],[
                 "role" => "user",
-                "content" => $request->text
+                "content" => utf8_encode($string)
             ]],
             'temperature' => 1,
             'max_tokens' => 2000,
             'frequency_penalty' => 0,
             'presence_penalty' => 0
         ]);
-
         $response = json_decode($complete, true);
         $text = $response['choices'][0]['message']['content'];
 
-        DB::update("UPDATE respuestas SET interpretation='$text' WHERE id=$id");
+        DB::update("UPDATE respuestas SET interpretation='$text', estado=2 WHERE id=$id");
 
-        return response()->json(["mensaje" => "la interpretacion se genero correctamente", "data" => $text], 201);
+        return $text;
     }
 
     public function saveInterpretation($id, Request $request) {
-        DB::update("UPDATE respuestas SET interpretation='$request->interpretation' WHERE id=$id");
+        DB::update("UPDATE respuestas SET interpretation='$request->interpretation', estado=2 WHERE id=$id");
 
         return response()->json(["mensaje" => "la interpretacion se guardó correctamente", "data" => $request->interpretation], 201);
     }

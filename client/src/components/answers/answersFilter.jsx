@@ -8,6 +8,8 @@ const AnswersFilter = ({ respuestas, setFiltered }) => {
   const [filter, setFilter] = useState("");
   const [estado, setEstado] = useState("todos");
 
+  console.log(respuestas)
+
   const searchRespuestas = () => {
     const newRespuestas = respuestas.filter(respuesta => {
       if(filter === "") return true;
@@ -21,7 +23,7 @@ const AnswersFilter = ({ respuestas, setFiltered }) => {
       }
     }).filter(respuesta => {
       if(estado === "todos") return true;
-      return respuesta.case.toLocaleLowerCase().includes(estado.toLowerCase());
+      return respuesta.estado == estado
     });
 
     setFiltered(newRespuestas);
@@ -44,8 +46,9 @@ const AnswersFilter = ({ respuestas, setFiltered }) => {
     </SearchDiv>
     <SearchSelect onChange={(e) => setEstado(e.target.value)}>
       <option value="todos">Estado</option>
-      <option value="pendiente">Pendiente</option>
-      <option value="recibido">Recibido</option>
+      <option value="0">Pendiente</option>
+      <option value="1">Recibido</option>
+      <option value="2">Corregido</option>
     </SearchSelect>
     </>
   )

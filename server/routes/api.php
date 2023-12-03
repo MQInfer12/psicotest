@@ -105,7 +105,9 @@ Route::group(['middleware' => 'api'], function(){
     //RESPUESTA ROUTES
     Route::apiResource("respuesta", RespuestaController::class);
     Route::get("respuesta/user/{id}", [RespuestaController::class, 'getRespuestasByUser']);
+    Route::post("respuesta/test/filtered", [RespuestaController::class, 'showAll']);
     Route::patch("respuesta/interpretation/{id}", [RespuestaController::class, 'generateInterpretation']);
+    Route::patch("respuesta/interpretation/all/{idTest}", [RespuestaController::class, 'interpretateTestResponses']);
     Route::patch("respuesta/interpretation/save/{id}", [RespuestaController::class, 'saveInterpretation']);
 
     //HORARIOS ROUTES

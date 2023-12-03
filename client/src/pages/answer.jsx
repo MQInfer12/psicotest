@@ -37,15 +37,7 @@ const Answer = () => {
 
   const handleIA = async () => {
     setLoadingIA(true);
-    let string = `Ayúdame a evaluar este test psicológico: \n En el test psicológico ${respuesta.tipo_test ? `${respuesta.tipo_test} ` : ""}llamado `;
-    string += respuesta.nombre_test;
-    string += " mi paciente " + respuesta.nombre_user.split(" ")[0] + " sacó siguientes puntuaciones naturales en las dimensiones de la personalidad: ";
-    respuesta.test.dimensiones.forEach(dimension => {
-      string += dimension.descripcion + " " + dimension.puntuaciones[0] + ", ";
-    });
-    string += "que puedes sugerir de él/ella (rasgos de personalidad, respuesta a las distintas dimensiones, gustos, aspectos relevantes de su vida, preferencias de profesión)? intenta no enumerar tu respuesta, escríbeme en términos generales y no técnicos";
-    console.log("Prompt: " + string);
-    const res = await generateInterpretation(respuesta.id, string);
+    const res = await generateInterpretation(respuesta.id);
     const resJson = await res.json();
     setResJson(old => ({...old, interpretation: resJson.data }));
     setLoadingIA(false);
