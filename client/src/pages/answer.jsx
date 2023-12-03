@@ -12,7 +12,7 @@ import { useWindowHeight } from "../hooks/useWindowHeight";
 import useGet from "../hooks/useGet";
 import { AnswerPage, ButtonsContainer, DataContainer, DataKey, DataRow, DataValue, InterpretationContainer, InterpretationMessage, SeccionContainer, TitleSeccion } from "../styles/pages/answer";
 import Totals from "../components/answer/totals";
-import { generateInterpretation, saveInterpretation } from "../services/respuesta";
+import { generateInterpretation, generateInterpretationOpenAI, saveInterpretation } from "../services/respuesta";
 import BfqGraph from "../components/answer/bfqGraph";
 
 const Answer = () => {
@@ -35,17 +35,9 @@ const Answer = () => {
     currentTableRef: tableRef?.current
   });
 
-  const handleIA = async () => {
-    setLoadingIA(true);
-    const res = await generateInterpretation(respuesta.id);
-    const resJson = await res.json();
-    setResJson(old => ({...old, interpretation: resJson.data }));
-    setLoadingIA(false);
-  }
-
-  const saveEdition = async () => {
+  const saveEdition = async (text) => {
     setLoadingSave(true);
-    const interpretation = interpretationRef.current.innerText;
+    const interpretation = text || interpretationRef.current.innerText;
     const res = await saveInterpretation(respuesta.id, interpretation);
     const resJson = await res.json();
     setResJson(old => ({...old, interpretation: resJson.data }));
@@ -56,6 +48,17 @@ const Answer = () => {
     await saveEdition();
     const interpretation = interpretationRef.current.innerText;
     window.open(`mailto:${respuesta.email_user}?subject=Tu respuesta a ${respuesta.nombre_test}&body=${interpretation}`, '_blank');
+  }
+
+  const handleIA = async () => {
+    setLoadingIA(true);
+    let text = "";
+    await generateInterpretationOpenAI(respuesta.prompt, stream => {
+      text += stream;
+      setResJson(old => ({...old, interpretation: text }));
+    });
+    setLoadingIA(false);
+    saveEdition(text);
   }
 
   useEffect(() => {
@@ -112,8 +115,19 @@ const Answer = () => {
       }
       <SeccionContainer>
         <TitleSeccion center>Interpretación</TitleSeccion>
+        <WhiteButton 
+          disabled={respuesta.estado === 0 || loadingIA}
+          onClick={handleIA}
+        >
+          {
+            respuesta.estado === 0 ? "Aún no se realizó el test" : 
+            loadingIA ? "Cargando..." :
+            respuesta.interpretation ? "Volver a generar" : "Generar con Inteligencia Artificial"
+          }
+        </WhiteButton>
         {
           respuesta.interpretation &&
+          <>
           <InterpretationContainer>
             <InterpretationMessage 
               ref={interpretationRef} 
@@ -121,30 +135,24 @@ const Answer = () => {
               suppressContentEditableWarning
             >{respuesta.interpretation}</InterpretationMessage>
           </InterpretationContainer>
-        }
-        <ButtonsContainer>
-          <WhiteButton 
-            disabled={respuesta.estado === 0 || loadingIA}
-            onClick={handleIA}
-          >
-            {
-              respuesta.estado === 0 ? "Aún no se realizó el test" : 
-              loadingIA ? "Cargando..." :
-              respuesta.interpretation ? "Volver a generar" : "Generar con Inteligencia Artificial"
-            }
-          </WhiteButton>
-          {
-            respuesta.interpretation &&
-            <>
-            <WhiteIconButton onClick={sendEmail} title="Guardar y enviar por correo">
+          <ButtonsContainer>
+            <WhiteIconButton 
+              disabled={loadingIA}
+              onClick={sendEmail} 
+              title="Guardar y enviar por correo"
+            >
               <i className="fa-solid fa-envelope"></i>
             </WhiteIconButton>
-            <WhiteIconButton disabled={loadingSave} onClick={saveEdition} title="Guardar"n>
+            <WhiteIconButton 
+              disabled={loadingSave || loadingIA} 
+              onClick={() => saveEdition()} 
+              title="Guardar"
+            >
               <i className="fa-solid fa-floppy-disk"></i>
             </WhiteIconButton>
-            </>
-          }
-        </ButtonsContainer>
+          </ButtonsContainer>
+          </>
+        }
       </SeccionContainer>
       {/*TODO: HARDCODED*/}
       {

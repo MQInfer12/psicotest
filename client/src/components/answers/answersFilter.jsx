@@ -8,8 +8,6 @@ const AnswersFilter = ({ respuestas, setFiltered }) => {
   const [filter, setFilter] = useState("");
   const [estado, setEstado] = useState("todos");
 
-  console.log(respuestas)
-
   const searchRespuestas = () => {
     const newRespuestas = respuestas.filter(respuesta => {
       if(filter === "") return true;

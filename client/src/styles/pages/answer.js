@@ -70,6 +70,7 @@ export const InterpretationMessage = styled.p`
   margin: 0 20px;
   line-height: 28px;
   max-width: 840px;
+  white-space: pre-line;
 `;
 
 export const SeccionContainer = styled.div`

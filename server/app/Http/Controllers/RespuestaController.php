@@ -250,7 +250,20 @@ class RespuestaController extends Controller
                 );
             }
         }
+        
+        $string = "Ayúdame a evaluar este test psicológico: \n En el test psicológico";
+        if($test->type != null) {
+            $string = $string.$test->type." ";
+        }
+        $string = $string."llamado ".$test->nombre;
+        $string = $string." mi paciente ".explode(" ", $respuesta->nombre_user)[0];
+        $string = $string." sacó siguientes puntuaciones naturales en las dimensiones de la personalidad: ";
+        foreach($dimensiones as $dimension) {
+            $string = $string.$dimension->descripcion." ".$dimension->puntuaciones[0].", ";
+        }
+        $string = $string."\n¿Qué puedes sugerir de él/ella (rasgos de personalidad, respuesta a las distintas dimensiones, gustos, aspectos relevantes de su vida, preferencias de profesión)? intenta no enumerar tu respuesta, escríbeme en términos generales y no técnicos";
 
+        $respuesta->prompt = $string;
         $respuesta->resultados = $resultados;
         $respuesta->test = $test;
 
