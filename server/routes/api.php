@@ -107,7 +107,7 @@ Route::group(['middleware' => 'api'], function(){
     Route::get("respuesta/user/{id}", [RespuestaController::class, 'getRespuestasByUser']);
     Route::post("respuesta/test/filtered", [RespuestaController::class, 'showAll']);
     Route::patch("respuesta/interpretation/{id}", [RespuestaController::class, 'generateInterpretation']);
-    Route::patch("respuesta/interpretation/all/{idTest}", [RespuestaController::class, 'interpretateTestResponses']);
+    Route::get("respuesta/interpretation/getprompt/{id}/{dimensionIndex}", [RespuestaController::class, 'getPrompt']);
     Route::patch("respuesta/interpretation/save/{id}", [RespuestaController::class, 'saveInterpretation']);
 
     //HORARIOS ROUTES

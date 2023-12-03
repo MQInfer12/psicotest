@@ -137,7 +137,8 @@ class RespuestaController extends Controller
         return response()->json(["mensaje" => "se guardo correctamente"], 201);
     }
 
-    public function showAll(Request $request) {
+    public function showAll(Request $request) 
+    {
         $idRespuestas = $request->ids;
         $fullRespuestas = [];
         foreach($idRespuestas as $id) {
@@ -251,19 +252,6 @@ class RespuestaController extends Controller
             }
         }
         
-        $string = "Ayúdame a evaluar este test psicológico: \n En el test psicológico";
-        if($test->type != null) {
-            $string = $string.$test->type." ";
-        }
-        $string = $string."llamado ".$test->nombre;
-        $string = $string." mi paciente ".explode(" ", $respuesta->nombre_user)[0];
-        $string = $string." sacó siguientes puntuaciones naturales en las dimensiones de la personalidad: ";
-        foreach($dimensiones as $dimension) {
-            $string = $string.$dimension->descripcion." ".$dimension->puntuaciones[0].", ";
-        }
-        $string = $string."\n¿Qué puedes sugerir de él/ella (rasgos de personalidad, respuesta a las distintas dimensiones, gustos, aspectos relevantes de su vida, preferencias de profesión)? intenta no enumerar tu respuesta, escríbeme en términos generales y no técnicos";
-
-        $respuesta->prompt = $string;
         $respuesta->resultados = $resultados;
         $respuesta->test = $test;
 
@@ -275,23 +263,62 @@ class RespuestaController extends Controller
         return Respuesta::destroy($id);
     }
 
-    public function interpretateTestResponses($idTest) {
-        $respuestas = DB::select("SELECT r.* 
-            FROM respuestas as r, docente_tests as dt
-            WHERE r.id_docente_test=dt.id AND dt.id_test='$idTest' AND r.estado = 1 AND r.interpretation IS NULL
-        ");
-        foreach($respuestas as $respuesta) {
-            $this->interpretate($respuesta->id);
-        }
-        return response()->json(["mensaje" => "las interpretaciones se generaron correctamente", "data" => null], 201);
-    }
-
-    public function generateInterpretation($id) {
+    public function generateInterpretation($id) 
+    {
         $text = $this->interpretate($id);
         return response()->json(["mensaje" => "la interpretacion se genero correctamente", "data" => $text], 201);
     }
 
-    public function interpretate($id) {
+    public function interpretate($id) 
+    {
+        $string = $this->makePrompt($id, 0);
+
+        /*$response = Http::post("https://mauriciomolina12.pythonanywhere.com/interpretation", [
+            "prompt" => utf8_encode($string)
+        ]);
+        $data = $response->json();
+        if($data["status"] === 0) {
+            return [
+                "error" => $data["message"]
+            ];
+        }
+        $text = $data["message"];*/
+
+        $open_ai_key = env("OPENAI_API_KEY");
+        $open_ai = new OpenAi($open_ai_key);
+        $complete = $open_ai->chat([
+            'model' => 'gpt-3.5-turbo',
+            'messages' => [[
+                "role" => "system",
+                "content" => "Eres un psicólogo especializado en el análisis de tests psicológicos de cualquier tipo de paciente"
+            ],[
+                "role" => "user",
+                "content" => $string
+            ]],
+            'temperature' => 1,
+            'max_tokens' => 2000,
+            'frequency_penalty' => 0,
+            'presence_penalty' => 0
+        ]);
+        $response = json_decode($complete, true);
+        $text = $response['choices'][0]['message']['content'];
+
+        DB::update("UPDATE respuestas SET interpretation='$text', estado=2 WHERE id=$id");
+
+        return $text;
+    }
+
+    public function getPrompt($id, $dimensionIndex)
+    {
+        $prompt = $this->makePrompt($id, $dimensionIndex);
+        return [
+            "message" => "prompt generada correctamente",
+            "data" => $prompt
+        ];
+    }
+
+    public function makePrompt($id, $dimensionIndex)
+    {
         $test = DB::select("SELECT t.*
             FROM tests as t, docente_tests as dt, respuestas as r
             WHERE dt.id_test = t.id AND dt.id = r.id_docente_test AND r.id = $id
@@ -332,56 +359,35 @@ class RespuestaController extends Controller
             $dimension->puntuaciones = $puntuacionesPorDimension;
         }
 
+        if($dimensionIndex == 0) {
+            $escalaName = "Natural";
+        } else {
+            $escalaName = $escalas[$dimensionIndex - 1]->descripcion;
+        }
+
         $string = "Ayúdame a evaluar este test psicológico: \n En el test psicológico";
         if($test->type != null) {
             $string = $string.$test->type." ";
         }
         $string = $string."llamado ".$test->nombre;
         $string = $string." mi paciente ".explode(" ", $paciente->nombre)[0];
-        $string = $string." sacó siguientes puntuaciones naturales en las dimensiones de la personalidad: ";
+        $string = $string." sacó siguientes puntuaciones en la escala '".$escalaName."' en las dimensiones de la personalidad: ";
         foreach($dimensiones as $dimension) {
-            $string = $string.$dimension->descripcion." ".$dimension->puntuaciones[0].", ";
+            $string = $string.$dimension->descripcion." ".$dimension->puntuaciones[$dimensionIndex].", ";
         }
         $string = $string."\n¿Qué puedes sugerir de él/ella (rasgos de personalidad, respuesta a las distintas dimensiones, gustos, aspectos relevantes de su vida, preferencias de profesión)? intenta no enumerar tu respuesta, escríbeme en términos generales y no técnicos";
-
-        /*$response = Http::post("https://mauriciomolina12.pythonanywhere.com/interpretation", [
-            "prompt" => utf8_encode($string)
-        ]);
-        $data = $response->json();
-        if($data["status"] === 0) {
-            return [
-                "error" => $data["message"]
-            ];
-        }
-        $text = $data["message"];*/
-
-        $open_ai_key = env("OPENAI_API_KEY");
-        $open_ai = new OpenAi($open_ai_key);
-        $complete = $open_ai->chat([
-            'model' => 'gpt-3.5-turbo',
-            'messages' => [[
-                "role" => "system",
-                "content" => "Eres un psicólogo especializado en el análisis de tests psicológicos de cualquier tipo de paciente"
-            ],[
-                "role" => "user",
-                "content" => utf8_encode($string)
-            ]],
-            'temperature' => 1,
-            'max_tokens' => 2000,
-            'frequency_penalty' => 0,
-            'presence_penalty' => 0
-        ]);
-        $response = json_decode($complete, true);
-        $text = $response['choices'][0]['message']['content'];
-
-        DB::update("UPDATE respuestas SET interpretation='$text', estado=2 WHERE id=$id");
-
-        return $text;
+        return utf8_encode($string);
     }
 
-    public function saveInterpretation($id, Request $request) {
-        DB::update("UPDATE respuestas SET interpretation='$request->interpretation', estado=2 WHERE id=$id");
+    public function saveInterpretation($id, Request $request) 
+    {
+        $interpretation = $request->interpretation;
+        
+        DB::update("UPDATE respuestas SET interpretation='$interpretation', estado=2 WHERE id=$id");
 
-        return response()->json(["mensaje" => "la interpretacion se guardó correctamente", "data" => $request->interpretation], 201);
+        return response()->json([
+            "mensaje" => "la interpretacion se guardo correctamente", 
+            "data" => $interpretation
+        ], 201);
     }
 }

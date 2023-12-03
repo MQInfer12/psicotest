@@ -10,10 +10,11 @@ import BigRow from "../components/answer/bigRow";
 import MiniRow from "../components/answer/miniRow";
 import { useWindowHeight } from "../hooks/useWindowHeight";
 import useGet from "../hooks/useGet";
-import { AnswerPage, ButtonsContainer, DataContainer, DataKey, DataRow, DataValue, InterpretationContainer, InterpretationMessage, SeccionContainer, TitleSeccion } from "../styles/pages/answer";
+import { AnswerPage, ButtonsContainer, DataContainer, DataKey, DataRow, DataValue, InterpretationContainer, InterpretationMessage, NormalP, SeccionContainer, TitleSeccion } from "../styles/pages/answer";
 import Totals from "../components/answer/totals";
-import { generateInterpretation, generateInterpretationOpenAI, saveInterpretation } from "../services/respuesta";
+import { generateInterpretation, generateInterpretationOpenAI, getPrompt, saveInterpretation } from "../services/respuesta";
 import BfqGraph from "../components/answer/bfqGraph";
+import { SearchSelect } from "../styles/pages/answers";
 
 const Answer = () => {
   const windowHeight = useWindowHeight(true, true);
@@ -21,6 +22,7 @@ const Answer = () => {
   const idRespuesta = Number(decipherId(idCode));
   const [tableRef, setTableRef] = useState(null);
   const [screen, setScreen] = useState(window.innerWidth);
+  const [dimensionIndex, setDimensionIndex] = useState("0");
   const [loadingIA, setLoadingIA] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
   const interpretationRef = useRef();
@@ -52,8 +54,10 @@ const Answer = () => {
 
   const handleIA = async () => {
     setLoadingIA(true);
-    let text = "";
-    await generateInterpretationOpenAI(respuesta.prompt, stream => {
+    const resPrompt = await getPrompt(respuesta.id, dimensionIndex);
+    const resPromptJson = await resPrompt.json();
+    let text = `Interpretación según ${+dimensionIndex !== 0 ? respuesta.test.escalas[dimensionIndex - 1].descripcion : "Escala natural"}:\n`;
+    await generateInterpretationOpenAI(resPromptJson.data, stream => {
       text += stream;
       setResJson(old => ({...old, interpretation: text }));
     });
@@ -115,16 +119,25 @@ const Answer = () => {
       }
       <SeccionContainer>
         <TitleSeccion center>Interpretación</TitleSeccion>
-        <WhiteButton 
-          disabled={respuesta.estado === 0 || loadingIA}
-          onClick={handleIA}
-        >
-          {
-            respuesta.estado === 0 ? "Aún no se realizó el test" : 
-            loadingIA ? "Cargando..." :
-            respuesta.interpretation ? "Volver a generar" : "Generar con Inteligencia Artificial"
-          }
-        </WhiteButton>
+        <ButtonsContainer flexDirection="column">
+          <NormalP>Generar según puntuación: </NormalP>
+          <SearchSelect value={dimensionIndex} onChange={e => setDimensionIndex(e.target.value)}>
+            <option value="0">Natural</option>
+            {respuesta.test.escalas.map((escala, i) => (
+              <option key={i + 1} value={i + 1}>{escala.descripcion}</option>
+            ))}
+          </SearchSelect>
+          <WhiteButton 
+            disabled={respuesta.estado === 0 || loadingIA}
+            onClick={handleIA}
+          >
+            {
+              respuesta.estado === 0 ? "Aún no se realizó el test" : 
+              loadingIA ? "Cargando..." :
+              respuesta.interpretation ? "Volver a generar" : "Generar con Inteligencia Artificial"
+            }
+          </WhiteButton>
+        </ButtonsContainer>
         {
           respuesta.interpretation &&
           <>

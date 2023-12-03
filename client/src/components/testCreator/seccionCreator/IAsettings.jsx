@@ -27,6 +27,7 @@ const IAsettings = ({ test }) => {
       <Selector onChange={handleChange} defaultValue={defaultTipo}>
         <option value="sin seleccionar">Sin seleccionar</option>
         <option value="psicométrico">Psicométrico</option>
+        <option value="de personalidad">Personalidad</option>
         <option value="de diagnóstico">Diagnóstico</option>
         <option value="de inteligencia">Inteligencia</option>
         <option value="vocacional">Vocacional</option>

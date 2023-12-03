@@ -59,6 +59,18 @@ export const getFullRespuesta = async ({ id }) => {
   }
 }
 
+export const getPrompt = async (id, dimensionIndex) => {
+  try {
+    const response = await fetch(`${http}respuesta/interpretation/getprompt/${id}/${dimensionIndex}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const generateInterpretationOpenAI = async (prompt, callback) => {
   try {
     const apiUrl = "https://api.openai.com/v1/chat/completions";
@@ -78,7 +90,7 @@ export const generateInterpretationOpenAI = async (prompt, callback) => {
           content: prompt
         }],
         temperature: 1,
-        max_tokens: 2000,
+        max_tokens: 1200,
         stream: true
       })
     });
